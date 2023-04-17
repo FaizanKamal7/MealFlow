@@ -3,7 +3,7 @@
 <!--begin::Head-->
 <head>
     <base href="">
-    <title>@yield('title') - Real Estate ERP</title>
+    <title>@yield('title') - Nixus ERP</title>
     <meta charset="utf-8"/>
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
@@ -14,7 +14,7 @@
     <meta property="og:url" content=""/>
     <meta property="og:site_name" content=""/>
     <link rel="canonical" href=""/>
-    <link rel="shortcut icon" href="{{ asset('araazee/img/arazeelogo.png') }}"/>
+    <link rel="shortcut icon" href="{{ asset('static/media/logx-logo-white.png') }}"/>
     @include('partials.styles')
 </head>
 <!--end::Head-->
@@ -36,7 +36,7 @@
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <!--begin::Logo-->
                 <a href="#">
-                    <img alt="Logo" src="{{ asset('araazee/img/arazeelogo.png') }}" class="h-35px logo"/>
+                    <img alt="Logo" src="{{ asset('static/media/logx-logo-white.png') }}" class="h-35px logo"/>
                 </a>
                 <!--end::Logo-->
                 <!--begin::Aside toggler-->
@@ -115,7 +115,7 @@
 											</span>
                                             <!--end::Svg Icon-->
 										</span>
-										<span class="menu-title">Users Management</span>
+										<span class="menu-title">Core Settings</span>
 										<span class="menu-arrow"></span>
 									</span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg"
@@ -157,119 +157,6 @@
                                 </div>
                             </div>
                             <div class="separator"></div>
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-									<span class="menu-link">
-										<span class="menu-icon">
-											<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
-											<span class="svg-icon svg-icon-2">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                     viewBox="0 0 24 24" fill="none">
-													<path
-                                                        d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
-                                                        fill="currentColor"></path>
-													<rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4"
-                                                          fill="currentColor"></rect>
-												</svg>
-											</span>
-                                            <!--end::Svg Icon-->
-										</span>
-										<span class="menu-title">Sellers</span>
-										<span class="menu-arrow"></span>
-									</span>
-                                <div class="menu-sub menu-sub-accordion menu-active-bg"
-                                     style="display: none; overflow: hidden;">
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="#">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-                                            <span class="menu-title">Individual Sellers</span>
-                                        </a>
-                                    </div>
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="#">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-                                            <span class="menu-title">Property Dealers</span>
-                                        </a>
-                                    </div>
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="#">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-                                            <span class="menu-title">Agencies</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="separator"></div>
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-									<span class="menu-link">
-										<span class="menu-icon">
-											<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
-											<span class="svg-icon svg-icon-2">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                     viewBox="0 0 24 24" fill="none">
-													<path
-                                                        d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
-                                                        fill="currentColor"></path>
-													<rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4"
-                                                          fill="currentColor"></rect>
-												</svg>
-											</span>
-                                            <!--end::Svg Icon-->
-										</span>
-										<span class="menu-title">Projects</span>
-										<span class="menu-arrow"></span>
-									</span>
-                                <div class="menu-sub menu-sub-accordion menu-active-bg"
-                                     style="display: none; overflow: hidden;">
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="#">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-                                            <span class="menu-title">Projects</span>
-                                        </a>
-                                    </div>
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="#">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-                                            <span class="menu-title">Developers</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="separator"></div>
-                            <div class="menu-item">
-                                <a class="menu-link" href="#">
-										<span class="menu-icon">
-											<!--begin::Svg Icon | path: assets/media/icons/duotune/art/art005.svg-->
-                                            <span class="svg-icon svg-icon-2 text-black-50">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                             viewBox="0 0 24 24" fill="none">
-                                                    <path opacity="0.3"
-                                                          d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z"
-                                                          fill="currentColor"/>
-                                                    <path
-                                                        d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z"
-                                                        fill="currentColor"/>
-                                        </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-										</span>
-                                    <span class="menu-title">Biddings</span>
-                                </a>
-                            </div>
-
-                            <div class="separator"></div>
-
-                            <div class="separator"></div>
                             <div class="menu-item">
                                 <a class="menu-link" href="#">
 										<span class="menu-icon">
@@ -300,10 +187,10 @@
             @section('sidebar_footer')
                 <!--begin::Footer-->
                 <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
-                    <a href="/" class="btn btn-custom btn-warning w-100"
+                    <a href="mailto:help@nixus.com" class="btn btn-custom btn-warning w-100"
                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"
-                       title="visit Araazee.com" style="background-color: #EF7F22;">
-                        <span class="btn-label">Visit Website</span>
+                       title="contact us in case of any issues" >
+                        <span class="btn-label">Contact Support</span>
                         <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg') }}-->
                         <span class="svg-icon btn-icon svg-icon-2">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -443,7 +330,7 @@
                         <!--begin::Copyright-->
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted fw-bold me-1">2023 ©</span>
-                            <a href="#" target="_blank" class="text-gray-800 text-hover-primary">Real Estate ERP</a>
+                            <a href="#" target="_blank" class="text-gray-800 text-hover-primary">Nixus ERP</a>
                         </div>
                         <!--end::Copyright-->
                         <!--begin::Menu-->

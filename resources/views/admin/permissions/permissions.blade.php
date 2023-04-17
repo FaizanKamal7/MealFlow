@@ -5,7 +5,7 @@
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
-        <div id="kt_content_container" class="container-xxl">
+        <div id="kt_content_container" class="container-fluid">
             <!--begin::Card-->
             <div class="card card-flush">
                 <!--begin::Card header-->
@@ -476,11 +476,21 @@
     <script src="{{ asset('static/js/custom/apps/user-management/permissions/add-permission.js')}}"></script>
     <script src="{{ asset('static/js/custom/apps/user-management/permissions/update-permission.js')}}"></script>
 
-    <script>
-        var _token = $("input[name='_token']").val();
 
+
+
+    <script>
+        var target = document.querySelector("#kt_post");
+
+        var blockUI = new KTBlockUI(target, {
+            message: '<div class="blockui-message"><span class="spinner-border text-primary"></span> Loading...</div>',
+        });
+
+
+        var _token = $("input[name='_token']").val();
         function edit_permission(permission_id) {
 
+            blockUI.block();
             $.ajax({
                 url: "{{ route('fetch_permission') }}",
                 type: "POST",
@@ -490,7 +500,6 @@
                 },
                 success: function (data) {
                     if ($.isEmptyObject(data.error)) {
-                        console.log(data.permission);
 
                         $("#permission_name_update").val(data.permission.name);
                         $("#permission_codename_update").val(data.permission.codename);
@@ -498,9 +507,9 @@
                         if (data.permission.is_active) {
                             $("#kt_permissions_status_update").attr("checked", 'checked');
                         }
-
+                        blockUI.release();
                     } else {
-                        console.log(data.error)
+                        blockUI.release();
                     }
                 }
             });

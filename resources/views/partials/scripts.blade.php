@@ -11,13 +11,45 @@
 <!--begin::Page Custom Javascript(used by this page)-->
 <script src="{{ asset('static/js/widgets.bundle.js') }}"></script>
 <script src="{{ asset('static/js/custom/widgets.js') }}"></script>
-<script src="{{ asset('static/js/custom/apps/chat/chat.js') }}"></script>
-<script src="{{ asset('static/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
-<script src="{{ asset('static/js/custom/utilities/modals/create-app.js') }}"></script>
-<script src="{{ asset('static/js/custom/utilities/modals/create-campaign.js') }}"></script>
-<script src="{{ asset('static/js/custom/utilities/modals/users-search.js') }}"></script>
-<script src="{{ asset('static/js/custom/apps/ecommerce/sales/listing.js') }}"></script>
-<script src="{{ asset('static/js/custom/apps/sm_manager/save-post.js') }}"></script>
+{{--<script src="{{ asset('static/js/custom/apps/chat/chat.js') }}"></script>--}}
+{{--<script src="{{ asset('static/js/custom/utilities/modals/upgrade-plan.js') }}"></script>--}}
+{{--<script src="{{ asset('static/js/custom/utilities/modals/create-app.js') }}"></script>--}}
+{{--<script src="{{ asset('static/js/custom/utilities/modals/create-campaign.js') }}"></script>--}}
+{{--<script src="{{ asset('static/js/custom/utilities/modals/users-search.js') }}"></script>--}}
+{{--<script src="{{ asset('static/js/custom/apps/ecommerce/sales/listing.js') }}"></script>--}}
+
 
 <!--end::Page Custom Javascript-->
+
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    @if(Session::has("success"))
+    toastr.success("{{ Session::get("success") }}");
+    @endif
+    @if(Session::has("error"))
+    toastr.error("{{ Session::get("error") }}");
+    @endif
+    @if(Session::has("info"))
+    toastr.info("{{ Session::get("info") }}");
+    @endif
+    @if(Session::has("warning"))
+    toastr.warning("{{ Session::get("warning") }}");
+    @endif
+</script>
 <!--end::Javascript-->

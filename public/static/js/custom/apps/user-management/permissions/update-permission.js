@@ -73,3 +73,6 @@ var KTUsersUpdatePermission = function () {
 KTUtil.onDOMContentLoaded((function () {
     KTUsersUpdatePermission.init()
 }));
+
+
+
