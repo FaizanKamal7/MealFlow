@@ -18,49 +18,52 @@ Route::get('/', function () {
 });
 
 
+Route::group(['prefix' => 'core/'], function () {
 
 
-//
-//Route::resource('users', \App\Http\Controllers\Admin\UserManagement\UsersController::class);
-//Route::resource('permissions', \App\Http\Controllers\Admin\UserManagement\PermissionsController::class);
-//Route::resource('roles', \App\Http\Controllers\Admin\UserManagement\RolesController::class);
+    Route::get('/', function () {
+        return view('dashboards.admin_dashboard');
+    });
+
+    Route::group(['prefix' => 'permissions/'], function () {
+        Route::get("/", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "viewPermissions"])->name("permissions_view");
+        Route::post("add/new", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "storePermissions"])->name("permissions_store");
+        Route::post("fetch-permission", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "fetchSinglePermission"])->name("fetch_permission");
+        Route::post("update", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "updatePermission"])->name("permissions_update");
+        Route::get("{permission_id}/delete", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "deletePermission"])->name("permissions_delete");
 
 
-Route::group(['prefix' => 'permissions/'], function () {
-    Route::get("/", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "viewPermissions"])->name("permissions_view");
-    Route::post("add/new", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "storePermissions"])->name("permissions_store");
-    Route::post("fetch-permission", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "fetchSinglePermission"])->name("fetch_permission");
-    Route::post("update", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "updatePermission"])->name("permissions_update");
-    Route::get("{permission_id}/delete", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "deletePermission"])->name("permissions_delete");
+    });
 
+    Route::group(['prefix'=>'roles/'], function(){
+        Route::get("/", [\App\Http\Controllers\Admin\UserManagement\RolesController::class, "viewRoles"])->name("roles_view");
+        Route::post("add/new", [\App\Http\Controllers\Admin\UserManagement\RolesController::class, "storeRole"])->name("role_store");
+        Route::get("{role_id}/edit", [\App\Http\Controllers\Admin\UserManagement\RolesController::class, "editRole"])->name("role_edit");
+        Route::post("update", [\App\Http\Controllers\Admin\UserManagement\RolesController::class, "updateRole"])->name("role_update");
+        Route::get("{role_id}/delete", [\App\Http\Controllers\Admin\UserManagement\RolesController::class, "deleteRole"])->name("role_delete");
+
+    });
+
+
+    Route::group(['prefix'=>'users/'], function (){
+        Route::get("/", [App\Http\Controllers\Admin\UserManagement\UsersController::class, 'viewUsers'])->name("users_view");
+        Route::post("add/new", [App\Http\Controllers\Admin\UserManagement\UsersController::class, 'storeUsers'])->name("user_store");
+        Route::get("{user_id}/details", [\App\Http\Controllers\Admin\UserManagement\UsersController::class, "viewUserDetails"])->name("user_view_details");
+        Route::post("update/role", [\App\Http\Controllers\Admin\UserManagement\UsersController::class, "updateUserRoles"])->name("user_update_role");
+        Route::get("{user_id}/delete", [\App\Http\Controllers\Admin\UserManagement\UsersController::class, "deleteUser"])->name("user_delete");
+
+    });
+
+    Route::group(['prefix' => 'accounts/'], function () {
+        Route::get("login", [\App\Http\Controllers\Authentication\LoginController::class, 'loginView'])->name("login_view");
+        Route::post("login", [\App\Http\Controllers\Authentication\LoginController::class, 'loginUser'])->name("login_user");
+
+        Route::get('logout', [\App\Http\Controllers\Authentication\LoginController::class, 'signOut'])->name("logout");
+    });
 
 });
 
-Route::group(['prefix'=>'roles/'], function(){
-    Route::get("/", [\App\Http\Controllers\Admin\UserManagement\RolesController::class, "viewRoles"])->name("roles_view");
-    Route::post("add/new", [\App\Http\Controllers\Admin\UserManagement\RolesController::class, "storeRole"])->name("role_store");
-    Route::get("{role_id}/edit", [\App\Http\Controllers\Admin\UserManagement\RolesController::class, "editRole"])->name("role_edit");
-    Route::post("update", [\App\Http\Controllers\Admin\UserManagement\RolesController::class, "updateRole"])->name("role_update");
-    Route::get("{role_id}/delete", [\App\Http\Controllers\Admin\UserManagement\RolesController::class, "deleteRole"])->name("role_delete");
 
-});
-
-
-Route::group(['prefix'=>'users/'], function (){
-    Route::get("/", [App\Http\Controllers\Admin\UserManagement\UsersController::class, 'viewUsers'])->name("users_view");
-    Route::post("add/new", [App\Http\Controllers\Admin\UserManagement\UsersController::class, 'storeUsers'])->name("user_store");
-    Route::get("{user_id}/details", [\App\Http\Controllers\Admin\UserManagement\UsersController::class, "viewUserDetails"])->name("user_view_details");
-    Route::post("update/role", [\App\Http\Controllers\Admin\UserManagement\UsersController::class, "updateUserRoles"])->name("user_update_role");
-    Route::get("{user_id}/delete", [\App\Http\Controllers\Admin\UserManagement\UsersController::class, "deleteUser"])->name("user_delete");
-
-});
-
-Route::group(['prefix' => 'accounts/'], function () {
-    Route::get("login", [\App\Http\Controllers\Authentication\LoginController::class, 'loginView'])->name("login_view");
-    Route::post("login", [\App\Http\Controllers\Authentication\LoginController::class, 'loginUser'])->name("login_user");
-
-    Route::get('logout', [\App\Http\Controllers\Authentication\LoginController::class, 'signOut'])->name("logout");
-});
 
 
 
