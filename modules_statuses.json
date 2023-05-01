@@ -1,3 +1,4 @@
 {
-    "HRManagement": true
+    "HRManagement": true,
+    "UserService": true
 }
