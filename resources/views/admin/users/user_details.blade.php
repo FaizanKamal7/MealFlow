@@ -19,7 +19,7 @@
                             <div class="d-flex flex-center flex-column py-5">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-100px symbol-circle mb-7">
-                                    <img src="assets/media/avatars/300-6.jpg" alt="image"/>
+                                    <img src="{{ asset("static/media/avatars/300-6.jpg") }}" alt="image"/>
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Name-->
@@ -70,7 +70,7 @@
                                     <!--begin::Details item-->
                                     <div class="fw-bolder mt-5">Email</div>
                                     <div class="text-gray-600">
-                                        <a href="#" class="text-gray-600 text-hover-primary">info@keenthemes.com</a>
+                                        <a href="#" class="text-gray-600 text-hover-primary">user@mail.com</a>
                                     </div>
                                     <!--begin::Details item-->
                                     <!--begin::Details item-->
@@ -929,10 +929,10 @@
                                             <div class="mt-1">
                                                 <!--begin::Image input-->
                                                 <div class="image-input image-input-outline" data-kt-image-input="true"
-                                                     style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                     style="background-image: url('{{ asset("static/media/avatars/blank.svg") }}')">
                                                     <!--begin::Preview existing avatar-->
                                                     <div class="image-input-wrapper w-125px h-125px"
-                                                         style="background-image: url(assets/media/avatars/300-6.jpg"></div>
+                                                         style="background-image: url('{{ asset("static/media/avatars/300-6.jpg") }}')"></div>
                                                     <!--end::Preview existing avatar-->
                                                     <!--begin::Edit-->
                                                     <label
@@ -1431,7 +1431,7 @@
                                 <!--end::Label-->
                                 <!--begin::QR code-->
                                 <div class="d-flex flex-center" data-kt-add-auth-action="qr-code">
-                                    <img src="assets/media/misc/qr.png" alt="Scan this QR code"/>
+                                    <img src="{{ asset("static/media/misc/qr.png") }}" alt="Scan this QR code"/>
                                 </div>
                                 <!--end::QR code-->
                                 <!--begin::Text code-->
@@ -1577,8 +1577,8 @@
 
     <script src="{{ asset('static/js/custom/apps/user-management/users/view/view.js')}}"></script>
     <script src="{{ asset('static/js/custom/apps/user-management/users/view/update-details.js')}}"></script>
-    <script src="{{ asset('static/js/custom/apps/user-management/users/view/add-schedule.js')}}"></script>
-    <script src="{{ asset('static/js/custom/apps/user-management/users/view/add-task.js')}}"></script>
+{{--    <script src="{{ asset('static/js/custom/apps/user-management/users/view/add-schedule.js')}}"></script>--}}
+{{--    <script src="{{ asset('static/js/custom/apps/user-management/users/view/add-task.js')}}"></script>--}}
     <script src="{{ asset('static/js/custom/apps/user-management/users/view/update-email.js')}}"></script>
     <script src="{{ asset('static/js/custom/apps/user-management/users/view/update-password.js')}}"></script>
     <script src="{{ asset('static/js/custom/apps/user-management/users/view/update-role.js')}}"></script>

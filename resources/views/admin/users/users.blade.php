@@ -253,7 +253,7 @@
                                     <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                         <a href="#">
                                             <div class="symbol-label">
-                                                <img src="assets/media/avatars/300-6.jpg" alt="Emma Smith"
+                                                <img src="{{ asset("static/media/avatars/300-6.jpg") }}" alt="Emma Smith"
                                                      class="w-100"/>
                                             </div>
                                         </a>

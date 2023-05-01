@@ -3,108 +3,142 @@
 namespace App\Http\Controllers\Admin\UserManagement;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\ApplicationModelInterface;
+use App\Interfaces\RoleInterface;
+use App\Interfaces\RolePermissionInterface;
 use App\Models\ApplicationModel;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RolePermission;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class RolesController extends Controller
 {
+    private RoleInterface $roleRepository;
+    private RolePermissionInterface $rolePermissionRepository;
+    private ApplicationModelInterface $applicationModelRepository;
+
+    /**
+     * @param RoleInterface $roleRepository
+     * @param RolePermissionInterface $rolePermissionRepository
+     * @param ApplicationModelInterface $applicationModelRepository
+     */
+    public function __construct(RoleInterface $roleRepository, RolePermissionInterface $rolePermissionRepository, ApplicationModelInterface $applicationModelRepository)
+    {
+        $this->roleRepository = $roleRepository;
+        $this->rolePermissionRepository = $rolePermissionRepository;
+        $this->applicationModelRepository = $applicationModelRepository;
+    }
+
+
     public function viewRoles()
     {
-        abort_if(Gate::denies('view_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $roles = Role::all();
-        $app_models = ApplicationModel::all();
-        return view("admin.roles.roles", ["roles" => $roles, "app_models" => $app_models]);
+        try {
+            abort_if(Gate::denies('view_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $roles = $this->roleRepository->getRoles();
+            $app_models = $this->applicationModelRepository->getApplicationModels();
+            return view("admin.roles.roles", ["roles" => $roles, "app_models" => $app_models]);
+        } catch (Exception $exception) {
+            Log::error($exception);
+            return abort(500);
+        }
+
     }
 
     public function storeRole(Request $request)
     {
-        abort_if(Gate::denies('add_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            abort_if(Gate::denies('add_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $role = new Role([
-            "role_name" => $request->get("role_name"),
-            "is_active" => true,
-        ]);
+            $role = $this->roleRepository->createRole(roleName: $request->get("role_name"), isActive: true);
+            if ($request->get("permissions") != null) {
+                foreach ($request->get("permissions") as $permission) {
 
-        $role->save();
-        if ($request->get("permissions") != null) {
-            foreach ($request->get("permissions") as $permission) {
-                $role_permissions = new RolePermission([
-                    "role_id" => $role->id,
-                    "permission_id" => $permission
-                ]);
-                $role_permissions->save();
+                    $this->rolePermissionRepository->createRolePermission(roleId: $role->id, permissionId: $permission);
+                }
             }
+
+            return redirect()->route("roles_view")->with("success", "Role added successfully");
+        } catch (Exception $exception) {
+            Log::error($exception);
+            return redirect()->route("roles_view")->with("error", "Something went wrong! Contact Support");
         }
 
-
-        return redirect()->route("roles_view");
     }
 
     public function editRole($role_id)
     {
-        abort_if(Gate::denies('update_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
 
-        $role = Role::where(["id" => $role_id])->first();
-        $app_models = ApplicationModel::all();
-        return view("admin.roles.edit_role", ["role" => $role, "app_models" => $app_models]);
+            abort_if(Gate::denies('update_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+            $role = $this->roleRepository->getRole(id: $role_id);
+            $app_models = $this->applicationModelRepository->getApplicationModels();
+            return view("admin.roles.edit_role", ["role" => $role, "app_models" => $app_models]);
+        } catch (Exception $exception) {
+            Log::error($exception);
+            return redirect()->route("roles_view")->with("error", "Something went wrong! Contact Support");
+        }
+
     }
 
     public function updateRole(Request $request)
     {
-        abort_if(Gate::denies('update_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $role_name = $request->get("role_name");
-        $role_id = $request->get("role_id");
-        $permissions = $request->get("permissions");
+        try {
+            abort_if(Gate::denies('update_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $role = Role::where(["id" => $role_id])->first();
-        $role_permissions = RolePermission::where(["role_id" => $role->id])->get();
-        $role->role_name = $role_name;
+            $role_name = $request->get("role_name");
+            $role_id = $request->get("role_id");
+            $permissions = $request->get("permissions");
 
-        $assigned_permissions = [];
-        foreach ($role_permissions as $permission) {
-            $assigned_permissions [] = $permission->permission_id;
-        }
-        $permissions_to_add = array_diff($permissions, $assigned_permissions);
-        $permissions_to_revoke = array_diff($assigned_permissions, $permissions);
-        if (!empty($permissions_to_add)) {
-            foreach ($permissions_to_add as $permission) {
-                $new_permission = new RolePermission([
-                    "role_id" => $role->id,
-                    "permission_id" => $permission
-                ]);
+            $this->roleRepository->updateRole(id: $role_id, roleName: $role_name);
+            $role_permissions = $this->rolePermissionRepository->getRolePermissionsByRole($role_id);
 
-                $new_permission->save();
+
+            $assigned_permissions = [];
+            foreach ($role_permissions as $permission) {
+                $assigned_permissions [] = $permission->permission_id;
             }
-        }
-
-        if (!empty($permissions_to_revoke)) {
-            foreach ($permissions_to_revoke as $permission) {
-                $delete_permission = RolePermission::where(["permission_id" => $permission, "role_id" => $role->id])->first();
-                $delete_permission->delete();
+            $permissions_to_add = array_diff($permissions, $assigned_permissions);
+            $permissions_to_revoke = array_diff($assigned_permissions, $permissions);
+            if (!empty($permissions_to_add)) {
+                foreach ($permissions_to_add as $permission) {
+                    $this->rolePermissionRepository->createRolePermission(roleId: $role_id, permissionId: $permission);
+                }
             }
 
+            if (!empty($permissions_to_revoke)) {
+                foreach ($permissions_to_revoke as $permission) {
+                    $this->rolePermissionRepository->deleteRolePermission($permission);
+                }
+
+            }
+
+
+            return redirect()->route("roles_view")->with("success", "Role updated successfully");
+        } catch (Exception $exception) {
+            Log::error($exception);
+            return redirect()->route("roles_view")->with("error", "Something went wrong! Contact Support");
         }
 
-        $role->save();
-
-        return redirect()->route("roles_view");
     }
 
     public function deleteRole(Request $request, $role_id)
     {
-        abort_if(Gate::denies('delete_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $role = Role::where("id", $role_id)->first();
-        if ($role !== null) {
-            RolePermission::where(["role_id" => $role_id])->delete();
-            $role->delete();
+        try {
+            abort_if(Gate::denies('delete_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $this->roleRepository->deleteRole($role_id);
+
+            return redirect()->route("roles_view")->with("success", "Role deleted successfully");
+        } catch (Exception $exception) {
+            Log::error($exception);
+            return redirect()->route("roles_view")->with("error", "Something went wrong! Contact Support");
         }
 
-        return redirect()->route("roles_view");
     }
 }
