@@ -20,6 +20,11 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'core/'], function () {
 
+
+    Route::get('/', function () {
+        return view('dashboards.admin_dashboard');
+    });
+
     Route::group(['prefix' => 'permissions/'], function () {
         Route::get("/", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "viewPermissions"])->name("permissions_view");
         Route::post("add/new", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "storePermissions"])->name("permissions_store");
