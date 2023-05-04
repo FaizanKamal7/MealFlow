@@ -34,8 +34,6 @@
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Custom Javascript(used by this page)-->
 <script src="{{ asset('static/js/custom/authentication/sign-in/general.js') }}"></script>
-<script src="{{ asset('static/js/custom/authentication/sign-up/general.js') }}"></script>
-<script src="{{ asset('static/js/custom/utilities/modals/create-property.js') }}"></script>
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->
 @yield('extra_js')
