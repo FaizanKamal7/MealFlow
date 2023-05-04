@@ -30,6 +30,10 @@ Route::group(['prefix' => 'core/'], function () {
     Route::get('fleets/', function () {
         return view('dashboards.fleets_dashboard');
     });
+    Route::get('fleets/details', function () {
+        return view('fleets.fleet_details');
+    });
+
 
 
     Route::group(['prefix' => 'permissions/'], function () {
