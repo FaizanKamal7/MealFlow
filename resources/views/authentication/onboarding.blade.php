@@ -16,7 +16,7 @@
                     <div class="d-flex flex-row-fluid flex-column flex-center p-10 pt-lg-20">
                         <!--begin::Logo-->
                         <a href="#" class="mb-10 mb-lg-20">
-                            <img alt="Logo" src="{{ asset('static/media/logos/logo_dark_horizontal.png')}}"
+                            <img alt="Logo" src="{{ asset('static/media\logos\logo_dark_horizontal.png')}}"
                                  class="h-75px logo" />
                         </a>
                         <!--end::Logo-->
@@ -147,7 +147,7 @@
                                         <!--end::Title-->
                                         <!--begin::Link-->
                                         <div class="text-gray-400 fw-bold fs-4">Already have an account?
-                                            <a href="#"
+                                            <a href="../../demo1/dist/authentication/layouts/aside/sign-in.html"
                                                class="link-primary fw-bolder">Sign in here</a>
                                         </div>
                                         <!--end::Link-->
@@ -165,14 +165,14 @@
                                     <div class="row fv-row mb-7">
                                         <!--begin::Col-->
                                         <div class="col-xl-6 fv-row">
-                                            <label class="form-label fw-bolder text-dark fs-6">First Name</label>
+                                            <label class="form-label fw-bolder text-dark fs-6 required">First Name</label>
                                             <input class="form-control form-control-lg form-control-solid" type="text"
                                                    placeholder="" name="first_name" autocomplete="off" />
                                         </div>
                                         <!--end::Col-->
                                         <!--begin::Col-->
                                         <div class="col-xl-6 fv-row">
-                                            <label class="form-label fw-bolder text-dark fs-6">Last Name</label>
+                                            <label class="form-label fw-bolder text-dark fs-6 required">Last Name</label>
                                             <input class="form-control form-control-lg form-control-solid" type="text"
                                                    placeholder="" name="last_name" autocomplete="off" />
                                         </div>
@@ -181,14 +181,14 @@
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-7">
-                                        <label class="form-label fw-bolder text-dark fs-6">Business Name</label>
+                                        <label class="form-label fw-bolder text-dark fs-6 required">Business Name</label>
                                         <input class="form-control form-control-lg form-control-solid"
                                                placeholder="" name="buisness_name" autocomplete="off" />
                                     </div>
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-7">
-                                        <label class="form-label fw-bolder text-dark fs-6">Email Address</label>
+                                        <label class="form-label fw-bolder text-dark fs-6 required">Email Adress</label>
                                         <input class="form-control form-control-lg form-control-solid"
                                                placeholder="" name="email" autocomplete="off" />
                                     </div>
@@ -198,7 +198,7 @@
                                         <!--begin::Wrapper-->
                                         <div class="mb-1">
                                             <!--begin::Label-->
-                                            <label class="form-label fw-bolder text-dark fs-6">Password</label>
+                                            <label class="form-label fw-bolder text-dark fs-6 required">Password</label>
                                             <!--end::Label-->
                                             <!--begin::Input wrapper-->
                                             <div class="position-relative mb-3">
@@ -238,7 +238,7 @@
                                     <!--end::Input group=-->
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-5">
-                                        <label class="form-label fw-bolder text-dark fs-6">Confirm Password</label>
+                                        <label class="form-label fw-bolder text-dark fs-6 required">Confirm Password</label>
                                         <input class="form-control form-control-lg form-control-solid" type="password"
                                                placeholder="" name="confirm_password" autocomplete="off" />
                                     </div>
@@ -307,7 +307,7 @@
                                             <label class="form-label required">Country</label>
 
                                             <!--begin::Input group-->
-                                            <select id="countries" class="form-select form-select-solid" name="country"
+                                            <select id="country" class="form-select form-select-solid" name="country"
                                                     data-control="select2" data-placeholder="Select an option"
                                                     data-allow-clear="true"></select>
                                             <!--end::Input group-->
@@ -595,10 +595,10 @@
                                             <!--end::Input-->
                                             <!--begin::Card logos-->
                                             <div class="position-absolute translate-middle-y top-50 end-0 me-5">
-                                                <img src="{{ asset("static/media/svg/card-logos/visa.svg") }}" alt="" class="h-25px" />
-                                                <img src="{{ asset("static/media/svg/card-logos/mastercard.svg") }}" alt=""
+                                                <img src="assets/media/svg/card-logos/visa.svg" alt="" class="h-25px" />
+                                                <img src="assets/media/svg/card-logos/mastercard.svg" alt=""
                                                      class="h-25px" />
-                                                <img src="{{ asset("static/media/svg/card-logos/american-express.svg") }}" alt=""
+                                                <img src="assets/media/svg/card-logos/american-express.svg" alt=""
                                                      class="h-25px" />
                                             </div>
                                             <!--end::Card logos-->
