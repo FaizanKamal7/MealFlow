@@ -26,13 +26,13 @@ Route::group(['prefix' => 'core/'], function () {
 
     Route::get('/', function () {
         return view('dashboards.admin_dashboard');
-    });
+    })->name("admin_dashboard");
     Route::get('fleets/', function () {
         return view('dashboards.fleets_dashboard');
-    });
+    })->name("fleet_dashboard");
     Route::get('fleets/details', function () {
         return view('fleets.fleet_details');
-    });
+    })->name("fleet_details");
 
 
 
@@ -65,15 +65,15 @@ Route::group(['prefix' => 'core/'], function () {
 
     });
 
-    Route::group(['prefix' => 'accounts/'], function () {
-        Route::get("login", [\App\Http\Controllers\Authentication\LoginController::class, 'loginView'])->name("login_view");
-        Route::post("login", [\App\Http\Controllers\Authentication\LoginController::class, 'loginUser'])->name("login_user");
-
-        Route::get('logout', [\App\Http\Controllers\Authentication\LoginController::class, 'signOut'])->name("logout");
-    });
-
 });
 
+
+Route::group(['prefix' => 'accounts/'], function () {
+    Route::get("login", [\App\Http\Controllers\Authentication\LoginController::class, 'loginView'])->name("login_view");
+    Route::post("login", [\App\Http\Controllers\Authentication\LoginController::class, 'loginUser'])->name("login_user");
+
+    Route::get('logout', [\App\Http\Controllers\Authentication\LoginController::class, 'signOut'])->name("logout");
+});
 
 
 
