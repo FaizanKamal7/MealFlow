@@ -22,20 +22,18 @@ var KTCreateAccount = function () {
             })), r.on("kt.stepper.previous", (function (e) {
                 console.log("stepper.previous"), e.goPrevious(), KTUtil.scrollTop()
             })), a.push(FormValidation.formValidation(i, {
-                fields: {account_type: {validators: {notEmpty: {message: "Account type is required"}}}},
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger,
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: ".fv-row",
-                        eleInvalidClass: "",
-                        eleValidClass: ""
-                    })
-                }
-            })), a.push(FormValidation.formValidation(i, {
                 fields: {
-                    account_team_size: {validators: {notEmpty: {message: "Time size is required"}}},
-                    account_name: {validators: {notEmpty: {message: "Account name is required"}}},
-                    account_plan: {validators: {notEmpty: {message: "Account plan is required"}}}
+                    account_type: {validators: {notEmpty: {message: "Account type is required"}}},
+                 first_name: {validators: {notEmpty: {message: "first name is required"}}},
+                 last_name: {validators: {notEmpty: {message: "last name is required"}}},
+                 buisness_name: {validators: {notEmpty: {message: "Buisness name is required"}}},
+                 email: {validators: {notEmpty: {message: "Email Adress is required"}}},
+                 password: {validators: {notEmpty: {message: "Pasword is required"}}},
+                 confirm_password: {validators: {notEmpty: {message: ""}}}
+
+
+
+                 
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger,
@@ -47,16 +45,26 @@ var KTCreateAccount = function () {
                 }
             })), a.push(FormValidation.formValidation(i, {
                 fields: {
-                    business_name: {validators: {notEmpty: {message: "Busines name is required"}}},
-                    business_descriptor: {validators: {notEmpty: {message: "Busines descriptor is required"}}},
-                    business_type: {validators: {notEmpty: {message: "Busines type is required"}}},
-                    business_description: {validators: {notEmpty: {message: "Busines description is required"}}},
-                    business_email: {
-                        validators: {
-                            notEmpty: {message: "Busines email is required"},
-                            emailAddress: {message: "The value is not a valid email address"}
-                        }
-                    }
+                    logo: {validators: {notEmpty: {message: "No File Choosen"}}},
+                    phone_no: {validators: {notEmpty: {message: "Phone Number is required"}}},
+                    country: {validators: {notEmpty: {message: "Country Not Selected"}}},
+                    city: {validators: {notEmpty: {message: "Country Not Selected"}}},
+                    state: {validators: {notEmpty: {message: "Country Not Selected"}}},
+                contact_email: {validators: {notEmpty: {message: "Contact Email is Required"}}},
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger,
+                    bootstrap: new FormValidation.plugins.Bootstrap5({
+                        rowSelector: ".fv-row",
+                        eleInvalidClass: "",
+                        eleValidClass: ""
+                    })
+                }
+            })), a.push(FormValidation.formValidation(i, {
+                fields: {
+                    category: {validators: {notEmpty: {message: "Category is required"}}},
+                   
+                    
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger,

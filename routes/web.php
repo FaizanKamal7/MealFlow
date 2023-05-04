@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/onboarding', function () {
+    return view('authentication.onboarding');
+});
 
 Route::group(['prefix' => 'core/'], function () {
 
@@ -24,6 +27,10 @@ Route::group(['prefix' => 'core/'], function () {
     Route::get('/', function () {
         return view('dashboards.admin_dashboard');
     });
+    Route::get('fleets/', function () {
+        return view('dashboards.fleets_dashboard');
+    });
+
 
     Route::group(['prefix' => 'permissions/'], function () {
         Route::get("/", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "viewPermissions"])->name("permissions_view");
