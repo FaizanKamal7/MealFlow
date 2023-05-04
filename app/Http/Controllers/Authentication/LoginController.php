@@ -19,7 +19,7 @@ class LoginController extends Controller
         ]);
         $credentials = $request->only("email", "password");
         if (Auth::attempt($credentials)) {
-            return redirect()->route("permissions_view");
+            return redirect()->route("admin_dashboard");
         }
         Session::flash("message", "Invalid email address or password!");
         Session::flash('alert-class', 'alert-danger');
