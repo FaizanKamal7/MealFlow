@@ -53,6 +53,9 @@
 
                             </div>
                             <!--begin::Heading-->
+                            @if(Session::has('error'))
+                                <p class="alert {{ Session::get('alert-class') }}">{{ Session::get('error') }}</p>
+                            @endif
                             <!--begin::Input group-->
                             <div class="fv-row mb-10">
                                 <!--begin::Label-->
