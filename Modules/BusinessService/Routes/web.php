@@ -13,6 +13,9 @@
 
 Route::prefix('businessservice')->group(function() {
     Route::get('/', 'BusinessServiceController@index');
-    Route::get('/onboarding', 'BusinessServiceController@index');
+    // Route::get('/onboarding', 'BusinessServiceController@index');
+    Route::get('/onboarding', function () {
+        return view('businessservice::onboarding');
+    });
      
 });
