@@ -1,4 +1,5 @@
 {
     "HRManagement": true,
-    "UserService": true
+    "UserService": true,
+    "BusinessService": true
 }
