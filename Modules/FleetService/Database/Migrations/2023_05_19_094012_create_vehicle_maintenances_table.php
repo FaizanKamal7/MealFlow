@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('vehicle_maintenances', function (Blueprint $table) {
-            $table->id();
+            $table->uuid("id")->primary();
             $table->uuid('vehicle_id');
             $table->date('maintenance_date');
             $table->text('description');
