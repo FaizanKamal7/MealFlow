@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('vehicle_logs', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->uuid("id")->primary();
             $table->uuid('vehicle_id');
             $table->uuid('driver_id')->nullable();
             $table->dateTime('check_in_time')->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreign('checked_out_user')->references('id')->on('users');
 
             $table->timestamps();
-            
+
         });
     }
 
