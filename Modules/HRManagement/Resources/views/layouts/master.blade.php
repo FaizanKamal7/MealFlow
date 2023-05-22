@@ -35,6 +35,7 @@
              data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
              data-kt-drawer-toggle="#kt_aside_mobile_toggle">
             <!--begin::Brand-->
+
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <!--begin::Logo-->
                 <a href="#">
@@ -876,6 +877,7 @@
         <!--begin::Wrapper-->
         <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
             <!--begin::Header-->
+
             <div id="kt_header" style="" class="header align-items-stretch">
                 <!--begin::Container-->
                 <div class="container-fluid d-flex align-items-stretch justify-content-between">
@@ -975,6 +977,7 @@
                 </div>
                 <!--end::Container-->
             </div>
+
             <!--end::Header-->
             <!--begin::Content-->
             <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -983,31 +986,33 @@
 
             </div>
             <!--end::Content-->
-            @section('footer')
-                <!--begin::Footer-->
-                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
-                    <!--begin::Container-->
-                    <div
-                        class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
-                        <!--begin::Copyright-->
-                        <div class="text-dark order-2 order-md-1">
-                            <span class="text-muted fw-bold me-1">2023 ©</span>
-                            <a href="#" target="_blank" class="text-gray-800 text-hover-primary">Real Estate ERP</a>
-                        </div>
-                        <!--end::Copyright-->
-                        <!--begin::Menu-->
-                        <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
-                            <li class="menu-item">
-                                <a href="#" target="_blank" class="menu-link px-2">Support</a>
-                            </li>
 
-                        </ul>
-                        <!--end::Menu-->
-                    </div>
-                    <!--end::Container-->
-                </div>
-                <!--end::Footer-->
-            @show
+{{--            @section('footer')--}}
+{{--                <!--begin::Footer-->--}}
+{{--                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">--}}
+{{--                    <!--begin::Container-->--}}
+{{--                    <div--}}
+{{--                        class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">--}}
+{{--                        <!--begin::Copyright-->--}}
+{{--                        <div class="text-dark order-2 order-md-1">--}}
+{{--                            <span class="text-muted fw-bold me-1">2023 ©</span>--}}
+{{--                            <a href="#" target="_blank" class="text-gray-800 text-hover-primary">Real Estate ERP</a>--}}
+{{--                        </div>--}}
+{{--                        <!--end::Copyright-->--}}
+{{--                        <!--begin::Menu-->--}}
+{{--                        <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">--}}
+{{--                            <li class="menu-item">--}}
+{{--                                <a href="#" target="_blank" class="menu-link px-2">Support</a>--}}
+{{--                            </li>--}}
+
+{{--                        </ul>--}}
+{{--                        <!--end::Menu-->--}}
+{{--                    </div>--}}
+{{--                    <!--end::Container-->--}}
+{{--                </div>--}}
+{{--                <!--end::Footer-->--}}
+{{--            @show--}}
+
         </div>
         <!--end::Wrapper-->
     </div>

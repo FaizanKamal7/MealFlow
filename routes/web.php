@@ -17,8 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::get('/onboarding', function () {
+//     return view('authentication.onboarding');
+// });
+
 Route::get('/onboarding', function () {
-    return view('authentication.onboarding');
+    return view('businessservice::onboarding');
 });
 
 Route::group(['prefix' => 'core/'], function () {
@@ -71,10 +75,5 @@ Route::group(['prefix' => 'core/'], function () {
 Route::group(['prefix' => 'accounts/'], function () {
     Route::get("login", [\App\Http\Controllers\Authentication\LoginController::class, 'loginView'])->name("login_view");
     Route::post("login", [\App\Http\Controllers\Authentication\LoginController::class, 'loginUser'])->name("login_user");
-
     Route::get('logout', [\App\Http\Controllers\Authentication\LoginController::class, 'signOut'])->name("logout");
 });
-
-
-
-
