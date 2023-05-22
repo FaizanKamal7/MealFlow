@@ -35,6 +35,7 @@
              data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
              data-kt-drawer-toggle="#kt_aside_mobile_toggle">
             <!--begin::Brand-->
+
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <!--begin::Logo-->
                 <a href="#">
@@ -876,6 +877,7 @@
         <!--begin::Wrapper-->
         <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
             <!--begin::Header-->
+
             <div id="kt_header" style="" class="header align-items-stretch">
                 <!--begin::Container-->
                 <div class="container-fluid d-flex align-items-stretch justify-content-between">
@@ -975,6 +977,7 @@
                 </div>
                 <!--end::Container-->
             </div>
+
             <!--end::Header-->
             <!--begin::Content-->
             <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -1008,6 +1011,7 @@
                 </div>
                 <!--end::Footer-->
             @show
+
         </div>
         <!--end::Wrapper-->
     </div>
