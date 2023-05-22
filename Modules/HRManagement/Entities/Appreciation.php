@@ -111,26 +111,6 @@ class Appreciation extends Model
 
         });
 
-//        static::retrieved(function ($model) {
-//            $helper = new Helper();
-//            $user_id = auth()->id();
-//            $module_name = "HRM";
-//            $action = "Retrieved";
-//            $subject = "Record Retrieved";
-//            $url = Request::fullUrl();
-//            $description = "Record has been retrieved";
-//            $ip_address = Request::ip();
-//            $user_agent = Request::header('user-agent');
-//            $old_values =  json_encode($model->getOriginal());
-//            $new_values = json_encode($model->getAttributes());
-//            $record_id = $model->id;
-//            $record_type = get_class($model);
-//            $method = Request::method();
-//
-//            $helper->logActivity(userId:$user_id, moduleName: $module_name, action: $action, subject: $subject,
-//                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-//                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
-//                method: $method);
-//        });
+
     }
 }

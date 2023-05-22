@@ -848,45 +848,45 @@
     </div>
     <!--end::Aside menu-->
     @show
-            @section('sidebar_footer')
-                <!--begin::Footer-->
-                <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
-{{--                    <a href="mailto:help@nixus.com" class="btn btn-custom btn-warning w-100"--}}
-{{--                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"--}}
-{{--                       title="contact us in case of any issues" >--}}
-{{--                        <span class="btn-label">Contact Support</span>--}}
-{{--                        <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg') }}-->--}}
-{{--                        <span class="svg-icon btn-icon svg-icon-2">--}}
-{{--								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"--}}
-{{--                                     fill="none">--}}
-{{--									<path opacity="0.3"--}}
-{{--                                          d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z"--}}
-{{--                                          fill="currentColor"/>--}}
-{{--									<rect x="7" y="17" width="6" height="2" rx="1" fill="currentColor"/>--}}
-{{--									<rect x="7" y="12" width="10" height="2" rx="1" fill="currentColor"/>--}}
-{{--									<rect x="7" y="7" width="6" height="2" rx="1" fill="currentColor"/>--}}
-{{--									<path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor"/>--}}
-{{--								</svg>--}}
-{{--							</span>--}}
-{{--                        <!--end::Svg Icon-->--}}
-{{--                    </a>--}}
-                </div>
-                <!--end::Footer-->
-            @show
+    @section('sidebar_footer')
+        <!--begin::Footer-->
+        <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
+            {{--                    <a href="mailto:help@nixus.com" class="btn btn-custom btn-warning w-100"--}}
+            {{--                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"--}}
+            {{--                       title="contact us in case of any issues" >--}}
+            {{--                        <span class="btn-label">Contact Support</span>--}}
+            {{--                        <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg') }}-->--}}
+            {{--                        <span class="svg-icon btn-icon svg-icon-2">--}}
+            {{--								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"--}}
+            {{--                                     fill="none">--}}
+            {{--									<path opacity="0.3"--}}
+            {{--                                          d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z"--}}
+            {{--                                          fill="currentColor"/>--}}
+            {{--									<rect x="7" y="17" width="6" height="2" rx="1" fill="currentColor"/>--}}
+            {{--									<rect x="7" y="12" width="10" height="2" rx="1" fill="currentColor"/>--}}
+            {{--									<rect x="7" y="7" width="6" height="2" rx="1" fill="currentColor"/>--}}
+            {{--									<path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor"/>--}}
+            {{--								</svg>--}}
+            {{--							</span>--}}
+            {{--                        <!--end::Svg Icon-->--}}
+            {{--                    </a>--}}
         </div>
-        <!--end::Aside-->
-        <!--begin::Wrapper-->
-        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-            <!--begin::Header-->
-            <div id="kt_header" style="" class="header align-items-stretch">
-                <!--begin::Container-->
-                <div class="container-fluid d-flex align-items-stretch justify-content-between">
-                    <!--begin::Aside mobile toggle-->
-                    <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show aside menu">
-                        <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
-                             id="kt_aside_mobile_toggle">
-                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg') }}-->
-                            <span class="svg-icon svg-icon-1">
+        <!--end::Footer-->
+    @show
+</div>
+<!--end::Aside-->
+<!--begin::Wrapper-->
+<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+    <!--begin::Header-->
+    <div id="kt_header" style="" class="header align-items-stretch">
+        <!--begin::Container-->
+        <div class="container-fluid d-flex align-items-stretch justify-content-between">
+            <!--begin::Aside mobile toggle-->
+            <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show aside menu">
+                <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+                     id="kt_aside_mobile_toggle">
+                    <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg') }}-->
+                    <span class="svg-icon svg-icon-1">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24" fill="none">
 											<path
@@ -897,123 +897,123 @@
                                                   fill="currentColor"/>
 										</svg>
 									</span>
-                            <!--end::Svg Icon-->
-                        </div>
-                    </div>
-                    <!--end::Aside mobile toggle-->
-                    <!--begin::Mobile logo-->
-                    <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                        <a href="#" class="d-lg-none">
-                            <img alt="Logo" src="{{ asset('static/media/logos/logo-2.svg') }}" class="h-30px"/>
-                        </a>
-                    </div>
-                    <!--end::Mobile logo-->
-                    <!--begin::Wrapper-->
-                    <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
-                        <!--begin::Navbar-->
-                        <div class="d-flex align-items-stretch" id="kt_header_nav">
+                    <!--end::Svg Icon-->
+                </div>
+            </div>
+            <!--end::Aside mobile toggle-->
+            <!--begin::Mobile logo-->
+            <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+                <a href="#" class="d-lg-none">
+                    <img alt="Logo" src="{{ asset('static/media/logos/logo-2.svg') }}" class="h-30px"/>
+                </a>
+            </div>
+            <!--end::Mobile logo-->
+            <!--begin::Wrapper-->
+            <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+                <!--begin::Navbar-->
+                <div class="d-flex align-items-stretch" id="kt_header_nav">
 
+                </div>
+                <!--end::Navbar-->
+                <!--begin::Toolbar wrapper-->
+                <div class="d-flex align-items-stretch flex-shrink-0">
+                    <!--begin::User menu-->
+                    <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+                        <!--begin::Menu wrapper-->
+                        <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
+                             data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+                             data-kt-menu-placement="bottom-end">
+                            <img src="{{ asset('static/media/avatars/300-1.jpg') }}" alt="user"/>
                         </div>
-                        <!--end::Navbar-->
-                        <!--begin::Toolbar wrapper-->
-                        <div class="d-flex align-items-stretch flex-shrink-0">
-                            <!--begin::User menu-->
-                            <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
-                                <!--begin::Menu wrapper-->
-                                <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
-                                     data-kt-menu-trigger="click" data-kt-menu-attach="parent"
-                                     data-kt-menu-placement="bottom-end">
-                                    <img src="{{ asset('static/media/avatars/300-1.jpg') }}" alt="user"/>
-                                </div>
-                                <!--begin::User account menu-->
-                                <div
-                                    class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
-                                    data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content d-flex align-items-center px-3">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="{{ asset('static/media/avatars/300-1.jpg') }}"/>
-                                            </div>
-                                            <!--end::Avatar-->
-                                            <!--begin::Username-->
-                                            <div class="d-flex flex-column">
-                                                <div class="fw-bolder d-flex align-items-center fs-5">
+                        <!--begin::User account menu-->
+                        <div
+                            class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
+                            data-kt-menu="true">
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-3">
+                                <div class="menu-content d-flex align-items-center px-3">
+                                    <!--begin::Avatar-->
+                                    <div class="symbol symbol-50px me-5">
+                                        <img alt="Logo" src="{{ asset('static/media/avatars/300-1.jpg') }}"/>
+                                    </div>
+                                    <!--end::Avatar-->
+                                    <!--begin::Username-->
+                                    <div class="d-flex flex-column">
+                                        <div class="fw-bolder d-flex align-items-center fs-5">
                                                     <span
                                                         class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">admin</span>
-                                                </div>
-                                                <a href="#" class="fw-bold text-muted text-hover-primary fs-7"></a>
-                                            </div>
-                                            <!--end::Username-->
                                         </div>
+                                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7"></a>
                                     </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu separator-->
-                                    <div class="separator my-2"></div>
-                                    <!--end::Menu separator-->
-
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-5 my-1">
-                                        <a href="#" class="menu-link px-5">Account
-                                            Settings</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-5">
-                                        <a href="#"
-                                           class="menu-link px-5">Sign Out</a>
-                                    </div>
-                                    <!--end::Menu item-->
+                                    <!--end::Username-->
                                 </div>
-                                <!--end::User account menu-->
-                                <!--end::Menu wrapper-->
                             </div>
-                            <!--end::User menu-->
+                            <!--end::Menu item-->
+                            <!--begin::Menu separator-->
+                            <div class="separator my-2"></div>
+                            <!--end::Menu separator-->
+
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-5 my-1">
+                                <a href="#" class="menu-link px-5">Account
+                                    Settings</a>
+                            </div>
+                            <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-5">
+                                <a href="#"
+                                   class="menu-link px-5">Sign Out</a>
+                            </div>
+                            <!--end::Menu item-->
                         </div>
-                        <!--end::Toolbar wrapper-->
+                        <!--end::User account menu-->
+                        <!--end::Menu wrapper-->
                     </div>
-                    <!--end::Wrapper-->
+                    <!--end::User menu-->
                 </div>
-                <!--end::Container-->
+                <!--end::Toolbar wrapper-->
             </div>
-            <!--end::Header-->
-            <!--begin::Content-->
-            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-
-                @yield('main_content')
-
-            </div>
-            <!--end::Content-->
-{{--            @section('footer')--}}
-{{--                <!--begin::Footer-->--}}
-{{--                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">--}}
-{{--                    <!--begin::Container-->--}}
-{{--                    <div--}}
-{{--                        class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">--}}
-{{--                        <!--begin::Copyright-->--}}
-{{--                        <div class="text-dark order-2 order-md-1">--}}
-{{--                            <span class="text-muted fw-bold me-1">2023 ©</span>--}}
-{{--                            <a href="#" target="_blank" class="text-gray-800 text-hover-primary">Nixus ERP</a>--}}
-{{--                        </div>--}}
-{{--                        <!--end::Copyright-->--}}
-{{--                        <!--begin::Menu-->--}}
-{{--                        <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">--}}
-{{--                            <li class="menu-item">--}}
-{{--                                <a href="#" target="_blank" class="menu-link px-2">Support</a>--}}
-{{--                            </li>--}}
-
-{{--                        </ul>--}}
-{{--                        <!--end::Menu-->--}}
-{{--                    </div>--}}
-{{--                    <!--end::Container-->--}}
-{{--                </div>--}}
-{{--                <!--end::Footer-->--}}
-{{--            @show--}}
+            <!--end::Wrapper-->
         </div>
-        <!--end::Wrapper-->
+        <!--end::Container-->
     </div>
-    <!--end::Page-->
+    <!--end::Header-->
+    <!--begin::Content-->
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+        @yield('main_content')
+
+    </div>
+    <!--end::Content-->
+    {{--            @section('footer')--}}
+    {{--                <!--begin::Footer-->--}}
+    {{--                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">--}}
+    {{--                    <!--begin::Container-->--}}
+    {{--                    <div--}}
+    {{--                        class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">--}}
+    {{--                        <!--begin::Copyright-->--}}
+    {{--                        <div class="text-dark order-2 order-md-1">--}}
+    {{--                            <span class="text-muted fw-bold me-1">2023 ©</span>--}}
+    {{--                            <a href="#" target="_blank" class="text-gray-800 text-hover-primary">Nixus ERP</a>--}}
+    {{--                        </div>--}}
+    {{--                        <!--end::Copyright-->--}}
+    {{--                        <!--begin::Menu-->--}}
+    {{--                        <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">--}}
+    {{--                            <li class="menu-item">--}}
+    {{--                                <a href="#" target="_blank" class="menu-link px-2">Support</a>--}}
+    {{--                            </li>--}}
+
+    {{--                        </ul>--}}
+    {{--                        <!--end::Menu-->--}}
+    {{--                    </div>--}}
+    {{--                    <!--end::Container-->--}}
+    {{--                </div>--}}
+    {{--                <!--end::Footer-->--}}
+    {{--            @show--}}
+</div>
+<!--end::Wrapper-->
+</div>
+<!--end::Page-->
 </div>
 <!--end::Root-->
 
