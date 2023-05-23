@@ -15,9 +15,12 @@ Route::prefix('fleetservice')->group(function() {
     Route::get('/', 'FleetServiceController@index');
 });
 
-Route::prefix('fleet')->group(function(){
+Route::prefix('fleets')->group(function(){
     Route::get('/', [\Modules\FleetService\Http\Controllers\Dashboard\DashboardController::class, "viewDashboard"])->name("fleet_dashboard");
+    Route::get('all', [\Modules\FleetService\Http\Controllers\Fleet\FleetController::class, "viewFleets"])->name("all_fleets");
     Route::get('details', [\Modules\FleetService\Http\Controllers\Fleet\FleetController::class, "viewFleetDetails"])->name("fleet_details");
+    Route::get('add', [\Modules\FleetService\Http\Controllers\Fleet\FleetController::class, "addFleet"])->name("add_fleet");
+    Route::get('edit/{id}', [\Modules\FleetService\Http\Controllers\Fleet\FleetController::class, "editFleet"])->name("edit_fleet");
 
     Route::group(['prefix'=>'vehicle/'], function () {
         Route::get('',[Modules\FleetService\Http\Controllers\VehicleController::class,'viewVehicles'])->name("fleet_vehicles");
