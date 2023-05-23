@@ -15,6 +15,8 @@
     <meta property="og:site_name" content=""/>
     <link rel="canonical" href=""/>
     <link rel="shortcut icon" href="{{ asset('static/media/logos/favicon.ico') }}"/>
+    {{-- <link rel="shortcut icon" href="theme/nexgen/images/favicon.ico"> --}}
+
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8_SfvsKNzsun4Y4Meq6asvmJhwgQQ33I&libraries=places"></script>
 
     @include('partials.styles')
