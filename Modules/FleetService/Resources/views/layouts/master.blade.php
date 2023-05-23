@@ -14,8 +14,7 @@
     <meta property="og:url" content=""/>
     <meta property="og:site_name" content=""/>
     <link rel="canonical" href=""/>
-    <link rel="shortcut icon" href="theme/nexgen/images/favicon.ico">
-
+    <link rel="shortcut icon" href=""/>
     @include('partials.styles')
     @yield("extra_style")
 
@@ -987,7 +986,6 @@
 
             </div>
             <!--end::Content-->
-
 {{--            @section('footer')--}}
 {{--                <!--begin::Footer-->--}}
 {{--                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">--}}
