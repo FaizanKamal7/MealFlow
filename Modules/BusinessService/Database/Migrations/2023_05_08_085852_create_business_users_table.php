@@ -14,15 +14,19 @@ return new class extends Migration
     public function up()
     {
         Schema::create('business_users', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('business_id');
+            $table->uuid("id")->primary();
+            $table->uuid('user_id');
+            $table->uuid('business_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
             $table->timestamp('deleted_at')->nullable();
             $table->boolean('is_deleted');
             $table->timestamps();
         });
+        // Schema::table('business_users', function ($table) {
+        //     $table->uuid('id')->change();
+        
+        // });
     }
 
     /**

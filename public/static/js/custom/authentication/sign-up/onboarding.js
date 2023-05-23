@@ -126,6 +126,32 @@ KTUtil.onDOMContentLoaded((function() {
     KTCreateAccount.init()
 }));
 
+
+var _token = $("input[name='_token']").val();
+$("#email_address").keyup(function() {
+    var email_address = $("#email_address").val();
+    $.ajax({
+        url: "{{ route('validate_email') }}",
+        type: "POST",
+        data: {
+            _token: _token,
+            email_address: email_address
+        },
+        success: function(data) {
+            if ($.isEmptyObject(data.error)) {
+                console.log("unique");
+                $("#kt_sign_up_submit").removeAttr("disabled");
+                $("#email_alert").addClass("d-none");
+            } else {
+                console.log("duplicate")
+                $("#kt_sign_up_submit").attr("disabled", "disabled");
+                $("#email_alert").removeClass("d-none");
+            }
+        }
+    });
+})
+
+
 function ajaxCall() {
     this.send = function(data, url, method, success, type) {
         type = 'json';

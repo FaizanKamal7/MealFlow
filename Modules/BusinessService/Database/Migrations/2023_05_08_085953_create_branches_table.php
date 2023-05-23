@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('branches', function (Blueprint $table) {
-            $table->id();
+            $table->uuid("id")->primary();
             $table->string('name');
             $table->string('address');
             $table->string('phone');
             $table->string('status');
-            $table->unsignedBigInteger('city_id');
-            $table->unsignedBigInteger('state_id');
-            $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('business_id');
+            $table->uuid('city_id');
+            $table->uuid('state_id');
+            $table->uuid('country_id');
+            $table->uuid('business_id');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
@@ -31,6 +31,7 @@ return new class extends Migration
             $table->boolean('is_deleted');
             $table->timestamps();
         });
+
     }
 
     /**

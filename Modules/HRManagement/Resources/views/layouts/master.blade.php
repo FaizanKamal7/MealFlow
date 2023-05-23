@@ -3,7 +3,7 @@
 <!--begin::Head-->
 <head>
     <base href="">
-    <title>@yield('title') - Real Estate ERP</title>
+    <title>@yield('title') - Nixus ERP</title>
     <meta charset="utf-8"/>
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
@@ -14,7 +14,8 @@
     <meta property="og:url" content=""/>
     <meta property="og:site_name" content=""/>
     <link rel="canonical" href=""/>
-    <link rel="shortcut icon" href=""/>
+    <link rel="shortcut icon" href="theme/nexgen/images/favicon.ico">
+
     @include('partials.styles')
     @yield("extra_style")
 
