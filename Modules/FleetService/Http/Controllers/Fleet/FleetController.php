@@ -10,11 +10,11 @@ class FleetController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Renderable
+
      */
-    public function index()
+    public function viewFleets()
     {
-        return view('fleetservice::index');
+        return view('fleetservice::Fleets.all_fleets');
     }
 
     public function viewFleetDetails(Request $request)
@@ -24,48 +24,37 @@ class FleetController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return Renderable
+
      */
-    public function create()
+    public function addFleet()
     {
-        return view('fleetservice::create');
+        return view('fleetservice::Fleets.add_fleet');
     }
 
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
+
      */
     public function store(Request $request)
     {
         //
     }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('fleetservice::show');
-    }
-
     /**
      * Show the form for editing the specified resource.
      * @param int $id
-     * @return Renderable
+
      */
-    public function edit($id)
+    public function editFleet($id)
     {
-        return view('fleetservice::edit');
+        return view('fleetservice::Fleets.edit_fleet');
     }
 
     /**
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
-     * @return Renderable
+
      */
     public function update(Request $request, $id)
     {
@@ -75,7 +64,7 @@ class FleetController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @return Renderable
+
      */
     public function destroy($id)
     {
