@@ -134,8 +134,10 @@
                 <div class="w-lg-800px p-10 mx-auto ">
                     <!--begin::Form-->
                     <form class="my-auto pb-5" novalidate="novalidate" id="kt_create_account_form">
+
                         <!--begin::Step 1-->
                         <div class="current" data-kt-stepper-element="content">
+                            @csrf
                             <!--begin::Wrapper-->
                             <div class="w-lg-700px  mx-auto">
                                 <!--begin::Heading-->
@@ -211,7 +213,7 @@
                                         </div>
                                         <!--end::Input wrapper-->
                                         <!--begin::Meter-->
-                                        <div class="d-flex align-items-center mb-3" 
+                                        <div class="d-flex align-items-center mb-3"
                                             data-kt-password-meter-control="highlight">
                                             <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
                                             </div>
@@ -256,7 +258,7 @@
                             <!--end::Wrapper-->
                         </div>
                         <!--end::Step 1-->
-                        <!---------------------------------------------------------------------------------> 
+                        <!--------------------------------------------------------------------------------->
                         <!--begin::Step 2-->
                         <div class="" data-kt-stepper-element="content">
                             <!--begin::Wrapper-->
@@ -654,7 +656,7 @@
                                     <!--end::Notice-->
                                 </div>
 
-                              
+
                                 <!--begin::Input group-->
                                 <div class="fv-row mb-10">
                                     <!--begin::Label-->
@@ -673,7 +675,7 @@
                                         <option value="5">Flower and gift delivery</option>
                                         <option value="6">Pet supply and pet food delivery</option>
                                         <option value="7">Beauty and personal care delivery</option>
-                                        
+
 
                                     </select>
                                     <!--end::Input-->
@@ -1041,7 +1043,7 @@
                                             <!--begin::Content-->
                                             <div class="fw-bold">
                                                 <h4 class="text-gray-900 fw-bolder">Currently we are offering flat price!</h4>
-                                                <div class="fs-6 text-gray-700">There is flat charge for each delivery for 
+                                                <div class="fs-6 text-gray-700">There is flat charge for each delivery for
                                                     <a href="#" class="fw-bolder">your selected city</a>
                                                 </div>
                                             </div>
@@ -1114,7 +1116,7 @@
                             </div>
                         </div>
                         <!--end::Actions-->
-                        
+
                     </form>
                     <!--end::Form-->
                 </div>

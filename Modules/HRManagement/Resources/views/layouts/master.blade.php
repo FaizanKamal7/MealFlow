@@ -329,6 +329,22 @@
                                             <span class="menu-title">Dashboard</span>
                                         </a>
                                     </div>
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{ route("all_fleets") }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                            <span class="menu-title">Fleets</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{ route("add_fleet") }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                            <span class="menu-title">Add New</span>
+                                        </a>
+                                    </div>
 
                                 </div>
 
