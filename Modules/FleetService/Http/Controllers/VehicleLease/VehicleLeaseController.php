@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\FleetService\Http\Controllers\VehicleFuel;
+namespace Modules\FleetService\Http\Controllers\VehicleLease;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class VehicleFuelController extends Controller
+class VehicleLeaseController extends Controller
 {
     /**
      * Display a listing of the resource.

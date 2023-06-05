@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\FleetService\Http\Controllers;
+namespace Modules\FleetService\Http\Controllers\Driver;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class VehicleMaintenanceController extends Controller
+class DriverController extends Controller
 {
     /**
      * Display a listing of the resource.

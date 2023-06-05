@@ -11,22 +11,27 @@
 |
 */
 
+
 Route::prefix('fleetservice')->group(function() {
     Route::get('/', 'FleetServiceController@index');
 });
 
 Route::prefix('fleets')->group(function(){
     Route::get('/', [\Modules\FleetService\Http\Controllers\Dashboard\DashboardController::class, "viewDashboard"])->name("fleet_dashboard");
-    Route::get('all', [\Modules\FleetService\Http\Controllers\Fleet\FleetController::class, "viewFleets"])->name("all_fleets");
+    Route::get('all', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'viewVehicles'])->name("all_fleets");
     Route::get('details', [\Modules\FleetService\Http\Controllers\Fleet\FleetController::class, "viewFleetDetails"])->name("fleet_details");
     Route::get('add', [\Modules\FleetService\Http\Controllers\Fleet\FleetController::class, "addFleet"])->name("add_fleet");
     Route::get('edit/{id}', [\Modules\FleetService\Http\Controllers\Fleet\FleetController::class, "editFleet"])->name("edit_fleet");
 
     Route::group(['prefix'=>'vehicle/'], function () {
-        Route::get('',[Modules\FleetService\Http\Controllers\VehicleController::class,'viewVehicles'])->name("fleet_vehicles");
-        Route::get('add/',[Modules\FleetService\Http\Controllers\VehicleController::class,'addVehicles'])->name("fleet_vehicles_add");
-        Route::get('add/',[Modules\FleetService\Http\Controllers\VehicleController::class,'storeVehicles'])->name("fleet_vehicles_store");
-        Route::get('edit/{id}',[Modules\FleetService\Http\Controllers\VehicleController::class,'editVehicles'])->name("fleet_vehicles_edit");
+        Route::get('',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'viewVehicles'])->name("fleet_vehicle");
+        Route::get('add/',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'addVehicle'])->name("fleet_vehicle_add");
+        Route::post('add/',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'storeVehicle'])->name("fleet_vehicle_store");
+        Route::get('{vehicle_id}/details/',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'viewvehicleDetail'])->name("fleet_vehicle_detail");
+        Route::get('edit/{id}',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'editVehicle'])->name("fleet_vehicle_edit");
+        Route::get('is-unique-vehicle/',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'isUniqueVehicle'])->name("fleet_vehicle_is_unique");
+        Route::get('get-make-models/',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'getMakeModels'])->name("fleet_vehicle_get_make_models");
+
 
     });
     Route::group(['prefix'=>'vehicle-log/'], function () {
