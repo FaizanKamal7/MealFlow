@@ -1,22 +1,21 @@
 <?php
 
-namespace Modules\FleetService\Http\Controllers\VehicleMaintenance;
+namespace Modules\FleetService\Http\Controllers\Settings;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class VehicleMaintenanceController extends Controller
+class VehicleModelsController extends Controller
 {
     /**
      * Display a listing of the resource.
 
      */
-    public function viewFleetMaintenance()
+    public function viewVehicleModels()
     {
-        return view('fleetservice::Fleets.logs.maintenance');
+        return view('fleetservice::Fleets.settings.fleet_model');
     }
-
 
 
     /**
@@ -24,19 +23,20 @@ class VehicleMaintenanceController extends Controller
      * @param Request $request
 
      */
-    public function storeFleetMaintenance(Request $request)
+    public function storeVehicleModel(Request $request)
     {
         //
     }
+
 
     /**
      * Show the form for editing the specified resource.
      * @param int $id
 
      */
-    public function editFleetMaintenance($id)
+    public function editVehicleModel($id)
     {
-
+        return view('fleetservice::edit');
     }
 
     /**
@@ -45,7 +45,7 @@ class VehicleMaintenanceController extends Controller
      * @param int $id
 
      */
-    public function updateFleetMaintenance(Request $request, $id)
+    public function updateVehicleModel(Request $request, $id)
     {
         //
     }
@@ -55,7 +55,7 @@ class VehicleMaintenanceController extends Controller
      * @param int $id
 
      */
-    public function destroyFleetMaintenance($id)
+    public function destroyVehicleModel($id)
     {
         //
     }
