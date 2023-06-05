@@ -34,11 +34,14 @@ Route::prefix('fleets')->group(function(){
 
 
     });
-    Route::group(['prefix'=>'vehicle-log/'], function () {
-
+    Route::group(['prefix'=>'logs/'], function () {
+        Route::get('fuels', [\Modules\FleetService\Http\Controllers\VehicleFuel\VehicleFuelController::class, "viewFuelLogs"])->name("fleet_fuel_logs");
+        Route::get('maintenance', [\Modules\FleetService\Http\Controllers\VehicleMaintenance\VehicleMaintenanceController::class, "viewFleetMaintenance"])->name("fleet_maintenance_logs");
     });
-    Route::group(['prefix'=>'vehicle-fuel/'], function () {
-
+    Route::group(['prefix'=>'settings/'], function () {
+        Route::get('make', [\Modules\FleetService\Http\Controllers\Settings\VehicleMakeController::class, "viewVehicleMake"])->name("view_vehicle_make");
+        Route::get('models', [\Modules\FleetService\Http\Controllers\Settings\VehicleModelsController::class, "viewVehicleModels"])->name("view_vehicle_models");
+        Route::get('types', [\Modules\FleetService\Http\Controllers\Settings\VehicleTypesController::class, "viewVehicleTypes"])->name("view_vehicle_types");
     });
     Route::group(['prefix'=>'vehicle-lease/'], function () {
 
