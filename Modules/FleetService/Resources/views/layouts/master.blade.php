@@ -337,7 +337,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="{{ route("add_fleet") }}">
+                                        <a class="menu-link" href="{{ route("fleet_vehicle_add") }}">
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>

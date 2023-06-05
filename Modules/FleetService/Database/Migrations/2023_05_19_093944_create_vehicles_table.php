@@ -22,8 +22,7 @@ return new class extends Migration
             $table->string("engine_number")->nullable();
             $table->string("chassis_number")->nullable();
 
-            $table->string("make")->nullable();
-            $table->string("model")->nullable();
+            
             $table->string("year")->nullable();
             $table->string("color")->nullable();
             $table->string("qr_code")->nullable();
@@ -42,12 +41,11 @@ return new class extends Migration
 
             $table->string('status')->default('available');
             $table->integer('mileage')->default(0);
-            $table->integer('maintenance_interval')->nullable();
 
-
-
-            $table->uuid("vehicle_type_id");
+            $table->uuid("vehicle_type_id")->nullable();
+            $table->uuid("vehicle_model_id")->nullable();
             $table->foreign("vehicle_type_id")->references("id")->on("vehicle_types")->onDelete("set null");
+            $table->foreign("vehicle_model_id")->references("id")->on("vehicle_models")->onDelete("set null");
             
             $table->timestamps();
         });
