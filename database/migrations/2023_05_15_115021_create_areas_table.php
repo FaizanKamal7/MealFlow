@@ -14,8 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('areas', function (Blueprint $table) {
-            $table->id();
+            $table->uuid("id")->primary();
+            $table->uuid("city_id");
+            $table->string("area_code")->nullable();
             $table->timestamps();
+
+            $table->foreign('city_id')->references('id')->on('cities');
         });
     }
 

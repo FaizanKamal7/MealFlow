@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('driver_areas', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->uuid("driver_id")->primary();
-            $table->uuid("area_id")->primary();
+            $table->uuid("driver_id");
+            $table->uuid("area_id");
 
             $table->foreign('driver_id')->references('id')->on('drivers');
             $table->foreign('area_id')->references('id')->on('areas');

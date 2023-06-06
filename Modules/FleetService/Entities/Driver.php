@@ -9,8 +9,16 @@ class Driver extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
-    
+    protected $fillable = [
+        'license_number',
+        'experience',
+        'is_available',
+        'license_document',
+        'license_expiry_date',
+        'employee_id',
+
+    ];
+
     protected static function newFactory()
     {
         return \Modules\FleetService\Database\factories\DriverFactory::new();

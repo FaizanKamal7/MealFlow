@@ -9,8 +9,11 @@ class DriverArea extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
-    
+    protected $fillable = [
+        'driver_id',
+        'area_id',
+    ];
+
     protected static function newFactory()
     {
         return \Modules\FleetService\Database\factories\DriverAreaFactory::new();

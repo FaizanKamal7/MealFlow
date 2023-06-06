@@ -14,8 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('states', function (Blueprint $table) {
-            $table->id();
+            $table->uuid("id")->primary();
+            $table->string("name");
+            $table->string("code")->nullable();
+            $table->uuid("country_id");
             $table->timestamps();
+            $table->foreign('country_id')->references('id')->on('countries');
         });
     }
 

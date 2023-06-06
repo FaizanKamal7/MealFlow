@@ -84,8 +84,6 @@
                             <!--begin::Name=-->
                             <td>Pickup</td>
                             <!--end::Name=-->
-
-
                             <!--begin::Action=-->
                             <td class="text-end">
                                 <!--begin::Update-->
