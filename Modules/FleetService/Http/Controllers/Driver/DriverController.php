@@ -12,9 +12,10 @@ class DriverController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function viewDrivers()
     {
-        return view('fleetservice::index');
+
+        return view('fleetservice::Fleets.drivers.drivers');
     }
 
     /**

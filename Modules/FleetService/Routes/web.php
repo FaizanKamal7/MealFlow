@@ -44,6 +44,11 @@ Route::prefix('fleets')->group(function(){
         Route::get('models', [\Modules\FleetService\Http\Controllers\Settings\VehicleModelsController::class, "viewVehicleModels"])->name("view_vehicle_models");
         Route::get('types', [\Modules\FleetService\Http\Controllers\Settings\VehicleTypesController::class, "viewVehicleTypes"])->name("view_vehicle_types");
     });
+
+    Route::group(['prefix'=>'drivers/'], function () {
+        Route::get('', [\Modules\FleetService\Http\Controllers\Driver\DriverController::class, "viewDrivers"])->name("view_drivers");
+    });
+
     Route::group(['prefix'=>'vehicle-lease/'], function () {
 
     });
