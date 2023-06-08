@@ -19,10 +19,10 @@ return new class extends Migration {
             $table->boolean('is_available')->default(true);
             $table->string('license_document')->nullable();
             $table->date('license_expiry_date');
-            $table->uuid('employee_id');
+            // $table->uuid('employee_id');
             $table->timestamps();
 
-            $table->foreign('employee_id')->references('id')->on('employees');
+            // $table->foreign('employee_id')->references('id')->on('employees');
 
 
         });

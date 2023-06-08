@@ -35,9 +35,9 @@ return new class extends Migration
             $table->date("municipality_issue_date")->nullable();
             $table->date("municipality_expiry_date")->nullable();
 
-            $table->string("Registration_picture")->nullable();
-            $table->date("Registration_issue_date")->nullable();
-            $table->date("Registration_expiry_date")->nullable();
+            $table->string("registration_picture")->nullable();
+            $table->date("registration_issue_date")->nullable();
+            $table->date("registration_expiry_date")->nullable();
 
             $table->string('status')->default('available');
             $table->integer('mileage')->default(0);

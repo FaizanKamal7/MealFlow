@@ -162,9 +162,9 @@
                                                 <select class="form-select form-control form-control" name="vehicle_status"
                                                     id="vehicle_status" data-control="select2"
                                                     data-placeholder="Select an option">
-                                                    <option value="3089ce8d-f476-11ed-8c5a-42b4abf843ed">Active</option>
-                                                    <option value="37d1b992-f476-11ed-8c5a-42b4abf843ed">Booked</option>
-                                                    <option value="3cdfc3d0-f476-11ed-8c5a-42b4abf843ed">In Maintenance
+                                                    <option value="Active">Active</option>
+                                                    <option value="Booked">Booked</option>
+                                                    <option value="In Maintenance">In Maintenance
                                                     </option>
                                                 </select>
                                                 <!--end::Input-->
@@ -207,7 +207,7 @@
                                             <div class="col-lg-4 fv-row">
                                                 <!--begin::Input-->
                                                 <label class=" form-label">Milage</label>
-                                                <input type="numbers" name="vehicle_milage" class="form-control mb-2"
+                                                <input type="numbers" name="vehicle_mileage" class="form-control mb-2"
                                                     value="" />
                                                 <!--end::Input-->
 

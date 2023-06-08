@@ -65,6 +65,37 @@ class VehicleRepository implements VehicleInterface{
   return $vehicle;
 
  }
+ public function updateVehicle($id,$registrationNumber,$engineNumber,$chassisNumber,$vehicleModel,$vehicleYear,$vehicleColor,$vehicleStatus,$vehicleTypeId,$vehiclePicture = null,$vehicleMileage,$registrationPicture = null,$registrationIssueDate,$registrationExpiryDate,$insurancePicture= null,$insuranceIssueDate,$insuranceExpiryDate,$municipalityPicture= null,$municipalityIssueDate,$municipalityExpiryDate,$apiUnitId,$qrCode){
+      
+  
+      $vehicle =Vehicle::find($id);
+
+      $vehicle->api_unit_id = $apiUnitId;
+      $vehicle->registration_number = $registrationNumber;
+      $vehicle->vehicle_picture = $vehiclePicture;
+      $vehicle->engine_number = $engineNumber;
+      $vehicle->chassis_number = $chassisNumber;
+      $vehicle->vehicle_model_id = $vehicleModel;
+      $vehicle->year = $vehicleYear;
+      $vehicle->color = $vehicleColor;
+      $vehicle->qr_code = $qrCode;
+      $vehicle->insurance_picture = $insurancePicture;
+      $vehicle->insurance_issue_date = $insuranceIssueDate;
+      $vehicle->insurance_expiry_date = $insuranceExpiryDate;
+      $vehicle->municipality_picture = $municipalityPicture;
+      $vehicle->municipality_issue_date = $municipalityIssueDate;
+      $vehicle->municipality_expiry_date = $municipalityExpiryDate;
+      $vehicle->Registration_picture = $registrationPicture;
+      $vehicle->Registration_issue_date = $registrationIssueDate;
+      $vehicle->Registration_expiry_date = $registrationExpiryDate;
+      $vehicle->status = $vehicleStatus;
+      $vehicle->mileage = $vehicleMileage;
+      $vehicle->vehicle_type_id = $vehicleTypeId;
+
+    $vehicle->save();
+    return $vehicle;
+ }
+
 
  public function getVehicles(){
    return Vehicle::all();

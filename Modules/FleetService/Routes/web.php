@@ -28,7 +28,8 @@ Route::prefix('fleets')->group(function(){
         Route::get('add/',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'addVehicle'])->name("fleet_vehicle_add");
         Route::post('add/',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'storeVehicle'])->name("fleet_vehicle_store");
         Route::get('{vehicle_id}/details/',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'viewvehicleDetail'])->name("fleet_vehicle_detail");
-        Route::get('edit/{id}',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'editVehicle'])->name("fleet_vehicle_edit");
+        Route::get('{vehicle_id}/edit',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'editVehicle'])->name("fleet_vehicle_edit");
+        Route::post('{vehicle_id}/edit',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'updateVehicle'])->name("fleet_vehicle_update");
         Route::get('is-unique-vehicle/',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'isUniqueVehicle'])->name("fleet_vehicle_is_unique");
         Route::get('get-make-models/',[Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class,'getMakeModels'])->name("fleet_vehicle_get_make_models");
 
