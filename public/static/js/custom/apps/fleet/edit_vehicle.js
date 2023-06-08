@@ -1,9 +1,8 @@
 
-const addVehicleForm =  document.getElementById('add_fleet_vehicle_form');
-var addVehicleValidator = FormValidation.formValidation(
-    addVehicleForm,
+const editVehicleForm =  document.getElementById('edit_fleet_vehicle_form');
+var editVehicleValidator = FormValidation.formValidation(
+    editVehicleForm,
     {
-        /*TODO unique validation not working */
         fields:{
             'registration_number': {
                 validators: {
@@ -11,9 +10,8 @@ var addVehicleValidator = FormValidation.formValidation(
                         message: 'Registration number is required'
                     },
                     async: {
-                        url: 'is-unique-vehicle',
+                        url: '/fleets/vehicle/is-unique-vehicle',
                         type: 'get',
-                        
                         data: {
                             'field': 'registration_number',
                             'value': function() {
@@ -21,8 +19,7 @@ var addVehicleValidator = FormValidation.formValidation(
                             }
                         },
                         message: 'Registration number already exists',
-                        delay: 500,
-                    
+                        delay: 500
                     }
                     }
             },
@@ -32,7 +29,7 @@ var addVehicleValidator = FormValidation.formValidation(
                         message: 'Engine number is required'
                     },
                     async: {
-                        url: 'is-unique-vehicle',
+                        url: '/fleets/vehicle/is-unique-vehicle',
                         type: 'get',
                         data: {
                             'field': 'engine_number',
@@ -51,7 +48,7 @@ var addVehicleValidator = FormValidation.formValidation(
                         message: 'Chassis number is required'
                     },
                     async: {
-                        url: 'is-unique-vehicle',
+                        url: '/fleets/vehicle/is-unique-vehicle',
                         type: 'get',
                         data: {
                             'field': 'chassis_number',
@@ -216,20 +213,21 @@ var addVehicleValidator = FormValidation.formValidation(
 // Revalidate
 $("#vehicle_make").change(function() {
     // Revalidate the field when an option is chosen
-    addVehicleValidator.revalidateField('vehicle_make');
+    editVehicleValidator.revalidateField('vehicle_make');
 });
 $("#vehicle_year").change(function() {
     // Revalidate the field when an option is chosen
-    addVehicleValidator.revalidateField('vehicle_year');
+    editVehicleValidator.revalidateField('vehicle_year');
 });
 $("#vehicle_status").change(function() {
     // Revalidate the field when an option is chosen
-    addVehicleValidator.revalidateField('vehicle_status');
+    editVehicleValidator.revalidateField('vehicle_status');
 });
 $("#vehicle_type").change(function() {
     // Revalidate the field when an option is chosen
-    addVehicleValidator.revalidateField('vehicle_status');
+    editVehicleValidator.revalidateField('vehicle_status');
 });
+
 // SHOWING THE RELEVENT MODELS BASED ON THE MAKE SELECTED 
 $('#vehicle_make').on('change', function() {
     var make = $(this).val();
@@ -254,14 +252,14 @@ $('#vehicle_make').on('change', function() {
 });
 
 // Submit button handler
-const vehicleSubmitButton = document.getElementById('re_add_fleet_vehicle_submit');
+const vehicleSubmitButton = document.getElementById('re_edit_fleet_vehicle_submit');
 vehicleSubmitButton.addEventListener('click', function (e) {
     // Prevent default button action
     e.preventDefault();
 
     // Validate form before submit
-    if (addVehicleValidator) {
-        addVehicleValidator.validate().then(function (status) {
+    if (editVehicleValidator) {
+        editVehicleValidator.validate().then(function (status) {
             console.log('validated!');
 
             if (status == 'Valid') {
@@ -290,7 +288,7 @@ vehicleSubmitButton.addEventListener('click', function (e) {
                     //     }
                     // });
 
-                    addVehicleForm.submit(); // Submit form
+                    editVehicleForm.submit(); // Submit form
                 }, 1500);
             }
         });

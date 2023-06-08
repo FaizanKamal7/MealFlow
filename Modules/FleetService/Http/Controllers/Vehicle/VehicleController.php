@@ -86,7 +86,7 @@ class VehicleController extends Controller
             $vehicleStatus = $request->get('vehicle_status');
             $vehicleTypeId = $request->get('vehicle_type');
             $vehiclePicture = null;// Handle file upload
-            $vehicleMileage = $request->get('vehicle_milage');
+            $vehicleMileage = $request->get('vehicle_mileage');
             
             // Retrieve insurance details
             $registrationPicture = null; // Handle file upload
@@ -140,9 +140,16 @@ class VehicleController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit($id)
+    public function editVehicle($id)
     {
-        return view('fleetservice::edit');
+        $vehicle =  $this->vehicleRepository->getVehicle($id);
+
+        $vehicleTypes = $this->vehicleTypeRepository->getActiveVehicleTypes();
+        $vehicleMakes = $this->vehicleModelRepository->getActiveVehicleMakes();
+    
+
+        $data =['vehicle'=>$vehicle,"vehicleTypes"=>$vehicleTypes,'vehicleMakes'=>$vehicleMakes];
+        return view('fleetservice::Fleets.edit_fleet',$data);
     }
 
     /**
@@ -151,9 +158,54 @@ class VehicleController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function updateVehicle(Request $request, $id)
     {
-        //
+        try{
+            // Retrieve the values from the request
+        $registrationNumber = $request->get('registration_number');
+        $engineNumber = $request->get('engine_number');
+        $chassisNumber = $request->get('chassis_number');
+        $vehicleModelID = $request->get('vehicle_model');
+        $vehicleYear = $request->get('vehicle_year');
+        $vehicleColor = $request->get('vehicle_color');
+        $vehicleStatus = $request->get('vehicle_status');
+        $vehicleTypeId = $request->get('vehicle_type');
+        $vehiclePicture = null;// Handle file upload
+        $vehicleMileage = $request->get('vehicle_mileage');
+        
+        // Retrieve insurance details
+        $registrationPicture = null; // Handle file upload
+        $registrationIssueDate = $request->get('registration_issue_date');
+        $registrationExpiryDate = $request->get('registration_expiry_date');
+        
+        // Retrieve insurance details
+        $insurancePicture = null; // Handle file upload
+        $insuranceIssueDate = $request->get('insurance_issue_date');
+        $insuranceExpiryDate = $request->get('insurance_expiry_date');
+        
+        // Retrieve municipality details
+        $municipalityPicture = null; // Handle file upload
+        $municipalityIssueDate = $request->get('municipality_issue_date');
+        $municipalityExpiryDate = $request->get('municipality_expiry_date');
+        
+        $qrCode = null;
+        // Retrieve API details
+        $apiUnitId = $request->get('api_unit_id');
+
+        if ($vehiclePicture = $request->file("picture")) {
+            $helper = new Helper();
+            $picture = $helper->storeFile($file, "employees");
+        }
+
+        // Creating Vehicle
+
+        $vehicle = $this->vehicleRepository->updateVehicle($id,$registrationNumber,$engineNumber,$chassisNumber,$vehicleModelID,$vehicleYear,$vehicleColor,$vehicleStatus,$vehicleTypeId,$vehiclePicture,$vehicleMileage,$registrationPicture,$registrationIssueDate,$registrationExpiryDate,$insurancePicture,$insuranceIssueDate,$insuranceExpiryDate,$municipalityPicture,$municipalityIssueDate,$municipalityExpiryDate,$apiUnitId,$qrCode);
+        
+        return redirect()->route("fleet_vehicle")->with("success", "Vehicle updated successfully");
+    }catch(Exception $exception){
+        Log::error($exception);
+        error_log("error ".$exception);
+    }
     }
 
     /**
@@ -167,14 +219,17 @@ class VehicleController extends Controller
     }
 
     public function isUniqueVehicle(Request $request){
+      
         // IF THE REGISTRATION NUMBER ALREADY EXIST IT WILL RETURN TRUE 
         $field = $request->input('field');
         $value = $request->input('value');
+
         $unique = false;
         if ($this->vehicleRepository->getVehicleByCriteria($field,$value)){
             $unique = true;
         }
-        return $unique;
+        // echo $unique;
+        return response()->json(['valid' => $unique]);;
     }
     /**
      * GETTING ALL MODEL FOR A SPECIFIC MAKE TYPE
