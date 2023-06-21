@@ -71,8 +71,8 @@
                         <!--begin::Table row-->
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                             <th class="min-w-125px">Vehicle type</th>
-
-
+                            <th class="min-w-125px">Capacity</th>
+                            <th class="min-w-125px">Status</th>
                             <th class="text-end min-w-100px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -80,9 +80,16 @@
                         <!--end::Table head-->
                         <!--begin::Table body-->
                         <tbody class="fw-bold text-gray-600">
+                            @foreach($types as $type)
                         <tr>
                             <!--begin::Name=-->
-                            <td>Pickup</td>
+                            <td class="name-cell">{{$type->name}}</td>
+                            <!--end::Name=-->
+                            <!--begin::Name=-->
+                            <td class="capacity-cell">{{$type->capacity}}</td>
+
+                            <td class="status-cell">{{$type->active_status}}</td>
+
                             <!--end::Name=-->
                             <!--begin::Action=-->
                             <td class="text-end">
@@ -90,7 +97,10 @@
                                 <button
                                     class="btn btn-icon btn-active-light-primary w-30px h-30px me-3"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#nixus_update_vehicle_type">
+                                    data-bs-target="#nixus_update_vehicle_type"
+                                    data-type-id="{{$type->id}}"
+                                    onclick="editVehicleType(this)"
+                                    >
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                     <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -107,7 +117,9 @@
                                 </button>
                                 <!--end::Update-->
                                 <!--begin::Delete-->
-                                <button class="btn btn-icon btn-active-light-primary w-30px h-30px"
+                                <form  action="{{route('delete_vehicle_type',["type_id"=>$type->id])}}" method="POST" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to Delete Type ?');">
+                                    @csrf
+                                <button class="btn btn-icon btn-active-light-primary w-30px h-30px" type="submit"
                                         data-kt-permissions-table-filter="delete_row">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                     <span class="svg-icon svg-icon-3">
@@ -126,63 +138,12 @@
                                                         </span>
                                     <!--end::Svg Icon-->
                                 </button>
+                            </form>
                                 <!--end::Delete-->
                             </td>
                             <!--end::Action=-->
                         </tr>
-                        <tr>
-                            <!--begin::Name=-->
-                            <td>Sedan</td>
-                            <!--end::Name=-->
-
-
-                            <!--begin::Action=-->
-                            <td class="text-end">
-                                <!--begin::Update-->
-                                <button
-                                    class="btn btn-icon btn-active-light-primary w-30px h-30px me-3"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#nixus_update_vehicle_type">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                    <span class="svg-icon svg-icon-3">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                 height="24" viewBox="0 0 24 24" fill="none">
-                                                                <path
-                                                                    d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                                    fill="currentColor"/>
-                                                                <path opacity="0.3"
-                                                                      d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                                      fill="currentColor"/>
-                                                            </svg>
-                                                        </span>
-                                    <!--end::Svg Icon-->
-                                </button>
-                                <!--end::Update-->
-                                <!--begin::Delete-->
-                                <button class="btn btn-icon btn-active-light-primary w-30px h-30px"
-                                        data-kt-permissions-table-filter="delete_row">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                    <span class="svg-icon svg-icon-3">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                 height="24" viewBox="0 0 24 24" fill="none">
-                                                                <path
-                                                                    d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
-                                                                    fill="currentColor"/>
-                                                                <path opacity="0.5"
-                                                                      d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
-                                                                      fill="currentColor"/>
-                                                                <path opacity="0.5"
-                                                                      d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
-                                                                      fill="currentColor"/>
-                                                            </svg>
-                                                        </span>
-                                    <!--end::Svg Icon-->
-                                </button>
-                                <!--end::Delete-->
-                            </td>
-                            <!--end::Action=-->
-                        </tr>
-
+                  @endforeach
                         </tbody>
                         <!--end::Table body-->
                     </table>
@@ -225,7 +186,8 @@
                         <!--begin::Modal body-->
                         <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                             <!--begin::Form-->
-                            <form id="nixus_add_vehicle_type_form" class="form" action="#">
+                            <form id="nixus_add_vehicle_type_form" class="form" action="{{route('add_vehicle_types')}}" method="POST" enctype="multipart/form-data">
+                              @csrf
                                 <!--begin::Input group-->
                                 <div class="fv-row mb-7">
                                     <!--begin::Label-->
@@ -238,21 +200,50 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-solid"
-                                           placeholder="Enter Vehicle type" name="type_name"/>
+                                    <input class="form-control form-control-solid" type="text"
+                                           placeholder="Enter Vehicle type" name="vehicle_type"/>
                                     <!--end::Input-->
 
 
+                                </div>
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label mb-5 mx-2">
+                                        <span class="required"> Capacity </span>
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                           data-bs-toggle="popover" data-bs-trigger="hover"
+                                           data-bs-html="true"
+                                           data-bs-content="Vehicle capicity  is required to be unique."></i>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-solid" type="text"
+                                           placeholder="Enter Vehicle capacity" name="vehicle_capacity"/>
+                                    <!--end::Input-->
+
+
+                                </div>
+                                <div class="fv-row mb-7">
+                                    
+                                    <!--begin::Input-->
+                                    <span>
+
+                                        <label class="form-check form-switch form-check-custom form-check-solid">
+                                            <input class="form-check-input mx-4"  type="checkbox" value="1" name="active_status" checked="checked" /><span class="fs-6 fw-bold">Is Available</span>
+    
+                                        </label>
+                                    </span>
+                                    <!--begin::Input-->
                                 </div>
                                 <!--end::Input group-->
 
 
                                 <!--begin::Actions-->
                                 <div class="text-center pt-15">
-                                    <button type="reset" class="btn btn-light me-3"
+                                    <button type="reset" class="btn btn-light me-3" id="nixus_add_new_type_cancel"
                                             data-kt-types-modal-action="cancel">Discard
                                     </button>
-                                    <button type="submit" class="btn btn-primary"
+                                    <button type="submit" class="btn btn-primary" id="nixus_add_new_type_submit"
                                             data-kt-types-modal-action="submit">
                                         <span class="indicator-label">Submit</span>
                                         <span class="indicator-progress">Please wait...
@@ -271,6 +262,8 @@
                 <!--end::Modal dialog-->
             </div>
             <!--end::Modal - Add types-->
+
+
             <!--begin::Modal - Update types-->
             <div class="modal fade" id="nixus_update_vehicle_type" tabindex="-1" aria-hidden="true">
                 <!--begin::Modal dialog-->
@@ -307,7 +300,8 @@
 
                             <!--end::Notice-->
                             <!--begin::Form-->
-                            <form id="nixus_update_vehicle_type_form" class="form" action="#">
+                            <form id="nixus_update_vehicle_type_form" class="form" action="#" method="POST">
+                                @csrf
                                 <!--begin::Input group-->
                                 <div class="fv-row mb-7">
                                     <!--begin::Label-->
@@ -316,14 +310,45 @@
                                         <i class="fas fa-exclamation-circle ms-2 fs-7"
                                            data-bs-toggle="popover" data-bs-trigger="hover"
                                            data-bs-html="true"
-                                           data-bs-content=" Vehicle type  is required to be unique."></i>
+                                           data-bs-content=" Vehicle type is required to be unique."></i>
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid"
-                                           placeholder="Enter a  type Name" name="type_name"/>
+                                           placeholder="Enter a type Name" name="updated_type_name" id="updated_type_name"/>
                                     <!--end::Input-->
                                 </div>
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label mb-5 mx-2">
+                                        <span class="required"> Capacity </span>
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                           data-bs-toggle="popover" data-bs-trigger="hover"
+                                           data-bs-html="true"
+                                           data-bs-content="Vehicle capicity  is required."></i>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-solid" type="text"
+                                           placeholder="Enter Vehicle capacity" name="updated_type_capacity" id="updated_type_capacity"/>
+                                    <!--end::Input-->
+
+
+                                </div>
+                                <div class="fv-row mb-7">
+                                    
+                                    <!--begin::Input-->
+                                    <span>
+
+                                        <label class="form-check form-switch form-check-custom form-check-solid">
+                                            <input class="form-check-input mx-4"  type="checkbox" name="updated_active_status" id="updated_active_status" checked="checked" /><span class="fs-6 fw-bold">Is Available</span>
+    
+                                        </label>
+                                    </span>
+                                    <!--begin::Input-->
+                                </div>
+                                <!--end::Input group-->
+
                                 <!--end::Input group-->
                                 <!--begin::Actions-->
                                 <div class="text-center pt-15">
@@ -359,6 +384,6 @@
 @endsection
 
 @section('extra_scripts')
-
+    <script src="{{asset('static/js/custom/apps/fleet/add_type.js')}}"></script>
 
 @endsection

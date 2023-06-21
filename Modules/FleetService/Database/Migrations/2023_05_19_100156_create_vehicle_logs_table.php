@@ -27,6 +27,8 @@ return new class extends Migration
             $table->foreign('checked_out_user')->references('id')->on('users');
 
             $table->timestamps();
+            $table->softDeletes();
+
 
         });
     }

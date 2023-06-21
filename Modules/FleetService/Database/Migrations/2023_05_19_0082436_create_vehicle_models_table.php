@@ -17,8 +17,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string("make");
             $table->string("model");
-            $table->boolean('is_active')->default(false);
+            $table->boolean('active_status')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,5 +31,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('vehicle_models');
+      
     }
 };

@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->string("name");
-            $table->string("code")->nullable();
+            $table->boolean('active_status');
+            $table->string('name');
+            $table->timestamp('deleted_at')->nullable();
+            $table->boolean('is_deleted')->nullable();
             $table->timestamps();
         });
     }

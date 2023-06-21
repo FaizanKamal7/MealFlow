@@ -15,14 +15,15 @@ return new class extends Migration {
         Schema::create('drivers', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->string('license_number')->unique();
-            $table->string('experience')->nullable();
             $table->boolean('is_available')->default(true);
             $table->string('license_document')->nullable();
+            $table->date('license_issue_date');
             $table->date('license_expiry_date');
-            // $table->uuid('employee_id');
+            $table->uuid('employee_id');
             $table->timestamps();
 
-            // $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->softDeletes();
 
 
         });

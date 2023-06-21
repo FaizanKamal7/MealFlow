@@ -13,7 +13,6 @@ var addVehicleValidator = FormValidation.formValidation(
                     async: {
                         url: 'is-unique-vehicle',
                         type: 'get',
-                        
                         data: {
                             'field': 'registration_number',
                             'value': function() {

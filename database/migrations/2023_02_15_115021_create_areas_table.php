@@ -15,11 +15,14 @@ return new class extends Migration
     {
         Schema::create('areas', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->uuid("city_id");
-            $table->string("area_code")->nullable();
+            $table->boolean('active_status');
+            $table->string('name');
+            $table->uuid('city_id');
+            $table->timestamp('deleted_at')->nullable();
+            $table->boolean('is_deleted')->nullable();
             $table->timestamps();
 
-            $table->foreign('city_id')->references('id')->on('cities');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });
     }
 
