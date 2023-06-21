@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->string("name");
             $table->string("capacity");
-            $table->boolean('is_active')->default(false);
+            $table->boolean('active_status')->default(false);
             $table->timestamps();
         });
     }

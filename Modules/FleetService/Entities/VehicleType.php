@@ -13,7 +13,7 @@ class VehicleType extends Model
     protected $fillable = [
         'name',
         'capacity',
-        'is_Active'
+        'active_status'
     ];
     
     public function vehicles()

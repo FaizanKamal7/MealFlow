@@ -45,9 +45,11 @@ return new class extends Migration
             $table->uuid("vehicle_type_id")->nullable();
             $table->uuid("vehicle_model_id")->nullable();
             $table->foreign("vehicle_type_id")->references("id")->on("vehicle_types")->onDelete("set null");
-            $table->foreign("vehicle_model_id")->references("id")->on("vehicle_models")->onDelete("set null");
+            // $table->foreign("vehicle_model_id")->references("id")->on("vehicle_models")->onDelete("set null");
             
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

@@ -73,52 +73,6 @@
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody class="fw-bolder text-gray-600">
-                                <tr data-kt-table-widget-4="subtable_template" class="d-none">
-                                    <td colspan="2">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <a href="#" class="symbol symbol-50px bg-secondary bg-opacity-25 rounded">
-                                                <img src="" data-kt-src-path="assets/media/stock/ecommerce/" alt="" data-kt-table-widget-4="template_image" />
-                                            </a>
-                                            <div class="d-flex flex-column text-muted">
-                                                <a href="#" class="text-gray-800 text-hover-primary fw-bolder" data-kt-table-widget-4="template_name">Product name</a>
-                                                <div class="fs-7" data-kt-table-widget-4="template_description">Product
-                                                    description</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="text-gray-800 fs-7">Cost</div>
-                                        <div class="text-muted fs-7 fw-bolder" data-kt-table-widget-4="template_cost">1
-                                        </div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="text-gray-800 fs-7">Qty</div>
-                                        <div class="text-muted fs-7 fw-bolder" data-kt-table-widget-4="template_qty">1
-                                        </div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="text-gray-800 fs-7">Total</div>
-                                        <div class="text-muted fs-7 fw-bolder" data-kt-table-widget-4="template_total">
-                                            name</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="text-gray-800 fs-7 me-3">On hand</div>
-                                        <div class="text-muted fs-7 fw-bolder" data-kt-table-widget-4="template_stock">
-                                            32</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="text-gray-800 fs-7 me-3">On hand</div>
-                                        <div class="text-muted fs-7 fw-bolder" data-kt-table-widget-4="template_Fuel">
-                                            32</div>
-                                    </td>
-
-
-                                </tr>
-
-
-
-
-
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
@@ -155,145 +109,6 @@
                                     <!--end::Qty-->
                                 </tr>
 
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50px me-3 ">
-                                                <img src="{{asset('static/media/avatars/300-11.jpg')}}" class="" alt="" />
-
-
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">Ahmed</a>
-                                                <span class="text-gray-400 fw-bold d-block fs-7">Ahmed@gmail.com</span>
-                                            </div>
-                                        </div>
-                                    </td>
-
-
-                                    <!--begin::Product ID-->
-                                    <td class="text-center">#AGXG903297</td>
-                                    <!--end::Product ID-->
-                                    <!--begin::Date added-->
-                                    <td class="text-center">KASJKSKLM</td>
-                                    <td class="text-center">02 Apr, 2022</td>
-                                    <!--begin::Price-->
-                                    <td class="text-end">Junaid</td>
-                                    <!--end::Price-->
-                                    <!--begin::Status-->
-                                    <td class="text-end">
-                                        <span class="badge py-3 px-4 fs-7 badge-light-primary">Available</span>
-                                    </td>
-                                    <!--end::Status-->
-                                    <!--begin::Qty-->
-
-
-                                    <!--end::Qty-->
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50px me-3 ">
-                                                <img src="{{asset('static/media/avatars/300-13.jpg')}}" class="" alt="" />
-
-
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">Ahmed</a>
-                                                <span class="text-gray-400 fw-bold d-block fs-7">Ahmed@gmail.com</span>
-                                            </div>
-                                        </div>
-                                    </td>
-
-
-                                    <!--begin::Product ID-->
-                                    <td class="text-center">#AGXG903297</td>
-                                    <!--end::Product ID-->
-                                    <!--begin::Date added-->
-                                    <td class="text-center">KASJKSKLM</td>
-                                    <td class="text-center">02 Apr, 2022</td>
-                                    <!--begin::Price-->
-                                    <td class="text-end">hamza</td>
-                                    <!--end::Price-->
-                                    <!--begin::Status-->
-                                    <td class="text-end">
-                                        <span class="badge py-3 px-4 fs-7 badge-light-primary">Available</span>
-                                    </td>
-                                    <!--end::Status-->
-                                    <!--begin::Qty-->
-
-
-                                    <!--end::Qty-->
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50px me-3 ">
-                                                <img src="{{asset('static/media/avatars/300-10.jpg')}}" class="" alt="" />
-
-
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">Ahmed</a>
-                                                <span class="text-gray-400 fw-bold d-block fs-7">Ahmed@gmail.com</span>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <!--begin::Product ID-->
-                                    <td class="text-center">#AGXG903297</td>
-                                    <!--end::Product ID-->
-                                    <!--begin::Date added-->
-                                    <td class="text-center">KASJKSKLM</td>
-                                    <td class="text-center">02 Apr, 2022</td>
-                                    <!--begin::Price-->
-                                    <td class="text-end">Ali Ahmed</td>
-                                    <!--end::Price-->
-                                    <!--begin::Status-->
-                                    <td class="text-end">
-                                        <span class="badge py-3 px-4 fs-7 badge-light-primary">Available</span>
-                                    </td>
-                                    <!--end::Status-->
-                                    <!--begin::Qty-->
-
-
-                                    <!--end::Qty-->
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-50px me-3 ">
-                                                <img src="{{asset('static/media/avatars/300-13.jpg')}}" class="" alt="" />
-
-
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">Ahmed</a>
-                                                <span class="text-gray-400 fw-bold d-block fs-7">Ahmed@gmail.com</span>
-                                            </div>
-                                        </div>
-                                    </td>
-
-
-                                    <!--begin::Product ID-->
-                                    <td class="text-center">#AGXG903297</td>
-                                    <!--end::Product ID-->
-                                    <!--begin::Date added-->
-                                    <td class="text-center">KASJKSKLM</td>
-                                    <td class="text-center">02 Apr, 2022</td>
-                                    <!--begin::Price-->
-                                    <td class="text-end">Ali Ahmed</td>
-                                    <!--end::Price-->
-                                    <!--begin::Status-->
-                                    <td class="text-end">
-                                        <span class="badge py-3 px-4 fs-7 badge-light-primary">Available</span>
-                                    </td>
-                                    <!--end::Status-->
-                                    <!--begin::Qty-->
-
-
-                                    <!--end::Qty-->
-                                </tr>
 
 
 
@@ -351,7 +166,8 @@
                 <!--begin::Modal body-->
                 <div class="modal-body  pt-0 ">
                     <!--begin:Form-->
-                    <form class="form" action="#" id="nixus_add_new_driver_form">
+                    <form class="form" action="{{route('fleet_store_driver')}}" id="nixus_add_new_driver_form" method="post" enctype="multipart/form-data">
+                        @csrf
                         <!--begin::Modal header-->
 
                         <!--end::Modal header-->
@@ -378,8 +194,10 @@
                                             <div class="border rounded">
                                                 <select id="employee" class="form-select form-select-solid" name="Employee1" data-placeholder="Select Employee">
                                                     <option></option>
-                                                    <option value="0" data-kt-rich-content-subcontent="asad@gmail.com" data-kt-rich-content-icon="{{ asset('static/media/avatars/300-6.jpg') }}">Asad</option>
-                                                    <option value="1" data-kt-rich-content-subcontent="ahmed@gmail.com" data-kt-rich-content-icon="{{ asset('static/media/avatars/300-7.jpg') }}">Ahmed</option>
+                                                    @foreach ($employees as $employee)
+                                                    <option value="{{$employee->id}}" data-kt-rich-content-subcontent="{{$employee->personal_email_address}}" data-kt-rich-content-icon="{{ asset('static/media/avatars/300-6.jpg') }}">{{$employee->first_name}}</option>
+                                                    @endforeach
+                                                
                                                 </select>
 
                                             </div>
@@ -403,7 +221,7 @@
                                             <span class="required">Licence Number</span>
                                         </label>
                                         <!--end::Label-->
-                                        <input type="text" class="form-control form-control-solid" placeholder="Enter Licence Number" name="Licence" />
+                                        <input type="text" class="form-control form-control-solid" placeholder="Enter Licence Number" name="licence_number" />
                                     </div>
                                     <!--end::Col-->
                                     <!--begin::Col-->
@@ -413,7 +231,7 @@
                                             <span class="required">Licence Document</span>
                                         </label>
                                         <!--end::Label-->
-                                        <input type="file" class="form-control form-control-solid" placeholder="Enter Licence Document" name="Licence_Document" />
+                                        <input type="file" class="form-control form-control-solid" placeholder="Enter Licence Document" name="licence_Document" />
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -423,23 +241,26 @@
 
 
                                     <div class="col-md-6 fv-row">
-                                        <label class="required fs-6 fw-bold mb-2">Licence Expiry Date</label>
+                                        <label class="required fs-6 fw-bold mb-2">Licence Issue Date</label>
                                         <!--begin::Input-->
                                         <div class="position-relative d-flex align-items-center">
 
                                             <!--begin::Datepicker-->
-                                            <input class="form-control form-control-solid ps-12" placeholder="Select a date" name="licence_Date" type="date" />
+                                            <input class="form-control form-control-solid ps-12" placeholder="Select a date" name="licence_issue_Date" type="date" />
                                             <!--end::Datepicker-->
                                         </div>
                                         <!--end::Input-->
                                     </div>
                                     <div class="col-md-6 fv-row">
-                                        <!--begin::Label-->
-                                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                            <span class="required">Experience</span>
-                                        </label>
-                                        <!--end::Label-->
-                                        <input type="text" class="form-control form-control-solid" placeholder="Enter Experience " name="Experience" />
+                                        <label class="required fs-6 fw-bold mb-2">Licence Expiry Date</label>
+                                        <!--begin::Input-->
+                                        <div class="position-relative d-flex align-items-center">
+
+                                            <!--begin::Datepicker-->
+                                            <input class="form-control form-control-solid ps-12" placeholder="Select a date" name="licence_expiry_Date" type="date" />
+                                            <!--end::Datepicker-->
+                                        </div>
+                                        <!--end::Input-->
                                     </div>
 
                                 </div>
@@ -450,7 +271,7 @@
 									<span>
 
 										<label class="form-check form-switch form-check-custom form-check-solid">
-											<input class="form-check-input mx-4" type="checkbox" value="1" checked="checked" /><span class="fs-6 fw-bold">Is Available</span>
+											<input class="form-check-input mx-4"  type="checkbox" value="1" name="is_available" checked="checked" /><span class="fs-6 fw-bold">Is Available</span>
 
 										</label>
                                     </span>
@@ -493,8 +314,5 @@
 @endsection
 
 @section('extra_scripts')
-    <script src="{{ asset('static/js/custom/utilities/modals/drivers.js') }}"></script>
-    <script>
-
-    </script>
+    <script src="{{ asset('static/js/custom/apps/fleet/add_driver.js') }}"></script>  
 @endsection

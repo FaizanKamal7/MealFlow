@@ -24,8 +24,10 @@ return new class extends Migration
                 $table->decimal('Fuel_cost', 10, 2)->nullable();
                 $table->string('supplier', 100)->nullable();
                 $table->string('notes', 255)->nullable();
+                
                 $table->timestamps();
-    
+                $table->softDeletes();
+
                 // Define foreign key constraints
                 $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete("set null");
                 $table->foreign('driver_id')->references('id')->on('drivers')->onDelete("set null");
