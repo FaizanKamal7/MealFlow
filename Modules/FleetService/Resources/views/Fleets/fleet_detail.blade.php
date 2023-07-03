@@ -78,7 +78,7 @@
                                 <div class="card-Fluid   rounded-pill " style="background-color:  #344767">
                                     <div class="px-10 py-5">
                                         <h3 class=" fw-bolder text-white fs-4">Milage : <span
-                                                class="fs-1qx">  15km/lit</span>
+                                                class="fs-1qx">  {{$vehicle->mileage}}km/lit</span>
                                         </h3>
                                         <div class="fs-4 fw-bold text-white ">Temperature:<span class="fs-1qx">
                                                 7*C</span>
@@ -104,7 +104,7 @@
                                 <div class="d-flex align-items-center gap-2">
 
 
-                                    <h3 class="mb-0 text-dark fs-2qx">LOZ 4352</h3>
+                                    <h3 class="mb-0 text-dark fs-2qx">{{$vehicle->registration_number}}</h3>
                                 </div>
                                 <!--end::Email-->
                                 <!--begin::Phone-->
