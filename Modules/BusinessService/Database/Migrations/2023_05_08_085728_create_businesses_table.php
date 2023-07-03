@@ -14,19 +14,26 @@ return new class extends Migration
     public function up()
     {
         Schema::create('businesses', function (Blueprint $table) {
-            $table->id();
+            $table->uuid("id")->primary();
             $table->string('name')->unique();
             $table->string('contract_file');
             $table->string('TRN');
-            $table->unsignedBigInteger('admin_id');
-            $table->unsignedBigInteger('business_category_id');
+            $table->uuid('admin_id');
+            $table->uuid('business_category_id');
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('business_category_id')->references('id')->on('business_categories')->onDelete('cascade');
             $table->timestamp('deleted_at')->nullable();
             $table->boolean('is_deleted');
             $table->timestamps();
         });
+        
+        // Schema::table('businesses', function ($table) {
+        //     $table->uuid('admin_id')->change();
+        //     $table->uuid('business_category_id')->change();
+        // });
     }
+
+    
 
     /**
      * Reverse the migrations.

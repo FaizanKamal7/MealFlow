@@ -52,8 +52,8 @@ use HasUuids;
         $this->notify(new ResetPassword($token));
     }
 
-    public function userRoles(){
-        return $this->hasMany(UserRole::class, "user_id");
-    }
+    // public function userRoles(){
+    //     return $this->hasMany(UserRole::class, "user_id");
+    // }
 
 }
