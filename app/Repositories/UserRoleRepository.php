@@ -49,4 +49,10 @@ class UserRoleRepository implements UserRoleInterface
     {
         return UserRole::where(["role_id" => $roleId])->get();
     }
+
+    public function assignUserRole($userId, $roleId)
+    {
+        $user_role =  new UserRole(["role_id" => $roleId, "user_id" => $userId]);
+        return $user_role;
+    }
 }

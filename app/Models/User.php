@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\BusinessService\Entities\Business;
+use Modules\BusinessService\Entities\BusinessUser;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-use HasUuids;
+    use HasUuids;
     /**
      * The attributes that are mass assignable.
      *
@@ -52,8 +54,18 @@ use HasUuids;
         $this->notify(new ResetPassword($token));
     }
 
-    public function userRoles(){
+    public function userRoles()
+    {
         return $this->hasMany(UserRole::class, "user_id");
     }
 
+    public function business_users()
+    {
+        return $this->hasMany(BusinessUser::class);
+    }
+
+    public function businesses()
+    {
+        return $this->hasMany(Business::class);
+    }
 }

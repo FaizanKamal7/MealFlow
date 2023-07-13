@@ -85,7 +85,6 @@
                                             <!--begin::User details-->
                                             <div class="d-flex flex-column">
                                                 <a href="#" class="text-gray-800 text-hover-primary mb-1">{{$employee->first_name}} {{$employee->last_name}}</a>
-{{--                                                <span>{{$deduction->employee->company_email_address}}</span>--}}
                                             </div>
                                             <!--begin::User details-->
                                         </td>
