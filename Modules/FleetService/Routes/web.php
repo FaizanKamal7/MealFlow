@@ -26,9 +26,14 @@ Route::prefix('fleets')->group(function () {
         Route::get('', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'viewVehicles'])->name("fleet_vehicle");
         Route::get('add/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'addVehicle'])->name("fleet_vehicle_add");
         Route::post('add/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'storeVehicle'])->name("fleet_vehicle_store");
+        
+        Route::delete('{vehicle_id}/delete', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'destroyVehicle'])->name("fleet_vehicle_delete");
+
+
         Route::get('{vehicle_id}/details/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'viewvehicleDetail'])->name("fleet_vehicle_detail");
         Route::get('{vehicle_id}/edit', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'editVehicle'])->name("fleet_vehicle_edit");
         Route::post('{vehicle_id}/edit', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'updateVehicle'])->name("fleet_vehicle_update");
+      
         Route::get('is-unique-vehicle/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'isUniqueVehicle'])->name("fleet_vehicle_is_unique");
         Route::get('get-make-models/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'getMakeModels'])->name("fleet_vehicle_get_make_models");
 
@@ -58,6 +63,11 @@ Route::prefix('fleets')->group(function () {
     Route::group(['prefix' => 'drivers/'], function () {
         Route::get('', [Modules\FleetService\Http\Controllers\Driver\DriverController::class, "viewDrivers"])->name("fleet_view_drivers");
         Route::post('add/', [Modules\FleetService\Http\Controllers\Driver\DriverController::class, "storeDriver"])->name("fleet_store_driver");
+        Route::get('{driver_id}/driver_timeline', [Modules\FleetService\Http\Controllers\Driver\DriverController::class, "showDriverTimeline"])->name("fleet_view_driver_timeline");
+
+        Route::get('{driver_id}/details', [Modules\FleetService\Http\Controllers\Driver\DriverController::class, "showDriver"])->name("fleet_view_driver_detail");
+        Route::post('{driver_id}/update', [Modules\FleetService\Http\Controllers\Driver\DriverController::class, "updateDriver"])->name("fleet_update_driver_detail");
+
     });
 
     Route::group(['prefix' => 'vehicle-lease/'], function () {

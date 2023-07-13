@@ -34,8 +34,9 @@ class DriverController extends Controller
     public function viewDrivers()
     {
         $employees = $this->employeeRepository->getEmployees();
-        $data = ['employees'=>$employees];
-        return view('fleetservice::Fleets.drivers.drivers',$data);
+        $drivers = $this->driverRepository->getDrivers();
+        $context = ['employees'=>$employees,'drivers'=>$drivers];
+        return view('fleetservice::Fleets.drivers.drivers',$context);
     }
 
     /**
@@ -50,7 +51,7 @@ class DriverController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
+     *
      */
     public function storeDriver(Request $request)
     {   
@@ -68,7 +69,11 @@ class DriverController extends Controller
             }
 
             $driver = $this->driverRepository->createDriver($employee_id,$license_number,$is_available,$licese_document,$licence_issue_Date,$licence_expiry_Date);
-            return redirect()->route('fleet_view_drivers');
+          
+            if (!$driver) {
+                return redirect()->route("fleet_view_drivers")->with("error", "Something went wrong! Contact support");
+            }
+            return redirect()->route('fleet_view_drivers')->with("success", "Driver addded Successfully");
 
         }
         catch(Exception $exception){
@@ -78,16 +83,32 @@ class DriverController extends Controller
         }
     }
 
-    /**
+    /**lkkdsm,nkj  knsdk  djnknds  nsd nlkdsklflkd,sklkl sdh 
      * Show the specified resource.
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
+    public function showDriver($id)
     {
-        return view('fleetservice::show');
+        $driver = $this->driverRepository->getDriver($id);
+        $context = ["driver"=>$driver];
+        return view('fleetservice::Fleets.drivers.driver_detail',$context);
+
     }
 
+     /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+    public function showDriverTimeline($id)
+    {
+        $driver = $this->driverRepository->getDriver($id);
+        $context = ["driver"=>$driver];
+        return view('fleetservice::Fleets.drivers.driver_timeline',$context);
+
+    }
+    
     /**
      * Show the form for editing the specified resource.
      * @param int $id
@@ -102,11 +123,36 @@ class DriverController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
-     * @return Renderable
+     * 
      */
-    public function update(Request $request, $id)
+    public function updateDriver(Request $request, $id)
     {
-        //
+        try {
+
+            $license_number = trim($request->get("Driver_Licence_number"));
+            $license_issue_date = $request->get("Driver_licence_issue_Date");
+            $license_expiry_date = $request->get("Driver_licence_expiry_Date");
+            $license_document = null; // $request->get("Driver_Licence_Document");
+            $is_available = $request->get("is_available")?1 :0;
+
+            // echo $license_number;
+            // return;
+            $driver = $this->driverRepository->updateDriver($id,$license_number,$is_available,$license_document,$license_issue_date,$license_expiry_date);
+
+            if (!$driver) {
+                return redirect()->route("fleet_view_driver_detail",['driver_id'=>$id])->with("error", "Something went wrong! Contact support");
+            }
+            return redirect()->route('fleet_view_driver_detail',['driver_id'=>$id])->with("success", "Driver addded Successfully");
+
+
+
+
+
+        }catch(Exception $exception){
+            Log::error($exception);
+            error_log("error " . $exception);
+            echo($exception);
+        }
     }
 
     /**

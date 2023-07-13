@@ -50,7 +50,11 @@
                                             </svg>
                                         </span>
                                         <!--end::Svg Icon-->
-                                        <h3 class=" fw-bolder text-dark fs-2qx">Muhammad Ali</h3>
+                                        @if($vehicle->lastIncompleteLog)    
+                                            <h3 class=" fw-bolder text-dark fs-2qx">{{ucfirst($vehicle->lastIncompleteLog->driver->employee->first_name)}} </h3>
+                                        @else
+                                        <h3 class=" fw-bolder text-dark fs-2qx">NA</h3>
+                                        @endif
                                     </div>
                                     <!--end::Email-->
                                     <!--begin::Phone-->
@@ -138,6 +142,17 @@
                 </div>
 
 
+                <div class="">
+
+                    <div class=" card h-md-100 ">
+
+                        <img src="{{ asset($vehicle->qr_code)}}" class=""
+                            alt="svg image" />
+                    </div>
+
+
+
+                </div>
                 <div class="">
 
                     <div class=" card h-md-100 ">
