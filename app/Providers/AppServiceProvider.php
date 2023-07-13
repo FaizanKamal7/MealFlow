@@ -59,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         Paginator::useBootstrap();
         $user = Auth::user();
 
@@ -80,5 +81,6 @@ class AppServiceProvider extends ServiceProvider
                 return count(array_intersect($rolesArray, $roles)) > 0;
             });
         }
+
     }
 }

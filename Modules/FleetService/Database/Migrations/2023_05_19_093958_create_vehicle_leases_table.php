@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('vehicle_leases', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->uuid('vehicle_id');
+            $table->uuid('vehicle_id')->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->decimal('total_amount', 10, 2);
@@ -25,6 +25,8 @@ return new class extends Migration
 
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete("set null");
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

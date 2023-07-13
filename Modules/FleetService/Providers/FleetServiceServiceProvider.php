@@ -4,6 +4,18 @@ namespace Modules\FleetService\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\FleetService\Interfaces\DriverInterface;
+use Modules\FleetService\Interfaces\VehicleInterface;
+use Modules\FleetService\Repositories\DriverRepository;
+use Modules\FleetService\Repositories\VehicleRepository;
+use Modules\FleetService\Interfaces\VehicleFuelInterface;
+use Modules\FleetService\Interfaces\VehicleTypeInterface;
+use Modules\FleetService\Interfaces\VehicleModelInterface;
+use Modules\FleetService\Repositories\VehicleFuelRepository;
+use Modules\FleetService\Repositories\VehicleTypeRepository;
+use Modules\FleetService\Repositories\VehicleModelRepository;
+use Modules\FleetService\Interfaces\VehicleMaintenanceInterface;
+use Modules\FleetService\Repositories\VehicleMaintenanceRepository;
 
 class FleetServiceServiceProvider extends ServiceProvider
 {
@@ -38,6 +50,15 @@ class FleetServiceServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->bind(VehicleInterface::class, VehicleRepository::class);
+        $this->app->bind(VehicleTypeInterface::Class, VehicleTypeRepository::class);
+        $this->app->bind(VehicleModelInterface::Class, VehicleModelRepository::class);
+        $this->app->bind(VehicleFuelInterface::Class, VehicleFuelRepository::class);
+        $this->app->bind(VehicleMaintenanceInterface::Class, VehicleMaintenanceRepository::class);
+        $this->app->bind(DriverInterface::Class, DriverRepository::class);
+
+
+
     }
 
     /**

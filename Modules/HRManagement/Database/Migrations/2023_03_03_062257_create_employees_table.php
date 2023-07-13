@@ -30,6 +30,9 @@ return new class extends Migration
             $table->date("probation_period_end")->nullable();
             $table->string("status")->nullable();
 
+            
+            // $table->string('experience')->nullable();
+
             $table->date("contract_start_date")->nullable();
             $table->date("contract_end_date")->nullable();
             $table->string("employee_type")->nullable();
