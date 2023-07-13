@@ -96,12 +96,23 @@ class VehicleRepository implements VehicleInterface{
     return $vehicle;
  }
 
+ public function updateVehicleFields($id,$fields){
+    $vehicle =Vehicle::find($id);
+    $vehicle->fill($fields);
+    return $vehicle->save();
+
+ }
 
  public function getVehicles(){
-   return Vehicle::all();
+   return Vehicle::with('vehicleType', 'vehicleModel','lastIncompleteLog.driver.employee')->get();;
  }
  public function getVehicle($id){
   return Vehicle::find($id);
+ }
+
+ public function deleteVehicle($id){
+     $vehicle= Vehicle::find($id);
+     return $vehicle->delete();
  }
 
  public function getVehicleByCriteria($field,$value){
