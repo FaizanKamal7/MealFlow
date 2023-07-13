@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::prefix('fleetservice')->group(function () {
     Route::get('/', 'FleetServiceController@index');
 });
@@ -71,6 +70,7 @@ Route::prefix('fleets')->group(function () {
 
     });
     Route::group(['prefix' => 'driver-area/'], function () {
+
 
     });
 });
