@@ -20,7 +20,6 @@ return new class extends Migration
             $table->boolean('is_deleted');
             $table->timestamps();
         });
-        
     }
 
     /**

@@ -18,6 +18,7 @@
     {{-- <link rel="shortcut icon" href="theme/nexgen/images/favicon.ico"> --}}
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8_SfvsKNzsun4Y4Meq6asvmJhwgQQ33I&libraries=places"></script>
+    <script src="//geodata.solutions/includes/countrystatecity.js"></script>
 
     @include('partials.styles')
 </head>

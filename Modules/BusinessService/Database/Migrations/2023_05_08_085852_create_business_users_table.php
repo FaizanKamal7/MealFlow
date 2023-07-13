@@ -23,10 +23,6 @@ return new class extends Migration
             $table->boolean('is_deleted');
             $table->timestamps();
         });
-        // Schema::table('business_users', function ($table) {
-        //     $table->uuid('id')->change();
-        
-        // });
     }
 
     /**

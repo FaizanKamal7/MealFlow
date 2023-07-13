@@ -7,13 +7,16 @@
     "require": {
         "php": "^8.0.2",
         "doctrine/dbal": "^3.6",
+        "docusign/esign-client": "^6.16",
         "guzzlehttp/guzzle": "^7.2",
+        "jason-guru/laravel-make-repository": "^0.0.3",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "nwidart/laravel-modules": "^9.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.8",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
