@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    public function loginView(){
+    public function loginView()
+    {
         return view("authentication.login");
     }
-    public function loginUser(Request $request){
+
+    public function loginUser(Request $request)
+    {
         $request->validate([
             "email" => "required",
             "password" => "required",

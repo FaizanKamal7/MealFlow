@@ -12,8 +12,26 @@ class City extends Model
     use HasUuids;
 
     protected $fillable = [
-        "name",
-        "state_id",
-        'country_id'
+        'active_status',
+        'name',
+        'state_id',
+        'state_code',
+        'country_id',
+        'country_code',
+        'latitude',
+        'longitude',
+        'flag',
+        'wikiDataId',
     ];
+
+    public function areas()
+    {
+        return $this->hasMany(Area::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
 }

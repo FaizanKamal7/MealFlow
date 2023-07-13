@@ -81,5 +81,6 @@ Route::prefix('fleets')->group(function () {
     });
     Route::group(['prefix' => 'driver-area/'], function () {
 
+
     });
 });
