@@ -11,6 +11,7 @@ class Country extends Model
     use HasFactory;
     use HasUuids;
 
+
     protected $fillable = [
         'name',
         'iso3',
@@ -39,4 +40,5 @@ class Country extends Model
     {
         return $this->hasMany(State::class);
     }
+
 }
