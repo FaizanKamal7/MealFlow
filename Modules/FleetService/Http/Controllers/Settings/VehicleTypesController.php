@@ -42,12 +42,13 @@ class VehicleTypesController extends Controller
         try {
             $type = strtolower($request->get("vehicle_type"));
             $capacity = $request->get("vehicle_capacity");
+            $icon = $request->get("icon");
             $active_status = $request->has("active_status") ? 1 : 0;
 
             if ($this->vehicleTypeRepository->isVehicleTypeExists($type)) {
                 return redirect()->route("view_vehicle_types")->with("error", "Vehicle Type Already exist");
             }
-            $vehicle_type = $this->vehicleTypeRepository->createVehicleType($type, $capacity, $active_status);
+            $vehicle_type = $this->vehicleTypeRepository->createVehicleType($type, $capacity,$icon, $active_status);
             if (!$vehicle_type) {
                 return redirect()->route("view_vehicle_types")->with("error", "Something went wrong! Contact support");
             }
@@ -79,12 +80,13 @@ class VehicleTypesController extends Controller
         try {
             $type = strtolower($request->get("updated_type_name"));
             $capacity = $request->get("updated_type_capacity");
+            $icon = $request->get("updated_type_icon");
             $active_status = $request->has("updated_active_status") ? 1 : 0;
 
             // if ($this->vehicleTypeRepository->isVehicleTypeExists($type)){
             //     return redirect()->route("view_vehicle_types")->with("error", "Vehicle Type Already exist");
             // }
-            $vehicle_type = $this->vehicleTypeRepository->updateVehicleType($id, $type, $capacity, $active_status);
+            $vehicle_type = $this->vehicleTypeRepository->updateVehicleType($id, $type, $capacity,$icon, $active_status);
             if (!$vehicle_type) {
                 return redirect()->route("view_vehicle_types")->with("error", "Something went wrong! Contact support");
             }
