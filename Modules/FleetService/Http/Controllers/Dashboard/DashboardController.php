@@ -5,16 +5,39 @@ namespace Modules\FleetService\Http\Controllers\Dashboard;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\FleetService\Interfaces\DriverInterface;
+use Modules\FleetService\Interfaces\VehicleInterface;
+use Modules\FleetService\Interfaces\VehicleLogInterface;
+use Modules\FleetService\Interfaces\VehicleModelInterface;
+use Modules\FleetService\Interfaces\VehicleTypeInterface;
 
 class DashboardController extends Controller
 {
+    private VehicleInterface $vehicleRepository;
+    private  DriverInterface $driverRepository;
+    private VehicleTypeInterface $vehicleTypeRepository;
+    // private VehicleLogInterface $vehicleLogRepository;
+
+    public function __construct(VehicleInterface $vehicleRepository,DriverInterface $driverRepository,VehicleTypeInterface $vehicleTypeRepository){
+        $this->vehicleRepository = $vehicleRepository;
+        $this->driverRepository = $driverRepository;
+        $this->vehicleTypeRepository = $vehicleTypeRepository;
+        // $this->vehicleLogRepository = $vehicleLogRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function viewDashboard()
     {
-        return view('fleetservice::dashboard.dashboard');
+        $vehicles = $this->vehicleRepository->getVehicles();
+        $vehicletypes =$this->vehicleTypeRepository->getActiveVehicleTypes();
+        // $vehicleLogs = $this->vehicleLogRepository->getallVehicleLogs();
+        $vehicleLogs="";
+        $context = ['vehicles'=>$vehicles,'vehicleTypes'=>$vehicletypes,'vehicleLogs'=>$vehicleLogs];
+        
+        return view('fleetservice::dashboard.dashboard',$context);
     }
 
     /**

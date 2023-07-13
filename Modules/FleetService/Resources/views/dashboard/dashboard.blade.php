@@ -147,7 +147,7 @@
 										<!--begin::Stats-->
 										<div class="m-0">
 											<!--begin::Number-->
-											<span class="text-gray-700 fw-boldest d-block fs-2qx lh-1 ls-n1 mb-1">37</span>
+											<span class="text-gray-700 fw-boldest d-block fs-2qx lh-1 ls-n1 mb-1">{{$vehicles->count()}}</span>
 											<!--end::Number-->
 											<!--begin::Desc-->
 											<span class="text-gray-500 fw-bold fs-6">Vehicles</span>
@@ -368,17 +368,18 @@
 						<div class="row">
 							<!--begin::Nav-->
 							<ul class="nav nav-pills nav-pills-custom mb-3 mx-9">
+								@foreach($vehicleTypes as $vehicleType)
 								<!--begin::Item-->
-								<li class="nav-item mb-3 me-3 me-lg-6">
+								<li class="nav-item mb-3 me-3 me-lg-6" data-type="{{$vehicleType->name}}">
 									<!--begin::Link-->
-									<a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2 active" data-bs-toggle="pill" id="kt_charts_widget_32_tab_1" href="#kt_charts_widget_32_tab_content_1">
+									<a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2 {{ $loop->first ? ' active' : '' }}" data-bs-toggle="pill" id="kt_charts_widget_32_tab_1" href="#kt_charts_widget_32_tab_content_1">
 										<!--begin::Icon-->
 										<div class="nav-icon mb-3">
-											<i class="fonticon-truck fs-1 p-0"></i>
+											<i class=" {{$vehicleType->icon}} fs-1 p-0"></i>
 										</div>
 										<!--end::Icon-->
 										<!--begin::Title-->
-										<span class="nav-text text-gray-800 fw-bolder fs-6 lh-1">Van</span>
+										<span class="nav-text text-gray-800 fw-bolder fs-6 lh-1">{{$vehicleType->name}}</span>
 										<!--end::Title-->
 										<!--begin::Bullet-->
 										<span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
@@ -386,45 +387,9 @@
 									</a>
 									<!--end::Link-->
 								</li>
+								@endforeach
 								<!--end::Item-->
-								<!--begin::Item-->
-								<li class="nav-item mb-3 me-3 me-lg-6">
-									<!--begin::Link-->
-									<a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" data-bs-toggle="pill" id="kt_charts_widget_32_tab_2" href="#kt_charts_widget_32_tab_content_2">
-										<!--begin::Icon-->
-										<div class="nav-icon mb-3">
-											<i class="fonticon-bicycle fs-1 p-0"></i>
-										</div>
-										<!--end::Icon-->
-										<!--begin::Title-->
-										<span class="nav-text text-gray-800 fw-bolder fs-6 lh-1">Bike</span>
-										<!--end::Title-->
-										<!--begin::Bullet-->
-										<span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-										<!--end::Bullet-->
-									</a>
-									<!--end::Link-->
-								</li>
-								<!--end::Item-->
-								<!--begin::Item-->
-								<li class="nav-item mb-3 me-3 me-lg-6">
-									<!--begin::Link-->
-									<a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden w-80px h-85px pt-5 pb-2" data-bs-toggle="pill" id="kt_charts_widget_32_tab_3" href="#kt_charts_widget_32_tab_content_3">
-										<!--begin::Icon-->
-										<div class="nav-icon mb-3">
-											<i class="fonticon-drone fs-1 p-0"></i>
-										</div>
-										<!--end::Icon-->
-										<!--begin::Title-->
-										<span class="nav-text text-gray-800 fw-bolder fs-6 lh-1">Drone</span>
-										<!--end::Title-->
-										<!--begin::Bullet-->
-										<span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
-										<!--end::Bullet-->
-									</a>
-									<!--end::Link-->
-								</li>
-								<!--end::Item-->
+
 							</ul>
 							<!--end::Nav-->
 						</div>
@@ -449,6 +414,7 @@
 								<!--end::Table head-->
 								<!--begin::Table body-->
 								<tbody>
+									@foreach($vehicles as $vehicle)
 									<tr>
 										<td>
 											<div class="d-flex align-items-center">
@@ -458,32 +424,47 @@
 
 												</div>
 												<div class="d-flex justify-content-start flex-column">
-													<a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">Ocian
-														X7</a>
-													<span class="text-gray-400 fw-bold d-block fs-7">8987</span>
+													<a href="{{ route("fleet_vehicle_detail", ["vehicle_id"=>$vehicle->id]) }}" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">{{ucfirst($vehicle->vehicleModel->make)}} {{ucfirst($vehicle->vehicleModel->model)}}</a>
+													<span class="text-gray-400 fw-bold d-block fs-7">{{$vehicle->registration_number}}</span>
 												</div>
 											</div>
 										</td>
 										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">KSDH2894</span>
+											<span class="text-gray-600 fw-bolder fs-6">{{$vehicle->registration_number}}</span>
 										</td>
 										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">14 KM/LIT</span>
+											<span class="text-gray-600 fw-bolder fs-6">{{$vehicle->mileage}}KM/LIT</span>
 										</td>
 										<td class="pe-0">
+											@if($vehicle->lastIncompleteLog)
 											<div class="d-flex align-items-center justify-content-end">
 												<div class="symbol symbol-30px me-3">
 													<img src="{{asset('static/media/avatars\300-9.jpg')}}" class="" alt="" />
 
 												</div>
-												<span class="text-gray-600 fw-bolder d-block fs-6">Junaid</span>
+												<span class="text-gray-600 fw-bolder d-block fs-6">
+														
+													{{$vehicle->lastIncompleteLog->driver->employee->first_name}}
+												
+													{{-- @if($vehicle->logs->count()>0)
+														@if(!$vehicle->logs->last()->check_out_time)
+															{{$vehicle->logs->last()->driver->employee->first_name}}
+														@endif
+													@endif --}}
+												</span>
 											</div>
+											@else
+											<div class="d-flex align-items-center justify-content-end">
+											NA
+											</div>
+											@endif
+											
 										</td>
 										<td class="text-end pe-0">
 											<span class="text-gray-600 fw-bolder fs-6">8 C</span>
 										</td>
 										<td class="text-end">
-											<a href="{{ route("fleet_details") }}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
+											<a href="{{ route("fleet_vehicle_detail", ["vehicle_id"=>$vehicle->id]) }}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
 												<!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
 												<span class="svg-icon svg-icon-5 svg-icon-gray-700">
 													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -495,182 +476,8 @@
 											</a>
 										</td>
 									</tr>
-									<tr>
-										<td>
-											<div class="d-flex align-items-center">
-												<div class="symbol symbol-50px me-3">
-													<img src="{{asset('static/media\Fleet\images-2.jpg')}}" class="" alt="" />
-												</div>
-												<div class="d-flex justify-content-start flex-column">
-													<a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">Suzuki</a>
-													<span class="text-gray-400 fw-bold d-block fs-7">7887</span>
-												</div>
-											</div>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">UWY3839</span>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">12 KM/LIT</span>
-										</td>
-										<td class="pe-0">
-											<div class="d-flex align-items-center justify-content-end">
-												<div class="symbol symbol-30px me-3">
-													<img src="{{asset('static/media/avatars\300-14.jpg')}}" class="" alt="" />
-												</div>
-												<span class="text-gray-600 fw-bolder d-block fs-6">Ahmed</span>
-											</div>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">8 C</span>
-										</td>
-										<td class="text-end">
-											<a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-												<!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
-												<span class="svg-icon svg-icon-5 svg-icon-gray-700">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-														<path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z" fill="currentColor" />
-														<path opacity="0.3" d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z" fill="currentColor" />
-													</svg>
-												</span>
-												<!--end::Svg Icon-->
-											</a>
-										</td>
-									</tr>
+									@endforeach
 
-
-
-									<tr>
-										<td>
-											<div class="d-flex align-items-center">
-												<div class="symbol symbol-50px me-3">
-													<img src="{{asset('static/media\Fleet\images-4.jpg')}}" class="" alt="" />
-												</div>
-												<div class="d-flex justify-content-start flex-column">
-													<a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">Toyota
-														Corola</a>
-													<span class="text-gray-400 fw-bold d-block fs-7">7564</span>
-												</div>
-											</div>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">KLMS4783</span>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">14 KM/LIT</span>
-										</td>
-										<td class="pe-0">
-											<div class="d-flex align-items-center justify-content-end">
-												<div class="symbol symbol-30px me-3">
-													<img src="{{asset('static/media/avatars\300-27.jpg')}}" class="" alt="" />
-												</div>
-												<span class="text-gray-600 fw-bolder d-block fs-6">Waqas</span>
-											</div>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">13 C</span>
-										</td>
-										<td class="text-end">
-											<a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-												<!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
-												<span class="svg-icon svg-icon-5 svg-icon-gray-700">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-														<path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z" fill="currentColor" />
-														<path opacity="0.3" d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z" fill="currentColor" />
-													</svg>
-												</span>
-												<!--end::Svg Icon-->
-											</a>
-										</td>
-									</tr>
-
-									<tr>
-										<td>
-											<div class="d-flex align-items-center">
-												<div class="symbol symbol-50px me-3">
-													<img src="{{asset('static/media\Fleet\images-5.jpg')}}" class="" alt="" />
-												</div>
-												<div class="d-flex justify-content-start flex-column">
-													<a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">Honda
-														Civic</a>
-													<span class="text-gray-400 fw-bold d-block fs-7">9855</span>
-												</div>
-											</div>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">HDG1234</span>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">12 KM/LIT</span>
-										</td>
-										<td class="pe-0">
-											<div class="d-flex align-items-center justify-content-end">
-												<div class="symbol symbol-30px me-3">
-													<img src="{{asset('static/media/avatars\300-21.jpg')}}" class="" alt="" />
-												</div>
-												<span class="text-gray-600 fw-bolder d-block fs-6">zeshan</span>
-											</div>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">15 C</span>
-										</td>
-										<td class="text-end">
-											<a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-												<!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
-												<span class="svg-icon svg-icon-5 svg-icon-gray-700">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-														<path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z" fill="currentColor" />
-														<path opacity="0.3" d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z" fill="currentColor" />
-													</svg>
-												</span>
-												<!--end::Svg Icon-->
-											</a>
-										</td>
-									</tr>
-
-									<tr>
-										<td>
-											<div class="d-flex align-items-center">
-												<div class="symbol symbol-50px me-3">
-													<img src="{{asset('static/media\Fleet\img-2.jpg')}}" class="" alt="" />
-												</div>
-												<div class="d-flex justify-content-start flex-column">
-													<a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">Nisan
-														Skyline</a>
-													<span class="text-gray-400 fw-bold d-block fs-7">1245</span>
-												</div>
-											</div>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">AGX8765</span>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">15 KM/LIT</span>
-										</td>
-										<td class="pe-0">
-											<div class="d-flex align-items-center justify-content-end">
-												<div class="symbol symbol-30px me-3">
-													<img src="{{asset('static/media\avatars\300-25.jpg')}}" class="" alt="" />
-												</div>
-												<span class="text-gray-600 fw-bolder d-block fs-6">Ahmed</span>
-											</div>
-										</td>
-										<td class="text-end pe-0">
-											<span class="text-gray-600 fw-bolder fs-6">17 C</span>
-										</td>
-										<td class="text-end">
-											<a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-												<!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
-												<span class="svg-icon svg-icon-5 svg-icon-gray-700">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-														<path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z" fill="currentColor" />
-														<path opacity="0.3" d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z" fill="currentColor" />
-													</svg>
-												</span>
-												<!--end::Svg Icon-->
-											</a>
-										</td>
-									</tr>
 								</tbody>
 								<!--end::Table body-->
 							</table>

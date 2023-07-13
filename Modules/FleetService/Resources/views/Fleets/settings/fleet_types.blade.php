@@ -72,6 +72,7 @@
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                             <th class="min-w-125px">Vehicle type</th>
                             <th class="min-w-125px">Capacity</th>
+                            <th class="min-w-125px">Icon</th>
                             <th class="min-w-125px">Status</th>
                             <th class="text-end min-w-100px">Actions</th>
                         </tr>
@@ -87,7 +88,7 @@
                             <!--end::Name=-->
                             <!--begin::Name=-->
                             <td class="capacity-cell">{{$type->capacity}}</td>
-
+                            <td class="icon-cell"><i class="far {{$type->icon}} fs-5x p-0"></i><span class="d-none">{{$type->icon}}</span></td>
                             <td class="status-cell">{{$type->active_status}}</td>
 
                             <!--end::Name=-->
@@ -224,6 +225,23 @@
 
                                 </div>
                                 <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label mb-5 mx-2">
+                                        <span class="required"> Icon </span>
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                           data-bs-toggle="popover" data-bs-trigger="hover"
+                                           data-bs-html="true"
+                                           data-bs-content="Vehicle icon  is required to be unique."></i>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-solid" type="text"
+                                           placeholder="Enter Vehicle icon code" name="vehicle_icon"/>
+                                    <!--end::Input-->
+
+
+                                </div>
+                                <div class="fv-row mb-7">
                                     
                                     <!--begin::Input-->
                                     <span>
@@ -333,6 +351,21 @@
                                            placeholder="Enter Vehicle capacity" name="updated_type_capacity" id="updated_type_capacity"/>
                                     <!--end::Input-->
 
+                                </div>
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label mb-5 mx-2">
+                                        <span class="required"> Icon </span>
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                           data-bs-toggle="popover" data-bs-trigger="hover"
+                                           data-bs-html="true"
+                                           data-bs-content="Vehicle icon  is required."></i>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-solid" type="text"
+                                           placeholder="Enter Vehicle icon code" name="updated_type_icon" id="updated_type_icon"/>
+                                    <!--end::Input-->
 
                                 </div>
                                 <div class="fv-row mb-7">
