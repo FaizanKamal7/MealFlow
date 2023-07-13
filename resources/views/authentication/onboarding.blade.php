@@ -291,8 +291,7 @@
                                     <label class="form-label required">Phone Number</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input name="phone_no" class="form-control form-control-lg form-control-solid"
-                                        type="numbers" />
+                                    <input name="phone_no" class="form-control form-control-lg form-control-solid"  />
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -623,6 +622,17 @@
                                 </div>
 
                                 <!--end::Input group-->
+                                
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-0">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold form-label required">Address</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input name="address" class="form-control form-control-lg form-control-solid"
+                                        value="" />
+                                    <!--end::Input-->
+                                </div>
 
                                 <!--begin::Input group-->
                                 <div class="fv-row mb-0">
@@ -657,7 +667,7 @@
                                     <!--end::Notice-->
                                 </div>
 
-                              
+
                                 <!--begin::Input group-->
                                 <div class="fv-row mb-10">
                                     <!--begin::Label-->
@@ -676,14 +686,14 @@
                                         <option value="5">Flower and gift delivery</option>
                                         <option value="6">Pet supply and pet food delivery</option>
                                         <option value="7">Beauty and personal care delivery</option>
-                                        
+
 
                                     </select>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
-                                  <!--begin::Input group-->
-                                  <div class="mb-10 fv-row">
+                                <!--begin::Input group-->
+                                <div class="mb-10 fv-row">
                                     <!--begin::Label-->
                                     <label class="d-flex align-items-center form-label mb-3">Number of Branches
                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
@@ -807,37 +817,37 @@
 
                                 </div>
                                 <div
-                                class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
-                                <!--begin::Icon-->
-                                <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
-                                <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none">
-                                        <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10"
-                                            fill="currentColor" />
-                                        <rect x="11" y="14" width="7" height="2" rx="1"
-                                            transform="rotate(-90 11 14)" fill="currentColor" />
-                                        <rect x="11" y="17" width="2" height="2" rx="1"
-                                            transform="rotate(-90 11 17)" fill="currentColor" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->
-                                <!--end::Icon-->
-                                <!--begin::Wrapper-->
-                                <div class="d-flex flex-stack flex-grow-1">
-                                    <!--begin::Content-->
-                                    <div class="fw-bold">
-                                        <h4 class="text-gray-900 fw-bolder">We need your attention!</h4>
-                                        <div class="fs-6 text-gray-700">To start using great tools,
-                                            please,
-                                            please
-                                            <a href="#" class="fw-bolder">Create Team Platform</a>
+                                    class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
+                                    <!--begin::Icon-->
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+                                    <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10"
+                                                fill="currentColor" />
+                                            <rect x="11" y="14" width="7" height="2" rx="1"
+                                                transform="rotate(-90 11 14)" fill="currentColor" />
+                                            <rect x="11" y="17" width="2" height="2" rx="1"
+                                                transform="rotate(-90 11 17)" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                    <!--end::Icon-->
+                                    <!--begin::Wrapper-->
+                                    <div class="d-flex flex-stack flex-grow-1">
+                                        <!--begin::Content-->
+                                        <div class="fw-bold">
+                                            <h4 class="text-gray-900 fw-bolder">We need your attention!</h4>
+                                            <div class="fs-6 text-gray-700">To start using great tools,
+                                                please,
+                                                please
+                                                <a href="#" class="fw-bolder">Create Team Platform</a>
+                                            </div>
                                         </div>
+                                        <!--end::Content-->
                                     </div>
-                                    <!--end::Content-->
+                                    <!--end::Wrapper-->
                                 </div>
-                                <!--end::Wrapper-->
-                            </div>
                             </div>
                             <!--end::Wrapper-->
                         </div>
@@ -1041,8 +1051,10 @@
                                         <div class="d-flex flex-stack flex-grow-1">
                                             <!--begin::Content-->
                                             <div class="fw-bold">
-                                                <h4 class="text-gray-900 fw-bolder">Currently we are offering flat price!</h4>
-                                                <div class="fs-6 text-gray-700">There is flat charge for each delivery for 
+                                                <h4 class="text-gray-900 fw-bolder">Currently we are offering flat
+                                                    price!</h4>
+                                                <div class="fs-6 text-gray-700">There is flat charge for each delivery
+                                                    for
                                                     <a href="#" class="fw-bolder">your selected city</a>
                                                 </div>
                                             </div>

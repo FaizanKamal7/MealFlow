@@ -3,7 +3,7 @@
 <!--begin::Head-->
 <head>
     <base href="">
-    <title>@yield('title') - Real Estate ERP</title>
+    <title>@yield('title') - Nixus ERP</title>
     <meta charset="utf-8"/>
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
@@ -14,7 +14,8 @@
     <meta property="og:url" content=""/>
     <meta property="og:site_name" content=""/>
     <link rel="canonical" href=""/>
-    <link rel="shortcut icon" href=""/>
+    <link rel="shortcut icon" href="theme/nexgen/images/favicon.ico">
+
     @include('partials.styles')
     @yield("extra_style")
 
@@ -222,14 +223,6 @@
                                             <span class="menu-title">Delayed Deliveries</span>
                                         </a>
                                     </div>
-
-
-
-
-
-
-
-
 
                                 </div>
 
@@ -1003,31 +996,31 @@
             </div>
             <!--end::Content-->
 
-{{--            @section('footer')--}}
-{{--                <!--begin::Footer-->--}}
-{{--                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">--}}
-{{--                    <!--begin::Container-->--}}
-{{--                    <div--}}
-{{--                        class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">--}}
-{{--                        <!--begin::Copyright-->--}}
-{{--                        <div class="text-dark order-2 order-md-1">--}}
-{{--                            <span class="text-muted fw-bold me-1">2023 ©</span>--}}
-{{--                            <a href="#" target="_blank" class="text-gray-800 text-hover-primary">Real Estate ERP</a>--}}
-{{--                        </div>--}}
-{{--                        <!--end::Copyright-->--}}
-{{--                        <!--begin::Menu-->--}}
-{{--                        <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">--}}
-{{--                            <li class="menu-item">--}}
-{{--                                <a href="#" target="_blank" class="menu-link px-2">Support</a>--}}
-{{--                            </li>--}}
+         @section('footer')
+              <!--begin::Footer-->
+              <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                  <!--begin::Container-->
+                  <div
+                      class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+                      <!--begin::Copyright-->
+                      <div class="text-dark order-2 order-md-1">
+                          <span class="text-muted fw-bold me-1">2023 ©</span>
+                          <a href="#" target="_blank" class="text-gray-800 text-hover-primary">Real Estate ERP</a>
+                      </div>
+                      <!--end::Copyright-->
+                      <!--begin::Menu-->
+                      <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
+                          <li class="menu-item">
+                              <a href="#" target="_blank" class="menu-link px-2">Support</a>
+                          </li>
 
-{{--                        </ul>--}}
-{{--                        <!--end::Menu-->--}}
-{{--                    </div>--}}
-{{--                    <!--end::Container-->--}}
-{{--                </div>--}}
-{{--                <!--end::Footer-->--}}
-{{--            @show--}}
+                      </ul>
+                      <!--end::Menu-->
+                  </div>
+                  <!--end::Container-->
+              </div>
+              <!--end::Footer-->
+          @show
 
         </div>
         <!--end::Wrapper-->

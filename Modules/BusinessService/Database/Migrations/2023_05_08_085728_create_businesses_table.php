@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('contract_file');
             $table->string('TRN');
+            $table->boolean('status');
+
             $table->uuid('admin_id');
             $table->uuid('business_category_id');
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
@@ -26,14 +28,12 @@ return new class extends Migration
             $table->boolean('is_deleted');
             $table->timestamps();
         });
-        
+
         // Schema::table('businesses', function ($table) {
         //     $table->uuid('admin_id')->change();
         //     $table->uuid('business_category_id')->change();
         // });
     }
-
-    
 
     /**
      * Reverse the migrations.

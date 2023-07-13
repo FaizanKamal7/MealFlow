@@ -38,15 +38,14 @@ class DepartmentsController extends Controller
      */
     public function viewDepartments()
     {
-//        abort_if(Gate::denies('view_department'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        try{
+        //        abort_if(Gate::denies('view_department'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
             $departments = $this->departmentRepository->getDepartments();
             $employees = $this->employeesRepository->getEmployees();
-            return view('hrmanagement::departments.departments',["departments"=>$departments, "employees"=>$employees]);
-        }
-        catch (Exception $exception){
+            return view('hrmanagement::departments.departments', ["departments" => $departments, "employees" => $employees]);
+        } catch (Exception $exception) {
             Log::error($exception);
-            return view('hrmanagement::departments.departments')-with('error', "Something went wrong");
+            // return view('hrmanagement::departments.departments')-with('error', "Something went wrong");
         }
     }
     // Add
@@ -61,14 +60,12 @@ class DepartmentsController extends Controller
         try {
             $name = $request->get("department_name");
             $department = $this->departmentRepository->createDepartment(departmentName: $name);
-            if($request->filled('manager'))
-            {
+            if ($request->filled('manager')) {
                 $manager = $request->get('manager');
-                $department_member = $this->employeeDepartmentsRepository->createEmployeeDepartment(employeeId: $manager,departmentId: $department->id,isManager: true);
+                $department_member = $this->employeeDepartmentsRepository->createEmployeeDepartment(employeeId: $manager, departmentId: $department->id, isManager: true);
             }
             return redirect()->route("hr_departments")->with("success", "Department added successfully");
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("hr_departments")->with("error", "Something went wrong! Contact support");
         }
@@ -94,11 +91,10 @@ class DepartmentsController extends Controller
         abort_if(Gate::denies('edit_department'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $department = $this->departmentRepository->getDepartment($id);
-            return response()->json(["department"=>$department], 200);
-        }
-        catch (Exception $exception){
+            return response()->json(["department" => $department], 200);
+        } catch (Exception $exception) {
             Log::error($exception);
-            return response()->json(["department"=>null], 404);
+            return response()->json(["department" => null], 404);
         }
     }
 
@@ -115,7 +111,7 @@ class DepartmentsController extends Controller
             $name = $request->get("department_name");
             $this->departmentRepository->updateDepartment($request->get("id"), $name);
             return redirect()->route("hr_departments")->with("success", "Department updated successfully");
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("hr_departments")->with("error", "Something went wrong! Contact support");
         }
@@ -132,7 +128,7 @@ class DepartmentsController extends Controller
         try {
             $this->departmentRepository->deleteDepartment($id);
             return redirect()->route("hr_departments")->with("success", "Department deleted successfully");
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("hr_departments")->with("error", "Something went wrong! Contact support");
         }
