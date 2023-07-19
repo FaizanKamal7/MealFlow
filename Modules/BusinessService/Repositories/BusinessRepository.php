@@ -23,6 +23,7 @@ class BusinessRepository implements BusinessInterface
         $card_cvv,
         $business_category_id,
         $admin,
+        $status
     ) {
         $business = Business::create([
             "name" => $name,
@@ -34,6 +35,7 @@ class BusinessRepository implements BusinessInterface
             "card_cvv" => $card_cvv,
             "business_category_id" => $business_category_id,
             "admin_id" => $admin,
+            "status" => $status
         ]);
         // $business->save();
         return $business;
