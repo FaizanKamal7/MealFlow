@@ -8,4 +8,7 @@ interface DriverInterface {
     public function getDrivers();
     public function getDriver($id);
 
+    public function getDriverByEmployeeId($employee_id);
+    public function delete_driver($id);
+
 }

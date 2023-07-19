@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\FleetService\Interfaces\DriverInterface;
 use Modules\FleetService\Interfaces\VehicleInterface;
-use Modules\FleetService\Interfaces\VehicleLogInterface;
+use Modules\FleetService\Interfaces\VehicleTimelineInterface;
 use Modules\FleetService\Interfaces\VehicleModelInterface;
 use Modules\FleetService\Interfaces\VehicleTypeInterface;
 
@@ -33,9 +33,9 @@ class DashboardController extends Controller
     {
         $vehicles = $this->vehicleRepository->getVehicles();
         $vehicletypes =$this->vehicleTypeRepository->getActiveVehicleTypes();
-        // $vehicleLogs = $this->vehicleLogRepository->getallVehicleLogs();
-        $vehicleLogs="";
-        $context = ['vehicles'=>$vehicles,'vehicleTypes'=>$vehicletypes,'vehicleLogs'=>$vehicleLogs];
+        // $vehicletimeline = $this->vehicleLogRepository->getallVehicletimeline();
+        $vehicletimeline="";
+        $context = ['vehicles'=>$vehicles,'vehicleTypes'=>$vehicletypes,'vehicleLogs'=>$vehicletimeline];
         
         return view('fleetservice::dashboard.dashboard',$context);
     }

@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->string("status")->nullable();
             $table->string("weight")->nullable();
             $table->string("dimensions")->nullable();
+            //Partner ID
             $table->timestamps();
             $table->uuid("business_id");
 
