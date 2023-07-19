@@ -2,5 +2,6 @@
     "HRManagement": true,
     "UserService": true,
     "BusinessService": true,
-    "FleetService": true
+    "FleetService": true,
+    "DeliveryService": true
 }

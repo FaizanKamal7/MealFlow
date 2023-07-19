@@ -22,6 +22,7 @@ class FleetController extends Controller
         return view('fleetservice::Fleets.fleet_detail');
     }
 
+
     /**
      * Show the form for creating a new resource.
 

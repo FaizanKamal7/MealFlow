@@ -39,7 +39,7 @@
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <!--begin::Logo-->
                 <a href="#">
-                    <img alt="Logo" src="{{ asset('static/media/arazeelogo.png') }}" class="h-35px logo"/>
+                    <img alt="Logo" src="{{ asset('static/media/logo_dark_horizontal.png') }}" class="h-35px logo"/>
                 </a>
                 <!--end::Logo-->
                 <!--begin::Aside toggler-->
@@ -337,7 +337,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="{{ route("add_fleet") }}">
+                                        <a class="menu-link" href="{{ route("fleet_vehicle_add") }}">
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
@@ -868,7 +868,7 @@
                 <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
                     <a href="/" class="btn btn-custom btn-warning w-100"
                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"
-                       title="visit Araazee.com" style="background-color: #EF7F22;">
+                       title="visit logx.com" style="background-color: #EF7F22;">
                         <span class="btn-label">Visit Website</span>
                         <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg') }}-->
                         <span class="svg-icon btn-icon svg-icon-2">
