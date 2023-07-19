@@ -57,7 +57,7 @@ class DeliverySlotController extends Controller
         $cities_arr = explode(",", $cities);
 
         // TODO: Validator for data
-        echo '<pre>' . var_export($cities_arr, true) . '</pre>';
+        // echo '<pre>' . var_export($cities_arr, true) . '</pre>';
         foreach ($cities_arr as $key => $city) {
             foreach ($delivery_slots_list as $key => $delivery_slot) {
                 $start_time = $delivery_slot['start_time'];
@@ -65,7 +65,7 @@ class DeliverySlotController extends Controller
                 $this->deliverySlotRepository->addDeliverySlots($start_time, $end_time, $city);
             }
         }
-        dd();
+
         return redirect()->route("get_all_delivery_slots")->with("success", "Business added successfully");
     }
 
