@@ -17,7 +17,9 @@ use HasUuids;
         "bag_type", // courier bag, backpack, tote bag
         "status", //in transit, delivered, in wearhouse
         "weight",
-        "dimensions" //length x width x height
+        "dimensions", //length x width x height
+
+        "business_id"
     ];
 
     protected static function newFactory()

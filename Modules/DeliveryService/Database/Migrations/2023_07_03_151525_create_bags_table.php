@@ -22,6 +22,9 @@ return new class extends Migration {
             $table->string("weight")->nullable();
             $table->string("dimensions")->nullable();
             $table->timestamps();
+            $table->uuid("business_id");
+
+            $table->foreign("business_id")->references("id")->on("businesses")->onDelete("cascade");
         });
     }
 

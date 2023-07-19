@@ -19,6 +19,7 @@ Route::prefix('businessservice')->group(function () {
     Route::group(['prefix' => 'onboarding/'], function () {
         Route::get("", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "index"])->name("business_onboarding");
         Route::post("add/", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "businessOnboarding"])->name("business_onboarding_add");
+        Route::get("pricing", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "pricingCalculator"])->name("pricing_calculator");
     });
 
     Route::group(['prefix' => 'new_requests/'], function () {
