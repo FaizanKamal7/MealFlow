@@ -31,23 +31,33 @@ class BagsController extends Controller
     {
         return view('deliveryservice::index');
     }
+    public function addBag()
+    {
+        
+        return view('deliveryservice::bags.add_bag');
+    }
 
     /**
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function storeBag(Request $request)
+    public function storeBag(Request $request,$partner_id)
     {
         $path = public_path('media/bags/qrcodes/' . time() . '.svg');
-        try {
-            $bag = $this->bagsRepository->addNewBag(qrCode: "", bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"));
-            QrCode::size(400)
-                ->generate($bag->id, $path);
-            $this->bagsRepository->updateBag(id: $bag->id, qrCode: $path, bagNumber: "", bagSize: "", bagType: "", status: "", weight: "", dimensions: "");
-        } catch (Exception $exception) {
-            Log::error($exception);
-            return redirect()->to("del_bags")->with("error", "Something went wrong!Contact support");
-        }
+        $request->validate([
+            'partner_id'=>['required'],
+            'no_of_bags'=>['required','numeric']
+        ]);
+        echo "here".$partner_id;
+        // try {
+        //     $bag = $this->bagsRepository->addNewBag(qrCode: "", bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"));
+        //     QrCode::size(400)
+        //         ->generate($bag->id, $path);
+        //     $this->bagsRepository->updateBag(id: $bag->id, qrCode: $path, bagNumber: "", bagSize: "", bagType: "", status: "", weight: "", dimensions: "");
+        // } catch (Exception $exception) {
+        //     Log::error($exception);
+        //     return redirect()->to("del_bags")->with("error", "Something went wrong!Contact support");
+        // }
     }
 
     /**
