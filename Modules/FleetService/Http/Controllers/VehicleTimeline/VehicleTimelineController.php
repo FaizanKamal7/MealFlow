@@ -1,18 +1,18 @@
 <?php
 
-namespace Modules\FleetService\Http\Controllers\VehicleLog;
+namespace Modules\FleetService\Http\Controllers\VehicleTimeline;
 
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Log;
-use Modules\FleetService\Interfaces\VehicleLogInterface;
+use Modules\FleetService\Interfaces\VehicleTimelineInterface;
 
-class VehicleLogController extends Controller
+class VehicleTimelineController extends Controller
 {
 
-    private VehicleLogInterface $vehicleLogRepository;
+    private VehicleTimelineInterface $vehicleTimelineRepository;
 
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class VehicleLogController extends Controller
      */
 
 
-    public function __construct(VehicleLogInterface $vehicleRepository){
-        $this->vehicleLogRepository = $vehicleRepository;
+    public function __construct(VehicleTimelineInterface $vehicleRepository){
+        $this->vehicleTimelineRepository = $vehicleRepository;
     }
 
     
@@ -43,14 +43,14 @@ class VehicleLogController extends Controller
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function storeVehicleLog(Request $request)
+    public function storeVehicleTimeline(Request $request)
     {
         try {
             $vehicle_id = $request->get("vehicle_id");
             $driver_id = $request->get("driver_id");
             $device_detail = $request->get("device_detail");
             $check_in_time =  date('Y-m-d H:i:s');
-            $this->vehicleLogRepository->createVehicleLog(vehileID:$vehicle_id,driveID:$driver_id,checkInTime:$check_in_time,checkOutTime:"",checkedOutUser:"", deviceDetails:$device_detail);
+            $this->vehicleTimelineRepository->createVehicleTimeline(vehileID:$vehicle_id,driveID:$driver_id,checkInTime:$check_in_time,checkOutTime:"",checkedOutUser:"", deviceDetails:$device_detail);
         }
         catch(Exception $exception)
         {
@@ -85,13 +85,13 @@ class VehicleLogController extends Controller
      * @param Request $request
      * @param int $id
      */
-    public function updateVehicleLog(Request $request, $id)
+    public function updateVehicleTimeline(Request $request, $id)
     {
         try {
             $checkout_user = $request->get("checked_out_user");
             $device_detail = $request->get("device_detail");
             $check_out_time =  date('Y-m-d H:i:s');
-            $this->vehicleLogRepository->updateVehicleLog(id:$id ,checkOutTime:$check_out_time,checkedOutUser:$checkout_user, deviceDetails:$device_detail);
+            $this->vehicleTimelineRepository->updateVehicleTimeline(id:$id ,checkOutTime:$check_out_time,checkedOutUser:$checkout_user, deviceDetails:$device_detail);
         }
         catch(Exception $exception)
         {

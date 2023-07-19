@@ -37,7 +37,7 @@ class Vehicle extends Model
         'Registration_picture',
         'Registration_issue_date',
         'Registration_expiry_date',
-        'status',
+        'active_status',
         'mileage',
         'vehicle_type_id',
     ];
@@ -55,14 +55,14 @@ class Vehicle extends Model
     {
         return $this->belongsTo(VehicleModel::class, 'vehicle_model_id');
     }
-    public function logs()
+    public function timelines()
     {
-        return $this->hasMany(VehicleLog::class)->orderBy('check_in_time', 'asc');
+        return $this->hasMany(VehicleTimeline::class)->orderBy('check_in_time', 'asc');
 
     }
-    public function lastIncompleteLog()
+    public function lastIncompleteTimeline()
     {
-        return $this->hasOne(VehicleLog::class)
+        return $this->hasOne(VehicleTimeline::class)
             ->orderBy('created_at', 'desc')
             ->whereNull('check_out_time');
     }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
+use Modules\FleetService\Http\Requests\VehicleRequest;
 use Modules\FleetService\Interfaces\VehicleInterface;
 use Modules\FleetService\Interfaces\VehicleTypeInterface;
 use Modules\FleetService\Interfaces\VehicleModelInterface;
@@ -78,10 +79,12 @@ class VehicleController extends Controller
      * @param Request $request
      * 
      */
-    public function storeVehicle(Request $request)
+    public function storeVehicle(VehicleRequest $request)
     {
         $path = 'media/vehicle/qrcodes/' . time() . '.svg';
+        $request->validated();
         try {
+            
             // Retrieve the values from the request
             $registrationNumber = $request->get('registration_number');
             $engineNumber = $request->get('engine_number');
@@ -134,6 +137,8 @@ class VehicleController extends Controller
         } catch (Exception $exception) {
             Log::error($exception);
             error_log("error " . $exception);
+            dd($exception);
+            // return redirect()->route("fleet_vehicle")->with("error", "Something went wrong! contact support");
         }
     }
 
