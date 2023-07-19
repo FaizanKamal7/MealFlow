@@ -14,15 +14,25 @@ return new class extends Migration
     public function up()
     {
         Schema::create('vehicle_fuels', function (Blueprint $table) {
-            $table->uuid("id")->primary();
-            $table->uuid('vehicle_id');
-            $table->date('fuel_date')->nullable();
-            $table->decimal('fuel_amount', 10, 2)->nullable();
-            $table->decimal('fuel_cost', 10, 2)->nullable();
 
-            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete("set null");
-           
-            $table->timestamps();
+                $table->uuid('id');
+                $table->uuid('vehicle_id')->nullable();
+                $table->uuid('driver_id')->nullable();
+                $table->enum('fuel_type', ['Diesel', 'Petrol', 'Gas', 'Electric']);
+                $table->decimal('fuel_quantity', 10, 2);
+                $table->date('fuel_date');
+                $table->decimal('Fuel_cost', 10, 2)->nullable();
+                $table->string('supplier', 100)->nullable();
+                $table->string('notes', 255)->nullable();
+                
+                $table->timestamps();
+                $table->softDeletes();
+
+                // Define foreign key constraints
+                $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete("set null");
+                $table->foreign('driver_id')->references('id')->on('drivers')->onDelete("set null");
+
+
         });
     }
 

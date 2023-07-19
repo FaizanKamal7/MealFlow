@@ -15,13 +15,20 @@ return new class extends Migration
     {
         Schema::create('vehicle_maintenances', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->uuid('vehicle_id');
+            $table->uuid('vehicle_id')->nullable();
+            $table->uuid('employee_id')->nullable();
             $table->date('maintenance_date');
+            $table->string('maintenance_type', 50);
             $table->text('description');
             $table->decimal('cost', 10, 2);
-
+            $table->text('notes')->nullable(); //vendor
+            $table->text('Garage')->nullable(); //additional notes 
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete("set null");
+            // $table->foreign('employee_id')->references('id')->on('employees')->onDelete("set null");
+
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

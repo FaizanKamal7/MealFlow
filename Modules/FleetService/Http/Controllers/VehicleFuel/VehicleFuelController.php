@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\FleetService\Http\Controllers;
+namespace Modules\FleetService\Http\Controllers\VehicleFuel;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -10,48 +10,30 @@ class VehicleFuelController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
-    {
-        return view('fleetservice::index');
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
      */
-    public function create()
+    public function viewFuelLogs()
     {
-        return view('fleetservice::create');
+        return view('fleetservice::Fleets.logs.fuels');
     }
 
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
+
      */
-    public function store(Request $request)
+    public function storeFuelLog(Request $request)
     {
-        //
+
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('fleetservice::show');
-    }
 
     /**
      * Show the form for editing the specified resource.
      * @param int $id
-     * @return Renderable
+
      */
-    public function edit($id)
+    public function editFuelLog($id)
     {
         return view('fleetservice::edit');
     }
@@ -60,9 +42,9 @@ class VehicleFuelController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
-     * @return Renderable
+
      */
-    public function update(Request $request, $id)
+    public function updateFuelLog(Request $request, $id)
     {
         //
     }
@@ -70,9 +52,9 @@ class VehicleFuelController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @return Renderable
+
      */
-    public function destroy($id)
+    public function destroyFuelLog($id)
     {
         //
     }
