@@ -84,7 +84,7 @@
                                                 </div>
 
                                             </div>
-											@if(!$driver->logs->first()->check_out_time)
+											@if(!$driver->timelines->first()->check_out_time)
 
                                             <div class="me-2 mb-4 ps-10">
                                                 <div
@@ -99,8 +99,8 @@
                                             <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                                                 <div class="flex-grow-1 me-2">
 
-                                                    <a href="#" class="text-gray-400 fs-1x fw-bold">{{ucfirst($driver->logs->first()->vehicle->vehicleModel->make)}} {{ucfirst($driver->logs->first()->vehicle->vehicleModel->model)}}</a>
-                                                    <a href="#" class="text-gray-400 fs-1x fw-bold">{{$driver->logs->first()->vehicle->registration_number}}</a>
+                                                    <a href="#" class="text-gray-400 fs-1x fw-bold">{{ucfirst($driver->timelines->first()->vehicle->vehicleModel->make)}} {{ucfirst($driver->timelines->first()->vehicle->vehicleModel->model)}}</a>
+                                                    <a href="#" class="text-gray-400 fs-1x fw-bold">{{$driver->timelines->first()->vehicle->registration_number}}</a>
 
 
 
@@ -128,10 +128,10 @@
                                         <!--begin::Timeline-->
                                         <div class="timeline-label">
 											@php
-											$logCount = count($driver->logs);
+											$logCount = count($driver->timelines);
 											$showMore = $logCount > 1;
 											@endphp
-                                            @foreach ($driver->logs->take(1) as $log)
+                                            @foreach ($driver->timelines->take(1) as $log)
 												{{-- ---FOR CHECK IN  --}}
 
 												@if (!$log->check_out_time)
@@ -222,7 +222,7 @@
                                             </div>
 											{{-- <button id="viewMoreButton" class="btn btn-primary mt-3">View More</button> --}}
 											<div id="hiddenLogs" style="display: none;">
-												@foreach ($driver->logs->slice(1) as $log)
+												@foreach ($driver->timelines->slice(1) as $log)
 												{{-- ---FOR CHECK IN  --}}
 
 												@if (!$log->check_out_time)

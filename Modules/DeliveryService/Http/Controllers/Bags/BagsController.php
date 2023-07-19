@@ -45,7 +45,7 @@ class BagsController extends Controller
                 ->generate($bag->id, $path);
             $this->bagsRepository->updateBag(id: $bag->id, qrCode: $path, bagNumber: "", bagSize: "", bagType: "", status: "", weight: "", dimensions: "");
         } catch (Exception $exception) {
-            Log::error($exception);
+            dd($exception);
             return redirect()->to("del_bags")->with("error", "Something went wrong!Contact support");
         }
     }

@@ -19,7 +19,7 @@ class AreaRepository implements AreaInterface
 
     public function getWhere($where)
     {
-        return Area::where($where)->get();
+        return Area::with('city')->where($where)->get();
     }
 
     public function getWhereSingle($where)

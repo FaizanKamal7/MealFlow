@@ -76,7 +76,7 @@
                                                 </div>
 
                                             </div>
-											@if(!$driver->logs->first()->check_out_time)
+											@if(!$driver->timelines->first()->check_out_time)
 
                                             <div class="me-2 mb-4 ps-10">
                                                 <div
@@ -91,8 +91,8 @@
                                             <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                                                 <div class="flex-grow-1 me-2">
 
-                                                    <a href="#" class="text-gray-400 fs-1x fw-bold">{{ucfirst($driver->logs->first()->vehicle->vehicleModel->make)}} {{ucfirst($driver->logs->first()->vehicle->vehicleModel->model)}}</a>
-                                                    <a href="#" class="text-gray-400 fs-1x fw-bold">{{$driver->logs->first()->vehicle->registration_number}}</a>
+                                                    <a href="#" class="text-gray-400 fs-1x fw-bold">{{ucfirst($driver->timelines->first()->vehicle->vehicleModel->make)}} {{ucfirst($driver->timelines->first()->vehicle->vehicleModel->model)}}</a>
+                                                    <a href="#" class="text-gray-400 fs-1x fw-bold">{{$driver->timelines->first()->vehicle->registration_number}}</a>
 
 
 
@@ -119,30 +119,31 @@
                                         <!--end::Wrapper-->
                                         <!--begin::Timeline-->
                                         <div class="timeline-label">
+                                            @if($driver->timelines)
 											@php
-											$logCount = count($driver->logs);
-											$showMore = $logCount > 1;
+											$timelineCount = count($driver->timelines);
+											$showMore = $timelineCount > 1;
 											@endphp
-                                            @foreach ($driver->logs->take(1) as $log)
+                                            @foreach ($driver->timelines->take(1) as $timeline)
 												{{-- ---FOR CHECK IN  --}}
 
-												@if (!$log->check_out_time)
+												@if (!$timeline->check_out_time)
 												<div class="timeline-item mb-15">
 
 
 													<!--begin::Label-->
-													<div class="timeline-label fw-bolder text-gray-800 fs-6 ">{{ \Carbon\Carbon::parse($log->check_in_time)->format('j-M-Y') }}</div>
+													<div class="timeline-label fw-bolder text-gray-800 fs-6 ">{{ \Carbon\Carbon::parse($timeline->check_in_time)->format('j-M-Y') }}</div>
 													<!--end::Label-->
 													<!--begin::Badge-->
 													<div class="timeline-badge">
 														<i class="fa fa-genderless text-warning fs-1"></i>
 													</div>
 													<div class="timeline-content d-flex">
-                                                        <span class="fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($log->check_in_time)->format('H:i:s')}}</span>
+                                                        <span class="fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($timeline->check_in_time)->format('H:i:s')}}</span>
                                                         <div class="fw-mormal timeline-content text-muted ps-3"></div>
 										
                                                         <span
-                                                            class="badge badge-lg badge-light-success fw-bolder " data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top" data-bs-custom-class="tooltip-dark" title="Model : AGZ5161<br>Registration N0 : JAKSHSA67<br>Owner : Ali Ahmed <br>Engine :1817CC Turbo">Vehicle :{{$log->vehicle->registration_number}}</span>
+                                                            class="badge badge-lg badge-light-success fw-bolder " data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top" data-bs-custom-class="tooltip-dark" title="Model : AGZ5161<br>Registration N0 : JAKSHSA67<br>Owner : Ali Ahmed <br>Engine :1817CC Turbo">Vehicle :{{$timeline->vehicle->registration_number}}</span>
 
                                                     </div>
 													<!--end::Badge-->
@@ -155,7 +156,7 @@
                                                 <!--begin::Item-->
                                                 <div class="timeline-item mb-15 mt-5">
                                                     <!--begin::Label-->
-                                                    <div class="timeline-label fw-bolder text-gray-800 fs-6">{{ \Carbon\Carbon::parse($log->check_in_time)->format('j-M-Y') }}</div>
+                                                    <div class="timeline-label fw-bolder text-gray-800 fs-6">{{ \Carbon\Carbon::parse($timeline->check_in_time)->format('j-M-Y') }}</div>
                                                     <!--end::Label-->
                                                     <!--begin::Badge-->
                                                     <div class="timeline-badge">
@@ -164,10 +165,10 @@
                                                     <!--end::Badge-->
                                                     <!--begin::Content-->
                                                     <div class="timeline-content d-flex">
-                                                        <span class="fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($log->check_in_time)->format('H:i:s')}}</span>
+                                                        <span class="fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($timeline->check_in_time)->format('H:i:s')}}</span>
                                                         <div class="fw-mormal timeline-content text-muted ps-3"></div>
                                                         <span
-                                                            class="badge badge-lg badge-light-success fw-bolder" data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top" data-bs-custom-class="tooltip-dark" title="Model : AGZ5161<br>Registration N0 : JAKSHSA67<br>Owner : Ali Ahmed <br>Engine :1817CC Turbo">Vehicle :{{$log->vehicle->registration_number}}</span>
+                                                            class="badge badge-lg badge-light-success fw-bolder" data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top" data-bs-custom-class="tooltip-dark" title="Model : AGZ5161<br>Registration N0 : JAKSHSA67<br>Owner : Ali Ahmed <br>Engine :1817CC Turbo">Vehicle :{{$timeline->vehicle->registration_number}}</span>
 
                                                     </div>
                                                     <!--end::Content-->
@@ -177,7 +178,7 @@
                                                 <!--begin::Item-->
                                                 <div class="timeline-item mb-15">
                                                     <!--begin::Label-->
-                                                    <div class="timeline-label fw-bolder text-gray-800 fs-6">{{ \Carbon\Carbon::parse($log->check_out_time)->format('j-M-Y')}}</div>
+                                                    <div class="timeline-label fw-bolder text-gray-800 fs-6">{{ \Carbon\Carbon::parse($timeline->check_out_time)->format('j-M-Y')}}</div>
                                                     <!--end::Label-->
                                                     <!--begin::Badge-->
                                                     <div class="timeline-badge">
@@ -185,10 +186,10 @@
                                                     </div>
                                                     <!--end::Badge-->
                                                     <!--begin::Desc-->
-                                                    <div class="timeline-content fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($log->check_out_time)->format('H:i:s') }}
+                                                    <div class="timeline-content fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($timeline->check_out_time)->format('H:i:s') }}
 														
                                                     </div>
-                                                    <span class="badge badge-lg badge-light-danger fw-bolder ">Vehicle :{{$log->vehicle->registration_number}}</span>
+                                                    <span class="badge badge-lg badge-light-danger fw-bolder ">Vehicle :{{$timeline->vehicle->registration_number}}</span>
 
                                                     <!--end::Desc-->
                                                 </div>
@@ -214,25 +215,25 @@
                                             </div>
 											{{-- <button id="viewMoreButton" class="btn btn-primary mt-3">View More</button> --}}
 											<div id="hiddenLogs" style="display: none;">
-												@foreach ($driver->logs->slice(1) as $log)
+												@foreach ($driver->timelines->slice(1) as $timeline)
 												{{-- ---FOR CHECK IN  --}}
 
-												@if (!$log->check_out_time)
+												@if (!$timeline->check_out_time)
 												<div class="timeline-item mb-15">
 
 
 													<!--begin::Label-->
-													<div class="timeline-label fw-bolder text-gray-800 fs-6 ">{{ \Carbon\Carbon::parse($log->check_in_time)->format('j-M-Y') }}</div>
+													<div class="timeline-label fw-bolder text-gray-800 fs-6 ">{{ \Carbon\Carbon::parse($timeline->check_in_time)->format('j-M-Y') }}</div>
 													<!--end::Label-->
 													<!--begin::Badge-->
 													<div class="timeline-badge">
 														<i class="fa fa-genderless text-warning fs-1"></i>
 													</div>
 													<div class="timeline-content d-flex">
-                                                        <span class="fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($log->check_in_time)->format('H:i:s')}}</span>
+                                                        <span class="fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($timeline->check_in_time)->format('H:i:s')}}</span>
                                                         <div class="fw-mormal timeline-content text-muted ps-3"></div>
                                                         <span
-                                                            class="badge badge-lg badge-light-success fw-bolder " data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top" data-bs-custom-class="tooltip-dark" title="Model : AGZ5161<br>Registration N0 : JAKSHSA67<br>Owner : Ali Ahmed <br>Engine :1817CC Turbo">Vehicle :{{$log->vehicle->registration_number}}</span>
+                                                            class="badge badge-lg badge-light-success fw-bolder " data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top" data-bs-custom-class="tooltip-dark" title="Model : AGZ5161<br>Registration N0 : JAKSHSA67<br>Owner : Ali Ahmed <br>Engine :1817CC Turbo">Vehicle :{{$timeline->vehicle->registration_number}}</span>
 
                                                     </div>
 													<!--end::Badge-->
@@ -244,7 +245,7 @@
                                                 <!--begin::Item-->
                                                 <div class="timeline-item mb-15 mt-5">
                                                     <!--begin::Label-->
-                                                    <div class="timeline-label fw-bolder text-gray-800 fs-6">{{ \Carbon\Carbon::parse($log->check_in_time)->format('j-M-Y') }}</div>
+                                                    <div class="timeline-label fw-bolder text-gray-800 fs-6">{{ \Carbon\Carbon::parse($timeline->check_in_time)->format('j-M-Y') }}</div>
                                                     <!--end::Label-->
                                                     <!--begin::Badge-->
                                                     <div class="timeline-badge">
@@ -253,10 +254,10 @@
                                                     <!--end::Badge-->
                                                     <!--begin::Content-->
                                                     <div class="timeline-content d-flex">
-                                                        <span class="fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($log->check_in_time)->format('H:i:s')}}</span>
+                                                        <span class="fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($timeline->check_in_time)->format('H:i:s')}}</span>
                                                         <div class="fw-mormal timeline-content text-muted ps-3"></div>
                                                         <span
-                                                            class="badge badge-lg badge-light-success fw-bolder " data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top" data-bs-custom-class="tooltip-dark" title="Model : AGZ5161<br>Registration N0 : JAKSHSA67<br>Owner : Ali Ahmed <br>Engine :1817CC Turbo">Vehicle :{{$log->vehicle->registration_number}}</span>
+                                                            class="badge badge-lg badge-light-success fw-bolder " data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top" data-bs-custom-class="tooltip-dark" title="Model : AGZ5161<br>Registration N0 : JAKSHSA67<br>Owner : Ali Ahmed <br>Engine :1817CC Turbo">Vehicle :{{$timeline->vehicle->registration_number}}</span>
 
                                                     </div>
                                                     <!--end::Content-->
@@ -266,7 +267,7 @@
                                                 <!--begin::Item-->
                                                 <div class="timeline-item mb-15">
                                                     <!--begin::Label-->
-                                                    <div class="timeline-label fw-bolder text-gray-800 fs-6">{{ \Carbon\Carbon::parse($log->check_out_time)->format('j-M-Y')}}</div>
+                                                    <div class="timeline-label fw-bolder text-gray-800 fs-6">{{ \Carbon\Carbon::parse($timeline->check_out_time)->format('j-M-Y')}}</div>
                                                     <!--end::Label-->
                                                     <!--begin::Badge-->
                                                     <div class="timeline-badge">
@@ -274,10 +275,10 @@
                                                     </div>
                                                     <!--end::Badge-->
                                                     <!--begin::Desc-->
-                                                    <div class="timeline-content fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($log->check_out_time)->format('H:i:s') }}
+                                                    <div class="timeline-content fw-bolder text-gray-800 ps-3">{{ \Carbon\Carbon::parse($timeline->check_out_time)->format('H:i:s') }}
 														
                                                     </div>
-                                                    <span class="badge badge-lg badge-light-danger fw-bolder ">Vehicle :{{$log->vehicle->registration_number}}</span>
+                                                    <span class="badge badge-lg badge-light-danger fw-bolder ">Vehicle :{{$timeline->vehicle->registration_number}}</span>
 
                                                     <!--end::Desc-->
                                                 </div>
@@ -287,7 +288,9 @@
 											</div>
 											@endif
 
-
+                                            @else
+                                            <div> No Recor found</div>
+                                            @endif
 
                                         </div>
                                     </div>
