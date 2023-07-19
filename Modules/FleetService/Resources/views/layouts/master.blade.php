@@ -337,6 +337,14 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
+                                        <a class="menu-link" href="{{ route("fleet_view_drivers") }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                            <span class="menu-title">Drivers</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item">
                                         <a class="menu-link" href="{{ route("fleet_vehicle_add") }}">
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
