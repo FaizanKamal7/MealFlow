@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
+use Modules\FleetService\Http\Requests\VehicleTypeRequest;
 use Modules\FleetService\Interfaces\VehicleTypeInterface;
 
 class VehicleTypesController extends Controller
@@ -37,8 +38,10 @@ class VehicleTypesController extends Controller
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function storeVehicleType(Request $request)
+    public function storeVehicleType(VehicleTypeRequest $request)
     {
+        $request->validated();
+      
         try {
             $type = strtolower($request->get("vehicle_type"));
             $capacity = $request->get("vehicle_capacity");
@@ -75,8 +78,9 @@ class VehicleTypesController extends Controller
      * @param Request $request
      * @param int $id
      */
-    public function updateVehicleType(Request $request, $id)
+    public function updateVehicleType(CreateVehicleTypeRequest $request, $id)
     {
+        $request->validated();
         try {
             $type = strtolower($request->get("updated_type_name"));
             $capacity = $request->get("updated_type_capacity");

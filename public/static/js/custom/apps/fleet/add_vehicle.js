@@ -10,19 +10,7 @@ var addVehicleValidator = FormValidation.formValidation(
                     notEmpty: {
                         message: 'Registration number is required'
                     },
-                    async: {
-                        url: 'is-unique-vehicle',
-                        type: 'get',
-                        data: {
-                            'field': 'registration_number',
-                            'value': function() {
-                                return $('[name="registration_number"]').val();
-                            }
-                        },
-                        message: 'Registration number already exists',
-                        delay: 500,
-                    
-                    }
+                   
                     }
             },
             'engine_number': {
@@ -30,18 +18,7 @@ var addVehicleValidator = FormValidation.formValidation(
                     notEmpty: {
                         message: 'Engine number is required'
                     },
-                    async: {
-                        url: 'is-unique-vehicle',
-                        type: 'get',
-                        data: {
-                            'field': 'engine_number',
-                            'value': function() {
-                                return $('[name="engine_number"]').val();
-                            }
-                        },
-                        message: 'Engine number already exists',
-                        delay: 500
-                    }
+                   
                 }
             },
             'chassis_number': {
@@ -49,18 +26,6 @@ var addVehicleValidator = FormValidation.formValidation(
                     notEmpty: {
                         message: 'Chassis number is required'
                     },
-                    async: {
-                        url: 'is-unique-vehicle',
-                        type: 'get',
-                        data: {
-                            'field': 'chassis_number',
-                            'value': function() {
-                                return $('[name="chassis_number"]').val();
-                            }
-                        },
-                        message: 'Chassis number already exists',
-                        delay: 500
-                    }
                 }
             },
             'vehicle_make': {
@@ -288,7 +253,8 @@ vehicleSubmitButton.addEventListener('click', function (e) {
                     //         confirmButton: "btn btn-primary"
                     //     }
                     // });
-
+        // Show the loader
+                    $('#loader').show();
                     addVehicleForm.submit(); // Submit form
                 }, 1500);
             }

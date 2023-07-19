@@ -64,7 +64,7 @@ Route::prefix('fleets')->group(function () {
         Route::get('', [Modules\FleetService\Http\Controllers\Driver\DriverController::class, "viewDrivers"])->name("fleet_view_drivers");
         Route::post('add/', [Modules\FleetService\Http\Controllers\Driver\DriverController::class, "storeDriver"])->name("fleet_store_driver");
         Route::get('{driver_id}/driver_timeline', [Modules\FleetService\Http\Controllers\Driver\DriverController::class, "showDriverTimeline"])->name("fleet_view_driver_timeline");
-
+        Route::delete('{driver_id}/delete',[Modules\FleetService\Http\Controllers\Driver\DriverController::class, "delete_driver"])->name("delete_driver");
         Route::get('{driver_id}/details', [Modules\FleetService\Http\Controllers\Driver\DriverController::class, "showDriver"])->name("fleet_view_driver_detail");
         Route::post('{driver_id}/update', [Modules\FleetService\Http\Controllers\Driver\DriverController::class, "updateDriver"])->name("fleet_update_driver_detail");
 
