@@ -92,27 +92,28 @@ class AreaController extends Controller
         $city_id = $request->input('city_id');
         $areas_to_upload = [];
 
-        foreach ($selected_areas as $area) {
-            $area_object = json_decode($area);
-            $area_geoname_exist = $this->areaRepository->getWhereSingle([['geoname_id', $area_object->geonameId]]);
+        if ($selected_areas) {
+            foreach ($selected_areas as $area) {
+                $area_object = json_decode($area);
+                $area_geoname_exist = $this->areaRepository->getWhereSingle([['geoname_id', $area_object->geonameId]]);
 
-            if ($area_geoname_exist == null) {
+                if ($area_geoname_exist == null) {
 
-                // $coordinates = serialize([$area_object->lat, $area_object->lng]);
-                $coordinates = $area_object->lat . "," . $area_object->lng;
+                    // $coordinates = serialize([$area_object->lat, $area_object->lng]);
+                    $coordinates = $area_object->lat . "," . $area_object->lng;
 
-                $single_area =
-                    [
-                        'actve_status' => true,
-                        'name' => $area_object->name,
-                        'city_id' =>  $city_id,
-                        'geoname_id' =>  $area_object->geonameId,
-                        'coordinates' =>  $coordinates,
-                    ];
-                $this->areaRepository->add($single_area);
+                    $single_area =
+                        [
+                            'actve_status' => true,
+                            'name' => $area_object->name,
+                            'city_id' =>  $city_id,
+                            'geoname_id' =>  $area_object->geonameId,
+                            'coordinates' =>  $coordinates,
+                        ];
+                    $this->areaRepository->add($single_area);
+                }
             }
         }
-
         $city = $this->cityRepository->get($city_id);
         $this->cityRepository->update($city_id, ['active_status' => true]);
         $this->stateRepository->update($city->state_id, ['active_status' => true]);

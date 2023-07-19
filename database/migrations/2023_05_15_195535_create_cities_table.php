@@ -32,18 +32,6 @@ return new class extends Migration
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countires')->onDelete('cascade');
         });
-
-        // Schema::table('cities', function (Blueprint $table) {
-
-
-        //     $table->string('state_code');
-        //     $table->uuid('country_id');
-        //     $table->string('country_code');
-        //     $table->string('latitude')->nullable();
-        //     $table->string('longitude')->nullable();
-        //     $table->boolean('flag')->default(false);
-        //     $table->string('wikiDataId')->nullable();
-        // });
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DeliverySlots\DeliverySlotController;
 use App\Http\Controllers\Admin\LocationManagement\Area\AreaController;
 use App\Http\Controllers\Admin\LocationManagement\City\CityController;
 use App\Http\Controllers\Admin\LocationManagement\State\StateController;
@@ -79,6 +80,12 @@ Route::group(['prefix' => 'core/'], function () {
             Route::get("/extract-api-areas-of-city/{city_id}/{city_name}", [AreaController::class, "extractAreasOfCityFromAPI"])->name("extract_api_areas_of_city");
             Route::get("/search-city", [CityController::class, "search"])->name("search_city");
             Route::get("/activate_api_areas", [AreaController::class, "activateCityAreas"])->name("activate_city_areas");
+        });
+
+        Route::group(['prefix' => 'delivery-slots/'], function () {
+            Route::get("/get-delivery-slots", [DeliverySlotController::class, "index"])->name("get_all_delivery_slots");
+            Route::get("/add-delivery-slots", [DeliverySlotController::class, "addDeliverySlots"])->name("add_delivery_slots");
+            
         });
     });
 });
