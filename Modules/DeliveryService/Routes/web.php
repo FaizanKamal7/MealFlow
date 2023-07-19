@@ -13,5 +13,12 @@
 
 Route::prefix('delivery')->group(function() {
     Route::get('/', 'DeliveryServiceController@index');
-    Route::get('/bag', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "storeBag"])->name("add_new_bag");
+
+    Route::group(['prefix' => 'bag/'], function () {
+        Route::get('/add', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "addBag"])->name("add_new_bag");
+        Route::post('/add/{partner_id}', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "storeBag"])->name("store_new_bag");
+
+    });
+
+    
 });

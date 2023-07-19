@@ -109,10 +109,7 @@
                                         </button>
                                         <!--end::Update-->
                                         <!--begin::Delete-->
-                                        <form method="post"
-                                            action="{{ route('delete_vehicle_model', ['vehicle_model' => $model]) }}">
-                                            @csrf
-                                            <button class="btn btn-icon btn-active-light-primary w-30px h-30px" type="submit"
+                                            <button class="btn btn-icon btn-active-light-primary w-30px h-30px" type="button" onclick="event.preventDefault(); document.getElementById('delete-form').submit();"
                                                 data-kt-permissions-table-filter="delete_row">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                 <span class="svg-icon svg-icon-3">
@@ -131,6 +128,9 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </button>
+                                            <form method="post" id="delete-form"
+                                            action="{{ route('delete_vehicle_model', ['vehicle_model' => $model]) }}" onsubmit="return confirm('Are you sure you want to Delete Type ?');" hidden>
+                                            @csrf
                                         </form>
                                         <!--end::Delete-->
                                     </td>
