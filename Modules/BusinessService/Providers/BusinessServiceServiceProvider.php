@@ -4,6 +4,23 @@ namespace Modules\BusinessService\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\BusinessService\Entities\BusinessCategory;
+use Modules\BusinessService\Entities\BusinessCustomer;
+use Modules\BusinessService\Entities\BusinessUser;
+use Modules\BusinessService\Interfaces\BranchCoverageInterface;
+use Modules\BusinessService\Interfaces\BranchInterface;
+use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
+use Modules\BusinessService\Interfaces\OnboardingInterface;
+use Modules\BusinessService\Interfaces\BusinessCovergeInterface;
+use Modules\BusinessService\Interfaces\BusinessInterface;
+use Modules\BusinessService\Interfaces\BusinessUserInterface;
+use Modules\BusinessService\Repositories\BranchCoverageRepository;
+use Modules\BusinessService\Repositories\BranchRepository;
+use Modules\BusinessService\Repositories\BusinessCategoryRepository;
+use Modules\BusinessService\Repositories\BusinessCustomerRepository;
+use Modules\BusinessService\Repositories\BusinessRepository;
+use Modules\BusinessService\Repositories\BusinessUserRepository;
+use Modules\BusinessService\Repositories\OnboardingRepository;
 
 class BusinessServiceServiceProvider extends ServiceProvider
 {
@@ -38,6 +55,14 @@ class BusinessServiceServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+
+        $this->app->bind(OnboardingInterface::class, OnboardingRepository::class);
+        $this->app->bind(BusinessInterface::class, BusinessRepository::class);
+        $this->app->bind(BranchCoverageInterface::class, BranchCoverageRepository::class);
+        $this->app->bind(BranchInterface::class, BranchRepository::class);
+        $this->app->bind(BusinessCategoryInterface::class, BusinessCategoryRepository::class);
+        $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
+        $this->app->bind(BusinessUserInterface::class, BusinessUserRepository::class);
     }
 
     /**
@@ -51,7 +76,8 @@ class BusinessServiceServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 

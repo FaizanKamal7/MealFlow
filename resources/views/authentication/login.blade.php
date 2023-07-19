@@ -1,5 +1,5 @@
 @extends('layouts.others_master')
-@section('title', 'login')
+@section('title', 'Login')
 
 @section('main_content')
 

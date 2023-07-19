@@ -28,7 +28,7 @@ class VehicleRepository implements VehicleInterface{
  * @param string|null $registration_picture
  * @param string|null $registration_issue_date (in Y-m-d format)
  * @param string|null $registration_expiry_date (in Y-m-d format)
- * @param string $status (default: 'available')
+ * @param string $active_status (default: 'available')
  * @param int $mileage (default: 0)
  * @param int|null $maintenance_interval
  * @param string|null $vehicle_type_id
@@ -36,7 +36,7 @@ class VehicleRepository implements VehicleInterface{
  * @param \Illuminate\Support\Carbon|null $updated_at
  */
 
- public function createVehicle($registrationNumber,$engineNumber,$chassisNumber,$vehicleModelID,$vehicleYear,$vehicleColor,$vehicleStatus,$vehicleTypeId,$vehiclePicture = null,$vehicleMileage,$registrationPicture = null,$registrationIssueDate,$registrationExpiryDate,$insurancePicture= null,$insuranceIssueDate,$insuranceExpiryDate,$municipalityPicture= null,$municipalityIssueDate,$municipalityExpiryDate,$apiUnitId,$qrCode= null)
+ public function createVehicle($registrationNumber,$engineNumber,$chassisNumber,$vehicleModelID,$vehicleYear,$vehicleColor,$vehicle_active_status,$vehicleTypeId,$vehiclePicture = null,$vehicleMileage,$registrationPicture = null,$registrationIssueDate,$registrationExpiryDate,$insurancePicture= null,$insuranceIssueDate,$insuranceExpiryDate,$municipalityPicture= null,$municipalityIssueDate,$municipalityExpiryDate,$apiUnitId,$qrCode= null)
  {
    $vehicle = Vehicle::create([
       'api_unit_id' => $apiUnitId,
@@ -57,7 +57,7 @@ class VehicleRepository implements VehicleInterface{
       'Registration_picture' => $registrationPicture,
       'Registration_issue_date' => $registrationIssueDate,
       'Registration_expiry_date' => $registrationExpiryDate,
-      'status' => $vehicleStatus,
+      'active_status' => $vehicle_active_status,
       'mileage' => $vehicleMileage,
       'vehicle_type_id' => $vehicleTypeId,
   ]);
@@ -65,7 +65,7 @@ class VehicleRepository implements VehicleInterface{
   return $vehicle;
 
  }
- public function updateVehicle($id,$registrationNumber,$engineNumber,$chassisNumber,$vehicleModel,$vehicleYear,$vehicleColor,$vehicleStatus,$vehicleTypeId,$vehiclePicture = null,$vehicleMileage,$registrationPicture = null,$registrationIssueDate,$registrationExpiryDate,$insurancePicture= null,$insuranceIssueDate,$insuranceExpiryDate,$municipalityPicture= null,$municipalityIssueDate,$municipalityExpiryDate,$apiUnitId,$qrCode){
+ public function updateVehicle($id,$registrationNumber,$engineNumber,$chassisNumber,$vehicleModel,$vehicleYear,$vehicleColor,$vehicle_active_status,$vehicleTypeId,$vehiclePicture = null,$vehicleMileage,$registrationPicture = null,$registrationIssueDate,$registrationExpiryDate,$insurancePicture= null,$insuranceIssueDate,$insuranceExpiryDate,$municipalityPicture= null,$municipalityIssueDate,$municipalityExpiryDate,$apiUnitId,$qrCode){
       
   
       $vehicle =Vehicle::find($id);
@@ -88,7 +88,7 @@ class VehicleRepository implements VehicleInterface{
       $vehicle->Registration_picture = $registrationPicture;
       $vehicle->Registration_issue_date = $registrationIssueDate;
       $vehicle->Registration_expiry_date = $registrationExpiryDate;
-      $vehicle->status = $vehicleStatus;
+      $vehicle->active_status = $vehicle_active_status;
       $vehicle->mileage = $vehicleMileage;
       $vehicle->vehicle_type_id = $vehicleTypeId;
 
@@ -96,12 +96,23 @@ class VehicleRepository implements VehicleInterface{
     return $vehicle;
  }
 
+ public function updateVehicleFields($id,$fields){
+    $vehicle =Vehicle::find($id);
+    $vehicle->fill($fields);
+    return $vehicle->save();
+
+ }
 
  public function getVehicles(){
-   return Vehicle::all();
+   return Vehicle::with('vehicleType', 'vehicleModel','lastIncompleteTimeline.driver.employee')->get();
  }
  public function getVehicle($id){
   return Vehicle::find($id);
+ }
+
+ public function deleteVehicle($id){
+     $vehicle= Vehicle::find($id);
+     return $vehicle->delete();
  }
 
  public function getVehicleByCriteria($field,$value){

@@ -39,7 +39,7 @@ return new class extends Migration
             $table->date("registration_issue_date")->nullable();
             $table->date("registration_expiry_date")->nullable();
 
-            $table->string('status')->default('available');
+            $table->string('active_status')->default('available');
             $table->integer('mileage')->default(0);
 
             $table->uuid("vehicle_type_id")->nullable();
