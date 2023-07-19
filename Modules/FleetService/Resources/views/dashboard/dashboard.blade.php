@@ -446,9 +446,9 @@
 														
 													{{$vehicle->lastIncompleteLog->driver->employee->first_name}}
 												
-													{{-- @if($vehicle->logs->count()>0)
-														@if(!$vehicle->logs->last()->check_out_time)
-															{{$vehicle->logs->last()->driver->employee->first_name}}
+													{{-- @if($vehicle->timeline->count()>0)
+														@if(!$vehicle->timeline->last()->check_out_time)
+															{{$vehicle->timeline->last()->driver->employee->first_name}}
 														@endif
 													@endif --}}
 												</span>

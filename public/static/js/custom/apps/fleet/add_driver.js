@@ -11,24 +11,24 @@ var addDriverValidator = FormValidation.formValidation(
                     notEmpty: { message: "Employee  is required" },
                 },
             },
-            'licence_number': {
+            'license_number': {
                 validators: {
-                    notEmpty: { message: " Licence Number is required" },
+                    notEmpty: { message: " License Number is required" },
                 },
             },
-            'licence_Document': {
+            'license_Document': {
                 validators: {
-                    notEmpty: { message: "Licence Document  is required" },
+                    notEmpty: { message: "License Document  is required" },
                 },
             },
-            'licence_issue_Date': {
+            'license_issue_Date': {
                 validators: {
-                    notEmpty: { message: "Licence Issue Date  is required" },
+                    notEmpty: { message: "License Issue Date  is required" },
                 },
             },
-            'licence_expiry_Date': {
+            'license_expiry_Date': {
                 validators: {
-                    notEmpty: { message: "Licence Expiry Date is required" },
+                    notEmpty: { message: "License Expiry Date is required" },
                 },
             },
         },
@@ -66,26 +66,27 @@ driverSubmitButton.addEventListener('click', function (e) {
                 driverSubmitButton.disabled = true;
 
                 // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                setTimeout(function () {
-                    // Remove loading indication
-                    driverSubmitButton.removeAttribute('data-kt-indicator');
+                // setTimeout(function () {
+                //     // Remove loading indication
+                //     driverSubmitButton.removeAttribute('data-kt-indicator');
 
-                    // Enable button
-                    driverSubmitButton.disabled = false;
+                //     // Enable button
+                //     driverSubmitButton.disabled = false;
 
-                    // Show popup confirmation
-                    Swal.fire({
-                        text: "Form has been successfully submitted!",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    });
+                //     // Show popup confirmation
+                //     Swal.fire({
+                //         text: "Form has been successfully submitted!",
+                //         icon: "success",
+                //         buttonsStyling: false,
+                //         confirmButtonText: "Ok, got it!",
+                //         customClass: {
+                //             confirmButton: "btn btn-primary"
+                //         }
+                //     });
 
-                    addDriverForm.submit(); // Submit form
-                }, 1500);
+                //     addDriverForm.submit(); // Submit form
+                // }, 1500);
+                addDriverForm.submit(); 
             }
         });
     }
