@@ -4,7 +4,6 @@ namespace Modules\HRManagement\Interfaces;
 
 interface DepartmentInterface
 {
-
     public function createDepartment($departmentName,$status="active");
     public function updateDepartment($id,$departmentName=null,$status=null);
     public function getDepartments();

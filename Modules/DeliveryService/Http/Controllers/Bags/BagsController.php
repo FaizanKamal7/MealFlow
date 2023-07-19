@@ -44,6 +44,7 @@ class BagsController extends Controller
     public function storeBag(Request $request,$partner_id)
     {
         $path = public_path('media/bags/qrcodes/' . time() . '.svg');
+
         $request->validate([
             'partner_id'=>['required'],
             'no_of_bags'=>['required','numeric']

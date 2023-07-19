@@ -12,8 +12,17 @@ class Area extends Model
     use HasUuids;
 
     protected $fillable = [
-        "name",
-        "city_id",
-        'area_code',
+        'active_status',
+        'name',
+        'city_id',
+        'geoname_id',
+        'coordinates',
+        'is_deleted',
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
 }
