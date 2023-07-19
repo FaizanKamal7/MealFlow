@@ -6,6 +6,7 @@ use App\Interfaces\ApplicationModelInterface;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
 use App\Interfaces\CountryInterface;
+use App\Interfaces\DeliverySlotInterface;
 use App\Interfaces\PermissionInterface;
 use App\Interfaces\RoleInterface;
 use App\Interfaces\RolePermissionInterface;
@@ -18,6 +19,7 @@ use App\Repositories\ApplicationModelRepository;
 use App\Repositories\AreaRepository;
 use App\Repositories\CityRepository;
 use App\Repositories\CountryRepository;
+use App\Repositories\DeliverySlotRepository;
 use App\Repositories\PermissionRepository;
 use App\Repositories\RolePermissionRepository;
 use App\Repositories\RoleRepository;
@@ -50,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AreaInterface::class, AreaRepository::class);
         $this->app->bind(StateInterface::class, StateRepository::class);
         $this->app->bind(CountryInterface::class, CountryRepository::class);
+        $this->app->bind(DeliverySlotInterface::class, DeliverySlotRepository::class);
     }
 
     /**
