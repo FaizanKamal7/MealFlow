@@ -3,9 +3,11 @@
 namespace Modules\FleetService\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 use Modules\FleetService\Interfaces\VehicleInterface;
 use Modules\FleetService\Interfaces\VehicleLogInterface;
+use Modules\FleetService\Repositories\DriverAreaRepository;
 use Modules\FleetService\Repositories\DriverRepository;
 use Modules\FleetService\Repositories\VehicleRepository;
 use Modules\FleetService\Interfaces\VehicleFuelInterface;
@@ -57,7 +59,8 @@ class FleetServiceServiceProvider extends ServiceProvider
         $this->app->bind(VehicleFuelInterface::Class, VehicleFuelRepository::class);
         $this->app->bind(VehicleMaintenanceInterface::Class, VehicleMaintenanceRepository::class);
         $this->app->bind(DriverInterface::Class, DriverRepository::class);
-        // $this->app->bind(VehicleLogInterface::Class, VehicleLogRepository::class);
+        $this->app->bind(DriverAreaInterface::Class, DriverAreaRepository::class);
+
 
 
 
