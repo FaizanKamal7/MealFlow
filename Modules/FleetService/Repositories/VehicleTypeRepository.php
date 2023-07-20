@@ -12,11 +12,12 @@ class VehicleTypeRepository implements VehicleTypeInterface
      * @param $is_Active
     */
 
-    public function createVehicleType($name,$capacity,$activeStatus)
+    public function createVehicleType($name,$capacity,$icon,$activeStatus)
     {
         $vehicle_type = VehicleType::create([
             "name"=>$name,
             'capacity'=>$capacity,
+            'icon'=>$icon,
             'active_status'=>$activeStatus,
         ]);
         
@@ -31,11 +32,12 @@ class VehicleTypeRepository implements VehicleTypeInterface
      * @param $capacity
      * @param $is_Active
     */
-    public function updateVehicleType($id, $name,$capacity,$activeStatus){
+    public function updateVehicleType($id, $name,$capacity,$icon,$activeStatus){
         $vehicle_type = VehicleType::find($id);
 
         $vehicle_type->name = $name;
         $vehicle_type->capacity = $capacity;
+        $vehicle_type->icon = $icon;
         $vehicle_type->active_status = $activeStatus;
 
         $vehicle_type->save();

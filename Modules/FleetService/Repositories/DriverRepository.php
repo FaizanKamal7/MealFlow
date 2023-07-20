@@ -23,12 +23,34 @@ class DriverRepository implements DriverInterface
         return $driver;
 
     }
+
+    public function updateDriver($id,$license_number, $is_available, $license_document, $license_issue_date, $license_expiry_date){
+
+        $driver = Driver::findorFail($id);
+
+        $driver->license_number = $license_number;
+        $driver->is_available = $is_available;
+        $driver->license_document = $license_document;
+        $driver->license_issue_date = $license_issue_date;
+        $driver->license_expiry_date = $license_expiry_date;
+
+        return $driver->save();
+    }
     public function getDrivers(){
-        return Driver::all();
+        return Driver::with('employee','timelines.vehicle')->get();
     }
     public function getDriver($id){
         return Driver::find($id);
     }
+
+    public function getDriverByEmployeeId($employee_id){
+        return Driver::where(["employee_id"=>$employee_id])->first();
+    }
+
+    public function delete_driver($id){
+        return Driver::find($id)->delete();
+    }
+
 
 
 }
