@@ -37,6 +37,9 @@ Route::prefix('fleets')->group(function () {
         Route::get('is-unique-vehicle/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'isUniqueVehicle'])->name("fleet_vehicle_is_unique");
         Route::get('get-make-models/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'getMakeModels'])->name("fleet_vehicle_get_make_models");
 
+        //------------------------------------TIME LINE---------------------------------------------------------------------------
+        Route::get('vehicle-timeline/', [Modules\FleetService\Http\Controllers\VehicleTimeline\VehicleTimelineController::class, 'index'])->name("fleet_vehicle_timeline");
+
 
     });
     Route::group(['prefix' => 'logs/'], function () {

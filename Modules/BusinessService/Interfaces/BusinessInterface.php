@@ -18,4 +18,5 @@ interface BusinessInterface
     );
 
     public function getNewBusinesses();
+    public function getBusinesses();
 }
