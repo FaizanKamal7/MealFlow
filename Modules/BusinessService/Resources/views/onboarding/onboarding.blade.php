@@ -60,7 +60,7 @@
                             <!--end::Label-->
                         </div>
                         <!--end::Step 2-->
-                        {{--
+
                         <!--begin::Step 3-->
                         <div class="stepper-item" data-kt-stepper-element="nav">
                             <!--begin::Line-->
@@ -81,7 +81,7 @@
                         </div>
                         <!--end::Step 3-->
                         <!--begin::Step 4-->
-                        <div class="stepper-item" data-kt-stepper-element="nav">
+                        {{-- <div class="stepper-item" data-kt-stepper-element="nav">
                             <!--begin::Line-->
                             <div class="stepper-line w-40px"></div>
                             <!--end::Line-->
@@ -138,7 +138,6 @@
                         action="{{ route('business_onboarding_add') }}" enctype="multipart/form-data">
                         <!--begin::Step 1-->
                         <div class="current" data-kt-stepper-element="content">
-                            {{-- @csrf --}}
                             {{ csrf_field() }}
 
                             <!--begin::Wrapper-->
@@ -284,6 +283,27 @@
                                     <!--begin::Input-->
                                     <input name="logo" class="form-control form-control-lg form-control"
                                         value="Keenthemes Inc." type="file" />
+
+
+                                    <!--begin::Dropzone-->
+                                    {{-- <div class="dropzone" id="kt_dropzonejs_example_1">
+                                        <!--begin::Message-->
+                                        <div class="dz-message needsclick">
+                                            <i class="ki-duotone ki-file-up fs-3x text-primary"><span
+                                                    class="path1"></span><span class="path2"></span></i>
+
+                                            <!--begin::Info-->
+                                            <div class="ms-4">
+                                                <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or
+                                                    click to upload.</h3>
+                                                <span class="fs-7 fw-semibold text-gray-400">Upload up to 10
+                                                    files</span>
+                                            </div>
+                                            <!--end::Info-->
+                                        </div>
+                                    </div> --}}
+                                    <!--end::Dropzone-->
+
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -320,88 +340,6 @@
                                 </div>
                                 <!--end::Input group-->
 
-                                <!--begin::Input group-->
-                                <div class="row fv-row mb-7">
-                                    <!--begin::Col-->
-                                    <div class="col-lg-4">
-                                        <label class="form-label required">Country</label>
-
-                                        <!--begin::Input group-->
-                                        <select id="country" class="form-select form-select-solid" name="country"
-                                            data-control="select2" data-placeholder="Select an option"
-                                            data-allow-clear="true" onchange="fetchStates()">
-
-                                            <option value="">Select country</option>
-                                            @if ($countries->count())
-                                            @foreach ($countries as $country)
-                                            <option value={{$country['id']}}>{{$country['name']}}</option>
-                                            @endforeach
-                                            @else
-                                            <option value="">Countries not available</option>
-                                            @endif
-                                        </select>
-                                        <!--end::Input group-->
-
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--end::Col-->
-                                    <div class="col-xl-4">
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">State</label>
-                                            <!--end::Label-->
-                                            <select id="state" name="state" class="form-select form-select-solid"
-                                                data-control="select2" data-placeholder="Choose" data-allow-clear="true"
-                                                onchange="fetchCities()">
-                                                <option value="">Select State</option>
-
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!--begin::Col-->
-                                    <div class="col-xl-4">
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">City</label>
-                                            <!--end::Label-->
-                                            <select id="city" class="form-select form-select-solid"
-                                                data-control="select2" data-placeholder="Choose city" name="city"
-                                                data-allow-clear="true" onchange="fetchAreas()">
-                                                <option value="">Select City</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!--end::Col-->
-                                    <!--begin::Col-->
-                                    <div class="col-xl-12">
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">Area</label>
-                                            <!--end::Label-->
-                                            <select id="area" class="form-select form-select-solid"
-                                                data-control="select2" data-placeholder="Choose area" name="area"
-                                                data-allow-clear="true">
-                                                <option value="">Select Area</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!--end::Col-->
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
-                                <div class=" fv-row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label required">Address</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input name="address" class="form-control form-control-lg form-control-solid" />
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
 
                                 <!--begin::Input group-->
                                 <div class="fv-row mb-10">
@@ -419,171 +357,160 @@
                         </div>
                         <!--end::Step 2-->
                         <!--------------------------------------------------------------------------------->
-                        {{--
+
                         <!--begin::Step 3-->
                         <div class="" data-kt-stepper-element="content">
                             <!--begin::Wrapper-->
                             <div class="w-100">
                                 <div class="pb-10 pb-lg-15">
                                     <!--begin::Title-->
-                                    <h2 class="fw-bolder text-dark">Extra Detail</h2>
+                                    <h2 class="fw-bolder text-dark">Business coverage</h2>
                                     <!--end::Title-->
                                     <!--begin::Notice-->
-                                    <div class="text-muted fw-bold fs-6">If you need more info, please check out
+                                    <div class="text-muted fw-bold fs-6">Please add information for your main business
+                                        branch. Select branch coverage areas
                                         <a href="#" class="link-primary fw-bolder">Help Page</a>.
                                     </div>
                                     <!--end::Notice-->
                                 </div>
 
+                                <div class="row fv-row mb-7">
+                                    <!--begin::Repeater-->
+                                    <div id="location_delivery_slots_repeater">
+                                        <!--begin::Form group-->
+                                        <div class="form-group">
+                                            <div data-repeater-list="area_coverage_list">
+                                                <div data-repeater-item>
+                                                    <div class="form-group row">
+                                                        <!--begin::Col-->
+                                                        <div class="col-xl-4">
+                                                            <label class="form-label required">Country</label>
 
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label required">Category</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <select name="category" class="form-select form-select-lg form-select-solid"
-                                        data-control="select2" data-placeholder="Select..." data-allow-clear="true"
-                                        data-hide-search="true">
-                                        <option></option>
-                                        <option value="1">Food delivery</option>
-                                        <option value="1">Grocery delivery</option>
-                                        <option value="2">Pharmacy and medical supply delivery</option>
-                                        <option value="3">Package and parcel delivery</option>
-                                        <option value="4">Alcohol and beverage delivery</option>
-                                        <option value="5">Flower and gift delivery</option>
-                                        <option value="6">Pet supply and pet food delivery</option>
-                                        <option value="7">Beauty and personal care delivery</option>
+                                                            <!--begin::Input group-->
+                                                            <select id="country" class="form-select form-select-solid"
+                                                                name="country" data-control="select2"
+                                                                data-placeholder="Select an option"
+                                                                data-allow-clear="true" onchange="fetchStates()">
+
+                                                                <option value="">Select country</option>
+                                                                @if ($countries->count())
+                                                                @foreach ($countries as $country)
+                                                                <option value={{$country['id']}}>{{$country['name']}}
+                                                                </option>
+                                                                @endforeach
+                                                                @else
+                                                                <option value="">Countries not available</option>
+                                                                @endif
+                                                            </select>
+                                                            <!--end::Input group-->
+
+                                                        </div>
+                                                        <!--end::Col-->
+                                                        <div class="col-xl-4">
+                                                            <div class="fv-row mb-10">
+                                                                <!--begin::Label-->
+                                                                <label class="form-label">State</label>
+                                                                <!--end::Label-->
+                                                                <select id="state" name="state"
+                                                                    class="form-select form-select-solid"
+                                                                    data-control="select2" data-placeholder="Choose"
+                                                                    data-allow-clear="true" onchange="fetchCities()">
+                                                                    <option value="">Select State</option>
 
 
-                                    </select>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="mb-10 fv-row">
-                                    <!--begin::Label-->
-                                    <label class="d-flex align-items-center form-label mb-3">Number of Branches
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                            title="Provide your team size to help us setup your billing"></i></label>
-                                    <!--end::Label-->
-                                    <!--begin::Row-->
-                                    <div class="row mb-2" data-kt-buttons="true">
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="num_of_branches"
-                                                    value="1-1" />
-                                                <span class="fw-bolder fs-3">1-1</span>
-                                            </label>
-                                            <!--end::Option-->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <!--begin::Col-->
+                                                        <div class="col-xl-4">
+                                                            <div class="fv-row mb-10">
+                                                                <!--begin::Label-->
+                                                                <label class="form-label">City</label>
+                                                                <!--end::Label-->
+                                                                <select id="city" class="form-select form-select-solid"
+                                                                    data-control="select2"
+                                                                    data-placeholder="Choose city" name="city"
+                                                                    data-allow-clear="true"
+                                                                    onchange="fetchDeliverySlotsOfCity()">
+                                                                    <option value="">Select City</option>
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Col-->
+
+                                                        <!--begin::Col-->
+                                                        <div class="col-xl-8">
+                                                            <div class="fv-row mb-10">
+                                                                <!--begin::Label-->
+                                                                <label class="form-label required">Areas</label>
+                                                                <!--end::Label-->
+
+                                                                <select id="area"
+                                                                    class="form-select form-select-lg form-select-solid"
+                                                                    data-control="select2"
+                                                                    data-placeholder="Choose Areas" name="area"
+                                                                    data-allow-clear="true" multiple="multiple">
+                                                                </select>
+                                                                <!--hidden text field-->
+                                                                <input type="hidden" id="areas" name="areas" />
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Col-->
+                                                        <!--begin::Col-->
+                                                        <div class="col-xl-8">
+                                                            <div class="fv-row mb-10">
+                                                                <!--begin::Label-->
+                                                                <label class="form-label required">Delivery
+                                                                    Slots</label>
+                                                                <!--end::Label-->
+
+                                                                <select id="delivery_slots"
+                                                                    class="form-select form-select-lg form-select-solid"
+                                                                    data-control="select2"
+                                                                    data-placeholder="Choose Delivery slots"
+                                                                    name="delivery_slots" data-allow-clear="true"
+                                                                    multiple="multiple">
+                                                                </select>
+                                                                <!--hidden text field-->
+                                                                <input type="hidden" id="selected_delivery_slots"
+                                                                    name="selected_delivery_slots" />
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Col-->
+
+                                                        <div class="col-xl-2">
+                                                            <div class="fv-row mb-10">
+                                                                <a href="javascript:;" data-repeater-delete
+                                                                    class="btn btn-sm btn-light-danger mt-3 mt-md-8">
+                                                                    Delete
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="separator mb-6"></div>
+
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4 active">
-                                                <input type="radio" class="btn-check" name="num_of_branches"
-                                                    checked="checked" value="2-10" />
-                                                <span class="fw-bolder fs-3">2-10</span>
-                                            </label>
-                                            <!--end::Option-->
+                                        <!--end::Form group-->
+
+
+
+                                        <!--begin::Form group-->
+                                        <div class="form-group mt-5">
+                                            <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
+                                                <i class="ki-duotone ki-plus fs-3"></i>
+                                                Add another coverage area
+                                            </a>
                                         </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="num_of_branches"
-                                                    value="10-50" />
-                                                <span class="fw-bolder fs-3">10-50</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="num_of_branches"
-                                                    value="50+" />
-                                                <span class="fw-bolder fs-3">50+</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
+                                        <!--end::Form group-->
                                     </div>
-                                    <!--end::Row-->
-
                                 </div>
-                                <!--end::Input group-->
-                                <div class="mb-10 fv-row">
-                                    <!--begin::Label-->
-                                    <label class="d-flex align-items-center form-label mb-3">No of Deliveries
-                                        Per
-                                        Day
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                            title="Provide your team size to help us setup your billing"></i></label>
-                                    <!--end::Label-->
-                                    <!--begin::Row-->
-                                    <div class="row mb-2" data-kt-buttons="true">
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="account_team_size"
-                                                    value="1-50" />
-                                                <span class="fw-bolder fs-3">1-50</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4 active">
-                                                <input type="radio" class="btn-check" name="account_team_size"
-                                                    checked="checked" value="50-100" />
-                                                <span class="fw-bolder fs-3">50-100</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="account_team_size"
-                                                    value="100-150" />
-                                                <span class="fw-bolder fs-3">100-150</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="account_team_size"
-                                                    value="500+" />
-                                                <span class="fw-bolder fs-3">500+</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Row-->
+                                <!--end::Repeater-->
 
-                                </div>
+
+
                                 <div
                                     class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
                                     <!--begin::Icon-->
@@ -605,27 +532,13 @@
                                     <div class="d-flex flex-stack flex-grow-1">
                                         <!--begin::Content-->
                                         <div class="fw-bold">
-                                            <h4 class="text-gray-900 fw-bolder">No of deliveries will determine
-                                                cost
-                                                per
-                                                delivery</h4>
-                                            <div class="fs-6 text-gray-700">Below is the pricing for all the
-                                                areas
-                                                of
-                                                your selected cities <b>Per Day</b> you can check pricing
-                                                details
-                                                <a href="#" class="fw-bolder">here</a>
+                                            <h4 class="text-gray-900 fw-bolder">You will get notified about all the
+                                                pricing details </h4>
+                                            <div class="fs-6 text-gray-700">Your branch area coverage and timeslots will
+                                                determine pricing for each service. For more details
+                                                <a href="#" class="fw-bolder">click here</a>
                                             </div>
-                                            <ul>
 
-                                                <li>First 8 deliveries = USD 5.4/Delivery</li>
-                                                <li>9 - 20 deliveries = USD 5.13/Delivery</li>
-                                                <li>21 - 40 deliveries = USD 4.59/Delivery</li>
-                                                <li>41 - 80 deliveries = USD 4.32/Delivery</li>
-                                                <li>81 - 160 deliveries = USD 4.05/Delivery</li>
-                                                <li>161 - 320 deliveries = USD 3.78/Delivery</li>
-
-                                            </ul>
                                         </div>
                                         <!--end::Conte  nt-->
                                     </div>
@@ -637,7 +550,7 @@
                         <!--end::Step 3-->
                         <!--------------------------------------------------------------------------------->
                         <!--begin::Step 4-->
-                        <div class="" data-kt-stepper-element="content">
+                        {{-- <div class="" data-kt-stepper-element="content">
                             <!--begin::Wrapper-->
                             <div class="w-100">
                                 <!--begin::Heading-->
@@ -834,7 +747,8 @@
                                             <!--begin::Content-->
                                             <div class="fw-bold">
                                                 <h4 class="text-gray-900 fw-bolder">Go on and login to explore</h4>
-                                                <div class="fs-6 text-gray-700">>All the pricing related info and much
+                                                <div class="fs-6 text-gray-700">>All the pricing related info and
+                                                    much
                                                     more will
                                                     be available once you login
 
@@ -937,7 +851,119 @@
 
 @section('extra_js')
 <script src="{{ asset('static/js/custom/authentication/sign-up/onboarding.js')}}"></script>
+<script src="{{ asset('static/js/custom/core/locations.js')}}"></script>
+<script src="{{ asset('static/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
+<script src="{{ asset('static/plugins/custom/utilities/multiselect-dropdown.js')}}"></script>
+
+
 <script>
+    function fetchDeliverySlotsOfCity() {
+    fetchAreasWithMultiSelectOption();
+    var cityID = document.getElementById("city").value;
+    var deliverySlotsDropdown = document.getElementById("delivery_slots");
+
+    // Clear current options
+    deliverySlotsDropdown.innerHTML = '<option value="">Select Slot</option>';
+
+    // Make AJAX request to fetch area
+    if (cityID) {
+        var url = "/core/settings/delivery-slots/get-delivery-slots-of-city";
+
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            data: { city_id: cityID },
+            success: function (response) {
+                // Keep track of the iterations
+                var iteration = 0;
+
+                // Populate city dropdown
+                // Loop through the response data and create an option element for each item
+                response.forEach((item) => {
+                    // If it's the first iteration, append the "Select All" option
+                    if (iteration === 0) {
+                        const allOption = document.createElement("option");
+                        allOption.value = "all";
+                        allOption.text = "Select All";
+                        deliverySlotsDropdown.appendChild(allOption);
+                    }
+                    const option = document.createElement("option");
+                    option.value = item.id; // Set the value attribute
+                    option.text = item.start_time + " - " + item.end_time; // Set the displayed text
+                    deliverySlotsDropdown.appendChild(option); // Add the option to the dropdown
+                    iteration++; // Increase the counter
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+}
+
+
+function fetchAreasWithMultiSelectOption() {
+    var cityID = document.getElementById("city").value;
+
+    var areaDropdown = document.getElementById("area");
+
+    // Clear current options
+    areaDropdown.innerHTML = '<option value="">Select area</option>';
+
+    // Make AJAX request to fetch area
+    if (cityID) {
+        var url = "/core/settings/locations/get-areas";
+
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            data: { city_id: cityID },
+            success: function (response) {
+                // Keep track of the iterations
+                var iteration = 0;
+
+                // Populate city dropdown
+                // Loop through the response data and create an option element for each item
+                response.forEach((item) => {
+                    // If it's the first iteration, append the "Select All" option
+                    if (iteration === 0) {
+                        const allOption = document.createElement("option");
+                        allOption.value = "all";
+                        allOption.text = "Select All";
+                        areaDropdown.appendChild(allOption);
+                    }
+                    const option = document.createElement("option");
+                    option.value = item.id; // Set the value attribute
+                    option.text = item.name; // Set the displayed text
+                    areaDropdown.appendChild(option); // Add the option to the dropdown
+                    iteration++; // Increase the counter
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+}
+    $("#location_delivery_slots_repeater").repeater({
+        initEmpty: false,
+
+        defaultValues: {
+            "text-input": "foo",
+        },
+
+        show: function () {
+            $(this).slideDown();
+        },
+
+        hide: function (deleteElement) {
+            $(this).slideUp(deleteElement);
+        },
+    });
+
+
     const countriesSelect = document.getElementById("countries");
 
         fetch("https://restcountries.com/v3.1/all")
@@ -960,5 +986,50 @@
                 });
             })
             .catch((error) => console.log(error));
+
+            // selecting all areas
+            $(document).ready(function(){
+                $('#area').change(function(){
+                    var selectedAreas = $(this).val();
+
+                    if (selectedAreas.includes('all')) {
+                        selectedAreas = [];
+                        $(this).find('option').each(function() {
+                            if ($(this).val() != 'all') {
+                                selectedAreas.push($(this).val());
+                            }
+                        });
+
+                        // Select all options in the dropdown, except 'all'
+                        $(this).val(selectedAreas).trigger('change');
+                    }
+
+                    // Update hidden field
+                    $('#areas').val(selectedAreas.join(','));
+                });
+
+                $('#delivery_slots').change(function(){
+                    var selectedDeliverySlots = $(this).val();
+
+                    if (selectedDeliverySlots.includes('all')) {
+                        selectedDeliverySlots = [];
+                        $(this).find('option').each(function() {
+                            if ($(this).val() != 'all') {
+                                selectedDeliverySlots.push($(this).val());
+                            }
+                        });
+
+                        // Select all options in the dropdown, except 'all'
+                        $(this).val(selectedDeliverySlots).trigger('change');
+                    }
+
+                    // Update hidden field
+                    $('#selected_delivery_slots').val(selectedDeliverySlots.join(','));
+                });
+            });
+
+
+
+
 </script>
 @endsection

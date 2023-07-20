@@ -92,7 +92,7 @@
                                     </td>
 
                                     <td>
-                                        <span class="badge badge-light-warning">Waiting Approval</span>
+                                        <span class="badge badge-light-success">Approved</span>
 
                                         @if ($business->business_categories)
                                         {{$business->business_categories->name}}

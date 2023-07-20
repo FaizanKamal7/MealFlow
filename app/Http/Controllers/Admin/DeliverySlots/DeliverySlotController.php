@@ -38,19 +38,25 @@ class DeliverySlotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addDeliverySlots(Request $request)
+
+    public function addDeliverySlotView()
     {
+        $delivery_slots = $this->deliverySlotRepository->getAllDeliverySlots();
+        $countries = $this->countryRepository->getAllActiveCountries();
+
+        return view('admin.delivery_slots.add_delivery_slot', ['delivery_slots' => $delivery_slots, 'countries' => $countries]);
+    }
+
+    public function storeDeliverySlots(Request $request)
+    {
+
         $delivery_slots_list = $request->delivery_slots_list;
         $end_time = $request->end_time;
         $country = $request->country;
         $state = $request->state;
         $cities = $request->cities;
 
-        echo '<pre>' . var_export($delivery_slots_list, true) . '</pre>';
-
-
-        // var_dump($delivery_slots_list);
-
+        // echo '<pre>' . var_export($delivery_slots_list, true) . '</pre>';
 
         // -- First character is a comma and then remove it 
         $cities = $cities[0] == ',' ? substr($cities, 1) : $cities;
@@ -58,6 +64,7 @@ class DeliverySlotController extends Controller
 
         // TODO: Validator for data
         // echo '<pre>' . var_export($cities_arr, true) . '</pre>';
+
         foreach ($cities_arr as $key => $city) {
             foreach ($delivery_slots_list as $key => $delivery_slot) {
                 $start_time = $delivery_slot['start_time'];
@@ -66,62 +73,13 @@ class DeliverySlotController extends Controller
             }
         }
 
-        return redirect()->route("get_all_delivery_slots")->with("success", "Business added successfully");
+        return redirect()->route("get_all_delivery_slots")->with("success", "Delivery Slot added successfully");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function getDeliverySlotsOfCity(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $delivery_slots = $this->deliverySlotRepository->getAllDeliverySlotsOfCity($request->city_id);
+        return response()->json($delivery_slots->toArray());
     }
 }

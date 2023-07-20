@@ -84,6 +84,5 @@ class AppServiceProvider extends ServiceProvider
                 return count(array_intersect($rolesArray, $roles)) > 0;
             });
         }
-
     }
 }
