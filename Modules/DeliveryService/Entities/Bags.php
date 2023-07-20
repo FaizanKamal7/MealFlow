@@ -11,6 +11,7 @@ class Bags extends Model
     use HasFactory;
 use HasUuids;
     protected $fillable = [
+        "partner_id",
         "qr_code",
         "bag_number",
         "bag_size", //small,medium,large or capacity (5 ltr, 10 ltr)

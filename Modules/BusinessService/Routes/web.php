@@ -11,8 +11,24 @@
 |
 */
 
-Route::prefix('businessservice')->group(function() {
-    Route::get('/', 'BusinessServiceController@index');
-    Route::get('/onboarding', 'BusinessServiceController@index');
-     
+use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsController;
+
+Route::prefix('businessservice')->group(function () {
+    Route::get("home/", [\Modules\BusinessService\Http\Controllers\BusinessSettings\BusinessSettingsController::class, "index"])->name("business_home");
+
+    Route::group(['prefix' => 'onboarding/'], function () {
+        Route::get("", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "index"])->name("business_onboarding");
+        Route::post("add/", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "businessOnboarding"])->name("business_onboarding_add");
+    });
+
+    Route::group(['prefix' => 'new_requests/'], function () {
+        Route::get("", [NewRequestsController::class, "getNewBusinessRequests"])->name("business_new_requests");
+        Route::get("answer-new-request", [NewRequestsController::class, "answerNewRequest"])->name("answer_new_request");
+        Route::post("send-docusign/", [NewRequestsController::class, "signDocument"])->name("docusign.sign");
+        Route::get('connect-docusign/{id}', [NewRequestsController::class, 'connectDocusign'])->name('connect.docusign');
+    });
+
+
+    Route::group(['prefix' => 'business-settings/'], function () {
+    });
 });
