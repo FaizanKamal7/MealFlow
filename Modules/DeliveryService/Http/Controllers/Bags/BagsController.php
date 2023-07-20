@@ -33,8 +33,9 @@ class BagsController extends Controller
      */
     public function viewAllBags()
     {
-        
-        return view('deliveryservice::index');
+        $businesses = $this->businessRepository->getBusinesses();
+        $context = ["businesses"=>$businesses];
+        return view('deliveryservice::bags.view_bags',$context);
     }
     public function addBag()
     {
@@ -49,24 +50,24 @@ class BagsController extends Controller
      */
     public function storeBag(Request $request,$partner_id)
     {
-<<<<<<< HEAD
         $path = 'media/bags/qrcodes/' . time() . '.svg';
-=======
         $path = public_path('media/bags/qrcodes/' . time() . '.svg');
->>>>>>> c32ed94c7b3477100353508d492d5dbcc80033b7
 
         $request->validate([
             'partner_id'=>['required'],
             'no_of_bags'=>['required','numeric']
         ]);
 
-        echo "here".$partner_id;
 
         try {
-            $bag = $this->bagsRepository->addNewBag(qrCode: "",partner_id:$request->get("partner_id"), bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"));
-            QrCode::size(400)
-                ->generate($bag->id, $path);
-            $this->bagsRepository->updateBag(id: $bag->id,partner_id:"", qrCode: $path, bagNumber: "", bagSize: "", bagType: "", status: "", weight: "", dimensions: "");
+            for ($i=0; $i <$request->get("no_of_bags") ; $i++) { 
+                $bag = $this->bagsRepository->addNewBag(qrCode: "",partner_id:$request->get("partner_id"), bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"));
+                QrCode::size(400)
+                    ->generate($bag->id, $path);
+                $this->bagsRepository->updateBag(id: $bag->id,partner_id:"", qrCode: $path, bagNumber: "", bagSize: "", bagType: "", status: "", weight: "", dimensions: "");
+            }
+            
+            return redirect()->route("add_new_bag")->with("Success", "Bags added successfully");
         } catch (Exception $exception) {
             Log::error($exception);
             echo "error";

@@ -5,7 +5,9 @@
 @endsection
 
 @section('main_content')
-
+@if(Session::has('success'))
+                                <p class="alert {{ Session::get('alert-class') }}">{{ Session::get('success') }}</p>
+                            @endif
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -16,7 +18,7 @@
                 <div class="card-header mt-6">
                     <!--begin::Card title-->
                     <div class="card-title">
-                        {{-- <h3>Add Bags:</h3> --}}
+                        <h3>Add Bags:</h3>
                         <!--begin::Search-->
                         {{-- <div class="d-flex align-items-center position-relative my-1 me-5">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -71,7 +73,6 @@
                     <div class="row">
                         <div class="col-md-4">
                             <select class="form-select" aria-label="Select example" id="partner_id" name="partner_id">
-                               
                                 <option value="">Select Partner</option>
                                 @foreach($businesses as $business)
                                 <option value="{{$business->id}}">{{$business->name}}</option>
@@ -111,7 +112,7 @@
                 <!--end::Card body-->
             </div>
             <!--end::Card-->
-            <div class="card card-flush">
+            {{-- <div class="card card-flush">
                 <!--begin::Card header-->
                 <div class="card-header mt-6">
                     <!--begin::Card title-->
@@ -254,7 +255,7 @@
                     <!--end::Table-->
                 </div>
                 <!--end::Card body-->
-            </div>
+            </div> --}}
             <!--begin::Modals-->
             <!--begin::Modal - Add Make-->
             <div class="modal fade" id="nixus_add_vehicle_make" tabindex="-1" aria-hidden="true">
