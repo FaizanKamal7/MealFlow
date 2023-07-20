@@ -130,6 +130,7 @@ function editVehicleType(btn){
         // Retrieve the values from the <td> cells within the row
         var name = row.find('.name-cell').text();
         var capacity = row.find('.capacity-cell').text();
+        var icon = row.find('.icon-cell').text();
         var status = row.find('.status-cell').text();
 
         var url = `${id}\\update_vehicle_type`;
@@ -139,6 +140,7 @@ function editVehicleType(btn){
         // Populate the form fields in the modal dialog with the retrieved values
         $('#updated_type_name').val(name);
         $('#updated_type_capacity').val(capacity);
+        $('#updated_type_icon').val(icon);
         $('#updated_active_status').val(status);
    
         if (status ==0){
