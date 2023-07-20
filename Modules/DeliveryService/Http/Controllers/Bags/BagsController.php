@@ -34,7 +34,8 @@ class BagsController extends Controller
     public function viewAllBags()
     {
         $businesses = $this->businessRepository->getBusinesses();
-        $context = ["businesses"=>$businesses];
+        $bags = $this->bagsRepository->getBags();
+        $context = ["businesses"=>$businesses,"bags"=>$bags];
         return view('deliveryservice::bags.view_bags',$context);
     }
     public function addBag()
@@ -51,7 +52,7 @@ class BagsController extends Controller
     public function storeBag(Request $request,$partner_id)
     {
         $path = 'media/bags/qrcodes/' . time() . '.svg';
-        $path = public_path('media/bags/qrcodes/' . time() . '.svg');
+        // $path = public_path('media/bags/qrcodes/' . time() . '.svg');
 
         $request->validate([
             'partner_id'=>['required'],
@@ -75,7 +76,11 @@ class BagsController extends Controller
             // return redirect()->to("del_bags")->with("error", "Something went wrong!Contact support");
         }
     }
-
+    public function viewPartnerBag(Request $request,$partner_id ){
+        $businesses = $this->businessRepository->getBusinesses();
+        $context = ["businesses"=>$businesses];
+        return view('deliveryservice::bags.view_bags',$context);
+    }
     /**
      * Show the specified resource.
      * @param int $id
