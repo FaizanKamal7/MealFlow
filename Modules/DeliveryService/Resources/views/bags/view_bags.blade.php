@@ -1,5 +1,5 @@
 @extends('fleetservice::layouts.master')
-@section('title', 'Bags | Add Bags')
+@section('title', 'Bags | View Bags')
 
 @section("extra_style")
 @endsection
@@ -82,12 +82,6 @@
                             @enderror
                         </div>
                         <div class="col-md-4">
-                            <input type="number" id="no_of_bags" name="no_of_bags" class="form-control form-control-solid" placeholder="Enter no of bags"/>
-                            @error('no_of_bags')
-                            <span class="text-danger">{{$message}}</span>    
-                            @enderror
-                        </div>
-                        <div class="col-md-4">
                             <button type="submit" class="btn btn-light-primary" id="add_bag_submit_btn">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
                             <span class="svg-icon svg-icon-3">
@@ -101,7 +95,7 @@
                                                           fill="currentColor"/>
                                                 </svg>
                                             </span>
-                            <!--end::Svg Icon-->Add Bags
+                            <!--end::Svg Icon-->Get Bags
                         </button>
                         </div>
                     </div>
@@ -133,9 +127,9 @@
                         <thead>
                         <!--begin::Table row-->
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th class="min-w-125px">Vehicle Make</th>
-
-
+                            <th class="min-w-125px">Qr Code</th>
+                            <th class="min-w-125px">Partner</th>
+                            <th class="min-w-125px">Bag number</th>
                             <th class="text-end min-w-100px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -145,6 +139,12 @@
                         <tbody class="fw-bold text-gray-600">
                         <tr>
                             <!--begin::Name=-->
+                            <td>Toyota</td>
+                            <!--end::Name=-->
+                             <!--begin::Name=-->
+                             <td>Toyota</td>
+                             <!--end::Name=-->
+                              <!--begin::Name=-->
                             <td>Toyota</td>
                             <!--end::Name=-->
 
