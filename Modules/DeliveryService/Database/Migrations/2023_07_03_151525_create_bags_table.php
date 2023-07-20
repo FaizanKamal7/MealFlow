@@ -14,6 +14,7 @@ return new class extends Migration {
     {
         Schema::create('bags', function (Blueprint $table) {
             $table->uuid("id")->primary();
+            $table->string("partner_id")->nullable();
             $table->string("qr_code")->nullable();
             $table->string("bag_number")->nullable();
             $table->string("bag_size")->nullable();
@@ -21,6 +22,8 @@ return new class extends Migration {
             $table->string("status")->nullable();
             $table->string("weight")->nullable();
             $table->string("dimensions")->nullable();
+            $table->foreign("partner_id")->references("id")->on("businesses")->onDelete("cascade");
+
             //Partner ID
             $table->timestamps();
         });
