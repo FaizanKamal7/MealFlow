@@ -6,15 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\RoleInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
-use App\Models\Role;
-use App\Models\User;
 use App\Models\UserRole;
 use Exception;
 use Illuminate\Http\Request;
-
-//use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Gate;
@@ -37,7 +31,6 @@ class UsersController extends Controller
         $this->userRoleRepository = $userRoleRepository;
     }
 
-
     public function viewUsers()
     {
         try {
@@ -49,30 +42,24 @@ class UsersController extends Controller
             Log::error($exception);
             return abort(500);
         }
-
-
     }
 
     public function storeUsers(Request $request)
     {
         try {
             abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
             $user = $this->userRepository->createUser(name: $request->get("user_name"), email: $request->get("user_email"), password: $request->get("user_password"), isActive: true);
             if ($request->get("user_roles") != null) {
                 foreach ($request->get("user_roles") as $role) {
                     $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role);
                 }
             }
-
             return redirect()->route("users_view")->with("success", "User added successfully");
         } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("users_view")->with("error", "Something went wrong! Contact Support");
         }
-
     }
-
 
     public function viewUserDetails(Request $request, $user_id)
     {

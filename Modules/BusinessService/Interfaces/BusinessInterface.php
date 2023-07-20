@@ -18,5 +18,8 @@ interface BusinessInterface
     );
 
     public function getNewBusinesses();
+<<<<<<< HEAD
     public function getBusinesses();
+=======
+>>>>>>> c32ed94c7b3477100353508d492d5dbcc80033b7
 }

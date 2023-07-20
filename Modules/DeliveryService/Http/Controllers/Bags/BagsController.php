@@ -49,7 +49,11 @@ class BagsController extends Controller
      */
     public function storeBag(Request $request,$partner_id)
     {
+<<<<<<< HEAD
         $path = 'media/bags/qrcodes/' . time() . '.svg';
+=======
+        $path = public_path('media/bags/qrcodes/' . time() . '.svg');
+>>>>>>> c32ed94c7b3477100353508d492d5dbcc80033b7
 
         $request->validate([
             'partner_id'=>['required'],

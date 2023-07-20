@@ -7,7 +7,8 @@ use Modules\CRM\Entities\Task;
 
 class Helper
 {
-    public function logActivity($userId,$moduleName,$action,$subject,$url,$description,$ipAddress,$userAgent,$oldValues,$newValues,$recordId,$recordType,$method){
+    public function logActivity($userId, $moduleName, $action, $subject, $url, $description, $ipAddress, $userAgent, $oldValues, $newValues, $recordId, $recordType, $method)
+    {
         ActivityLogs::create([
             'user_id' => $userId,
             'module_name' => $moduleName,

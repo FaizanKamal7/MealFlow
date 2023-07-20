@@ -28,7 +28,11 @@ class BagsRepository implements BagsInterface
     public function updateBag($id, $partner_id,$qrCode, $bagNumber, $bagSize, $bagType, $status, $weight, $dimensions)
     {
         return Bags::where(["id" => $id])->update([
+<<<<<<< HEAD
             "partner_id"=>$partner_id,
+=======
+            "qr_code" => $qrCode,
+>>>>>>> c32ed94c7b3477100353508d492d5dbcc80033b7
             "bag_number" => $bagNumber,
             "bag_size" => $bagSize,
             "bag_type" => $bagType,

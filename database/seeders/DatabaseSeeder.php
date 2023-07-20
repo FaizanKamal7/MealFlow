@@ -14,6 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(CountriesSeeder::class);
+        $this->call(StatesSeeder::class);
+        $this->call(CitiesTableChunkOneSeeder::class);
+        $this->call(CitiesTableChunkTwoSeeder::class);
+        $this->call(CitiesTableChunkThreeSeeder::class);
+        $this->call(CitiesTableChunkFourSeeder::class);
+        $this->call(CitiesTableChunkFiveSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
