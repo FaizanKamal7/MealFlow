@@ -4,6 +4,7 @@ namespace Modules\FleetService\Entities;
 
 use App\Http\Helper\Helper;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Request;
 use Modules\FleetService\Entities\VehicleType;
 use Modules\FleetService\Entities\VehicleModel;
@@ -14,8 +15,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Vehicle extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     use HasUuids;
     protected $fillable = [
+
         'api_unit_id',
         'registration_number',
         'vehicle_picture',
@@ -34,11 +37,11 @@ class Vehicle extends Model
         'Registration_picture',
         'Registration_issue_date',
         'Registration_expiry_date',
-        'status',
+        'active_status',
         'mileage',
         'vehicle_type_id',
     ];
-    
+
     protected static function newFactory()
     {
         return \Modules\FleetService\Database\factories\VehicleFactory::new();
@@ -46,15 +49,27 @@ class Vehicle extends Model
 
     public function vehicleType()
     {
-        return $this->belongsTo(VehicleType::class,'vehicle_type_id');
+        return $this->belongsTo(VehicleType::class, 'vehicle_type_id');
     }
-    public function vehicleModel(){
-        return $this->belongsTo(VehicleModel::class,'vehicle_model_id');
-    }
-
-    public static function getByCriteria($field,$value)
+    public function vehicleModel()
     {
-        return self::where($field,$value)->first();
+        return $this->belongsTo(VehicleModel::class, 'vehicle_model_id');
+    }
+    public function timelines()
+    {
+        return $this->hasMany(VehicleTimeline::class)->orderBy('check_in_time', 'asc');
+
+    }
+    public function lastIncompleteTimeline()
+    {
+        return $this->hasOne(VehicleTimeline::class)
+            ->orderBy('created_at', 'desc')
+            ->whereNull('check_out_time');
+    }
+    
+    public static function getByCriteria($field, $value)
+    {
+        return self::where($field, $value)->first();
     }
 
     public static function boot()
@@ -77,10 +92,12 @@ class Vehicle extends Model
             $record_type = get_class($model);
             $method = Request::method();
 
-            $helper->logActivity(userId:$user_id, moduleName: $module_name, action: $action, subject: $subject,
+            $helper->logActivity(
+                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
                 url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
                 oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
-                method: $method);
+                method: $method
+            );
         });
 
         static::updating(function ($model) {
@@ -96,16 +113,18 @@ class Vehicle extends Model
                 $description = "Record has been updated";
                 $ip_address = Request::ip();
                 $user_agent = Request::header('user-agent');
-                $old_values = json_encode( json_encode($model->getOriginal()));
+                $old_values = json_encode(json_encode($model->getOriginal()));
                 $new_values = json_encode($model->getAttributes());
                 $record_id = $model->id;
                 $record_type = get_class($model);
                 $method = Request::method();
 
-                $helper->logActivity(userId:$user_id, moduleName: $module_name, action: $action, subject: $subject,
+                $helper->logActivity(
+                    userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
                     url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
                     oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
-                    method: $method);
+                    method: $method
+                );
             }
         });
 
@@ -119,15 +138,17 @@ class Vehicle extends Model
             $description = "Record has been Deleted";
             $ip_address = Request::ip();
             $user_agent = Request::header('user-agent');
-            $old_values =  json_encode($model->getOriginal());
+            $old_values = json_encode($model->getOriginal());
             $new_values = null;
             $record_id = $model->id;
             $record_type = get_class($model);
             $method = Request::method();
-            $helper->logActivity(userId:$user_id, moduleName: $module_name, action: $action, subject: $subject,
+            $helper->logActivity(
+                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
                 url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
                 oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
-                method: $method);
+                method: $method
+            );
 
         });
 
