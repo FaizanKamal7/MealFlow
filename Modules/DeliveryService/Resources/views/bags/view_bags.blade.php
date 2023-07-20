@@ -1,13 +1,11 @@
 @extends('fleetservice::layouts.master')
-@section('title', 'Bags | Add Bags')
+@section('title', 'Bags | View Bags')
 
 @section("extra_style")
 @endsection
 
 @section('main_content')
-@if(Session::has('success'))
-                                <p class="alert {{ Session::get('alert-class') }}">{{ Session::get('success') }}</p>
-                            @endif
+
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -18,7 +16,7 @@
                 <div class="card-header mt-6">
                     <!--begin::Card title-->
                     <div class="card-title">
-                        <h3>Add Bags:</h3>
+                        {{-- <h3>Add Bags:</h3> --}}
                         <!--begin::Search-->
                         {{-- <div class="d-flex align-items-center position-relative my-1 me-5">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -73,18 +71,13 @@
                     <div class="row">
                         <div class="col-md-4">
                             <select class="form-select" aria-label="Select example" id="partner_id" name="partner_id">
+                               
                                 <option value="">Select Partner</option>
                                 @foreach($businesses as $business)
                                 <option value="{{$business->id}}">{{$business->name}}</option>
                                @endforeach
                             </select>
                             @error('partner_id')
-                            <span class="text-danger">{{$message}}</span>    
-                            @enderror
-                        </div>
-                        <div class="col-md-4">
-                            <input type="number" id="no_of_bags" name="no_of_bags" class="form-control form-control-solid" placeholder="Enter no of bags"/>
-                            @error('no_of_bags')
                             <span class="text-danger">{{$message}}</span>    
                             @enderror
                         </div>
@@ -102,7 +95,7 @@
                                                           fill="currentColor"/>
                                                 </svg>
                                             </span>
-                            <!--end::Svg Icon-->Add Bags
+                            <!--end::Svg Icon-->Get Bags
                         </button>
                         </div>
                     </div>
@@ -112,7 +105,7 @@
                 <!--end::Card body-->
             </div>
             <!--end::Card-->
-            {{-- <div class="card card-flush">
+            <div class="card card-flush">
                 <!--begin::Card header-->
                 <div class="card-header mt-6">
                     <!--begin::Card title-->
@@ -134,9 +127,9 @@
                         <thead>
                         <!--begin::Table row-->
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th class="min-w-125px">Vehicle Make</th>
-
-
+                            <th class="min-w-125px">Qr Code</th>
+                            <th class="min-w-125px">Partner</th>
+                            <th class="min-w-125px">Bag number</th>
                             <th class="text-end min-w-100px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -146,14 +139,21 @@
                         <tbody class="fw-bold text-gray-600">
                         <tr>
                             <!--begin::Name=-->
-                            <td>Toyota</td>
+                            <td> <img src="{{ asset('static/media/avatars/300-7.jpg') }}" width="100px"
+                                alt="image" /></td>
+                            <!--end::Name=-->
+                             <!--begin::Name=-->
+                             <td>Test 1</td>
+                             <!--end::Name=-->
+                              <!--begin::Name=-->
+                            <td>1234</td>
                             <!--end::Name=-->
 
 
                             <!--begin::Action=-->
                             <td class="text-end">
                                 <!--begin::Update-->
-                                <button
+                                {{-- <button
                                     class="btn btn-icon btn-active-light-primary w-30px h-30px me-3"
                                     data-bs-toggle="modal"
                                     data-bs-target="#nixus_update_vehicle_make">
@@ -170,7 +170,7 @@
                                                             </svg>
                                                         </span>
                                     <!--end::Svg Icon-->
-                                </button>
+                                </button> --}}
                                 <!--end::Update-->
                                 <!--begin::Delete-->
                                 <button class="btn btn-icon btn-active-light-primary w-30px h-30px"
@@ -198,14 +198,21 @@
                         </tr>
                         <tr>
                             <!--begin::Name=-->
-                            <td>Honda</td>
+                            <td> <img src="{{ asset('static/media/avatars/300-7.jpg') }}" width="100px"
+                                alt="image" /></td>
+                            <!--end::Name=-->
+                             <!--begin::Name=-->
+                             <td>Test 1</td>
+                             <!--end::Name=-->
+                              <!--begin::Name=-->
+                            <td>1234</td>
                             <!--end::Name=-->
 
 
                             <!--begin::Action=-->
                             <td class="text-end">
                                 <!--begin::Update-->
-                                <button
+                                {{-- <button
                                     class="btn btn-icon btn-active-light-primary w-30px h-30px me-3"
                                     data-bs-toggle="modal"
                                     data-bs-target="#nixus_update_vehicle_make">
@@ -222,7 +229,125 @@
                                                             </svg>
                                                         </span>
                                     <!--end::Svg Icon-->
+                                </button> --}}
+                                <!--end::Update-->
+                                <!--begin::Delete-->
+                                <button class="btn btn-icon btn-active-light-primary w-30px h-30px"
+                                        data-kt-Make-table-filter="delete_row">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                    <span class="svg-icon svg-icon-3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path
+                                                                    d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
+                                                                    fill="currentColor"/>
+                                                                <path opacity="0.5"
+                                                                      d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
+                                                                      fill="currentColor"/>
+                                                                <path opacity="0.5"
+                                                                      d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
+                                                                      fill="currentColor"/>
+                                                            </svg>
+                                                        </span>
+                                    <!--end::Svg Icon-->
                                 </button>
+                                <!--end::Delete-->
+                            </td>
+                            <!--end::Action=-->
+                        </tr>
+                        <tr>
+                            <!--begin::Name=-->
+                            <td> <img src="{{ asset('static/media/avatars/300-7.jpg') }}" width="100px"
+                                alt="image" /></td>
+                            <!--end::Name=-->
+                             <!--begin::Name=-->
+                             <td>Test 1</td>
+                             <!--end::Name=-->
+                              <!--begin::Name=-->
+                            <td>1234</td>
+                            <!--end::Name=-->
+
+
+                            <!--begin::Action=-->
+                            <td class="text-end">
+                                <!--begin::Update-->
+                                {{-- <button
+                                    class="btn btn-icon btn-active-light-primary w-30px h-30px me-3"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#nixus_update_vehicle_make">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                    <span class="svg-icon svg-icon-3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path
+                                                                    d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
+                                                                    fill="currentColor"/>
+                                                                <path opacity="0.3"
+                                                                      d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
+                                                                      fill="currentColor"/>
+                                                            </svg>
+                                                        </span>
+                                    <!--end::Svg Icon-->
+                                </button> --}}
+                                <!--end::Update-->
+                                <!--begin::Delete-->
+                                <button class="btn btn-icon btn-active-light-primary w-30px h-30px"
+                                        data-kt-Make-table-filter="delete_row">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                    <span class="svg-icon svg-icon-3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path
+                                                                    d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
+                                                                    fill="currentColor"/>
+                                                                <path opacity="0.5"
+                                                                      d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
+                                                                      fill="currentColor"/>
+                                                                <path opacity="0.5"
+                                                                      d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
+                                                                      fill="currentColor"/>
+                                                            </svg>
+                                                        </span>
+                                    <!--end::Svg Icon-->
+                                </button>
+                                <!--end::Delete-->
+                            </td>
+                            <!--end::Action=-->
+                        </tr>
+                        <tr>
+                            <!--begin::Name=-->
+                            <td> <img src="{{ asset('static/media/avatars/300-7.jpg') }}" width="100px"
+                                alt="image" /></td>
+                            <!--end::Name=-->
+                             <!--begin::Name=-->
+                             <td>Test 1</td>
+                             <!--end::Name=-->
+                              <!--begin::Name=-->
+                            <td>1234</td>
+                            <!--end::Name=-->
+
+
+                            <!--begin::Action=-->
+                            <td class="text-end">
+                                <!--begin::Update-->
+                                {{-- <button
+                                    class="btn btn-icon btn-active-light-primary w-30px h-30px me-3"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#nixus_update_vehicle_make">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                                    <span class="svg-icon svg-icon-3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path
+                                                                    d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
+                                                                    fill="currentColor"/>
+                                                                <path opacity="0.3"
+                                                                      d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
+                                                                      fill="currentColor"/>
+                                                            </svg>
+                                                        </span>
+                                    <!--end::Svg Icon-->
+                                </button> --}}
                                 <!--end::Update-->
                                 <!--begin::Delete-->
                                 <button class="btn btn-icon btn-active-light-primary w-30px h-30px"
@@ -255,7 +380,7 @@
                     <!--end::Table-->
                 </div>
                 <!--end::Card body-->
-            </div> --}}
+            </div>
             <!--begin::Modals-->
             <!--begin::Modal - Add Make-->
             <div class="modal fade" id="nixus_add_vehicle_make" tabindex="-1" aria-hidden="true">
