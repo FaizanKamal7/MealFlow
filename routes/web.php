@@ -84,8 +84,9 @@ Route::group(['prefix' => 'core/'], function () {
 
         Route::group(['prefix' => 'delivery-slots/'], function () {
             Route::get("/get-delivery-slots", [DeliverySlotController::class, "index"])->name("get_all_delivery_slots");
-            Route::get("/add-delivery-slots", [DeliverySlotController::class, "addDeliverySlots"])->name("add_delivery_slots");
-            
+            Route::get("/add-delivery-slots", [DeliverySlotController::class, "addDeliverySlotView"])->name("add_new_delivery_slots");
+            Route::post("/store-delivery-slots", [DeliverySlotController::class, "storeDeliverySlots"])->name("store_delivery_slots");
+            Route::get("/get-delivery-slots-of-city", [DeliverySlotController::class, "getDeliverySlotsOfCity"])->name("get_delivery_slots_of_city");
         });
     });
 });
