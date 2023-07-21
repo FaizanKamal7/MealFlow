@@ -5,13 +5,14 @@ namespace Modules\DeliveryService\Entities;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\BusinessService\Entities\Business;
 
 class Bags extends Model
 {
     use HasFactory;
 use HasUuids;
     protected $fillable = [
-        "partner_id",
+        "business_id",
         "qr_code",
         "bag_number",
         "bag_size", //small,medium,large or capacity (5 ltr, 10 ltr)
@@ -28,5 +29,8 @@ use HasUuids;
 
     public function bagLogs(){
         return $this->hasMany(BagLogs::class, "bag_id");
+    }
+    public function business(){
+        return $this->belongsTo(Business::class);
     }
 }
