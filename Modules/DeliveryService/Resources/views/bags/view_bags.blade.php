@@ -66,17 +66,17 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                     <!--begin::Form-->
-                    <form action="{{route('view_partner_bags')}}" method="post" id="add_new_bag_form">
+                    <form action="{{route('view_business_bags')}}" method="post" id="view_partner_bag_form">
                         @csrf
                     <div class="row">
                         <div class="col-md-4">
-                            <select class="form-select" aria-label="Select example" id="partner_id" name="partner_id">
-                                <option value="">Select Partner</option>
+                            <select class="form-select" aria-label="Select example" id="business_id" name="business_id">
+                                <option value="">Select Business</option>
                                 @foreach($businesses as $business)
                                 <option value="{{$business->id}}">{{$business->name}}</option>
                                @endforeach
                             </select>
-                            @error('partner_id')
+                            @error('business_id')
                             <span class="text-danger">{{$message}}</span>    
                             @enderror
                         </div>
@@ -130,7 +130,7 @@
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                             <th class="min-w-125px">Qr Code</th>
                             <th class="min-w-125px">Bag ID</th>
-                            <th class="min-w-125px">partner ID</th>
+                            <th class="min-w-125px">Business</th>
                             <th class="text-end min-w-100px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -145,10 +145,10 @@
                                     alt="image" /></td>
                                 <!--end::Name=-->
                                  <!--begin::Name=-->
-                                 <td>{{$bag->id}}</td>
+                                 <td><a href="{{route('view_bag_timeline',['bag_id'=>$bag->id])}}"> {{$bag->id}}</a></td>
                                  <!--end::Name=-->
                                   <!--begin::Name=-->
-                                <td>{{$bag->partneer_id}}</td>
+                                <td>{{$bag->business->name}}</td>
                                 <!--end::Name=-->
     
     

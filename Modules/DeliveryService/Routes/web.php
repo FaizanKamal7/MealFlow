@@ -16,10 +16,11 @@ Route::prefix('delivery')->group(function() {
 
     Route::group(['prefix' => 'bag/'], function () {
         Route::get('/', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "viewAllBags"])->name("view_all_bags");
-        Route::get('/bags', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "viewPartnerBag"])->name("view_partner_bags");
+        Route::POST('/bags', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "viewBusinessBag"])->name("view_business_bags");
+        Route::get('{bag_id}/timeline', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "bagTimeline"])->name("view_bag_timeline");
 
         Route::get('/add', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "addBag"])->name("add_new_bag");
-        Route::post('/add/{partner_id}', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "storeBag"])->name("store_new_bag");
+        Route::post('/add/{business_id}', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "storeBag"])->name("store_new_bag");
 
     });
 
