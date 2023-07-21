@@ -69,19 +69,19 @@ class DriverController extends Controller
         $request->validated();
         try {
             $employee_id = $request->get("Employee1");
-            $license_number = $request->get("licence_number");
+            $license_number = $request->get("license_number");
             $licese_document = null;
-            $licence_issue_Date = $request->get("licence_issue_Date");
-            $licence_expiry_Date = $request->get("licence_expiry_Date");
+            $license_issue_Date = $request->get("license_issue_Date");
+            $license_expiry_Date = $request->get("license_expiry_Date");
             $is_available = $request->get("is_available");
             $areas = $request->get("driver_areas");
             // if($this->driverRepository->getDriver())
-            if ($vehiclePicture = $request->file("licence_Document")) {
+            if ($vehiclePicture = $request->file("license_Document")) {
                 $helper = new Helper();
                 // $picture = $helper->storeFile($file, "drivers");
             }
 
-            $driver = $this->driverRepository->createDriver($employee_id, $license_number, $is_available, $licese_document, $licence_issue_Date, $licence_expiry_Date);
+            $driver = $this->driverRepository->createDriver($employee_id, $license_number, $is_available, $licese_document, $license_issue_Date, $license_expiry_Date);
 
 
             if (!$driver) {
@@ -150,10 +150,10 @@ class DriverController extends Controller
         $request->validated();
         try {
 
-            $license_number = trim($request->get("Driver_Licence_number"));
-            $license_issue_date = $request->get("Driver_licence_issue_Date");
-            $license_expiry_date = $request->get("Driver_licence_expiry_Date");
-            $license_document = null; // $request->get("Driver_Licence_Document");
+            $license_number = trim($request->get("Driver_License_number"));
+            $license_issue_date = $request->get("Driver_license_issue_Date");
+            $license_expiry_date = $request->get("Driver_license_expiry_Date");
+            $license_document = null; // $request->get("Driver_License_Document");
             $is_available = $request->get("is_available") ? 1 : 0;
 
             // echo $license_number;
