@@ -49,23 +49,23 @@ class BagsController extends Controller
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function storeBag(Request $request,$partner_id)
+    public function storeBag(Request $request,$business_id)
     {
         $path = 'media/bags/qrcodes/' . time() . '.svg';
         // $path = public_path('media/bags/qrcodes/' . time() . '.svg');
 
         $request->validate([
-            'partner_id'=>['required'],
+            'business_id'=>['required'],
             'no_of_bags'=>['required','numeric']
         ]);
 
 
         try {
             for ($i=0; $i <$request->get("no_of_bags") ; $i++) { 
-                $bag = $this->bagsRepository->addNewBag(qrCode: "",partner_id:$request->get("partner_id"), bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"));
+                $bag = $this->bagsRepository->addNewBag(qrCode: "",business_id:$request->get("business_id"), bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"));
                 QrCode::size(400)
                     ->generate($bag->id, $path);
-                $this->bagsRepository->updateBag(id: $bag->id,partner_id:"", qrCode: $path, bagNumber: "", bagSize: "", bagType: "", status: "", weight: "", dimensions: "");
+                $this->bagsRepository->updateBag(id: $bag->id,business_id:$request->get("business_id"), qrCode: $path, bagNumber: "", bagSize: "", bagType: "", status: "", weight: "", dimensions: "");
             }
             
             return redirect()->route("add_new_bag")->with("Success", "Bags added successfully");
@@ -76,9 +76,13 @@ class BagsController extends Controller
             // return redirect()->to("del_bags")->with("error", "Something went wrong!Contact support");
         }
     }
-    public function viewPartnerBag(Request $request,$partner_id ){
+    public function viewBusinessBag(Request $request ){
+        $business_id = $request->get("business_id");
+     
         $businesses = $this->businessRepository->getBusinesses();
-        $context = ["businesses"=>$businesses];
+        $bags = $this->businessRepository->getBusiness($business_id)->bags;
+      
+        $context = ["businesses"=>$businesses,"bags"=>$bags];
         return view('deliveryservice::bags.view_bags',$context);
     }
     /**
@@ -90,6 +94,12 @@ class BagsController extends Controller
         return view('deliveryservice::show');
     }
 
+    public function bagTimeline(Request $request,$id){
+        $bag= $this->bagsRepository->getBag($id);
+        $context = ["bag"=>$bag];
+        return view('deliveryservice::bags.bag_timeline',$context);
+
+    }
     /**
      * Show the form for editing the specified resource.
      * @param int $id
