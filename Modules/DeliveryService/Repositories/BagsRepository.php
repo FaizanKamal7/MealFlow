@@ -8,10 +8,10 @@ use Modules\DeliveryService\Interfaces\BagsInterface;
 class BagsRepository implements BagsInterface
 {
 
-    public function addNewBag($partner_id,$qrCode, $bagNumber, $bagSize, $bagType, $weight, $dimensions, $status = "Available")
+    public function addNewBag($business_id,$qrCode, $bagNumber, $bagSize, $bagType, $weight, $dimensions, $status = "Available")
     {
         $bag = new Bags([
-            "partner_id"=>$partner_id,
+            "business_id"=>$business_id,
             "qr_code" => $qrCode,
             "bag_number" => $bagNumber,
             "bag_size" => $bagSize,
@@ -25,10 +25,10 @@ class BagsRepository implements BagsInterface
         return $bag;
     }
 
-    public function updateBag($id, $partner_id,$qrCode, $bagNumber, $bagSize, $bagType, $status, $weight, $dimensions)
+    public function updateBag($id, $business_id,$qrCode, $bagNumber, $bagSize, $bagType, $status, $weight, $dimensions)
     {
         return Bags::where(["id" => $id])->update([
-            "partner_id"=>$partner_id,
+            "business_id"=>$business_id,
             "qr_code" => $qrCode,
             "bag_number" => $bagNumber,
             "bag_size" => $bagSize,
