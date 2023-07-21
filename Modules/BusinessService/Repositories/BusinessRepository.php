@@ -48,4 +48,7 @@ class BusinessRepository implements BusinessInterface
     public function getBusinesses(){
         return Business::all();
     }
+    public function getBusiness($id){
+        return Business::find($id);
+    }
 }

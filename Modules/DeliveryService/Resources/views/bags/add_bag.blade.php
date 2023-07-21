@@ -5,11 +5,12 @@
 @endsection
 
 @section('main_content')
-@if(Session::has('success'))
-                                <p class="alert {{ Session::get('alert-class') }}">{{ Session::get('success') }}</p>
-                            @endif
+
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
+        @if(Session::has('success'))
+<p class="alert {{ Session::get('alert-class') }}">{{ Session::get('success') }}</p>
+@endif
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Card-->
@@ -68,17 +69,17 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                     <!--begin::Form-->
-                    <form action="{{route('store_new_bag',["partner_id"=>"232"])}}" method="post" id="add_new_bag_form">
+                    <form action="{{route('store_new_bag',["business_id"=>"232"])}}" method="post" id="add_new_bag_form">
                         @csrf
                     <div class="row">
                         <div class="col-md-4">
-                            <select class="form-select" aria-label="Select example" id="partner_id" name="partner_id">
+                            <select class="form-select" aria-label="Select example" id="business_id" name="business_id">
                                 <option value="">Select Partner</option>
                                 @foreach($businesses as $business)
                                 <option value="{{$business->id}}">{{$business->name}}</option>
                                @endforeach
                             </select>
-                            @error('partner_id')
+                            @error('business_id')
                             <span class="text-danger">{{$message}}</span>    
                             @enderror
                         </div>
