@@ -117,4 +117,45 @@ class DeliveryServiceController extends Controller
     {
         //
     }
+
+    public function bulkAddView(){
+        return view("deliveryservice::delivery.bulk");
+    }
+    public function addBulk(Request $request)
+    {
+
+        $customer_arr = $request->get('customer');
+        $delivery_address_arr = $request->get('delivery_address');
+        $delivery_slot_arr = $request->get('delivery_slot');
+        $item_type_arr = $request->get('item_type');
+        $special_instructions_arr = $request->get('special_instructions');
+        $notes_arr = $request->get('notes');
+        $cod_amount_arr = $request->get('cod_amount');
+
+        // Assuming all arrays have the same length, you can use any of the arrays to determine the loop length
+        $arrayLength = count($customer_arr);
+
+        for ($i = 0; $i < $arrayLength; $i++) {
+            $customer = $customer_arr[$i];
+            $delivery_address = $delivery_address_arr[$i];
+            $delivery_slot = $delivery_slot_arr[$i];
+            $item_type = $item_type_arr[$i];
+            $special_instructions = $special_instructions_arr[$i];
+            $notes = $notes_arr[$i];
+            $cod_amount = $cod_amount_arr[$i];
+
+            // use these variables for repo function
+
+            error_log("Customer: " . $customer);
+            error_log("Delivery Address: " . $delivery_address);
+            error_log("Delivery Slot: " . $delivery_slot);
+            error_log("Item Type: " . $item_type);
+            error_log("Special Instructions: " . $special_instructions);
+            error_log("Notes: " . $notes);
+            error_log("COD Amount: " . $cod_amount);
+            error_log("****************");
+
+        }
+    }
+
 }
