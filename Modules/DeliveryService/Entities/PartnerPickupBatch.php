@@ -22,7 +22,7 @@ class PartnerPickupBatch extends Model
         "total_items_picked",
 
         "created_by",
-        "branch_id",
+        "branch_id", //Remove this and add an associative entity
         "vehicle_id",
         "driver_id",
 
