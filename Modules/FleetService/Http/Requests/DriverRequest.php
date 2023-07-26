@@ -16,7 +16,7 @@ class DriverRequest extends FormRequest
         return [
             'Employee1' => ['required', 'unique:drivers,employee_id'],
             'license_number' => ['required', 'string', 'max:255'],
-            'license_Document' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:2048'], 
+            'license_Document' => ['required', 'file', 'max:2048'], 
             'license_issue_Date' => ['required', 'date'],
             'license_expiry_Date' => ['required', 'date', 'after:license_issue_Date'],
             'driver_areas' => ['required', 'array'], 
