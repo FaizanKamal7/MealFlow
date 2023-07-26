@@ -99,6 +99,7 @@ class BusinessOnboardingController extends Controller
                 card_cvv: $request->get("card_cvv"),
                 business_category_id: $request->get("category"),
                 admin: $user->id,
+                status: "NEW_REQUEST",
             );
             echo " <br />business ID: " . $business->id;
 
@@ -117,7 +118,7 @@ class BusinessOnboardingController extends Controller
                 business_id: $business->id,
             );
 
-            //TODO: get area_id,city_id,state_id,country_id dynamicaly
+            //TODO: get area_id, city_id, state_id, country_id dynamicaly
 
             $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
                 active_status: true,
@@ -219,9 +220,9 @@ class BusinessOnboardingController extends Controller
     //     return view('businessservice::edit');
     // }
 
-
     public function pricingCalculator(Request $request){
         return view("businessservice::onboarding.pricing");
 
     }
+
 }

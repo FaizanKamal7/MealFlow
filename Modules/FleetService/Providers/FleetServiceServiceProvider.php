@@ -7,6 +7,7 @@ use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 use Modules\FleetService\Interfaces\VehicleInterface;
 use Modules\FleetService\Interfaces\VehicleLogInterface;
+use Modules\FleetService\Interfaces\VehicleTimelineInterface;
 use Modules\FleetService\Repositories\DriverAreaRepository;
 use Modules\FleetService\Repositories\DriverRepository;
 use Modules\FleetService\Repositories\VehicleRepository;
@@ -14,6 +15,7 @@ use Modules\FleetService\Interfaces\VehicleFuelInterface;
 use Modules\FleetService\Interfaces\VehicleTypeInterface;
 use Modules\FleetService\Interfaces\VehicleModelInterface;
 use Modules\FleetService\Repositories\VehicleFuelRepository;
+use Modules\FleetService\Repositories\VehicleTimelineRepository;
 use Modules\FleetService\Repositories\VehicleTypeRepository;
 use Modules\FleetService\Repositories\VehicleModelRepository;
 use Modules\FleetService\Interfaces\VehicleMaintenanceInterface;
@@ -60,6 +62,8 @@ class FleetServiceServiceProvider extends ServiceProvider
         $this->app->bind(VehicleMaintenanceInterface::Class, VehicleMaintenanceRepository::class);
         $this->app->bind(DriverInterface::Class, DriverRepository::class);
         $this->app->bind(DriverAreaInterface::Class, DriverAreaRepository::class);
+        $this->app->bind(VehicleTimelineInterface::Class, VehicleTimelineRepository::class);
+
 
 
 
