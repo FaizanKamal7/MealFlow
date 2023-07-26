@@ -14,15 +14,19 @@ return new class extends Migration {
     {
         Schema::create('bags', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->string("partner_id")->nullable();
+            $table->uuid("business_id")->nullable();
             $table->string("qr_code")->nullable();
             $table->string("bag_number")->nullable();
             $table->string("bag_size")->nullable();
             $table->string("bag_type")->nullable();
-            $table->string("status")->nullable();
+            // $table->string("status")->nullable();
+            $table->uuid("status_id")->nullable();
+            
             $table->string("weight")->nullable();
             $table->string("dimensions")->nullable();
-            $table->foreign("partner_id")->references("id")->on("businesses")->onDelete("cascade");
+
+            $table->foreign("status_id")->references("id")->on("bag_statuses")->onDelete("set null");
+            $table->foreign("business_id")->references("id")->on("businesses")->onDelete("cascade");
 
             //Partner ID
             $table->timestamps();

@@ -1,27 +1,21 @@
 <?php
 
-namespace Modules\DeliveryService\Providers;
-
+namespace Modules\FinanceService\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\DeliveryService\Interfaces\BagsInterface;
-use Modules\DeliveryService\Interfaces\BagStatusInterface;
-use Modules\DeliveryService\Repositories\BagsRepository;
-use Modules\DeliveryService\Repositories\BagStatusRepository;
 
-
-class DeliveryServiceServiceProvider extends ServiceProvider
+class FinanceServiceServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'DeliveryService';
+    protected $moduleName = 'FinanceService';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'deliveryservice';
+    protected $moduleNameLower = 'financeservice';
 
     /**
      * Boot the application events.
@@ -44,9 +38,6 @@ class DeliveryServiceServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-        $this->app->bind(BagsInterface::class,BagsRepository::class);
-        $this->app->bind(BagStatusInterface::class,BagStatusRepository::class);
-
     }
 
     /**
