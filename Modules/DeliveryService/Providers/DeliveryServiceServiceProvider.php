@@ -2,10 +2,14 @@
 
 namespace Modules\DeliveryService\Providers;
 
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\DeliveryService\Interfaces\BagsInterface;
+use Modules\DeliveryService\Interfaces\BagStatusInterface;
 use Modules\DeliveryService\Repositories\BagsRepository;
+use Modules\DeliveryService\Repositories\BagStatusRepository;
+
 
 class DeliveryServiceServiceProvider extends ServiceProvider
 {
@@ -41,6 +45,8 @@ class DeliveryServiceServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->bind(BagsInterface::class,BagsRepository::class);
+        $this->app->bind(BagStatusInterface::class,BagStatusRepository::class);
+
     }
 
     /**

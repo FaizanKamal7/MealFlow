@@ -69,7 +69,7 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                     <!--begin::Form-->
-                    <form action="{{route('store_new_bag',["business_id"=>"232"])}}" method="post" id="add_new_bag_form">
+                    <form action="{{route('store_new_bag')}}" method="post" id="add_new_bag_form">
                         @csrf
                     <div class="row">
                         <div class="col-md-4">
