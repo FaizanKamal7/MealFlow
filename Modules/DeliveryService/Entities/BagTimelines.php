@@ -6,21 +6,25 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class BagLogs extends Model
+class BagTimelines extends Model
 {
     use HasFactory;
     use HasUuids;
-
+    
     protected $fillable = [
         "bag_id",
-        "previous_status",
-        "current_status",
+        "delivery_id",
+        "status_id",
+        "action_by",
+        "vehicle_id",
+        // "previous_status",
+        // "current_status",
         "description"
     ];
 
     protected static function newFactory()
     {
-        return \Modules\DeliveryService\Database\factories\BagLogsFactory::new();
+        return \Modules\DeliveryService\Database\factories\BagTimelineFactory::new();
     }
 
     public function bag(){
