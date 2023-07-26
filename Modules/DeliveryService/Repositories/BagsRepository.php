@@ -8,7 +8,7 @@ use Modules\DeliveryService\Interfaces\BagsInterface;
 class BagsRepository implements BagsInterface
 {
 
-    public function addNewBag($business_id,$qrCode, $bagNumber, $bagSize, $bagType, $weight, $dimensions, $status = "Available")
+    public function addNewBag($business_id,$qrCode, $bagNumber, $bagSize, $bagType, $weight, $dimensions, $status_id = null)
     {
         $bag = new Bags([
             "business_id"=>$business_id,
@@ -16,7 +16,7 @@ class BagsRepository implements BagsInterface
             "bag_number" => $bagNumber,
             "bag_size" => $bagSize,
             "bag_type" => $bagType,
-            "status" => $status,
+            "status_id" => $status_id,
             "weight" => $weight,
             "dimensions" => $dimensions,
         ]);
@@ -25,7 +25,7 @@ class BagsRepository implements BagsInterface
         return $bag;
     }
 
-    public function updateBag($id, $business_id,$qrCode, $bagNumber, $bagSize, $bagType, $status, $weight, $dimensions)
+    public function updateBag($id, $business_id,$qrCode, $bagNumber, $bagSize, $bagType, $status_id, $weight, $dimensions)
     {
         return Bags::where(["id" => $id])->update([
             "business_id"=>$business_id,
@@ -33,10 +33,16 @@ class BagsRepository implements BagsInterface
             "bag_number" => $bagNumber,
             "bag_size" => $bagSize,
             "bag_type" => $bagType,
-            "status" => $status,
+            "status_id" => $status_id,
             "weight" => $weight,
             "dimensions" => $dimensions,
         ]);
+    }
+
+    public function updateStatus($id,$status_id){
+        $bag = Bags::find($id);
+        $bag->status_id = $status_id;
+        $bag->save();
     }
 
     public function getBag($id)

@@ -3,7 +3,6 @@
 
 @section("extra_style")
 @endsection
-
 @section('main_content')
 
 <!--begin::Post-->
@@ -80,7 +79,7 @@
 										<div class="me-2 mb-4 ps-10">
 											<div class="flex-grow-1 ">
 												<span class="text-gray-800 fw-bolder d-block fs-6">Vehicle number</span>
-												<a href="#" class="text-gray-400 fs-1x fw-bold">#AJHE7890</a>
+												<a href="{{ route('update_bag_status',['bag_id'=>$bag->id])}}" class="text-gray-400 fs-1x fw-bold">#AJHE7890</a>
 												<span href="#" class="text-gray-400 fs-1x d-block fw-bold">Usman Rafique,</span>
 												<span href="#" class="text-gray-400 fs-1x d-block fw-bold">+9713040885424</span>
 
