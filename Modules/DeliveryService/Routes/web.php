@@ -14,6 +14,8 @@
 Route::prefix('delivery')->group(function() {
     Route::get('download-excel', 'DeliveryServiceController@downloadExcel');
     Route::get('/upload', 'DeliveryServiceController@uploadDeliveryView');
+    Route::post('/upload/bulk', 'DeliveryServiceController@addBulk')->name("bulk_delivery_add");
+    Route::get('/upload/bulk', 'DeliveryServiceController@bulkAddView')->name("bulk_delivery_add_view");
     Route::post('/upload/save', 'DeliveryServiceController@uploadFile')->name("upload_file");
     Route::get('/', 'DeliveryServiceController@index');
 
@@ -27,5 +29,5 @@ Route::prefix('delivery')->group(function() {
 
     });
 
-    
+
 });
