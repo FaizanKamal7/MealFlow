@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Request;
 use Modules\BusinessService\Entities\Business;
 
-class Bags extends Model
+class Bag extends Model
 {
     use HasFactory;
     use HasUuids;
