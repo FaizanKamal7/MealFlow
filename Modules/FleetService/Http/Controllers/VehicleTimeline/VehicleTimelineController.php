@@ -7,12 +7,14 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Log;
+use Modules\FleetService\Interfaces\VehicleInterface;
 use Modules\FleetService\Interfaces\VehicleTimelineInterface;
 
 class VehicleTimelineController extends Controller
 {
 
     private VehicleTimelineInterface $vehicleTimelineRepository;
+    private VehicleInterface $vehicleRepository;
 
     /**
      * Display a listing of the resource.
@@ -20,14 +22,18 @@ class VehicleTimelineController extends Controller
      */
 
 
-    public function __construct(VehicleTimelineInterface $vehicleRepository){
-        $this->vehicleTimelineRepository = $vehicleRepository;
-    }
+    public function __construct(VehicleTimelineInterface $vehicleTimelineRepository,VehicleInterface $vehicleRepository){
+        $this->vehicleTimelineRepository = $vehicleTimelineRepository;
+        $this->vehicleRepository = $vehicleRepository;
+
+    }   
 
     
     public function index()
-    {
-        return view('fleetservice::index');
+    {   
+        $vehicles=$this->vehicleRepository->getVehicles();
+        $context = ["vehicles"=>$vehicles];
+        return view('fleetservice::Fleets.logs.vehicle_timeline',$context);
     }
 
     /**

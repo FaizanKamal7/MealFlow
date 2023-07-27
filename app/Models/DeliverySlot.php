@@ -12,14 +12,17 @@ class DeliverySlot extends Model
     use HasUuids;
 
     protected $fillable = [
-        'start_time',
-        'end_time',
-        'active_status',
-        'city_id',
-    ];
+
+        "area_id",
+        "city_id",
+        "start_time",
+        "end_time",
+        ];
+
 
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id');
     }
+
 }

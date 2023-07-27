@@ -30,6 +30,9 @@ return new class extends Migration {
 
             //Partner ID
             $table->timestamps();
+            $table->uuid("business_id");
+
+            $table->foreign("business_id")->references("id")->on("businesses")->onDelete("cascade");
         });
     }
 

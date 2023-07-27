@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Request;
 use Modules\BusinessService\Entities\Business;
 
-class Bags extends Model
+class Bag extends Model
 {
     use HasFactory;
     use HasUuids;
@@ -24,7 +24,9 @@ class Bags extends Model
         "status",
         //in transit, delivered, in wearhouse
         "weight",
-        "dimensions" //length x width x height
+        "dimensions", //length x width x height
+
+        "business_id"
     ];
     protected $delivery_id;
     protected $vehicle_id;
