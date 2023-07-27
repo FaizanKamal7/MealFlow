@@ -4,7 +4,7 @@ namespace App\Http\Helper;
 
 use App\Models\ActivityLogs;
 use Modules\CRM\Entities\Task;
-use Modules\DeliveryService\Entities\BagTimelines;
+use Modules\DeliveryService\Entities\BagTimeline;
 
 class Helper
 {
@@ -29,7 +29,7 @@ class Helper
 
     public function bagTimeline($bag_id, $delivery_id, $status_id, $action_by, $vehicle_id, $description)
     {
-        BagTimelines::create([
+        BagTimeline::create([
             'bag_id' => $bag_id,
             'delivery_id' => $delivery_id,
             'status_id' => $status_id,
