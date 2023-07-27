@@ -24,12 +24,13 @@ return new class extends Migration
             $table->enum('status', ['unpaid', 'paid', 'partial'])->default('unpaid'); // Invoice status: unpaid, paid, or partial
             $table->date('paid_date')->nullable(); // Date when the invoice was paid
             $table->string('payment_method')->nullable(); // Payment method used (e.g., cash, credit card, bank transfer, etc.)
-            $table->boolean('is_sent')->default(false); 
+            $table->boolean('is_sent')->default(false);
 
             // Timestamps
             $table->timestamps();
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete("set null");
             $table->softDeletes();
-            $table->foreign("business_id")->reference("businesses")->onDelete("set null");
+
         });
     }
 
