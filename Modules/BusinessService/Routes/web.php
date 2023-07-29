@@ -15,6 +15,7 @@ use Modules\BusinessService\Http\Controllers\BusinessPricing\BusinessPricingCont
 use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsController;
 
 Route::prefix('businessservice')->group(function () {
+    Route::get("",[\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
     Route::get("home/", [\Modules\BusinessService\Http\Controllers\BusinessSettings\BusinessSettingsController::class, "index"])->name("business_home");
 
     Route::group(['prefix' => 'onboarding/'], function () {
@@ -26,7 +27,7 @@ Route::prefix('businessservice')->group(function () {
     Route::group(['prefix' => 'new_requests/'], function () {
         Route::get("", [NewRequestsController::class, "getNewBusinessRequests"])->name("business_new_requests");
         Route::get("all-business", [NewRequestsController::class, "getAllBusinesses"])->name("get_all_businesses");
-        
+
         Route::get("answer-new-request", [NewRequestsController::class, "answerNewRequest"])->name("answer_new_request");
         Route::post("send-docusign/", [NewRequestsController::class, "signDocument"])->name("docusign.sign");
         Route::get('connect-docusign/{id}', [NewRequestsController::class, 'connectDocusign'])->name('connect.docusign');
