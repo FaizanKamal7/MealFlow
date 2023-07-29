@@ -49,6 +49,11 @@ class NewRequestsController extends Controller
         return view('businessservice::requests.new_business_requests', ['new_businesses' => $new_businesses]);
     }
 
+    public function getAllBusinesses()
+    {
+        $new_businesses = $this->businessRepository->getNewBusinesses();
+        return view('businessservice::business_info.all_active_businesses_view', ['new_businesses' => $new_businesses]);
+    }
     public function getNewBsusinessRequests()
     {
         $new_businesses = $this->businessRepository->getNewBusinesses();
@@ -285,8 +290,4 @@ class NewRequestsController extends Controller
 
         return $args;
     }
-
-
-
-  
 }

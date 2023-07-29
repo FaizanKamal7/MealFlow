@@ -6,7 +6,6 @@ use App\Interfaces\CountryInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
 use App\Models\Country;
-// use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -19,8 +18,10 @@ use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\BusinessUserInterface;
 use Modules\BusinessService\Interfaces\OnboardingInterface;
-use Illuminate\Support\Facades\Session;
+use Modules\BusinessService\Interfaces\BranchCoverageDeliverySlotInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Support\Facades\Session;
+use TestInterface;
 
 class BusinessOnboardingController extends Controller
 {
@@ -34,11 +35,10 @@ class BusinessOnboardingController extends Controller
     private BranchCoverageInterface $branchCoverageRepository;
     private UserRoleInterface $userRoleRepository;
     private CountryInterface $countryRepository;
+    private BranchCoverageDeliverySlotInterface $branchCoverageDeliverySlotRepository;
 
 
-    /**
-     * @param OnboardingInterface $designationRepository
-     */
+
     public function __construct(
         OnboardingInterface $onboardingRepository,
         BranchInterface $branchRepository,
@@ -49,6 +49,7 @@ class BusinessOnboardingController extends Controller
         BranchCoverageInterface $branchCoverageRepository,
         UserRoleInterface $userRoleRepository,
         CountryInterface $countryRepository,
+        // BranchCoverageDeliverySlotInterface $branchCoverageDeliverySlotRepository
 
     ) {
         $this->onboardingRepository = $onboardingRepository;
@@ -60,6 +61,7 @@ class BusinessOnboardingController extends Controller
         $this->branchCoverageRepository = $branchCoverageRepository;
         $this->userRoleRepository = $userRoleRepository;
         $this->countryRepository = $countryRepository;
+        // $this->branchCoverageDeliverySlotRepository = $branchCoverageDeliverySlotRepository;
     }
 
     /**
@@ -101,7 +103,6 @@ class BusinessOnboardingController extends Controller
                 admin: $user->id,
                 status: "NEW_REQUEST",
             );
-            echo " <br />business ID: " . $business->id;
 
             // // Adding ternary relation
             $this->businessUserRepository->createBusinessUser(
@@ -117,18 +118,26 @@ class BusinessOnboardingController extends Controller
                 is_main_branch: 1,
                 business_id: $business->id,
             );
+            $area_coverage_list = $request->area_coverage_list;
 
             //TODO: get area_id, city_id, state_id, country_id dynamicaly
 
-            $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
-                active_status: true,
-                area_id: $request->get("area"),
-                city_id: $request->get("city"),
-                state: $request->get("state"),
-                country: $request->get("country"),
-                branch_id: $branch->id,
-            );
-
+            foreach ($area_coverage_list as $key => $coverage_list_item) {
+                $areas = $coverage_list_item["area"];
+                foreach ($areas as $key => $area) {
+                    $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
+                        active_status: 1,
+                        area_id: $area,
+                        city_id: $coverage_list_item["city"],
+                        state: $coverage_list_item["state"],
+                        country: $coverage_list_item["country"],
+                        branch_id: $branch->id,
+                    );
+                    foreach ($coverage_list_item['delivery_slots'] as $key => $delivery_slot_id) {
+                        // $this->branchCoverageRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
+                    }
+                }
+            }
             $this->signInBusinessAdminUponRegistration($request->get("contact_email"), $request->get("password"), $user->id);
 
             // echo "business_user ID: " . $business_user->id;
