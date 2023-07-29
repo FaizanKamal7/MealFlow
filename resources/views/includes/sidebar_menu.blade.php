@@ -70,17 +70,13 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("roles_view") }}">
+                        <a class="menu-link" href="{{ route("business_pricing_home") }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Pricing Info</span>
                         </a>
                     </div>
-
-
-
-
                 </div>
             </div>
 
@@ -349,6 +345,19 @@
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">New Businesses Requests</span>
+                        </a>
+                    </div>
+
+
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route("get_all_businesses") }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">All Businesses</span>
                         </a>
                     </div>
 
@@ -826,20 +835,20 @@
 
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <a href="{{ route("business_pricing_home") }}">
+                    <span class="menu-link">
+                        <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
+                        <span class="svg-icon svg-icon-muted svg-icon-1x"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="15" viewBox="0 0 16 15" fill="none">
+                                <rect y="6" width="16" height="3" rx="1.5" fill="currentColor" />
+                                <rect opacity="0.3" y="12" width="8" height="3" rx="1.5" fill="currentColor" />
+                                <rect opacity="0.3" width="12" height="3" rx="1.5" fill="currentColor" />
+                            </svg></span>
+                        <!--end::Svg Icon-->
+                        <span class="menu-title mx-2">Pricing Info</span>
 
-                <span class="menu-link">
-                    <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
-                    <span class="svg-icon svg-icon-muted svg-icon-1x"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                            height="15" viewBox="0 0 16 15" fill="none">
-                            <rect y="6" width="16" height="3" rx="1.5" fill="currentColor" />
-                            <rect opacity="0.3" y="12" width="8" height="3" rx="1.5" fill="currentColor" />
-                            <rect opacity="0.3" width="12" height="3" rx="1.5" fill="currentColor" />
-                        </svg></span>
-                    <!--end::Svg Icon-->
-                    <span class="menu-title mx-2">Pricing Info</span>
-
-                </span>
-
+                    </span>
+                </a>
 
             </div>
 
