@@ -12,6 +12,11 @@
 */
 
 Route::prefix('delivery')->group(function() {
+    Route::get('download-excel', 'DeliveryServiceController@downloadExcel');
+    Route::get('/upload', 'DeliveryServiceController@uploadDeliveryView');
+    Route::post('/upload/bulk', 'DeliveryServiceController@addBulk')->name("bulk_delivery_add");
+    Route::get('/upload/bulk', 'DeliveryServiceController@bulkAddView')->name("bulk_delivery_add_view");
+    Route::post('/upload/save', 'DeliveryServiceController@uploadFile')->name("upload_file");
     Route::get('/', 'DeliveryServiceController@index');
 
     Route::group(['prefix' => 'bag/'], function () {
@@ -20,9 +25,11 @@ Route::prefix('delivery')->group(function() {
         Route::get('{bag_id}/timeline', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "bagTimeline"])->name("view_bag_timeline");
 
         Route::get('/add', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "addBag"])->name("add_new_bag");
-        Route::post('/add/{business_id}', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "storeBag"])->name("store_new_bag");
+        Route::post('/add', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "storeBag"])->name("store_new_bag");
+        
+        Route::get('/update{bag_id}', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "updateBagStatus"])->name("update_bag_status");
 
     });
 
-    
+
 });

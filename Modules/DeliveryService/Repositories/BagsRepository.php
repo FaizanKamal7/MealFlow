@@ -2,21 +2,21 @@
 
 namespace Modules\DeliveryService\Repositories;
 
-use Modules\DeliveryService\Entities\Bags;
+use Modules\DeliveryService\Entities\Bag;
 use Modules\DeliveryService\Interfaces\BagsInterface;
 
 class BagsRepository implements BagsInterface
 {
 
-    public function addNewBag($business_id,$qrCode, $bagNumber, $bagSize, $bagType, $weight, $dimensions, $status = "Available")
+    public function addNewBag($business_id,$qrCode, $bagNumber, $bagSize, $bagType, $weight, $dimensions, $status_id = null)
     {
-        $bag = new Bags([
+        $bag = new Bag([
             "business_id"=>$business_id,
             "qr_code" => $qrCode,
             "bag_number" => $bagNumber,
             "bag_size" => $bagSize,
             "bag_type" => $bagType,
-            "status" => $status,
+            "status_id" => $status_id,
             "weight" => $weight,
             "dimensions" => $dimensions,
         ]);
@@ -25,37 +25,43 @@ class BagsRepository implements BagsInterface
         return $bag;
     }
 
-    public function updateBag($id, $business_id,$qrCode, $bagNumber, $bagSize, $bagType, $status, $weight, $dimensions)
+    public function updateBag($id, $business_id,$qrCode, $bagNumber, $bagSize, $bagType, $status_id, $weight, $dimensions)
     {
-        return Bags::where(["id" => $id])->update([
+        return Bag::where(["id" => $id])->update([
             "business_id"=>$business_id,
             "qr_code" => $qrCode,
             "bag_number" => $bagNumber,
             "bag_size" => $bagSize,
             "bag_type" => $bagType,
-            "status" => $status,
+            "status_id" => $status_id,
             "weight" => $weight,
             "dimensions" => $dimensions,
         ]);
     }
 
+    public function updateStatus($id,$status_id){
+        $bag = Bag::find($id);
+        $bag->status_id = $status_id;
+        $bag->save();
+    }
+
     public function getBag($id)
     {
-        return Bags::where(["id"=>$id])->first();
+        return Bag::where(["id"=>$id])->first();
     }
 
     public function deleteBag($id)
     {
-        return Bags::where(["id"=>$id])->delete();
+        return Bag::where(["id"=>$id])->delete();
     }
 
     public function getBags()
     {
-        return Bags::all();
+        return Bag::all();
     }
 
     public function filterBags($status)
     {
-        return Bags::where(["status"=>$status])->get();
+        return Bag::where(["status"=>$status])->get();
     }
 }

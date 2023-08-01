@@ -102,7 +102,7 @@ class BusinessOnboardingController extends Controller
                 status: "NEW_REQUEST",
             );
 
-            // // Adding ternary relation 
+            // // Adding ternary relation
             $this->businessUserRepository->createBusinessUser(
                 business_id: $business->id,
                 user_id: $user->id,
@@ -181,13 +181,13 @@ class BusinessOnboardingController extends Controller
     // function getDependentCountryStateCity()
     // {
     //     if (!empty($_POST['id'])) {
-    //         // Fetch state data based on the specific country 
+    //         // Fetch state data based on the specific country
     //         $country_id = $_POST['id'];
 
     //         // Fetch state data based on the specific country
     //         $states = $this->onboardingRepository->getStatesOfCountry($country_id);
 
-    //         // Generate HTML of state options list 
+    //         // Generate HTML of state options list
     //         if ($states->num_rows > 0) {
     //             echo '<option value="">Select State</option>';
     //             while ($row = $states->fetch_assoc()) {
@@ -212,7 +212,7 @@ class BusinessOnboardingController extends Controller
     //         $query = "SELECT * FROM cities WHERE state_id = " . $GetStateID . " AND flag = 1 ORDER BY name ASC";
     //         $result = $link->query($query);
 
-    //         // Generate HTML of city options list 
+    //         // Generate HTML of city options list
     //         if ($result->num_rows > 0) {
     //             echo '<option value="">Select city</option>';
     //             while ($row = $result->fetch_assoc()) {
@@ -228,4 +228,10 @@ class BusinessOnboardingController extends Controller
     // {
     //     return view('businessservice::edit');
     // }
+
+    public function pricingCalculator(Request $request){
+        return view("businessservice::onboarding.pricing");
+
+    }
+
 }
