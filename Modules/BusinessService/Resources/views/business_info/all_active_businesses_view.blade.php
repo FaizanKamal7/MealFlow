@@ -52,7 +52,7 @@
                                     <th class="min-w-125px">Business</th>
                                     <th class="min-w-50px">Application Date</th>
                                     <th class="min-w-50px">Admin</th>
-                                    <th class="min-w-50px">Category</th>
+                                    <th class="min-w-50px">Status</th>
                                     <th class="text-end min-w-100px">Actions</th>
                                 </tr>
                                 <!--end::Table row-->
@@ -92,6 +92,8 @@
                                     </td>
 
                                     <td>
+                                        <span class="badge badge-light-success">Approved</span>
+
                                         @if ($business->business_categories)
                                         {{$business->business_categories->name}}
                                         @endif
