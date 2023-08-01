@@ -3,14 +3,14 @@
 namespace Modules\BusinessService\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\BusinessService\Interfaces\BranchCoverageDeliverySlotInterface;
+use Modules\BusinessService\Interfaces\BranchCoverageDeliverySlotsInterface;
 use Modules\BusinessService\Interfaces\BranchCoverageInterface;
 use Modules\BusinessService\Interfaces\BranchInterface;
 use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\OnboardingInterface;
 use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\BusinessUserInterface;
-use Modules\BusinessService\Repositories\BranchCoverageDeliverySlotRepository;
+use Modules\BusinessService\Repositories\BranchCoverageDeliverySlotsRepository;
 use Modules\BusinessService\Repositories\BranchCoverageRepository;
 use Modules\BusinessService\Repositories\BranchRepository;
 use Modules\BusinessService\Repositories\BusinessCategoryRepository;
@@ -62,8 +62,7 @@ class BusinessServiceServiceProvider extends ServiceProvider
         $this->app->bind(BusinessCategoryInterface::class, BusinessCategoryRepository::class);
         $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
         $this->app->bind(BusinessUserInterface::class, BusinessUserRepository::class);
-        $this->app->bind(BranchCoverageDeliverySlotInterface::class, BranchCoverageDeliverySlotRepository::class);
-        $this->app->bind(TestInterface::class, TestRepository::class);
+        $this->app->bind(BranchCoverageDeliverySlotsInterface::class, BranchCoverageDeliverySlotsRepository::class);
     }
 
     /**

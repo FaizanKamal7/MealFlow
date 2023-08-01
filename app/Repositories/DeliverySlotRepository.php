@@ -18,6 +18,14 @@ class DeliverySlotRepository implements DeliverySlotInterface
     }
 
 
+    public function getAllDeliverySlotsOfCities($cities)
+    {
+        return DeliverySlot::whereIn('city_id', $cities)
+            ->where('active_status', 1)
+            ->get();
+    }
+
+
     public function addDeliverySlots($start_time, $end_time, $city_id)
     {
         return DeliverySlot::create([

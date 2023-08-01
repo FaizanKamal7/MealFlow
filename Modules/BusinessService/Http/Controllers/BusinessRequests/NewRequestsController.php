@@ -46,7 +46,7 @@ class NewRequestsController extends Controller
     public function getNewBusinessRequests()
     {
         $new_businesses = $this->businessRepository->getNewBusinesses();
-        return view('businessservice::requests.new_business_requests', ['new_businesses' => $new_businesses]);
+        return view('businessservice::business_info.requests.new_business_requests', ['new_businesses' => $new_businesses]);
     }
 
     public function getAllBusinesses()

@@ -39,16 +39,4 @@ class BranchCoverageRepository implements BranchCoverageInterface
     {
         return BranchCoverage::all();
     }
-
-    public function createBranchCoverageDeliverySlot($branch_coverage_id, $delivery_slot_id)
-    {
-
-        $branch_coverage_delivery_slot =  BranchCoverageDeliverySlots::inser([
-            "branch_coverage_id" => $branch_coverage_id,
-            "delivery_slot_id" => $delivery_slot_id,
-
-        ]);
-        $branch_coverage_delivery_slot->save();
-        return $branch_coverage_delivery_slot;
-    }
 }

@@ -37,15 +37,13 @@
 /*    }*/
 /*}*/
 
-
-
 .card {
     border: 1px solid #d8d8d8;
 }
 
 body {
     /*background-color: #f5f8fa;*/
-    background-color: #F1F5F9;
+    background-color: #f1f5f9;
 }
 
 .image-input .image-input-wrapper {
@@ -53,7 +51,7 @@ body {
 }
 
 .form-control.form-control-solid {
-    background-color: #F1F5F9;
+    background-color: #f1f5f9;
     border-color: #d8d8d8;
 }
 
@@ -68,4 +66,14 @@ a {
 
 .modal-header {
     padding: 0.75rem 0.75rem;
+}
+
+.button-no-style {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    text-align: inherit;
+    font: inherit;
+    cursor: pointer;
 }

@@ -31,6 +31,15 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Modules\BusinessService\Interfaces\BusinessPricingInterface;
+use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
+use Modules\BusinessService\Interfaces\PricingTypeInterface;
+use Modules\BusinessService\Interfaces\RangePricingInterface;
+use Modules\BusinessService\Repositories\BusinessPricingRepository;
+use Modules\BusinessService\Repositories\DeliverySlotPricingRepository;
+use Modules\BusinessService\Repositories\PricingRepository;
+use Modules\BusinessService\Repositories\PricingTypeRepository;
+use Modules\BusinessService\Repositories\RangePricingRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,6 +62,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(StateInterface::class, StateRepository::class);
         $this->app->bind(CountryInterface::class, CountryRepository::class);
         $this->app->bind(DeliverySlotInterface::class, DeliverySlotRepository::class);
+        $this->app->bind(BusinessPricingInterface::class, BusinessPricingRepository::class);
+        $this->app->bind(RangePricingInterface::class, RangePricingRepository::class);
+        $this->app->bind(PricingTypeInterface::class, PricingTypeRepository::class);
+        $this->app->bind(DeliverySlotPricingInterface::class, DeliverySlotPricingRepository::class);
     }
 
     /**

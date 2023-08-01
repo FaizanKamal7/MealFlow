@@ -115,7 +115,6 @@ function fetchCities() {
 function fetchCitiesWithMultiSelectOption() {
     var stateID = document.getElementById("state").value;
     var cityDropdown = document.getElementById("city");
-
     // Clear current options
     cityDropdown.innerHTML = '<option value="">Select city</option>';
 
@@ -131,7 +130,6 @@ function fetchCitiesWithMultiSelectOption() {
             success: function (response) {
                 // Keep track of the iterations
                 var iteration = 0;
-
                 // Populate city dropdown
                 // Loop through the response data and create an option element for each item
                 response.forEach((item) => {
