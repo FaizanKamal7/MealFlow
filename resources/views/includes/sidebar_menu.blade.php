@@ -70,17 +70,13 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("roles_view") }}">
+                        <a class="menu-link" href="{{ route("delivery_slot_wise_base_pricing") }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Pricing Info</span>
                         </a>
                     </div>
-
-
-
-
                 </div>
             </div>
 
@@ -227,24 +223,49 @@
             </div>
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
-                    <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
+                <span class=" menu-link">
                     <span class="svg-icon svg-icon-muted svg-icon-2x"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" viewBox="0 0 24 24" fill="none">
                             <path
-                                d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z"
-                                fill="currentColor" />
-                            <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z"
+                                d="M20 8H16C15.4 8 15 8.4 15 9V16H10V17C10 17.6 10.4 18 11 18H16C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18H21C21.6 18 22 17.6 22 17V13L20 8Z"
                                 fill="currentColor" />
                             <path opacity="0.3"
-                                d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z"
+                                d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z"
                                 fill="currentColor" />
                         </svg></span>
-                    <span class="menu-title mx-2">Bag Tracking</span>
+                    <!--end::Svg Icon-->
+                    <span class="menu-title mx-2">Bag tracking</span>
                     <span class="menu-arrow"></span>
                 </span>
 
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{route('add_new_bag')}}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Add bag</span>
+                        </a>
+                    </div>
+
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{route('view_all_bags')}}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">View bag</span>
+                        </a>
+                    </div>
+
+
+
+
+                </div>
+
             </div>
+
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
@@ -349,6 +370,19 @@
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">New Businesses Requests</span>
+                        </a>
+                    </div>
+
+
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route("get_all_businesses") }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">All Businesses</span>
                         </a>
                     </div>
 
@@ -763,6 +797,14 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
                     <div class="menu-item">
+                        <a class="menu-link" href="{{ route("activate_locations_view") }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Activate Locations</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
                         <a class="menu-link" href="{{ route("business_home") }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -803,6 +845,55 @@
 
                 </div>
             </div>
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
+                        <span class="svg-icon svg-icon-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <path
+                                    d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
+                                    fill="currentColor"></path>
+                                <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor"></rect>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-title">Pricing Info</span>
+                    <span class="menu-arrow"></span>
+
+                </span>
+                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route("delivery_slot_wise_base_pricing") }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Base Pricing (Delivery Slot Wise)</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route("range_base_pricing") }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Base Pricing (Daily Range Wise)</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route("delivery_slot_wise_base_pricing") }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Partner Pricing </span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
 
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -825,23 +916,6 @@
             </div>
 
 
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-
-                <span class="menu-link">
-                    <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
-                    <span class="svg-icon svg-icon-muted svg-icon-1x"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                            height="15" viewBox="0 0 16 15" fill="none">
-                            <rect y="6" width="16" height="3" rx="1.5" fill="currentColor" />
-                            <rect opacity="0.3" y="12" width="8" height="3" rx="1.5" fill="currentColor" />
-                            <rect opacity="0.3" width="12" height="3" rx="1.5" fill="currentColor" />
-                        </svg></span>
-                    <!--end::Svg Icon-->
-                    <span class="menu-title mx-2">Pricing Info</span>
-
-                </span>
-
-
-            </div>
 
             <div class="menu-item">
                 <a class="menu-link" href="#">

@@ -45,9 +45,11 @@ class BusinessRepository implements BusinessInterface
     {
         return Business::where(["status" => "NEW_REQUEST"])->get();
     }
+
     public function getBusinesses(){
         return Business::all();
     }
+    
     public function getBusiness($id){
         return Business::find($id);
     }

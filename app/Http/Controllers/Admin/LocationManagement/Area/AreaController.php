@@ -68,7 +68,6 @@ class AreaController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
         ));
-
         $response = curl_exec($curl);
 
         curl_close($curl);
@@ -82,7 +81,7 @@ class AreaController extends Controller
 
         // Re-index the array if needed
         $api_areas_object = (object) $areas_unique_name_array;
-        return View::make("admin.settings.city_location_activation", ['areas' => $api_areas_object, 'selected_city_id' => $city_id]);
+        return View::make("admin.locations.city_location_activation", ['areas' => $api_areas_object, 'selected_city_id' => $city_id]);
     }
 
 
@@ -104,11 +103,12 @@ class AreaController extends Controller
 
                     $single_area =
                         [
-                            'actve_status' => true,
+                            'actve_status' => 1,
                             'name' => $area_object->name,
                             'city_id' =>  $city_id,
                             'geoname_id' =>  $area_object->geonameId,
                             'coordinates' =>  $coordinates,
+
                         ];
                     $this->areaRepository->add($single_area);
                 }
