@@ -108,34 +108,24 @@
                                                     <!--begin::Col-->
                                                     <div class="col-md-5">
                                                         <div class="fv-row mb-7">
-                                                            <!--begin::Label-->
-                                                            <label class="fs-6 fw-bold form-label mt-3">
-                                                                <span class="required">Start time</span>
-                                                                <i class="fas fa-exclamation-circle ms-1 fs-7"
-                                                                    data-bs-toggle="tooltip"
-                                                                    title="Enter start time"></i>
-                                                            </label>
-                                                            <!--end::Label-->
-                                                            <!--begin::Input-->
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="start_time" value="" />
-                                                            <!--end::Input-->
+
+                                                            <label for="start_time" class="form-label">Enter start
+                                                                time</label>
+                                                            <input
+                                                                class="form-control form-control-solid flatpickr-input start_time"
+                                                                type="text" name="start_time" value="">
+
                                                         </div>
                                                     </div>
                                                     <!--begin::Col-->
                                                     <div class="col-md-5">
                                                         <div class="fv-row mb-7">
-                                                            <!--begin::Label-->
-                                                            <label class="fs-6 fw-bold form-label mt-3">
-                                                                <span class="required">End time</span>
-                                                                <i class="fas fa-exclamation-circle ms-1 fs-7"
-                                                                    data-bs-toggle="tooltip" title="Enter end time"></i>
-                                                            </label>
-                                                            <!--end::Label-->
-                                                            <!--begin::Input-->
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="end_time" value="" />
-                                                            <!--end::Input-->
+                                                            <label for="end_time" class="form-label">Enter end
+                                                                time</label>
+                                                            <input
+                                                                class="form-control form-control-solid flatpickr-input end_time"
+                                                                type="text" name="end_time" value="">
+
                                                         </div>
                                                     </div>
 
@@ -199,7 +189,9 @@
 
 
 <script>
-    $(document).ready(function(){
+
+
+
         $('#city').change(function(){
             var selectedCities = $(this).val();
 
@@ -218,7 +210,7 @@
             // Update hidden field
             $('#cities').val(selectedCities.join(','));
         });
-    });
+    
 </script>
 
 @endsection

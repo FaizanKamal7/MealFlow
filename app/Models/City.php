@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\BusinessService\Entities\Pricing;
 
 class City extends Model
 {
@@ -34,4 +35,8 @@ class City extends Model
         return $this->belongsTo(State::class);
     }
 
+    public function pricings()
+    {
+        return $this->hasMany(Pricing::class);
+    }
 }

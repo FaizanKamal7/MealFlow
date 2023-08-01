@@ -72,7 +72,7 @@
 //                     cityDropdown.appendChild(option); // Add the option to the dropdown
 //                     iteration++; // Increase the counter
 //                 });
-                
+
 //             },
 //             error: function (error) {
 //                 console.log(error);
@@ -80,6 +80,18 @@
 //         });
 //     }
 // }
+
+$(document).ready(function () {
+    initializeFlatpickr();
+});
+
+function initializeFlatpickr() {
+    $(".start_time, .end_time").flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+    });
+}
 
 $("#delivery_slot_repeater_form").repeater({
     initEmpty: false,
@@ -90,10 +102,10 @@ $("#delivery_slot_repeater_form").repeater({
 
     show: function () {
         $(this).slideDown();
+        initializeFlatpickr(); // Initialize Flatpickr again
     },
 
     hide: function (deleteElement) {
         $(this).slideUp(deleteElement);
     },
 });
-

@@ -185,13 +185,19 @@
                                     <label class="form-label fw-bolder text-dark fs-6 required">Business Name</label>
                                     <input class="form-control form-control-lg form-control-solid" placeholder=""
                                         name="buisness_name" autocomplete="off" />
+                                    @error('buisness_name')
+                                    <span class="text-danger">{{$message}}</span>
+                                    @enderror
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
                                 <div class="fv-row mb-7">
-                                    <label class="form-label fw-bolder text-dark fs-6 required">Email Adress</label>
+                                    <label class="form-label fw-bolder text-dark fs-6 required">Email Address</label>
                                     <input class="form-control form-control-lg form-control-solid" placeholder=""
                                         name="email" autocomplete="off" />
+                                    @error('email')
+                                    <span class="text-danger">{{$message}}</span>
+                                    @enderror
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
@@ -342,7 +348,7 @@
 
 
                                 <!--begin::Input group-->
-                                <div class="fv-row mb-10">
+                                {{-- <div class="fv-row mb-10">
                                     <!--begin::Label-->
                                     <label class="form-label required">Contact Email</label>
                                     <!--end::Label-->
@@ -350,6 +356,88 @@
                                     <input name="contact_email"
                                         class="form-control form-control-lg form-control-solid" />
                                     <!--end::Input-->
+                                </div> --}}
+                                <div class="fv-row mb-10">
+                                    <label class="form-label required">Address (Business Main Branch Address)</label>
+                                    <div class="form-group row">
+                                        <!--begin::Col-->
+                                        <div class="col-xl-4">
+                                            <label class="form-label required">Country</label>
+
+                                            <!--begin::Input group-->
+                                            <select id="address_country" class="form-select form-select-solid"
+                                                name="address_country" data-control="select2"
+                                                data-placeholder="Select an option" data-allow-clear="true"
+                                                onchange="fetchAddressStates()">
+
+                                                <option value="">Select country</option>
+                                                @if ($countries->count())
+                                                @foreach ($countries as $country)
+                                                <option value={{$country['id']}}>{{$country['name']}}
+                                                </option>
+                                                @endforeach
+                                                @else
+                                                <option value="">Countries not available</option>
+                                                @endif
+                                            </select>
+                                            <!--end::Input group-->
+
+                                        </div>
+                                        <!--end::Col-->
+                                        <div class="col-xl-4">
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="form-label">State</label>
+                                                <!--end::Label-->
+                                                <select id="address_state" name="address_state"
+                                                    class="form-select form-select-solid" data-control="select2"
+                                                    data-placeholder="Choose" data-allow-clear="true"
+                                                    onchange="fetchAddressCities()">
+                                                    <option value="">Select State</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--begin::Col-->
+                                        <div class="col-xl-4">
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="form-label">City</label>
+                                                <!--end::Label-->
+                                                <select id="address_city" class="form-select form-select-solid"
+                                                    data-control="select2" data-placeholder="Choose city"
+                                                    name="address_city" data-allow-clear="true"
+                                                    onchange="fetchAddressAreas()">
+                                                    <option value="">Select City</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--end::Col-->
+
+                                        <!--begin::Col-->
+                                        <div class="col-xl-5">
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="form-label required">Areas</label>
+                                                <!--end::Label-->
+                                                <select id="address_area"
+                                                    class="form-select form-select-lg form-select-solid"
+                                                    data-control="select2" data-placeholder="Choose Areas"
+                                                    name="address_area" data-allow-clear="true">
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-xl-7">
+                                            <div class="fv-row mb-10">
+                                                <label class="form-label required">Street Address</label>
+                                                <input name="address"
+                                                    class="form-control form-control-lg form-control-solid" />
+                                            </div>
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
                                 </div>
                                 <!--end::Input group-->
                             </div>
@@ -903,50 +991,160 @@
 }
 
 
-function fetchAreasWithMultiSelectOption() {
-    var cityID = document.getElementById("city").value;
+    function fetchAreasWithMultiSelectOption() {
+        var cityID = document.getElementById("city").value;
 
-    var areaDropdown = document.getElementById("area");
+        var areaDropdown = document.getElementById("area");
 
-    // Clear current options
-    areaDropdown.innerHTML = '<option value="">Select area</option>';
+        // Clear current options
+        areaDropdown.innerHTML = '<option value="">Select area</option>';
 
-    // Make AJAX request to fetch area
-    if (cityID) {
-        var url = "/core/settings/locations/get-areas";
+        // Make AJAX request to fetch area
+        if (cityID) {
+            var url = "/core/settings/locations/get-areas";
 
-        $.ajax({
-            url: url,
-            method: "GET",
-            dataType: "json",
-            data: { city_id: cityID },
-            success: function (response) {
-                // Keep track of the iterations
-                var iteration = 0;
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                data: { city_id: cityID },
+                success: function (response) {
+                    // Keep track of the iterations
+                    var iteration = 0;
 
-                // Populate city dropdown
-                // Loop through the response data and create an option element for each item
-                response.forEach((item) => {
-                    // If it's the first iteration, append the "Select All" option
-                    if (iteration === 0) {
-                        const allOption = document.createElement("option");
-                        allOption.value = "all";
-                        allOption.text = "Select All";
-                        areaDropdown.appendChild(allOption);
-                    }
-                    const option = document.createElement("option");
-                    option.value = item.id; // Set the value attribute
-                    option.text = item.name; // Set the displayed text
-                    areaDropdown.appendChild(option); // Add the option to the dropdown
-                    iteration++; // Increase the counter
-                });
-            },
-            error: function (error) {
-                console.log(error);
-            },
-        });
+                    // Populate city dropdown
+                    // Loop through the response data and create an option element for each item
+                    response.forEach((item) => {
+                        // If it's the first iteration, append the "Select All" option
+                        if (iteration === 0) {
+                            const allOption = document.createElement("option");
+                            allOption.value = "all";
+                            allOption.text = "Select All";
+                            areaDropdown.appendChild(allOption);
+                        }
+                        const option = document.createElement("option");
+                        option.value = item.id; // Set the value attribute
+                        option.text = item.name; // Set the displayed text
+                        areaDropdown.appendChild(option); // Add the option to the dropdown
+                        iteration++; // Increase the counter
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+        }
     }
-}
+
+
+    function fetchAddressAreas() {
+        var cityID = document.getElementById("address_city").value;
+
+        var areaDropdown = document.getElementById("address_area");
+
+        // Clear current options
+        areaDropdown.innerHTML = '<option value="">Select area</option>';
+
+        // Make AJAX request to fetch area
+        if (cityID) {
+            var url = "/core/settings/locations/get-areas";
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                data: { city_id: cityID },
+                success: function (response) {
+                    var area = response;
+                    // Populate city dropdown
+                    // Loop through the response data and create an option element for each item
+                    area.forEach((item) => {
+                        console.log(item);
+                        const option = document.createElement("option");
+                        option.value = item.id; // Set the value attribute
+                        option.text = item.name; // Set the displayed text
+                        areaDropdown.appendChild(option); // Add the option to the dropdown
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+        }
+    }
+
+    function fetchAddressCities() {
+        var stateID = document.getElementById("address_state").value;
+        var cityDropdown = document.getElementById("address_city");
+
+        // Clear current options
+        cityDropdown.innerHTML = '<option value="">Select city</option>';
+
+        // Make AJAX request to fetch city
+        if (stateID) {
+            var url = "/core/settings/locations/get-cities";
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                data: { state_id: stateID },
+                success: function (response) {
+                    var city = response;
+                    // Populate city dropdown
+                    // Loop through the response data and create an option element for each item
+                    city.forEach((item) => {
+                        console.log(item);
+                        const option = document.createElement("option");
+                        option.value = item.id; // Set the value attribute
+                        option.text = item.name; // Set the displayed text
+                        cityDropdown.appendChild(option); // Add the option to the dropdown
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+        }
+    }
+    
+    function fetchAddressStates() {
+        var countryId = document.getElementById("address_country").value;
+        var stateDropdown = document.getElementById("address_state");
+
+        // Clear current options
+        stateDropdown.innerHTML = '<option value="">Select state</option>';
+
+        // Make AJAX request to fetch states
+        if (countryId) {
+            var url = "/core/settings/locations/get-states";
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                data: { country_id: countryId },
+                success: function (response) {
+                    var states = response;
+                    // Populate states dropdown
+                    // Loop through the response data and create an option element for each item
+                    states.forEach((item) => {
+                        console.log(item);
+                        const option = document.createElement("option");
+                        option.value = item.id; // Set the value attribute
+                        option.text = item.name; // Set the displayed text
+                        stateDropdown.appendChild(option); // Add the option to the dropdown
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+        }
+    }
+
+    
+
     $("#location_delivery_slots_repeater").repeater({
         initEmpty: false,
 
