@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('delivery_slotss', function (Blueprint $table) {
+        Schema::create('delivery_slots', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->uuid('city_id');
             $table->string('start_time');
