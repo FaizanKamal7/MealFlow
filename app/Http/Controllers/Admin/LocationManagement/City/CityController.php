@@ -34,10 +34,7 @@ class CityController extends Controller
 
     public function search(Request $request)
     {
-
         $searchTerm = $request->get('search');
-        dd($searchTerm);
-
         $cities = $this->cityRepository->searchCity($searchTerm);
         return response()->json($cities);
     }
