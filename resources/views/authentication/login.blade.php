@@ -33,7 +33,7 @@
                 <!--end::Content-->
                 <!--begin::Illustration-->
                 <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
-                    style="background-image: url({{ asset(" static/media/illustrations/sketchy-1/13.png") }})"></div>
+                    style="background-image: url({{ asset("static/media/illustrations/sketchy-1/13.png") }})"></div>
                 <!--end::Illustration-->
             </div>
             <!--end::Wrapper-->
@@ -46,11 +46,9 @@
                 <!--begin::Wrapper-->
                 <div class="w-lg-500px p-10 p-lg-15 mx-auto">
                     <!--begin::Form-->
-                    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" method="post" <<<<<<< Updated
-                        upstream action="{{ route('login_user') }}">
-                        =======
-                        action="{{ route("login_user") }}">
-                        >>>>>>> Stashed changes
+                    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" method="post"
+                        action="{{ route('login_user') }}">
+
                         @csrf
                         <!--begin::Heading-->
                         <div class="text-center mb-10">
@@ -105,53 +103,40 @@
                         </div>
                         <!--end::Actions-->
                     </form>
-                    <<<<<<< Updated upstream <!--end::Form-->
 
-                        <br>
-
-                        <div class="text-center">
-                            <p>OR</p><br>
-                            <a href="{{route('business_onboarding')}}"> <button class="btn btn-lg btn-secondary w-100">
-                                    Register your business</button></a>
-                            =======
-
-                            <!--end::Form-->
-                            <div class="text-center">
-                                <br>OR <br><br>
-                                <a href="{{route('business_onboarding')}}"> <button
-                                        class="btn btn-lg btn-secondary w-100 mb-5">
-                                        <span class="indicator-label">Register your business now!</span>
-                                        <span class="indicator-progress">Please wait...
-                                            <span
-                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                    </button>
-                                </a>
-                                >>>>>>> Stashed changes
-                            </div>
-                        </div>
-                        <!--end::Wrapper-->
-                </div>
-                <!--end::Content-->
-                <!--begin::Footer-->
-                <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
-                    <!--begin::Links-->
-                    <div class="d-flex flex-center fw-bold fs-6">
-                        <a href="#" class="text-muted text-hover-primary px-2" target="_blank">About</a>
-                        <a href="#" class="text-muted text-hover-primary px-2" target="_blank">Support</a>
-                        <a href="#" class="text-muted text-hover-primary px-2" target="_blank">Purchase</a>
+                    <div class="text-center">
+                        <br>OR <br><br>
+                        <a href="{{route('business_onboarding')}}"> <button class="btn btn-lg btn-secondary w-100 mb-5">
+                                <span class="indicator-label">Register your business now!</span>
+                                <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </a>
                     </div>
-                    <!--end::Links-->
                 </div>
-                <!--end::Footer-->
+                <!--end::Wrapper-->
             </div>
-            <!--end::Body-->
+            <!--end::Content-->
+            <!--begin::Footer-->
+            <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
+                <!--begin::Links-->
+                <div class="d-flex flex-center fw-bold fs-6">
+                    <a href="#" class="text-muted text-hover-primary px-2" target="_blank">About</a>
+                    <a href="#" class="text-muted text-hover-primary px-2" target="_blank">Support</a>
+                    <a href="#" class="text-muted text-hover-primary px-2" target="_blank">Purchase</a>
+                </div>
+                <!--end::Links-->
+            </div>
+            <!--end::Footer-->
         </div>
-        <!--end::Authentication - Sign-in-->
+        <!--end::Body-->
     </div>
-    <!--end::Root-->
-    @endsection
+    <!--end::Authentication - Sign-in-->
+</div>
+<!--end::Root-->
+@endsection
 
-    @section('extra_scripts')
-    <script src="{{ asset('static/js/custom/authentication/sign-in/general.js')}}"></script>
+@section('extra_scripts')
+<script src="{{ asset('static/js/custom/authentication/sign-in/general.js')}}"></script>
 
-    @endsection
+@endsection
