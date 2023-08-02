@@ -14,8 +14,8 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.12",
-        "mhmiton/laravel-modules-livewire": "^1.6",
         "maatwebsite/excel": "^3.1",
+        "mhmiton/laravel-modules-livewire": "^2.0",
         "nwidart/laravel-modules": "^9.0",
         "simplesoftwareio/simple-qrcode": "^4.2"
     },

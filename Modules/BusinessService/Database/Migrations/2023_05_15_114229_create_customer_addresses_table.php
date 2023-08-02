@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('country_name');
             $table->string('address_type');
             $table->string('google_coordinates');
+            $table->uuid('customer_id');
             $table->uuid('area_id');
             $table->uuid('city_id');
             $table->uuid('state_id');
