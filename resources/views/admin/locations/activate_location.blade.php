@@ -45,17 +45,17 @@
                         <!--end::Card title-->
 
                     </div>
-                    {{ $cities->links() }}
                     <!--end::Card header-->
                     <!--begin::Card body-->
                     <div class="card-body pt-0">
-                        <table id="kt_datatable_fixed_header" class="table table-striped table-row-bordered gy-5 gs-7">
+                        <input type="text" id="search" class="form-control" placeholder="Search cities">
+
+                        <table id="city-table" class="table table-striped table-row-bordered gy-5 gs-7">
                             <thead>
                                 <tr class="fw-semibold fs-6 text-gray-800">
                                     <th></th>
                                     <th>Name</th>
                                     <th>Action</th>
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,9 +72,7 @@
 
                                             <div class="symbol-label">
                                                 {{$city->state->country->emoji}}
-                                                {{-- <img src={{$country->emoji}}
-                                                class="w-100"
-                                                /> --}}
+
                                             </div>
 
                                         </div>
@@ -116,6 +114,7 @@
 
                             </tbody>
                         </table>
+                        {{ $cities->links() }}
 
                     </div>
                     <!--end::Card body-->
@@ -157,7 +156,7 @@
 				7: {"title": "Warning", "state": "warning"},
 			};
 
-			$("#kt_datatable_fixed_header").DataTable({
+			$("#city-table").DataTable({
 				"fixedHeader": {
 					"header":true,
 					"headerOffset": 5

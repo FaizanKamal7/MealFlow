@@ -19,7 +19,7 @@ Route::prefix('businessservice')->group(function () {
     Route::get("home/", [\Modules\BusinessService\Http\Controllers\BusinessSettings\BusinessSettingsController::class, "index"])->name("business_home");
 
     Route::group(['prefix' => 'business_info/'], function () {
-        Route::get("overview", [BusinessInfoController::class, "index"])->name("business_overview");
+        Route::get("overview/{business_id}", [BusinessInfoController::class, "index"])->name("business_overview");
     });
 
     Route::group(['prefix' => 'onboarding/'], function () {

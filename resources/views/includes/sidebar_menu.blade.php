@@ -161,11 +161,11 @@
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
 
                     <div class="menu-item">
-                        <a class="menu-link" href="">
+                        <a class="menu-link" href="{{route('bulk_delivery_add')}}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">upload Deliveries</span>
+                            <span class="menu-title">Upload Deliveries</span>
                         </a>
                     </div>
 

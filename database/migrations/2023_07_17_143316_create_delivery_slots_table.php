@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('city_id');
             $table->string('start_time');
             $table->string('end_time');
-            $table->boolean('active_status');
+            $table->boolean('active_status')->default(true);
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');

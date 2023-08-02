@@ -75,7 +75,7 @@
                                         <!--end::Avatar-->
                                         <!--begin::User details-->
                                         <div class="d-flex flex-column">
-                                            <a href="{{route('business_overview')}}"
+                                            <a href="{{route('business_overview', ['business_id' => $business->id])}}"
                                                 class="text-gray-800 text-hover-primary mb-1">{{$business->name}}</a>
                                         </div>
                                         <!--begin::User details-->

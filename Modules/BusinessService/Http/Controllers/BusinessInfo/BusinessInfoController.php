@@ -5,17 +5,24 @@ namespace Modules\BusinessService\Http\Controllers\BusinessInfo;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\BusinessService\Interfaces\BusinessInterface;
 
 class BusinessInfoController extends Controller
 {
+    private BusinessInterface $businessRepository;
+
+    public function __construct(BusinessInterface $businessRepository)
+    {
+        $this->businessRepository = $businessRepository;
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index($business_id)
     {
-        
-        return view('businessservice::business_info.business_overview');
+        $business = $this->businessRepository->getBusiness($business_id);
+        return view('businessservice::business_info.business_overview', ['business' => $business]);
     }
 
     /**

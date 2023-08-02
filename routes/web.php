@@ -80,8 +80,9 @@ Route::group(['prefix' => 'core/'], function () {
             Route::get("/get-areas", [AreaController::class, "getAreasOfCity"])->name("get_areas_of_city");
             Route::get("/extract-api-areas-of-city/{city_id}/{city_name}", [AreaController::class, "extractAreasOfCityFromAPI"])->name("extract_api_areas_of_city");
             Route::get("/search-city", [CityController::class, "search"])->name("search_city");
-            Route::get("/activate_api_areas", [AreaController::class, "activateCityAreas"])->name("activate_city_areas");
-            Route::get("/activate_locations_view", [LocationController::class, "index"])->name("activate_locations_view");
+            Route::get("/activate-api-areas", [AreaController::class, "activateCityAreas"])->name("activate_city_areas");
+            Route::get("/activate-locations-view", [LocationController::class, "index"])->name("activate_locations_view");
+            Route::get("/city-search", [LocationController::class, "search"])->name("city_search");
         });
 
         Route::group(['prefix' => 'delivery-slots/'], function () {
