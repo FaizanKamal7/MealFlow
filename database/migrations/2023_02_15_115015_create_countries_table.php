@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('delivery_slots', function (Blueprint $table) {
-            $table->id();
+        Schema::create('countries', function (Blueprint $table) {
+            $table->uuid("id")->primary();
+            $table->boolean('active_status');
+            $table->string('name');
+            $table->timestamp('deleted_at')->nullable();
+            $table->boolean('is_deleted')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delivery_slots');
+        Schema::dropIfExists('countries');
     }
 };
