@@ -23,6 +23,7 @@ class BusinessRepository implements BusinessInterface
         $card_cvv,
         $business_category_id,
         $admin,
+        $status
     ) {
         $business = Business::create([
             "name" => $name,
@@ -34,6 +35,7 @@ class BusinessRepository implements BusinessInterface
             "card_cvv" => $card_cvv,
             "business_category_id" => $business_category_id,
             "admin_id" => $admin,
+            "status" => $status
         ]);
         // $business->save();
         return $business;
@@ -42,5 +44,13 @@ class BusinessRepository implements BusinessInterface
     public function getNewBusinesses()
     {
         return Business::where(["status" => "NEW_REQUEST"])->get();
+    }
+
+    public function getBusinesses(){
+        return Business::all();
+    }
+    
+    public function getBusiness($id){
+        return Business::find($id);
     }
 }

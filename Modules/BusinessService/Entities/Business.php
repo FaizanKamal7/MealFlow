@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\DeliveryService\Entities\Bags;
 
 class Business extends Model
 {
@@ -56,6 +57,9 @@ class Business extends Model
     public function business_category()
     {
         return $this->belongsTo(BusinessCategory::class, 'business_category_id');
+    }
+    public function bags(){
+        return $this->hasMany(Bags::class);
     }
 
     protected static function newFactory()
