@@ -17,20 +17,23 @@ return new class extends Migration
 
                 $table->uuid('id');
                 $table->uuid('vehicle_id')->nullable();
-                $table->uuid('driver_id')->nullable();
-                $table->enum('fuel_type', ['Diesel', 'Petrol', 'Gas', 'Electric']);
+                $table->uuid('employee_id')->nullable();
+                $table->enum('fuel_type', ['diesel', 'petrol', 'gas', 'electric'])->default("petrol");
                 $table->decimal('fuel_quantity', 10, 2);
                 $table->date('fuel_date');
                 $table->decimal('Fuel_cost', 10, 2)->nullable();
                 $table->string('supplier', 100)->nullable();
                 $table->string('notes', 255)->nullable();
-                
+                $table->enum('payment_method', ['topup','cash','credit'])->default('topup');
+                $table->dateTime('paid_date')->nullable();
+
+
                 $table->timestamps();
                 $table->softDeletes();
 
                 // Define foreign key constraints
                 $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete("set null");
-                $table->foreign('driver_id')->references('id')->on('drivers')->onDelete("set null");
+                $table->foreign('employee_id')->references('id')->on('employees')->onDelete("set null");
 
 
         });
