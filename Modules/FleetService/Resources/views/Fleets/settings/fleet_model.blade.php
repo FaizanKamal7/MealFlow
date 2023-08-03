@@ -3,9 +3,7 @@
 
 @section('extra_style')
 @endsection
-
 @section('main_content')
-
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->

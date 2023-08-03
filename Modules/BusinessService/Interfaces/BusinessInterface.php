@@ -14,7 +14,10 @@ interface BusinessInterface
         $card_cvv,
         $business_category_id,
         $admin,
+        $status,
     );
 
     public function getNewBusinesses();
+    public function getBusinesses();
+    public function getBusiness($id);
 }
