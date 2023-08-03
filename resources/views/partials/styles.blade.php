@@ -10,4 +10,5 @@
 <link href="{{ asset('static/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('static/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('static/css/nixus.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('static/css/nixus.css') }}" rel="stylesheet" type="text/css" />
 <!--end::Global Stylesheets Bundle-->

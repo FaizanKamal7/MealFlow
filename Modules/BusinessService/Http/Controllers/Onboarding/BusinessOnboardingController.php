@@ -5,22 +5,20 @@ namespace Modules\BusinessService\Http\Controllers\Onboarding;
 use App\Interfaces\CountryInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
-use App\Models\Country;
-// use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Response;
 use Modules\BusinessService\Interfaces\BranchCoverageInterface;
 use Modules\BusinessService\Interfaces\BranchInterface;
 use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\BusinessUserInterface;
 use Modules\BusinessService\Interfaces\OnboardingInterface;
+use Modules\BusinessService\Interfaces\BranchCoverageDeliverySlotsInterface;
 use Illuminate\Support\Facades\Session;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Modules\BusinessService\Http\Requests\BusinessRequest;
 
 class BusinessOnboardingController extends Controller
 {
@@ -34,11 +32,10 @@ class BusinessOnboardingController extends Controller
     private BranchCoverageInterface $branchCoverageRepository;
     private UserRoleInterface $userRoleRepository;
     private CountryInterface $countryRepository;
+    private BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository;
 
 
-    /**
-     * @param OnboardingInterface $designationRepository
-     */
+
     public function __construct(
         OnboardingInterface $onboardingRepository,
         BranchInterface $branchRepository,
@@ -49,6 +46,7 @@ class BusinessOnboardingController extends Controller
         BranchCoverageInterface $branchCoverageRepository,
         UserRoleInterface $userRoleRepository,
         CountryInterface $countryRepository,
+        BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository
 
     ) {
         $this->onboardingRepository = $onboardingRepository;
@@ -60,6 +58,7 @@ class BusinessOnboardingController extends Controller
         $this->branchCoverageRepository = $branchCoverageRepository;
         $this->userRoleRepository = $userRoleRepository;
         $this->countryRepository = $countryRepository;
+        $this->branchCoverageDeliverySlotRepository = $branchCoverageDeliverySlotRepository;
     }
 
     /**
@@ -74,15 +73,16 @@ class BusinessOnboardingController extends Controller
         return view('businessservice::onboarding.onboarding', ['countries' => $countries, 'business_categories' => $business_categories]);
     }
 
-    public function businessOnboarding(Request $request)
+    public function businessOnboarding(BusinessRequest $request)
     {
         // abort_if(Gate::denies('add_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $request->validated();
         try {
             // --- Adding data in users table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $user = $this->userRepository->createUser(
                 name: $request->get("first_name") . " " . $request->get("last_name"),
-                email: $request->get("contact_email"),
+                email: $request->get("email"),
                 password: Hash::make($request->get("password")),
                 isActive: true
             );
@@ -90,7 +90,7 @@ class BusinessOnboardingController extends Controller
             // --- Adding data in business table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $business = $this->businessRepository->createBusiness(
-                name: $request->get("first_name") . " " . $request->get("last_name"),
+                name: $request->get("buisness_name"),
                 logo: $request->get("logo"),
                 card_name: $request->get("card_name"),
                 card_number: $request->get("card_number"),
@@ -99,10 +99,10 @@ class BusinessOnboardingController extends Controller
                 card_cvv: $request->get("card_cvv"),
                 business_category_id: $request->get("category"),
                 admin: $user->id,
+                status: "NEW_REQUEST",
             );
-            echo " <br />business ID: " . $business->id;
 
-            // // Adding ternary relation 
+            // // Adding ternary relation
             $this->businessUserRepository->createBusinessUser(
                 business_id: $business->id,
                 user_id: $user->id,
@@ -110,29 +110,39 @@ class BusinessOnboardingController extends Controller
 
             $branch = $this->branchRepository->createBranch(
                 name: "Main Branch",
-                address: $request->get("address"),
                 phone: $request->get("phone"),
+                address: $request->get("address"),
+                country_id: $request->get("address_country"),
+                state_id: $request->get("address_state"),
+                city_id: $request->get("address_city"),
+                area_id: $request->get("address_area"),
                 active_status: true,
                 is_main_branch: 1,
                 business_id: $business->id,
             );
+            $area_coverage_list = $request->area_coverage_list;
 
-            //TODO: get area_id,city_id,state_id,country_id dynamicaly
+            //TODO: get area_id, city_id, state_id, country_id dynamicaly
 
-            $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
-                active_status: true,
-                area_id: $request->get("area"),
-                city_id: $request->get("city"),
-                state: $request->get("state"),
-                country: $request->get("country"),
-                branch_id: $branch->id,
-            );
+            foreach ($area_coverage_list as $key => $coverage_list_item) {
+                $areas = $coverage_list_item["area"];
+                foreach ($areas as $key => $area) {
+                    $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
+                        active_status: 1,
+                        area_id: $area,
+                        city_id: $coverage_list_item["city"],
+                        state: $coverage_list_item["state"],
+                        country: $coverage_list_item["country"],
+                        branch_id: $branch->id,
+                    );
+                    foreach ($coverage_list_item['delivery_slots'] as $key => $delivery_slot_id) {
+                        $this->branchCoverageDeliverySlotRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
+                    }
+                }
+            }
+            $this->signInBusinessAdminUponRegistration($request->get("email"), $request->get("password"), $user->id);
 
-            $this->signInBusinessAdminUponRegistration($request->get("contact_email"), $request->get("password"), $user->id);
 
-            // echo "business_user ID: " . $business_user->id;
-
-            // $this->onboardingRepository->createBusiness($name);
             return redirect()->route("business_home")->with("success", "Business added successfully");
         } catch (Exception $exception) {
             Log::error($exception);
@@ -171,13 +181,13 @@ class BusinessOnboardingController extends Controller
     // function getDependentCountryStateCity()
     // {
     //     if (!empty($_POST['id'])) {
-    //         // Fetch state data based on the specific country 
+    //         // Fetch state data based on the specific country
     //         $country_id = $_POST['id'];
 
     //         // Fetch state data based on the specific country
     //         $states = $this->onboardingRepository->getStatesOfCountry($country_id);
 
-    //         // Generate HTML of state options list 
+    //         // Generate HTML of state options list
     //         if ($states->num_rows > 0) {
     //             echo '<option value="">Select State</option>';
     //             while ($row = $states->fetch_assoc()) {
@@ -202,7 +212,7 @@ class BusinessOnboardingController extends Controller
     //         $query = "SELECT * FROM cities WHERE state_id = " . $GetStateID . " AND flag = 1 ORDER BY name ASC";
     //         $result = $link->query($query);
 
-    //         // Generate HTML of city options list 
+    //         // Generate HTML of city options list
     //         if ($result->num_rows > 0) {
     //             echo '<option value="">Select city</option>';
     //             while ($row = $result->fetch_assoc()) {
@@ -218,4 +228,10 @@ class BusinessOnboardingController extends Controller
     // {
     //     return view('businessservice::edit');
     // }
+
+    public function pricingCalculator(Request $request){
+        return view("businessservice::onboarding.pricing");
+
+    }
+
 }

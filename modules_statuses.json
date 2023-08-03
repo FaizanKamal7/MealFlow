@@ -3,5 +3,6 @@
     "UserService": true,
     "BusinessService": true,
     "FleetService": true,
-    "DeliveryService": true
+    "DeliveryService": true,
+    "FinanceService": true
 }
