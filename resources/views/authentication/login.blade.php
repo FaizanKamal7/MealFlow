@@ -103,7 +103,6 @@
                         <!--end::Actions-->
                     </form>
 
-                    <!--end::Form-->
                     <div class="text-center">
                         <br>OR <br><br>
                         <a href="{{route('business_onboarding')}}"> <button class="btn btn-lg btn-secondary w-100 mb-5">
