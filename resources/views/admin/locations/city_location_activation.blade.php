@@ -19,25 +19,34 @@
                     <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
                 </div>
                 <!--end::Close-->
-                <p>Select the areas of city you want to active</p>
-                <input class="form-check-input" type="checkbox" onClick="toggle(this)" /> Select All<br />
-                <hr>
                 <form method="GET" action="{{ route('activate_city_areas') }}">
-                    @csrf
                     <input type="hidden" name="city_id" value={{$selected_city_id}}>
+
+                    @if (count((array)$areas))
+                    <p>Select the areas of city you want to active</p>
+                    <input class="form-check-input" type="checkbox" onClick="toggle(this)" /> Select All<br />
+
+                    <hr>
+                    @csrf
 
                     @foreach ($areas as $area)
                     <input class="form-check-input" type="checkbox" name="areas[]" value="{{ json_encode($area) }}">
                     {{$area['name']}}
+
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     @endforeach
+
 
                     <br><br>
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Activate Locations</button>
+
+
+                    @else
+                    <b>No areas extracted from API for selected city</b> <br><br>
+                    <button type="submit" class="btn btn-primary">Proceed with activating entire city </button>
+                    @endif
                 </form>
-
-
 
 
 
