@@ -38,7 +38,7 @@
 /*}*/
 
 .card {
-    border: 1px solid #d8d8d8;
+    /*border: 1px solid #d8d8d8;*/
 }
 
 body {
@@ -51,8 +51,9 @@ body {
 }
 
 .form-control.form-control-solid {
-    background-color: #f1f5f9;
-    border-color: #d8d8d8;
+
+    background-color: #ffffff;
+    border-color: #efeeee;
 }
 
 .form-control.form-control-solid:focus {
