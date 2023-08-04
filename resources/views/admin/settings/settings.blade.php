@@ -273,7 +273,7 @@
                                             <!--end::Table body-->
                                         </table>
                                         <!--end::Table-->
-                                        {{ $cities->links() }}
+                                        {{-- {{ $cities->links() }} --}}
                                     </div>
                                     <!--end::Card body-->
                                 </div>
