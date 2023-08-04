@@ -50,7 +50,6 @@ class AreaController extends Controller
 
     public function extractAreasOfCityFromAPI($city_id, $city_name)
     {
-
         $city_name = $replacedText = str_replace(' ', '%20', $city_name);
         $user_name = "faizankamal_";
         $maxRows = 200;
@@ -77,7 +76,7 @@ class AreaController extends Controller
         $areas_array = json_decode($responce, true);
 
         // Removed elements with duplicated names
-        $areas_unique_name_array = $this->removeArrayDuplicatesWithProperty($areas_array['geoname'], 'name');
+        $areas_unique_name_array = $this->removeArrayDuplicatesWithProperty($areas_array['totalResultsCount'] != 0 ?  $areas_array['geoname'] : '', 'name');
 
         // Re-index the array if needed
         $api_areas_object = (object) $areas_unique_name_array;

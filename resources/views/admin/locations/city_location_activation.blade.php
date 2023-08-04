@@ -29,7 +29,7 @@
                     @foreach ($areas as $area)
                     <input class="form-check-input" type="checkbox" name="areas[]" value="{{ json_encode($area) }}">
                     {{$area['name']}}
-                    &nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     @endforeach
 
                     <br><br>
