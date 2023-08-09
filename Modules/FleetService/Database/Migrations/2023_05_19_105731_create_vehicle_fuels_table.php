@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('vehicle_fuels', function (Blueprint $table) {
 
-                $table->uuid('id');
+                $table->uuid('id')->primary();
                 $table->uuid('vehicle_id')->nullable();
                 $table->uuid('employee_id')->nullable();
                 $table->enum('fuel_type', ['diesel', 'petrol', 'gas', 'electric'])->default("petrol");
                 $table->decimal('fuel_quantity', 10, 2);
                 $table->date('fuel_date');
-                $table->decimal('Fuel_cost', 10, 2)->nullable();
+                $table->decimal('fuel_cost', 10, 2)->nullable();
                 $table->string('supplier', 100)->nullable();
                 $table->string('notes', 255)->nullable();
                 $table->enum('payment_method', ['topup','cash','credit'])->default('topup');
