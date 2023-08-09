@@ -9,4 +9,5 @@ interface RangePricingInterface
     public function update($id, $data);
     public function getAllRangeBasePricesOfCities($cities);
     public function getAllRangeBasePricesOfCity($city);
+    public function getAllRangeBusinessPricesOfCities($cities, $business_id);
 }

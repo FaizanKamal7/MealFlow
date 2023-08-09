@@ -80,8 +80,9 @@
                                             <!--end::Label-->
 
                                             <select id="city" class="form-select form-select-lg form-select-solid"
-                                                data-control="select2" onchange="getDeliverySlots()" data-placeholder="Choose City"
-                                                name="city" data-allow-clear="true" multiple="multiple">
+                                                data-control="select2" onchange="getDeliverySlots()"
+                                                data-placeholder="Choose City" name="city" data-allow-clear="true"
+                                                multiple="multiple">
                                             </select>
                                             <!--hidden text field-->
                                             <input type="hidden" id="cities" name="cities" />
@@ -94,36 +95,56 @@
                             </form>
                             <!--end::Form-->
                             <!--begin::Separator-->
-                            <div class="separator mb-6"></div>
+                            <div class="separator mb-2"></div>
 
                         </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="radiogroup" type="radio" value="base" id="r1"
+                                        checked />
+                                    <label for="r1" class="form-check-label">
+                                        Set BASE pricing (Applicable for all new businesses)
+                                    </label>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="col-xl-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="radiogroup" type="radio" value="non_base"
+                                        id="r2" />
+                                    <label for="r2" class="form-check-label">
+                                        Set for specific business
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-2" id="inputField" style="display:none;">
+                            <label class="form-label required">Businesses</label>
+
+                            <!--begin::Input group-->
+                            <select id="business" class="form-select form-select-solid" data-control="select2"
+                                data-placeholder="Select an option" data-allow-clear="true"
+                                onchange="getDeliverySlots()">
+
+                                <option value="">Select business</option>
+                                @if ($businesses->count())
+                                @foreach ($businesses as $business)
+                                <option value="{{$business['id']}}">{{$business['name']}}</option>
+                                @endforeach
+                                @else
+                                <option value="">Businesses not available</option>
+                                @endif
+                            </select>
+                            <!--end::Input group-->
+                        </div>
+
                         <!--end::Card body-->
                         <div id="delivery-slot-pricing-component-id" style="display: none">
                             @livewire('businessservice::delivery-slot-pricing-component' )
                         </div>
 
-                        {{-- <div id="form_id" style="display: none;">
-                            <form id="dynamic_form" action="{{route('store_delivery_slot_pricing_in_base_price')}}">
-                                <!-- Dynamic content will be added here -->
-                            </form>
-                            <br>
-                            <!--begin::Action buttons-->
-                            <div class="d-flex justify-content-end">
-                                <!--begin::Button-->
-                                <button type="reset" data-kt-contacts-type="cancel"
-                                    class="btn btn-light me-3">Cancel</button>
-                                <!--end::Button-->
-                                <!--begin::Button-->
-                                <button type="submit" form="dynamic_form" data-kt-contacts-type="submit"
-                                    class="btn btn-primary">
-                                    <span class="indicator-label">Submit</span>
-                                    <span class="indicator-progress">Please wait...
-                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                </button>
-                                <!--end::Button-->
-                            </div>
-                            <!--end::Action buttons-->
-                        </div> --}}
+
 
                     </div>
                 </div>
@@ -141,14 +162,14 @@
 <script src="{{ asset('static/js/custom/core/locations.js')}}"></script>
 
 <script>
-
     function getDeliverySlots() {
         console.log("inside getDeliverySlots");
         var cities = document.getElementById("cities").value;
+        var business_id = document.getElementById("business").value;
         var delivery_slot_pricing_component = document.getElementById("delivery-slot-pricing-component-id");
        
         var url = "/businessservice/pricing/get-delivery-slots-of-city-in-base-price";
-            console.log(cities);
+            
             $.ajax({
                 url: url,
                 dataType: "json",
@@ -161,6 +182,8 @@
                     var component = Livewire.find(componentId);
                     component.set('cities_delivery_slots',cities_delivery_slots);
                     component.set('cities', cities.split(',')); 
+                    component.set('business_id', business_id); 
+                    
                     
                     // divForm.style.display = "block";
 
@@ -259,26 +282,22 @@
             // Update hidden field
             $('#cities').val(selectedCities.join(','));
         });
+    });
 
-        // document.getElementById('city').addEventListener('change', function() {
-        //     var inputValue = this.value;
-
-        //     $.ajax({
-        //         url: '/your-controller-route',
-        //         type: 'POST',
-        //         data: { input: inputValue },
-        //         success: function(response) {
-        //             // Handle the response from the controller
-        //         },
-        //         error: function(xhr) {
-        //             // Handle any errors that occur during the AJAX request
-        //         }
-        //     });
-        // });
-
+    
+    document.getElementsByName('radiogroup').forEach((elem) => {
+        elem.addEventListener('change', (e) => {
+            if (e.target.value === 'non_base') {
+                document.getElementById('inputField').style.display = 'block';
+            } else {
+                document.getElementById('inputField').style.display = 'none';
+            }
+        });
     });
 
 
 </script>
 
 @endsection
+
+
