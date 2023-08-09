@@ -31,12 +31,12 @@ class DashboardController extends Controller
      */
     public function viewDashboard()
     {
-        $vehicles = $this->vehicleRepository->getVehicles();
+        $vehicles = $this->vehicleRepository->getDetailedVehicles();
         $vehicletypes =$this->vehicleTypeRepository->getActiveVehicleTypes();
         // $vehicletimeline = $this->vehicleLogRepository->getallVehicletimeline();
         $vehicletimeline="";
         $context = ['vehicles'=>$vehicles,'vehicleTypes'=>$vehicletypes,'vehicleLogs'=>$vehicletimeline];
-        
+
         return view('fleetservice::dashboard.dashboard',$context);
     }
 
