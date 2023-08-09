@@ -6,6 +6,8 @@
         @csrf
         <!--hidden text field-->
         <input type="hidden" id="cities" name="cities" value={{json_encode($cities)}} />
+        <input type="hidden" id="business_id" name="business_id" value={{$business_id}}>
+
         <!--begin::Repeater-->
         <div id="kt_docs_repeater_basic">
             <!--begin::Form group-->
