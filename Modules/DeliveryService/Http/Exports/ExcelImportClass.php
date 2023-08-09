@@ -37,7 +37,7 @@ class ExcelImportClass implements  WithHeadingRow, onEachRow
             // Value is not a duplicate, add it to the selectedOptions array
             $this->selectedCustomers[] = $customer;
 
-//            dd($customer,$address,$deliverySlot,$item_type,$enableSMSNotifications,$enableEmailNotifications,$special_instructions,$notes,$codAmount);
+            dd($customer,$address,$deliverySlot,$item_type,$enableSMSNotifications,$enableEmailNotifications,$special_instructions,$notes,$codAmount);
 
             //TODO::Push delivery data to database table (Delivery)
         }
