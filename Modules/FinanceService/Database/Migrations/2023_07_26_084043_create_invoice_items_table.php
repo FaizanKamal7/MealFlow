@@ -15,14 +15,16 @@ return new class extends Migration
     {
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('invoice_id');
             $table->string('item_type');
             $table->uuid('item_id');
             $table->decimal('amount', 8, 2);
+
+            $table->uuid('invoice_id');
+
             // Timestamps
             $table->timestamps();
 
-            $table->foreign("invoice_id")->references("invoices")->on("id")->onDelete("cascade");
+            $table->foreign("invoice_id")->references("id")->on("invoices")->onDelete("cascade");
         });
     }
 
