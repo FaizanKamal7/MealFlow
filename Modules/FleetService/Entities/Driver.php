@@ -35,6 +35,19 @@ class Driver extends Model
     public function timelines(){
         return $this->hasMany(VehicleTimeline::class);
     }
+    public function lastIncompleteTimeline()
+    {
+        // return $this->hasOne(VehicleTimeline::class)->ofMany(
+        //     [
+        //         'created_at','max',
+        //     ],function (Builder $query){
+        //         $query->whereNull("check_out_time");
+        //     }
+        // );
+        return $this->hasOne(VehicleTimeline::class)
+            ->orderBy('created_at', 'desc')
+            ->whereNull('check_out_time');
+    }
     public function areas(){
         return $this->hasMany(DriverArea::class);
     }

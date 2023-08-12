@@ -722,7 +722,8 @@
                                         <option></option>
                                         @foreach ($areas as $area)
                                             <option value="{{ $area->id }}" selected>{{ $area->name }} -
-                                                {{ $area->city->name }}</option>
+                                                {{-- {{ $area->city->name }} --}}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
