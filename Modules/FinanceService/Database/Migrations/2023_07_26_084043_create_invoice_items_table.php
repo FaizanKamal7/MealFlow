@@ -23,6 +23,8 @@ return new class extends Migration
 
             // Timestamps
             $table->timestamps();
+            $table->softDeletes();
+
 
             $table->foreign("invoice_id")->references("id")->on("invoices")->onDelete("cascade");
         });

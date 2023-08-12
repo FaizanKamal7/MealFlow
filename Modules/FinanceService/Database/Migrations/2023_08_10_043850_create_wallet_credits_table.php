@@ -24,6 +24,7 @@ return new class extends Migration
             $table->uuid("card_id")->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign("wallet_id")->references("id")->on("business_wallet")->onDelete("cascade");
             $table->foreign("card_id")->references("id")->on("business_cards")->onDelete("set null");
