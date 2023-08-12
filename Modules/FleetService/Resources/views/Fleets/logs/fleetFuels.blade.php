@@ -95,7 +95,7 @@
                                                     <img src="{{ asset('static/media\Fleet\images-1.jpg') }}" class=""
                                                         alt="" />
                                                     <a href="#"
-                                                        class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">{{$fuel->vehicle->registration_number}}</a>
+                                                        class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">{{$fuel->vehicle->registration_number}} {{$fuel->vehicle->vehicleModel->make}}</a>
 
 
                                                 </div>

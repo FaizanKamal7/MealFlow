@@ -65,7 +65,7 @@
                                         <th class="text-center min-w-150px ">license No</th>
                                         <th class="text-center min-w-150px">license Document</th>
                                         <th class="text-center min-w-150px ">license Expiry date</th>
-                                        <th class="text-end min-w-100px">Employee</th>
+                                        <th class="text-end min-w-100px">Vehicle</th>
                                         <th class="text-center min-w-100px">Status</th>
                                         <th class="text-center min-w-100px">Action</th>
 
@@ -107,7 +107,7 @@
                                             </td>
                                             <td class="text-center">{{ $driver->license_expiry_date }}</td>
                                             <!--begin::Price-->
-                                            <td class="text-end">{{ $driver->employee->first_name }}</td>
+                                            <td class="text-end"> @if ($driver->lastIncompleteTimeline) {{ $driver->lastIncompleteTimeline->vehicle->registration_number }}@else NA @endif</td>
                                             <!--end::Price-->
                                             <!--begin::Status-->
                                             <td class="text-end">
@@ -354,7 +354,8 @@
                                         <option></option>
                                         @foreach ($areas as $area)
                                             <option value="{{ $area->id }}">{{ $area->name }} -
-                                                {{ $area->city->name }}</option>
+                                                {{-- {{ $area->city->name }} --}}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('driver_areas')

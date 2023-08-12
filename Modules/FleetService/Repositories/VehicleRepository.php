@@ -107,7 +107,7 @@ class VehicleRepository implements VehicleInterface{
  }
 
  public function getDetailedVehicles(){
-   return Vehicle::with('vehicleType', 'vehicleModel','lastIncompleteTimeline.driver.employee')->get();
+   return Vehicle::with('vehicleType', 'vehicleModel')->get();
  }
  public function getVehicle($id){
   return Vehicle::find($id);
