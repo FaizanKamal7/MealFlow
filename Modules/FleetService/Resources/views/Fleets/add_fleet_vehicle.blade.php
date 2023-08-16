@@ -1,4 +1,4 @@
-@extends('fleetservice::layouts.master')
+@extends('layouts.admin_master')
 @section('title', 'Add Fleet')
 
 @section('extra_style')
