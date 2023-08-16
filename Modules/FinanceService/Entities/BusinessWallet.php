@@ -2,7 +2,6 @@
 
 namespace Modules\FinanceService\Entities;
 
-
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,36 +9,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Request;
 use App\Http\Helper\Helper;
-use Modules\BusinessService\Entities\Business;
-class Invoice extends Model
+class BusinessWallet extends Model
 {
     use HasFactory;
     use HasUuids;
     use SoftDeletes;
 
     protected $fillable = [
-        'start_date',
-        'end_date',
-        'invoice_date',
-        'total_amount',
-        'paid_amount',
-        'status',
-        'paid_date',
-        'payment_method',
-        'is_sent',
+        'balance',
         'business_id',
+
     ];
     
-    public function business(){
-        return $this->belongsTo(Business::class,"business_id");
-    }
-    public function items(){
-        return $this->hasMany(InvoiceItem::class);
+    public function cards(){
+        return $this->hasMany(BusinessCard::class);
     }
 
     protected static function newFactory()
     {
-        return \Modules\FinanceService\Database\factories\InvoiceFactory::new();
+        return \Modules\FinanceService\Database\factories\BusinessWalletFactory::new();
     }
     public static function boot()
     {
@@ -122,6 +110,5 @@ class Invoice extends Model
         });
 
     }
-
 
 }
