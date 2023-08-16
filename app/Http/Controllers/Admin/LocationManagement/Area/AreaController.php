@@ -50,7 +50,6 @@ class AreaController extends Controller
 
     public function extractAreasOfCityFromAPI($city_id, $city_name)
     {
-
         $city_name = $replacedText = str_replace(' ', '%20', $city_name);
         $user_name = "faizankamal_";
         $maxRows = 200;
@@ -68,7 +67,6 @@ class AreaController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
         ));
-
         $response = curl_exec($curl);
 
         curl_close($curl);
@@ -78,11 +76,11 @@ class AreaController extends Controller
         $areas_array = json_decode($responce, true);
 
         // Removed elements with duplicated names
-        $areas_unique_name_array = $this->removeArrayDuplicatesWithProperty($areas_array['geoname'], 'name');
+        $areas_unique_name_array = $this->removeArrayDuplicatesWithProperty($areas_array['totalResultsCount'] != 0 ?  $areas_array['geoname'] : '', 'name');
 
         // Re-index the array if needed
         $api_areas_object = (object) $areas_unique_name_array;
-        return View::make("admin.settings.city_location_activation", ['areas' => $api_areas_object, 'selected_city_id' => $city_id]);
+        return View::make("admin.locations.city_location_activation", ['areas' => $api_areas_object, 'selected_city_id' => $city_id]);
     }
 
 
@@ -92,6 +90,8 @@ class AreaController extends Controller
         $city_id = $request->input('city_id');
         $areas_to_upload = [];
 
+        $city = $this->cityRepository->get($city_id);
+
         if ($selected_areas) {
             foreach ($selected_areas as $area) {
                 $area_object = json_decode($area);
@@ -99,31 +99,43 @@ class AreaController extends Controller
 
                 if ($area_geoname_exist == null) {
 
-                    // $coordinates = serialize([$area_object->lat, $area_object->lng]);
                     $coordinates = $area_object->lat . "," . $area_object->lng;
 
                     $single_area =
                         [
-                            'actve_status' => true,
+                            'actve_status' => 1,
                             'name' => $area_object->name,
                             'city_id' =>  $city_id,
                             'geoname_id' =>  $area_object->geonameId,
                             'coordinates' =>  $coordinates,
+
                         ];
                     $this->areaRepository->add($single_area);
                 }
             }
+        } else {
+            $coordinates = $city->latitude . "," . $city->longitude;
+
+            $single_area =
+                [
+                    'actve_status' => 1,
+                    'name' => $city->name,
+                    'city_id' =>  $city_id,
+                    'coordinates' =>  $coordinates,
+                ];
+            $this->areaRepository->add($single_area);
         }
-        $city = $this->cityRepository->get($city_id);
         $this->cityRepository->update($city_id, ['active_status' => true]);
         $this->stateRepository->update($city->state_id, ['active_status' => true]);
         $this->countryRepository->update($city->state->country_id, ['active_status' => true]);
-        return redirect()->route('settings')->with('status', 'Areas activated successfully');
+        return redirect()->route('activate_locations_view')->with('success', 'Areas activated successfully');
     }
-
     // TODO: Transfer below function in Helper class
     public function removeArrayDuplicatesWithProperty($array = [], $property_name = '')
     {
+        if (is_string($array) && $array === "") {
+            $array = [];
+        }
         // Count the occurrences of each name
         $nameCount = array_count_values(array_column($array, $property_name));
 
