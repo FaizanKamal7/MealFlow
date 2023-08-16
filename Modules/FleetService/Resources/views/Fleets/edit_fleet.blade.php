@@ -1,4 +1,4 @@
-@extends('fleetservice::layouts.master')
+@extends('layouts.admin_master')
 @section('title', 'Edit Fleet')
 
 @section('extra_style')
@@ -267,7 +267,7 @@
 
                                         </div>
 
-                    
+
 
 
                                         <!--end::Input group-->
