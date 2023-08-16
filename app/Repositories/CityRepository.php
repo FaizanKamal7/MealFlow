@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\CityInterface;
 use App\Models\City;
+use Yajra\DataTables\DataTables;
 
 class CityRepository implements CityInterface
 {
@@ -20,7 +21,11 @@ class CityRepository implements CityInterface
 
     public function getAllCities()
     {
-        return City::paginate(50);
+        // return City::paginate(50);
+        return City::whereIn('state_id', ['3390', '3391', '3392', '3393', '3394', '3395', '3396'])->get();
+
+        // $cities = City::get('id', 'active', 'name', 'state_id', 'country_id');
+        // return DataTables::of($cities)->make(true);
     }
 
     public function getCitiesOfState($state_id)

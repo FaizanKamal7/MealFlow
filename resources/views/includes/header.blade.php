@@ -55,8 +55,9 @@
                                 <!--end::Avatar-->
                                 <!--begin::Username-->
                                 <div class="d-flex flex-column">
-                                    <a href="#" class="fw-bold fs-18 px-2 py-1 ms-2 text-hover-primary">{{ Auth::user()->name }}
-
+                                    <a href="#" class="fw-bold fs-18 px-2 py-1 ms-2 text-hover-primary">
+{{--                                        {{ Auth::user()->name }}--}}
+John Doe
                                     </a>
                                     <div class="fw-bolder d-flex align-items-center fs-5">
                                         <span

@@ -4,6 +4,7 @@ namespace Modules\BusinessService\Repositories;
 
 use Modules\BusinessService\Entities\Branch;
 use Modules\BusinessService\Entities\BranchCoverage;
+use Modules\BusinessService\Entities\BranchCoverageDeliverySlots;
 use Modules\BusinessService\Interfaces\BranchCoverageInterface;
 
 class BranchCoverageRepository implements BranchCoverageInterface
