@@ -1,7 +1,7 @@
 "use strict";
-var KTCustomersList = function () {
+var KTdeliverysList = function () {
     var t, e, o = () => {
-        e.querySelectorAll('[data-kt-customer-table-filter="delete_row"]').forEach((e => {
+        e.querySelectorAll('[data-kt-delivery-table-filter="delete_row"]').forEach((e => {
             e.addEventListener("click", (function (e) {
                 e.preventDefault();
                 const o = e.target.closest("tr"), n = o.querySelectorAll("td")[1].innerText;
@@ -37,7 +37,7 @@ var KTCustomersList = function () {
         }))
     }, n = () => {
         const o = e.querySelectorAll('[type="checkbox"]'),
-            n = document.querySelector('[data-kt-customer-table-select="delete_selected"]');
+            n = document.querySelector('[data-kt-delivery-table-select="delete_selected"]');
         o.forEach((t => {
             t.addEventListener("click", (function () {
                 setTimeout((function () {
@@ -46,7 +46,7 @@ var KTCustomersList = function () {
             }))
         })), n.addEventListener("click", (function () {
             Swal.fire({
-                text: "Are you sure you want to delete selected customers?",
+                text: "Are you sure you want to delete selected deliverys?",
                 icon: "warning",
                 showCancelButton: !0,
                 buttonsStyling: !1,
@@ -58,7 +58,7 @@ var KTCustomersList = function () {
                 }
             }).then((function (n) {
                 n.value ? Swal.fire({
-                    text: "You have deleted all selected customers!.",
+                    text: "You have deleted all selected deliverys!.",
                     icon: "success",
                     buttonsStyling: !1,
                     confirmButtonText: "Ok, got it!",
@@ -69,7 +69,7 @@ var KTCustomersList = function () {
                     }));
                     e.querySelectorAll('[type="checkbox"]')[0].checked = !1
                 })) : "cancel" === n.dismiss && Swal.fire({
-                    text: "Selected customers was not deleted.",
+                    text: "Selected deliverys was not deleted.",
                     icon: "error",
                     buttonsStyling: !1,
                     confirmButtonText: "Ok, got it!",
@@ -79,9 +79,9 @@ var KTCustomersList = function () {
         }))
     };
     const c = () => {
-        const t = document.querySelector('[data-kt-customer-table-toolbar="base"]'),
-            o = document.querySelector('[data-kt-customer-table-toolbar="selected"]'),
-            n = document.querySelector('[data-kt-customer-table-select="selected_count"]'),
+        const t = document.querySelector('[data-kt-delivery-table-toolbar="base"]'),
+            o = document.querySelector('[data-kt-delivery-table-toolbar="selected"]'),
+            n = document.querySelector('[data-kt-delivery-table-select="selected_count"]'),
             c = e.querySelectorAll('tbody [type="checkbox"]');
         let r = !1, l = 0;
         c.forEach((t => {
@@ -90,7 +90,7 @@ var KTCustomersList = function () {
     };
     return {
         init: function () {
-            (e = document.querySelector("#kt_customers_table")) && (e.querySelectorAll("tbody tr").forEach((t => {
+            (e = document.querySelector("#kt_deliverys_table")) && (e.querySelectorAll("tbody tr").forEach((t => {
                 const e = t.querySelectorAll("td"), o = moment(e[5].innerHTML, "DD MMM YYYY, LT").format();
                 e[5].setAttribute("data-order", o)
             })), (t = $(e).DataTable({
@@ -99,7 +99,7 @@ var KTCustomersList = function () {
                 columnDefs: [{orderable: !1, targets: 0}, {orderable: !1, targets: 6}]
             })).on("draw", (function () {
                 n(), o(), c()
-            })), n(), document.querySelector('[data-kt-customer-table-filter="search"]').addEventListener("keyup", (function (e) {
+            })), n(), document.querySelector('[data-kt-delivery-table-filter="search"]').addEventListener("keyup", (function (e) {
                 t.search(e.target.value).draw()
             })), o(), (() => {
                 const e = document.querySelector('[data-kt-ecommerce-order-filter="status"]');
@@ -112,5 +112,5 @@ var KTCustomersList = function () {
     }
 }();
 KTUtil.onDOMContentLoaded((function () {
-    KTCustomersList.init()
+    KTdeliverysList.init()
 }));

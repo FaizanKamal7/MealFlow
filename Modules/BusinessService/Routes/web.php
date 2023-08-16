@@ -16,7 +16,11 @@ use Modules\BusinessService\Http\Controllers\BusinessPricing\BusinessPricingCont
 use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsController;
 
 Route::prefix('businessservice')->group(function () {
+    Route::get("",[\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
+    Route::get("deliveries/upload",[\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "uploadDeliveriesByForm"])->name("partner_upload_deliveries");
+    Route::get("deliveries",[\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "viewAllDeliveries"])->name("partner_all_deliveries");
     Route::get("home/", [\Modules\BusinessService\Http\Controllers\BusinessSettings\BusinessSettingsController::class, "index"])->name("business_home");
+    Route::get("customers",[\Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController::class, "viewAllCustomers"])->name("partner_all_customers");
 
     Route::group(['prefix' => 'business_info/'], function () {
         Route::get("overview/{business_id}", [BusinessInfoController::class, "index"])->name("business_overview");

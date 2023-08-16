@@ -11,7 +11,7 @@
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <!--begin::Container-->
     <div id="kt_content_container" class="container-fluid">
-        <h1 class="fs-lg-2x  pb-7 px-2">New Business Requests </h1>
+        <h1 class="fs-lg-2x  pb-7 px-2">Activate Your Service Locations </h1>
 
         <div class="d-flex flex-column flex-lg-row">
             <!--begin::Content-->
@@ -37,8 +37,11 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
-                                <input type="text" data-kt-permissions-table-filter="search"
-                                    class="form-control form-control-solid w-250px ps-15" placeholder="Search" />
+                                <input type="text" id="myInput" data-kt-permissions-table-filter="search"
+                                    onkeyup="myFunction()" class="form-control form-control-solid w-250px ps-15"
+                                    placeholder="Search city name..." />
+
+
                             </div>
                             <!--end::Search-->
                         </div>
@@ -48,8 +51,7 @@
                     <!--end::Card header-->
                     <!--begin::Card body-->
                     <div class="card-body pt-0">
-                        <input type="text" id="search" class="form-control" placeholder="Search cities">
-
+                      
                         <table id="city-table" class="table table-striped table-row-bordered gy-5 gs-7">
                             <thead>
                                 <tr class="fw-semibold fs-6 text-gray-800">
@@ -114,7 +116,7 @@
 
                             </tbody>
                         </table>
-                        {{ $cities->links() }}
+                        {{-- {{ $cities->links() }} --}}
 
                     </div>
                     <!--end::Card body-->
@@ -146,6 +148,27 @@
 <script src="{{ asset('static/js/custom/settings/settings_home.js') }}"></script>
 <script src="{{ asset('static/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("city-table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1]; // get second column (name column)
+            if (td) {
+            a = td.getElementsByTagName("a")[0]; // get anchor within td
+            txtValue = a.textContent || a.innerText; // get text within anchor
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }       
+        }
+    }
+
     var status = {
 				1: {"title": "Pending", "state": "primary"},
 				2: {"title": "Delivered", "state": "danger"},

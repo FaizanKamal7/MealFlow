@@ -10,7 +10,7 @@
             id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <a href="{{ route("admin_dashboard") }}">
+                <a href="{{ route('admin_dashboard') }}">
                     <span class="menu-link">
 
                         <span class="menu-icon">
@@ -52,7 +52,7 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("business_home") }}">
+                        <a class="menu-link" href="{{ route('business_home') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("permissions_view") }}">
+                        <a class="menu-link" href="{{ route('permissions_view') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("delivery_slot_wise_base_pricing") }}">
+                        <a class="menu-link" href="{{ route('delivery_slot_wise_base_pricing') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -102,7 +102,7 @@
                 <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
                     @can("view_permissions")
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("permissions_view") }}">
+                        <a class="menu-link" href="{{ route('permissions_view') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -113,7 +113,7 @@
 
                     @can("view_role")
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("roles_view") }}">
+                        <a class="menu-link" href="{{ route('roles_view') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -124,7 +124,7 @@
 
                     @can("view_users")
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("users_view") }}">
+                        <a class="menu-link" href="{{ route('users_view') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -161,7 +161,7 @@
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{route('bulk_delivery_add')}}">
+                        <a class="menu-link" href="{{route('upload_deliveries')}}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -333,7 +333,9 @@
                     </div>
 
                     <div class="menu-item">
+
                         <a class="menu-link" href="{{route("fleet_dashboard")}}">
+
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -369,7 +371,9 @@
                     </div>
 
                     <div class="menu-item">
+
                         <a class="menu-link" href="{{route("fleet_vehicle")}}">
+
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -378,7 +382,9 @@
                     </div>
 
                     <div class="menu-item">
+
                         <a class="menu-link" href="{{route("fleet_vehicle_timeline")}}">
+
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -553,7 +559,7 @@
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("business_new_requests") }}">
+                        <a class="menu-link" href="{{ route('business_new_requests') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -566,7 +572,7 @@
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("get_all_businesses") }}">
+                        <a class="menu-link" href="{{ route('get_all_businesses') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -654,7 +660,7 @@
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
                             @can("add_department")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_departments") }}">
+                                <a class="menu-link" href="{{ route('hr_departments') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -665,7 +671,7 @@
 
                             @can("view_designation")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_designations") }}">
+                                <a class="menu-link" href="{{ route('hr_designations') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -676,7 +682,7 @@
 
                             @can("view_events")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_events") }}">
+                                <a class="menu-link" href="{{ route('hr_events') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -687,7 +693,7 @@
 
                             @can("view_award")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_awards") }}">
+                                <a class="menu-link" href="{{ route('hr_awards') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -699,7 +705,7 @@
                             @can("view_appreciation")
 
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_appreciations") }}">
+                                <a class="menu-link" href="{{ route('hr_appreciations') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -711,7 +717,7 @@
 
                             @can("view_taxes")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_taxes") }}">
+                                <a class="menu-link" href="{{ route('hr_taxes') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -738,7 +744,7 @@
 
                             @can("view_employee")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_employees") }}">
+                                <a class="menu-link" href="{{ route('hr_employees') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -749,7 +755,7 @@
 
                             @can("view_employee")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_salaries") }}">
+                                <a class="menu-link" href="{{ route('hr_salaries') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -760,7 +766,7 @@
 
                             @can("view_timesheet")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_timesheets") }}">
+                                <a class="menu-link" href="{{ route('hr_timesheets') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -771,7 +777,7 @@
 
                             @can("view_overtime")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_overtimes") }}">
+                                <a class="menu-link" href="{{ route('hr_overtimes') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -782,7 +788,7 @@
 
                             @can("view_deduction")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_deductions") }}">
+                                <a class="menu-link" href="{{ route('hr_deductions') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -793,7 +799,7 @@
 
                             @can("view_expense_reclaim")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_expense_reclaims") }}">
+                                <a class="menu-link" href="{{ route('hr_expense_reclaims') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -808,7 +814,7 @@
 
                     @can("view_team")
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("hr_teams") }}">
+                        <a class="menu-link" href="{{ route('hr_teams') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -831,7 +837,7 @@
                             @can("view_attendence")
 
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_attendance") }}">
+                                <a class="menu-link" href="{{ route('hr_attendance') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -842,7 +848,7 @@
 
                             @can("view_leave_application")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_leave_applications") }}">
+                                <a class="menu-link" href="{{ route('hr_leave_applications') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -853,7 +859,7 @@
 
                             @can("view_leave_type")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("hr_leave_types") }}">
+                                <a class="menu-link" href="{{ route('hr_leave_types') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -864,7 +870,7 @@
 
                             @can("view_leave_policy")
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route("leave_policy") }}">
+                                <a class="menu-link" href="{{ route('leave_policy') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
@@ -985,7 +991,7 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("activate_locations_view") }}">
+                        <a class="menu-link" href="{{ route('activate_locations_view') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -993,7 +999,7 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("business_home") }}">
+                        <a class="menu-link" href="{{ route('business_home') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -1002,7 +1008,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("permissions_view") }}">
+                        <a class="menu-link" href="{{ route('permissions_view') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -1011,7 +1017,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("roles_view") }}">
+                        <a class="menu-link" href="{{ route('roles_view') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -1020,7 +1026,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("roles_view") }}">
+                        <a class="menu-link" href="{{ route('roles_view') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -1054,7 +1060,7 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("delivery_slot_wise_base_pricing") }}">
+                        <a class="menu-link" href="{{ route('delivery_slot_wise_base_pricing') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -1062,7 +1068,7 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("range_base_pricing") }}">
+                        <a class="menu-link" href="{{ route('range_base_pricing') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -1071,7 +1077,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("delivery_slot_wise_base_pricing") }}">
+                        <a class="menu-link" href="{{ route('delivery_slot_wise_base_pricing') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -1104,7 +1110,6 @@
             </div>
 
 
-
             <div class="menu-item">
                 <a class="menu-link" href="#">
                     <span class="menu-icon">
@@ -1125,7 +1130,7 @@
                     <span class="menu-title">System Settings</span>
                     {{-- @can("settings") --}}
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route("settings") }}">
+                        <a class="menu-link" href="{{ route('settings') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -1138,8 +1143,26 @@
             </div>
 
         </div>
-
-
+        <div>
+            <a href="https://www.nixus.tech/" class="btn btn-custom btn-warning w-100" data-bs-toggle="tooltip"
+                data-bs-trigger="hover" data-bs-dismiss-="click" title="visit Nixus.com"
+                style="background-color: #EF7F22;">
+                <span class="btn-label">Visit Nixus.com</span>
+                <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg') }}-->
+                <span class="svg-icon btn-icon svg-icon-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path opacity="0.3"
+                            d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z"
+                            fill="currentColor" />
+                        <rect x="7" y="17" width="6" height="2" rx="1" fill="currentColor" />
+                        <rect x="7" y="12" width="10" height="2" rx="1" fill="currentColor" />
+                        <rect x="7" y="7" width="6" height="2" rx="1" fill="currentColor" />
+                        <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor" />
+                    </svg>
+                </span>
+                <!--end::Svg Icon-->
+            </a>
+        </div>
 
     </div>
 
