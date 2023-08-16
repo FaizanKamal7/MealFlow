@@ -25,11 +25,11 @@
                         <!--end::Card title-->
                         <!--start::Card Tool Bar-->
                         <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                            <button class="btn btn-primary">
-                                <a href="{{route('add_new_delivery_slots')}}">Add New
-                                    Delivery Slot</a>
+                            <a href="{{route('add_new_delivery_slots')}}"> <button class="btn btn-primary">
+                                    Add New
+                                    Delivery Slot
 
-                            </button>
+                                </button></a>
                         </div>
                         <!--end::Card Tool Bar-->
                     </div>
