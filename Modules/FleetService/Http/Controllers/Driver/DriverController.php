@@ -44,7 +44,7 @@ class DriverController extends Controller
     public function viewDrivers()
     {
         $employees = $this->employeeRepository->getEmployees();
-        $drivers = $this->driverRepository->getDrivers();
+        $drivers = $this->driverRepository->getDetailDrivers();
         $areas = $this->areaRepository->getWhere(["active_status" => 1]);
         $context = ['employees' => $employees, 'drivers' => $drivers, 'areas' => $areas];
         return view('fleetservice::Fleets.drivers.drivers', $context);

@@ -5,6 +5,7 @@ namespace Modules\FleetService\Entities;
 use App\Http\Helper\Helper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Request;
 use Modules\FleetService\Entities\VehicleType;
 use Modules\FleetService\Entities\VehicleModel;
@@ -60,8 +61,19 @@ class Vehicle extends Model
         return $this->hasMany(VehicleTimeline::class)->orderBy('check_in_time', 'asc');
 
     }
+    public function driver(){
+        return $this->hasOneThrough(VehicleTimeline::class,Driver::class);
+    }   
+    // TODO using has many through for driver to skip timeline table
     public function lastIncompleteTimeline()
     {
+        // return $this->hasOne(VehicleTimeline::class)->ofMany(
+        //     [
+        //         'created_at','max',
+        //     ],function (Builder $query){
+        //         $query->whereNull("check_out_time");
+        //     }
+        // );
         return $this->hasOne(VehicleTimeline::class)
             ->orderBy('created_at', 'desc')
             ->whereNull('check_out_time');

@@ -26,14 +26,14 @@ Route::prefix('fleets')->group(function () {
         Route::get('', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'viewVehicles'])->name("fleet_vehicle");
         Route::get('add/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'addVehicle'])->name("fleet_vehicle_add");
         Route::post('add/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'storeVehicle'])->name("fleet_vehicle_store");
-        
+
         Route::delete('{vehicle_id}/delete', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'destroyVehicle'])->name("fleet_vehicle_delete");
 
 
         Route::get('{vehicle_id}/details/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'viewvehicleDetail'])->name("fleet_vehicle_detail");
         Route::get('{vehicle_id}/edit', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'editVehicle'])->name("fleet_vehicle_edit");
         Route::post('{vehicle_id}/edit', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'updateVehicle'])->name("fleet_vehicle_update");
-      
+
         Route::get('is-unique-vehicle/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'isUniqueVehicle'])->name("fleet_vehicle_is_unique");
         Route::get('get-make-models/', [Modules\FleetService\Http\Controllers\Vehicle\VehicleController::class, 'getMakeModels'])->name("fleet_vehicle_get_make_models");
 
@@ -77,10 +77,11 @@ Route::prefix('fleets')->group(function () {
 
     });
     Route::group(['prefix' => 'vehicle-maintenance/'], function () {
-
-    });
-    Route::group(['prefix' => 'driver/'], function () {
-
+        Route::get('/maintenance', [Modules\FleetService\Http\Controllers\VehicleMaintenance\VehicleMaintenanceController::class, "viewFleetMaintenance"])->name("fleet_maintenance");
+        Route::post('/store', [Modules\FleetService\Http\Controllers\VehicleMaintenance\VehicleMaintenanceController::class, "storeFleetMaintenance"])->name("store_fleet_maintenance");
+        Route::get('/fuel', [Modules\FleetService\Http\Controllers\VehicleFuel\VehicleFuelController::class, "viewFleetFuelList"])->name("fleet_fuel");
+        Route::post('/store', [Modules\FleetService\Http\Controllers\VehicleFuel\VehicleFuelController::class, "storeFleetFuel"])->name("store_fleet_fuel");
+        
     });
     Route::group(['prefix' => 'driver-area/'], function () {
 
