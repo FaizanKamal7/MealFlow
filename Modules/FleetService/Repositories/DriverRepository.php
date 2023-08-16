@@ -37,7 +37,10 @@ class DriverRepository implements DriverInterface
         return $driver->save();
     }
     public function getDrivers(){
-        return Driver::with('employee','timelines.vehicle')->get();
+        return Driver::all();
+    }
+    public function getDetailDrivers(){
+        return Driver::with('employee','areas','lastIncompleteTimeline')->get();
     }
     public function getDriver($id){
         return Driver::find($id);
