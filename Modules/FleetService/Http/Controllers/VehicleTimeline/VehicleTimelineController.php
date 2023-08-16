@@ -26,12 +26,12 @@ class VehicleTimelineController extends Controller
         $this->vehicleTimelineRepository = $vehicleTimelineRepository;
         $this->vehicleRepository = $vehicleRepository;
 
-    }   
+    }
 
-    
+
     public function index()
-    {   
-        $vehicles=$this->vehicleRepository->getVehicles();
+    {
+        $vehicles=$this->vehicleRepository->getDetailedVehicles();
         $context = ["vehicles"=>$vehicles];
         return view('fleetservice::Fleets.logs.vehicle_timeline',$context);
     }
@@ -63,7 +63,7 @@ class VehicleTimelineController extends Controller
             Log::error($exception);
             error_log("error" . $exception);
         }
-        
+
     }
 
     /**
