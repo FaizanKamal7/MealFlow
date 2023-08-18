@@ -1,4 +1,4 @@
-@extends('fleetservice::layouts.master')
+@extends('layouts.admin_master')
 @section('title', ' Fleet Details')
 
 @section("extra_style")
@@ -48,7 +48,7 @@
                                         <div>
                                             <h6 class="mb-0 text-white opacity-7 mb-7" style="font-family: Open Sans;font-size: 16px;line-height: 26px;">Distance</h6>
                                             <h3 class="text-white " style="font-size: 30px;">145 <small class="text-sm align-top" style="font-size: 14px;">/km</small></h3>
-                                            
+
                                         </div>
                                         <div class="ms-lg-6 ms-4">
                                             <h6 class="mb-0 text-white opacity-7 mb-7 " style="font-family: Open Sans;font-size: 16px;line-height: 26px; text-color: rgb(185, 74, 72) solid 1px;">Milage</h6>
@@ -616,7 +616,7 @@
                             <!--end::Input group-->
 
                             <!--begin::Input group-->
-                            
+
                             <!--end::Input group-->
                         </div>
                         <!--end::Address form-->
@@ -790,7 +790,7 @@
                             <!--end::Input group-->
 
                             <!--begin::Input group-->
-                           
+
                             <!--end::Input group-->
                         </div>
 
@@ -807,8 +807,8 @@
                         </div>
 
                         <div id="kt_modal_update_user_address" class="collapse show">
-                           
-                           
+
+
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-bold mb-2">Api Unit Id</label>
@@ -820,7 +820,7 @@
                             <!--end::Input group-->
 
                             <!--begin::Input group-->
-                           
+
                             <!--end::Input group-->
                         </div>
 
