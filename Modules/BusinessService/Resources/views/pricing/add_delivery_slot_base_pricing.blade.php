@@ -144,6 +144,14 @@
                             @livewire('businessservice::delivery-slot-pricing-component' )
                         </div>
 
+                        <div id="no-delivery-slot" class="text-center" style="display: none">
+                            <br><br>
+                            <p><i>No Delivery Slot Available for selected region. Please <a
+                                        href="{{route('add_new_delivery_slots')}}">add delivery slots</a> for this
+                                    region before adding price</i></p>
+                        </div>
+
+
 
 
                     </div>
@@ -167,6 +175,7 @@
         var cities = document.getElementById("cities").value;
         var business_id = document.getElementById("business").value;
         var delivery_slot_pricing_component = document.getElementById("delivery-slot-pricing-component-id");
+        var no_delivery_slot = document.getElementById("no-delivery-slot");
        
         var url = "/businessservice/pricing/get-delivery-slots-of-city-in-base-price";
             
@@ -176,8 +185,12 @@
                 data: { cities: cities },
                 success: function(cities_delivery_slots) {
                     city_pricings_arr = Object.values(cities_delivery_slots);
-              
-                    delivery_slot_pricing_component.style.display = "block";
+                    if (city_pricings_arr.length === 0) {
+                        no_delivery_slot.style.display = "block"
+                    } else {
+                        delivery_slot_pricing_component.style.display = "block";
+
+                    }
                     var componentId = document.querySelector('#delivery-slot-pricing-component-id [wire\\:id]').getAttribute('wire:id');
                     var component = Livewire.find(componentId);
                     component.set('cities_delivery_slots',cities_delivery_slots);
@@ -299,5 +312,3 @@
 </script>
 
 @endsection
-
-

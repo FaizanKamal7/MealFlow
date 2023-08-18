@@ -260,7 +260,7 @@
                                     collection and cash.
                                     collection.</b></p>
                             <button type="button" class="button-no-style"
-                                onclick="changeNewlyAddedPricingView(this)">Click
+                                onclick=" (this)">Click
                                 here</button>
                             <p id="pricing_text_id_new" style="display: inline;">
                                 to set same pricing for all services</p>
