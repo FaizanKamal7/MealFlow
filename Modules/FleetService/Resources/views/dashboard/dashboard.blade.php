@@ -1,4 +1,4 @@
-@extends('fleetservice::layouts.master')
+@extends('layouts.admin_master')
 @section('title', 'Fleet Management')
 
 @section("extra_style")
@@ -443,9 +443,9 @@
 
 												</div>
 												<span class="text-gray-600 fw-bolder d-block fs-6">
-														
+
 													{{$vehicle->lastIncompleteLog->driver->employee->first_name}}
-												
+
 													{{-- @if($vehicle->timeline->count()>0)
 														@if(!$vehicle->timeline->last()->check_out_time)
 															{{$vehicle->timeline->last()->driver->employee->first_name}}
@@ -458,7 +458,7 @@
 											NA
 											</div>
 											@endif
-											
+
 										</td>
 										<td class="text-end pe-0">
 											<span class="text-gray-600 fw-bolder fs-6">8 C</span>

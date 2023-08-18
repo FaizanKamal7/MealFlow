@@ -53,7 +53,7 @@ class VehicleController extends Controller
     public function viewVehicles()
     {
         // abort_if(Gate::denies('view_vehicle'),Response::HTTP_FORBIDDEN,'403 Forbidden');
-        $vehicles = $this->vehicleRepository->getVehicles();
+        $vehicles = $this->vehicleRepository->getDetailedVehicles();
         $vehicleTypes = $this->vehicleTypeRepository->getActiveVehicletypes();
         $vehicleMakes = $this->vehicleModelRepository->getActiveVehicleMakes();
         $data = ["vehicles" => $vehicles, "vehicleTypes" => $vehicleTypes, 'vehicleMakes' => $vehicleMakes];
@@ -77,14 +77,14 @@ class VehicleController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * 
+     *
      */
     public function storeVehicle(VehicleRequest $request)
     {
         $path = 'media/vehicle/qrcodes/' . time() . '.svg';
         $request->validated();
         try {
-            
+
             // Retrieve the values from the request
             $registrationNumber = $request->get('registration_number');
             $engineNumber = $request->get('engine_number');
@@ -124,15 +124,16 @@ class VehicleController extends Controller
             // Creating Vehicle
 
             $vehicle = $this->vehicleRepository->createVehicle($registrationNumber, $engineNumber, $chassisNumber, $vehicleModelID, $vehicleYear, $vehicleColor, $vehicleStatus, $vehicleTypeId, $vehiclePicture, $vehicleMileage, $registrationPicture, $registrationIssueDate, $registrationExpiryDate, $insurancePicture, $insuranceIssueDate, $insuranceExpiryDate, $municipalityPicture, $municipalityIssueDate, $municipalityExpiryDate, $apiUnitId, $qrCode);
-           
+
             if (!$vehicle) {
                return redirect()->route("fleet_vehicle")->with("error", "Something went wrong! contact support");
             }
+
             QrCode::size(400)
             ->generate($vehicle->id, public_path($path));
             $fields= ['qr_code'=>$path];
             $this->vehicleRepository->updateVehicleFields(id:$vehicle->id, fields:$fields);
-       
+
             return redirect()->route("fleet_vehicle")->with("success", "Vehicle added successfully");
         } catch (Exception $exception) {
             Log::error($exception);
@@ -230,8 +231,8 @@ class VehicleController extends Controller
      * @param int $id
      */
     public function destroyVehicle($id)
-    {   
-        
+    {
+
         try {
 
             $vehicle= $this->vehicleRepository->deleteVehicle($id);
@@ -246,7 +247,7 @@ class VehicleController extends Controller
     public function isUniqueVehicle(Request $request)
     {
 
-        // IF THE REGISTRATION NUMBER ALREADY EXIST IT WILL RETURN TRUE 
+        // IF THE REGISTRATION NUMBER ALREADY EXIST IT WILL RETURN TRUE
         $field = $request->input('field');
         $value = $request->input('value');
 
@@ -256,7 +257,7 @@ class VehicleController extends Controller
         }
         // echo $unique;
         return response()->json(['valid' => $unique]);
-        
+
     }
     /**
      * GETTING ALL MODEL FOR A SPECIFIC MAKE TYPE
