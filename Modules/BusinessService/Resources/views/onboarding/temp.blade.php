@@ -1,12 +1,12 @@
 @extends('layouts.others_master')
-@section('title', 'Business Onboarding')
-
+@section('title', 'Onboarding')
 
 @section('main_content')
 
+
 <!--begin::Root-->
 <div class="d-flex flex-column flex-root">
-    <!--begin::Authentication - Multi-steps-->
+    <!--begin::Authentication - Sign-in -->
     <div class="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column"
         id="kt_create_account_stepper">
         <!--begin::Aside-->
@@ -131,17 +131,18 @@
         <!--begin::Aside-->
         <!--begin::Body-->
         <div class="d-flex flex-column flex-lg-row-fluid ">
+
             <!--begin::Content-->
             <div class="d-flex flex-center flex-column flex-column-fluid">
                 <!--begin::Wrapper-->
-                <div class="w-lg-800px p-10 mx-auto ">
+                <div class="w-lg-800px p-10 mx-auto">
                     <!--begin::Form-->
                     <form class="my-auto pb-5" method="post" id="kt_create_account_form"
-                        action="{{ route('business_onboarding_add') }}" enctype="multipart/form-data">
-                        <!--begin::Step 1-->
-                        <div class="current" data-kt-stepper-element="content">
-                            {{ csrf_field() }}
+                        action="{{ route('business_onboarding_add') }}">
 
+                        @csrf
+                        <!--begin::Step 1-->
+                        <div class="flex-column current" data-kt-stepper-element="content">
                             <!--begin::Wrapper-->
                             <div class="w-lg-700px  mx-auto">
                                 <!--begin::Heading-->
@@ -256,12 +257,10 @@
                         <!--end::Step 1-->
                         <!--------------------------------------------------------------------------------->
                         <!--begin::Step 2-->
-                        <div class="" data-kt-stepper-element="content">
+                        <div class="flex-column" data-kt-stepper-element="content">
                             <!--begin::Wrapper-->
                             <div class="w-100">
                                 <!--begin::Heading-->
-
-
                                 <div class="pb-10 pb-lg-12">
                                     <!--begin::Title-->
                                     <h2 class="fw-bolder text-dark">Buisness Info</h2>
@@ -272,38 +271,7 @@
                                     </div>
                                     <!--end::Notice-->
                                 </div>
-                                <!--begin::Input group-->
-                                {{--<div class="fv-row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label required">Buisness Logo</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input name="logo" class="form-control form-control-lg form-control"
-                                        value="Keenthemes Inc." type="file" />
-                                    --}}
 
-                                    <!--begin::Dropzone-->
-                                    {{-- <div class="dropzone" id="kt_dropzonejs_example_1">
-                                        <!--begin::Message-->
-                                        <div class="dz-message needsclick">
-                                            <i class="ki-duotone ki-file-up fs-3x text-primary"><span
-                                                    class="path1"></span><span class="path2"></span></i>
-
-                                            <!--begin::Info-->
-                                            <div class="ms-4">
-                                                <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or
-                                                    click to upload.</h3>
-                                                <span class="fs-7 fw-semibold text-gray-400">Upload up to 10
-                                                    files</span>
-                                            </div>
-                                            <!--end::Info-->
-                                        </div>
-                                    </div>
-                                    <!--end::Dropzone-->
-
-                                    <!--end::Input-->
-                                </div>--}}
-                                <!--end::Input group-->
                                 <div class="fv-row mb-10">
                                     <!--begin::Label-->
                                     <label class="form-label required">Category</label>
@@ -338,16 +306,6 @@
                                 <!--end::Input group-->
 
 
-                                <!--begin::Input group-->
-                                {{-- <div class="fv-row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label required">Contact Email</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input name="contact_email"
-                                        class="form-control form-control-lg form-control-solid" />
-                                    <!--end::Input-->
-                                </div> --}}
                                 <div class="fv-row mb-10">
                                     <label class="form-label required">Address (Business Main Branch Address)</label>
                                     <br>
@@ -486,9 +444,8 @@
                         </div>
                         <!--end::Step 2-->
                         <!--------------------------------------------------------------------------------->
-
                         <!--begin::Step 3-->
-                        <div class="" data-kt-stepper-element="content">
+                        <div class="flex-column" data-kt-stepper-element="content">
                             <!--begin::Wrapper-->
                             <div class="w-100">
                                 <div class="pb-10 pb-lg-15">
@@ -506,7 +463,6 @@
 
 
                                 <div class="row fv-row mb-7">
-
                                     <!--begin::Repeater-->
                                     <div id="location_delivery_slots_repeater">
                                         <!--begin::Form group-->
@@ -514,15 +470,15 @@
                                             <div data-repeater-list="area_coverage_list">
                                                 <div data-repeater-item>
                                                     <div class="form-group row">
-                                                        <input type="hidden" id="is_repeater_item" value="true" />
                                                         <!--begin::Col-->
                                                         <div class="col-xl-4">
                                                             <label class="form-label required">Country</label>
+
                                                             <!--begin::Input group-->
                                                             <select id="country" class="form-select form-select-solid"
                                                                 name="country" data-control="select2"
                                                                 data-placeholder="Select an option"
-                                                                data-allow-clear="true" onchange="fetchStates(this)">
+                                                                data-allow-clear="true" onchange="fetchStates()">
 
                                                                 <option value="">Select country</option>
                                                                 @if ($countries->count())
@@ -535,6 +491,7 @@
                                                                 @endif
                                                             </select>
                                                             <!--end::Input group-->
+
                                                         </div>
                                                         <!--end::Col-->
                                                         <!--begin::Col-->
@@ -636,7 +593,7 @@
                                         <div class="form-group mt-5">
                                             <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
                                                 <i class="ki-duotone ki-plus fs-3"></i>
-                                                Add
+                                                Add another coverage area
                                             </a>
                                         </div>
                                         <!--end::Form group-->
@@ -684,224 +641,7 @@
                         </div>
                         <!--end::Step 3-->
                         <!--------------------------------------------------------------------------------->
-                        <!--begin::Step 4-->
-                        {{-- <div class="" data-kt-stepper-element="content">
-                            <!--begin::Wrapper-->
-                            <div class="w-100">
-                                <!--begin::Heading-->
-                                <div class="pb-10 pb-lg-15">
-                                    <!--begin::Title-->
-                                    <h2 class="fw-bolder text-dark">Billing Details</h2>
-                                    <!--end::Title-->
-                                    <!--begin::Notice-->
-                                    <div class="text-muted fw-bold fs-6">If you need more info, please check out
-                                        <a href="#" class="text-primary fw-bolder">Help Page</a>.
-                                    </div>
-                                    <!--end::Notice-->
-                                </div>
-                                <!--end::Heading-->
-                                <!--begin::Input group-->
-                                <div class="d-flex flex-column mb-7 fv-row">
-                                    <!--begin::Label-->
-                                    <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                        <span class="required">Name On Card</span>
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                            title="Specify a card holder's name"></i>
-                                    </label>
-                                    <!--end::Label-->
-                                    <input type="text" class="form-control form-control-solid" placeholder=""
-                                        name="card_name" value="Max Doe" />
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="d-flex flex-column mb-7 fv-row">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold form-label mb-2">Card Number</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input wrapper-->
-                                    <div class="position-relative">
-                                        <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-solid"
-                                            placeholder="Enter card number" name="card_number"
-                                            value="4111 1111 1111 1111" />
-                                        <!--end::Input-->
-                                        <!--begin::Card logos-->
-                                        <div class="position-absolute translate-middle-y top-50 end-0 me-5">
-                                            <img src="assets/media/svg/card-logos/visa.svg" alt="" class="h-25px" />
-                                            <img src="assets/media/svg/card-logos/mastercard.svg" alt=""
-                                                class="h-25px" />
-                                            <img src="assets/media/svg/card-logos/american-express.svg" alt=""
-                                                class="h-25px" />
-                                        </div>
-                                        <!--end::Card logos-->
-                                    </div>
-                                    <!--end::Input wrapper-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="row mb-10">
-                                    <!--begin::Col-->
-                                    <div class="col-md-8 fv-row">
-                                        <!--begin::Label-->
-                                        <label class="required fs-6 fw-bold form-label mb-2">Expiration
-                                            Date</label>
-                                        <!--end::Label-->
-                                        <!--begin::Row-->
-                                        <div class="row fv-row">
-                                            <!--begin::Col-->
-                                            <div class="col-6">
-                                                <select name="card_expiry_month" class="form-select form-select-solid"
-                                                    data-control="select2" data-hide-search="true"
-                                                    data-placeholder="Month">
-                                                    <option></option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                </select>
-                                            </div>
-                                            <!--end::Col-->
-                                            <!--begin::Col-->
-                                            <div class="col-6">
-                                                <select name="card_expiry_year" class="form-select form-select-solid"
-                                                    data-control="select2" data-hide-search="true"
-                                                    data-placeholder="Year">
-                                                    <option></option>
-                                                    <option value="2022">2022</option>
-                                                    <option value="2023">2023</option>
-                                                    <option value="2024">2024</option>
-                                                    <option value="2025">2025</option>
-                                                    <option value="2026">2026</option>
-                                                    <option value="2027">2027</option>
-                                                    <option value="2028">2028</option>
-                                                    <option value="2029">2029</option>
-                                                    <option value="2030">2030</option>
-                                                    <option value="2031">2031</option>
-                                                    <option value="2032">2032</option>
-                                                </select>
-                                            </div>
-                                            <!--end::Col-->
-                                        </div>
-                                        <!--end::Row-->
-                                    </div>
-                                    <!--end::Col-->
-                                    <!--begin::Col-->
-                                    <div class="col-md-4 fv-row">
-                                        <!--begin::Label-->
-                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                            <span class="required">CVV</span>
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                                title="Enter a card CVV code"></i>
-                                        </label>
-                                        <!--end::Label-->
-                                        <!--begin::Input wrapper-->
-                                        <div class="position-relative">
-                                            <!--begin::Input-->
-                                            <input type="text" class="form-control form-control-solid" minlength="3"
-                                                maxlength="4" placeholder="CVV" name="card_cvv" />
-                                            <!--end::Input-->
-                                            <!--begin::CVV icon-->
-                                            <div class="position-absolute translate-middle-y top-50 end-0 me-3">
-                                                <!--begin::Svg Icon | path: icons/duotune/finance/fin002.svg-->
-                                                <span class="svg-icon svg-icon-2hx">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none">
-                                                        <path d="M22 7H2V11H22V7Z" fill="currentColor" />
-                                                        <path opacity="0.3"
-                                                            d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19ZM14 14C14 13.4 13.6 13 13 13H5C4.4 13 4 13.4 4 14C4 14.6 4.4 15 5 15H13C13.6 15 14 14.6 14 14ZM16 15.5C16 16.3 16.7 17 17.5 17H18.5C19.3 17 20 16.3 20 15.5C20 14.7 19.3 14 18.5 14H17.5C16.7 14 16 14.7 16 15.5Z"
-                                                            fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::CVV icon-->
-                                        </div>
-                                        <!--end::Input wrapper-->
-                                    </div>
-                                    <!--end::Col-->
-                                </div>
-                                <!--end::Input group-->
 
-                            </div>
-                            <!--end::Wrapper-->
-                        </div>
-                        <!--end::Step 4--> --}}
-                        <!--------------------------------------------------------------------------------->
-                        <!--begin::Step 5-->
-                        <div class="" data-kt-stepper-element="content">
-                            <!--begin::Wrapper-->
-                            <div class="w-100">
-                                <!--begin::Heading-->
-                                <div class="pb-8 pb-lg-10">
-                                    <!--begin::Title-->
-                                    <h2 class="fw-bolder text-dark">Your Are Done!</h2>
-                                    <!--end::Title-->
-                                    <!--begin::Notice-->
-                                    <div class="text-muted fw-bold fs-6">We got you info.
-                                        other relavant info
-                                        <a href="../../demo1/dist/authentication/sign-in/basic.html"
-                                            class="link-primary fw-bolder">Sign In</a>.
-                                    </div>
-                                    <!--end::Notice-->
-                                </div>
-                                <!--end::Heading-->
-                                <!--begin::Body-->
-                                <div class="mb-0">
-                                    <!--begin::Text-->
-
-                                    <!--end::Text-->
-                                    <!--begin::Alert-->
-                                    <!--begin::Notice-->
-                                    <div
-                                        class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
-                                        <!--begin::Icon-->
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
-                                        <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10"
-                                                    fill="currentColor" />
-                                                <rect x="11" y="14" width="7" height="2" rx="1"
-                                                    transform="rotate(-90 11 14)" fill="currentColor" />
-                                                <rect x="11" y="17" width="2" height="2" rx="1"
-                                                    transform="rotate(-90 11 17)" fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                        <!--end::Icon-->
-                                        <!--begin::Wrapper-->
-                                        <div class="d-flex flex-stack flex-grow-1">
-                                            <!--begin::Content-->
-                                            <div class="fw-bold">
-                                                <h4 class="text-gray-900 fw-bolder">Go on and login to explore</h4>
-                                                <div class="fs-6 text-gray-700">>All the pricing related info and
-                                                    much
-                                                    more will
-                                                    be available once you login
-
-                                                </div>
-                                            </div>
-                                            <!--end::Content-->
-                                        </div>
-                                        <!--end::Wrapper-->
-                                    </div>
-                                    <!--end::Notice-->
-                                    <!--end::Alert-->
-                                </div>
-                                <!--end::Body-->
-                            </div>
-                            <!--end::Wrapper-->
-                        </div>
-                        <!--end::Step 5-->
-                        <!--------------------------------------------------------------------------------->
                         <!--begin::Actions-->
                         <div class="d-flex flex-stack pt-15">
                             <div class="mr-2">
@@ -958,7 +698,6 @@
                             </div>
                         </div>
                         <!--end::Actions-->
-
                     </form>
                     <!--end::Form-->
                 </div>
@@ -979,18 +718,20 @@
         </div>
         <!--end::Body-->
     </div>
-    <!--end::Authentication - Multi-steps-->
+    <!--end::Authentication - Sign-in-->
 </div>
 <!--end::Root-->
 @endsection
 
 @section('extra_scripts')
 <script src="{{ asset('static/js/custom/authentication/sign-up/onboarding.js')}}"></script>
-<script src="{{ asset('static/js/custom/core/locations.js')}}"></script>
 <script src="{{ asset('static/plugins/custom/utilities/multiselect-dropdown.js')}}"></script>
+<script src="{{ asset('static/js/custom/core/locations.js')}}"></script>
+
+
 <script>
     $(document).ready(function() {
-        $('#location_delivery_slots_repeater').repeater({
+        $('#kt_docs_repeater_basic').repeater({
             initEmpty: false,
 
             defaultValues: {
@@ -1006,25 +747,5 @@
             }
         });
     });
-
-    $('#city').change(function(){
-            var selectedCities = $(this).val();
-
-            if (selectedCities.includes('all')) {
-                selectedCities = [];
-                $(this).find('option').each(function() {
-                    if ($(this).val() != 'all') {
-                        selectedCities.push($(this).val());
-                    }
-                });
-
-                // Select all options in the dropdown, except 'all'
-                $(this).val(selectedCities).trigger('change');
-            }
-
-            // Update hidden field
-            $('#cities').val(selectedCities.join(','));
-        });
-
 </script>
 @endsection
