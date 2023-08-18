@@ -92,8 +92,6 @@ class BusinessPricingController extends Controller
 
     public function getCityRangeBasePrice(Request $request)
     {
-        echo ("Inside getCityRangeBasePrice");
-
         $cities = $request->cities;
         $cities = $cities[0] == ',' ? substr($cities, 1) : $cities;
         $cities_arr = explode(",", $cities);
@@ -104,11 +102,10 @@ class BusinessPricingController extends Controller
     public function getCitiesRangeBusinessPrice(Request $request)
     {
         $cities = $request->cities;
-        $business_id = $request->business_id;
         $cities = $cities[0] == ',' ? substr($cities, 1) : $cities;
         $cities_arr = explode(",", $cities);
+        $business_id = $request->business_id;
         $range_pricing = $this->rangePricingRepository->getAllRangeBusinessPricesOfCities($cities_arr, $business_id);
-        dd($range_pricing);
         return response()->json($range_pricing);
     }
 

@@ -1,6 +1,37 @@
-function fetchStates() {
-    var countryId = document.getElementById("country").value;
+function fetchStates(...parameters) {
+    var countryId = "";
+    var stateDropdown = "";
     var stateDropdown = document.getElementById("state");
+
+    if (parameters.length >= 1) {
+        var selectElement = parameters[0];
+        // Find the parent repeater item to get its index
+        var repeaterItem = $(selectElement).closest('[data-repeater-item]');
+        var index = repeaterItem.index();
+
+        // Generate the unique ID for the country dropdown using the index
+        var countryDropdownId = 'country_' + index;
+
+        // Get the selected value of the country dropdown
+        var countryId = $(selectElement).val();
+
+        // Get the ID of the state dropdown using the generated ID
+        var stateDropdownId = 'state_' + index;
+        var selectedStateValue = $('#' + stateDropdownId).val();
+
+        // Now you can use the generated IDs and selected values for whatever you need
+        console.log('Generated ID for country dropdown:', countryDropdownId);
+        console.log('Selected country value:', countryId);
+        console.log('Generated ID for state dropdown:', stateDropdownId);
+        console.log('Selected state value:', selectedStateValue);
+
+    } else {
+        var countryId = document.getElementById("country").value;
+        var stateDropdown = document.getElementById("state");
+        console.log("Inside IF " + countryId.value + " " + stateDropdown);
+
+    }
+
 
     // Clear current options
     stateDropdown.innerHTML = '<option value="">Select state</option>';

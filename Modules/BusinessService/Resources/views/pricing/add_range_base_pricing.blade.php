@@ -29,72 +29,68 @@
 
                         <!--begin::Card body-->
                         <div class="card-body pt-5">
-                            <!--begin::Form-->
-                            <form id="location_form" class="form" method="post">
-                                @csrf
 
-                                <!--begin::Input group-->
-                                <div class="row fv-row mb-7">
-                                    <!--begin::Col-->
-                                    <div class="col-lg-4">
-                                        <label class="form-label required">Country</label>
+                            <!--begin::Input group-->
+                            <div class="row fv-row mb-7">
+                                <!--begin::Col-->
+                                <div class="col-lg-4">
+                                    <label class="form-label required">Country</label>
 
-                                        <!--begin::Input group-->
-                                        <select id="country" class="form-select form-select-solid" name="country"
-                                            data-control="select2" data-placeholder="Select an option"
-                                            data-allow-clear="true" onchange="fetchStates()">
+                                    <!--begin::Input group-->
+                                    <select id="country" class="form-select form-select-solid" name="country"
+                                        data-control="select2" data-placeholder="Select an option"
+                                        data-allow-clear="true" onchange="fetchStates()">
 
-                                            <option value="">Select country</option>
-                                            @if ($countries->count())
-                                            @foreach ($countries as $country)
-                                            <option value={{$country['id']}}>{{$country['name']}}</option>
-                                            @endforeach
-                                            @else
-                                            <option value="">Countries not available</option>
-                                            @endif
-                                        </select>
-                                        <!--end::Input group-->
-
-                                    </div>
+                                        <option value="">Select country</option>
+                                        @if ($countries->count())
+                                        @foreach ($countries as $country)
+                                        <option value={{$country['id']}}>{{$country['name']}}</option>
+                                        @endforeach
+                                        @else
+                                        <option value="">Countries not available</option>
+                                        @endif
+                                    </select>
                                     <!--end::Input group-->
-                                    <!--end::Col-->
-                                    <div class="col-xl-4">
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">State</label>
-                                            <!--end::Label-->
-                                            <select id="state" name="state" class="form-select form-select-solid"
-                                                data-control="select2" data-placeholder="Choose" data-allow-clear="true"
-                                                onchange="fetchCitiesWithMultiSelectOption()">
-                                                <option value="">Select State</option>
-
-
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!--begin::Col-->
-                                    <div class="col-xl-4">
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">City</label>
-                                            <!--end::Label-->
-
-                                            <select id="city" class="form-select form-select-lg form-select-solid"
-                                                data-control="select2" onchange="getRangePricing()"
-                                                data-placeholder="Choose City" name="city" data-allow-clear="true"
-                                                multiple="multiple">
-                                            </select>
-                                            <!--hidden text field-->
-                                            <input type="hidden" id="cities" name="cities" />
-                                        </div>
-                                    </div>
-                                    <!--end::Col-->
 
                                 </div>
+                                <!--end::Input group-->
+                                <!--end::Col-->
+                                <div class="col-xl-4">
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label required">State</label>
+                                        <!--end::Label-->
+                                        <select id="state" name="state" class="form-select form-select-solid"
+                                            data-control="select2" data-placeholder="Choose" data-allow-clear="true"
+                                            onchange="fetchCitiesWithMultiSelectOption()">
+                                            <option value="">Select State</option>
 
-                            </form>
-                            <!--end::Form-->
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!--begin::Col-->
+                                <div class="col-xl-4">
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label required">City</label>
+                                        <!--end::Label-->
+
+                                        <select id="city" class="form-select form-select-lg form-select-solid"
+                                            data-control="select2" onchange="getRangePricing()"
+                                            data-placeholder="Choose City" name="city" data-allow-clear="true"
+                                            multiple="multiple">
+                                        </select>
+                                        <!--hidden text field-->
+                                        <input type="hidden" id="cities" name="cities" />
+                                    </div>
+                                </div>
+                                <!--end::Col-->
+
+                            </div>
+
+
 
                             <!--begin::Separator-->
                             <div class="separator mb-6">
@@ -146,6 +142,14 @@
                                 @livewire('businessservice::range-pricing', ['available_base_range_pricings' =>[]])
                             </div>
 
+                            <div id="no-range-pricing" class="text-center" style="display: none">
+                                <br><br>
+                                <p><i>No Range Pricings Available for Selected Region. Please <a
+                                            href="{{route('add_new_delivery_slots')}}">add delivery slots</a> for this
+                                        region before adding price</i></p>
+                            </div>
+
+
 
 
 
@@ -196,9 +200,9 @@
         var cities = document.getElementById("cities").value;
         var range_pricing_component = document.getElementById("range-pricing-component-id");
         var business_id = document.getElementById("business").value;
-        console.log("Inside getRangePricing");
-        console.log(business_id);
+        var no_range_pricing = document.getElementById("no-range-pricing");
 
+        
         var base_url = "/businessservice/pricing/get-base-range-pricing";
         var business_url = "/businessservice/pricing/get-business-range-pricing";
         
@@ -206,14 +210,12 @@
             $.ajax({
                 url: business_id == "" ? base_url : business_url,
                 dataType: "json",
-                data: business_id == "" ? { cities: cities, business_id: business_id } : { cities: cities },
+                 data: business_id == "" ? { cities: cities, business_id: business_id } : { cities: cities },
                 success: function(city_pricings) {
-                    city_pricings_arr = Object.values(city_pricings);
-
                     range_pricing_component.style.display = "block";
                     var componentId = document.querySelector('#range-pricing-component-id [wire\\:id]').getAttribute('wire:id');
                     var component = Livewire.find(componentId);
-                    component.set('available_base_range_pricings',city_pricings_arr);
+                    component.set('available_base_range_pricings',city_pricings);
                     component.set('cities', cities.split(',')); 
                     component.set('business_id', business_id); 
                     
