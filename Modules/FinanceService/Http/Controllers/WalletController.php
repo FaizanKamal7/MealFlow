@@ -18,9 +18,9 @@ class WalletController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function viewWallet()
     {
-        return view('financeservice::index');
+        return view('businessservice::business_info.wallet.Wallet');
     }
 
     /**

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('business_cards', function (Blueprint $table) {
             $table->uuid("id")->primary(); 
-            
+            $table->unsignedSmallInteger("card_number");
             $table->string("card_holder_name");
             $table->unsignedSmallInteger("cvv");
             $table->unsignedSmallInteger('expiry_month'); 
