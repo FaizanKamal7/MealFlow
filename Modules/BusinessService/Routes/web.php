@@ -46,7 +46,8 @@ Route::prefix('businessservice')->group(function () {
         Route::get("add-delivery-slot-base-pricing", [BusinessPricingController::class, "addDeliverySlotBasePricing"])->name("add_delivery_slot_base_pricing");
         Route::get("add-range-pricing", [BusinessPricingController::class, "addRangeBasePricing"])->name("add_range_base_pricing");
         Route::get("range-based-pricing", [BusinessPricingController::class, "rangeBasePricing"])->name("range_base_pricing");
-        Route::get("get-base-range-pricing", [BusinessPricingController::class, "getCityRangeBasePrice"])->name("get_delivery_slots_of_city_in_base_price");
+        Route::get("get-base-range-pricing", [BusinessPricingController::class, "getCityRangeBasePrice"])->name("get_base_range_pricing");
+        Route::get("get-business-range-pricing", [BusinessPricingController::class, "getCitiesRangeBusinessPrice"])->name("get_business_range_pricing");
         Route::post("store-base-range-pricing", [BusinessPricingController::class, "storeCityRangeBasePrice"])->name("store_delivery_slots_of_city_in_base_price");
 
         Route::get("get-delivery-slots-of-city-in-base-price", [BusinessPricingController::class, "getDeliverySlotsOfCityInBasePrice"])->name("get_delivery_slots_of_city_in_base_price");

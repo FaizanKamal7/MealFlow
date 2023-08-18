@@ -17,6 +17,7 @@ class BusinessRequest extends FormRequest
             'buisness_name' => ['required', 'unique:businesses,name'],
             'email' => ['required', 'unique:users'],
 
+
         ];
     }
 

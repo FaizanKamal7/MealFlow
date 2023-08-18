@@ -40,6 +40,11 @@ class DeliverySlotPricing extends Model
         return $this->belongsTo(DeliverySlot::class, 'delivery_slot_id');
     }
 
+    public function business()
+    {
+        return $this->belongsTo(Business::class, 'business_id');
+    }
+
 
 
     protected static function newFactory()
