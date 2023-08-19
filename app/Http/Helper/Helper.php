@@ -5,6 +5,7 @@ namespace App\Http\Helper;
 use App\Models\ActivityLogs;
 use Modules\CRM\Entities\Task;
 use Modules\DeliveryService\Entities\BagTimeline;
+use Modules\FinanceService\Entities\BusinessWallet;
 
 class Helper
 {
@@ -37,6 +38,17 @@ class Helper
             'vehicle_id' => $vehicle_id,
             'description' => $description,
         ]);
+    }
+
+    public function createWallet($business_id){
+        BusinessWallet::create([
+            'balance'=>0,
+            'business_id'=>$business_id,
+        ]);
+    }
+
+    public function deleteWallet($busines_id){
+        BusinessWallet::where('business_id',$busines_id)->delete;
     }
 
 
