@@ -2,6 +2,8 @@
 
 namespace Modules\BusinessService\Http\Controllers\Onboarding;
 
+use App\Http\Helper\Helper;
+use App\Interfaces\AreaInterface;
 use App\Interfaces\CountryInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
@@ -32,7 +34,10 @@ class BusinessOnboardingController extends Controller
     private BranchCoverageInterface $branchCoverageRepository;
     private UserRoleInterface $userRoleRepository;
     private CountryInterface $countryRepository;
+    private AreaInterface $areaRepository;
     private BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository;
+    private Helper $helper;
+
 
 
 
@@ -46,7 +51,10 @@ class BusinessOnboardingController extends Controller
         BranchCoverageInterface $branchCoverageRepository,
         UserRoleInterface $userRoleRepository,
         CountryInterface $countryRepository,
-        BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository
+        AreaInterface $areaRepository,
+        BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository,
+        Helper $helper
+
 
     ) {
         $this->onboardingRepository = $onboardingRepository;
@@ -58,7 +66,9 @@ class BusinessOnboardingController extends Controller
         $this->branchCoverageRepository = $branchCoverageRepository;
         $this->userRoleRepository = $userRoleRepository;
         $this->countryRepository = $countryRepository;
+        $this->areaRepository = $areaRepository;
         $this->branchCoverageDeliverySlotRepository = $branchCoverageDeliverySlotRepository;
+        $this->helper = $helper;
     }
 
     /**
@@ -77,27 +87,65 @@ class BusinessOnboardingController extends Controller
     {
         // abort_if(Gate::denies('add_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validated();
+        $first_name = $request->first_name;
+        $last_name = $request->last_name;
+        $email = $request->email;
+        $password = $request->password;
+        $buisness_name = $request->buisness_name;
+        $logo = $request->logo;
+        $card_name = $request->card_name;
+        $card_number = $request->card_number;
+        $card_expiry_month = $request->card_expiry_month;
+        $card_expiry_year = $request->card_expiry_year;
+        $card_cvv = $request->card_cvv;
+        $business_category_id = $request->category;
+        $phone = $request->phone;
+        $address = $request->address;
+        $address_country = $request->address_country;
+        $address_state = $request->address_state;
+        $address_city = $request->address_city;
+        $address_area = $request->address_area;
+        $latitude = $request->latitude;
+        $longitude = $request->longitude;
+        $area_coverage_list = $request->area_coverage_list;
+        $cities = $request->cities;
+
+
+
+        echo "<pre>" . $latitude . "-" . $longitude . "</pre>";
+
+        // --  Selected address from google map locations
+        if ($request->latitude != 0) {
+            $map_location_names = $this->helper->getLocationFromCoordinates($latitude, $longitude);
+            $db_map_location_ids = $this->helper->findDBLocationsWithNames($map_location_names['country'], $map_location_names['state'], $map_location_names['city'], $map_location_names['area']);
+
+            $address_country = $db_map_location_ids['country_id'] != '' ? $db_map_location_ids['country_id'] : null;
+            $address_state = $db_map_location_ids['state_id'] != '' ? $db_map_location_ids['state_id'] : null;
+            $address_city = $db_map_location_ids['city_id'] != '' ? $db_map_location_ids['city_id'] : null;
+            $address_area = $db_map_location_ids['area_id'] != '' ?  $db_map_location_ids['area_id'] : null;
+        }
+
         try {
             // --- Adding data in users table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $user = $this->userRepository->createUser(
-                name: $request->get("first_name") . " " . $request->get("last_name"),
-                email: $request->get("email"),
-                password: Hash::make($request->get("password")),
+                name: $first_name . " " . $last_name,
+                email: $email,
+                password: Hash::make($password),
                 isActive: true
             );
 
             // --- Adding data in business table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $business = $this->businessRepository->createBusiness(
-                name: $request->get("buisness_name"),
-                logo: $request->get("logo"),
-                card_name: $request->get("card_name"),
-                card_number: $request->get("card_number"),
-                card_expiry_month: $request->get("card_expiry_month"),
-                card_expiry_year: $request->get("card_expiry_year"),
-                card_cvv: $request->get("card_cvv"),
-                business_category_id: $request->get("category"),
+                name: $buisness_name,
+                logo: $logo,
+                card_name: $card_name,
+                card_number: $card_number,
+                card_expiry_month: $card_expiry_month,
+                card_expiry_year: $card_expiry_year,
+                card_cvv: $card_cvv,
+                business_category_id: $business_category_id,
                 admin: $user->id,
                 status: "NEW_REQUEST",
             );
@@ -110,36 +158,57 @@ class BusinessOnboardingController extends Controller
 
             $branch = $this->branchRepository->createBranch(
                 name: "Main Branch",
-                phone: $request->get("phone"),
-                address: $request->get("address"),
-                country_id: $request->get("address_country"),
-                state_id: $request->get("address_state"),
-                city_id: $request->get("address_city"),
-                area_id: $request->get("address_area"),
+                phone: $phone,
+                address: $address,
+                country_id: $address_country,
+                state_id: $address_state,
+                city_id: $address_city,
+                area_id: $address_area,
                 active_status: true,
                 is_main_branch: 1,
                 business_id: $business->id,
             );
-            $area_coverage_list = $request->area_coverage_list;
+            var_dump($area_coverage_list);
+            echo "<pre></pre>";
+            var_dump($cities);
+            dd();
+            // TODO: FIX BUG: Repeater form coverage_list not fetching data poperly. Commenting below code and sending only 1 state's cities for now
+            // if ($area_coverage_list) {
+            //     foreach ($area_coverage_list as $key => $coverage_list_item) {
+            //         $areas = $coverage_list_item["area"];
+            //         foreach ($areas as $key => $area) {
+            //             $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
+            //                 active_status: 1,
+            //                 area_id: $area,
+            //                 city_id: $coverage_list_item["city"],
+            //                 state: $coverage_list_item["state"],
+            //                 country: $coverage_list_item["country"],
+            //                 branch_id: $branch->id,
+            //             );
+            //             foreach ($coverage_list_item['delivery_slots'] as $key => $delivery_slot_id) {
+            //                 $this->branchCoverageDeliverySlotRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
+            //             }
+            //         }
+            //     }
+            // }
+            foreach ($cities as $key => $city_id) {
+                $city_areas = $this->areaRepository->getAreasOfCity($city_id);
+                foreach ($city_areas as $key => $area) {
 
-            //TODO: get area_id, city_id, state_id, country_id dynamicaly
-
-            foreach ($area_coverage_list as $key => $coverage_list_item) {
-                $areas = $coverage_list_item["area"];
-                foreach ($areas as $key => $area) {
-                    $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
-                        active_status: 1,
-                        area_id: $area,
-                        city_id: $coverage_list_item["city"],
-                        state: $coverage_list_item["state"],
-                        country: $coverage_list_item["country"],
-                        branch_id: $branch->id,
-                    );
-                    foreach ($coverage_list_item['delivery_slots'] as $key => $delivery_slot_id) {
-                        $this->branchCoverageDeliverySlotRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
-                    }
+                    // $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
+                    //     active_status: 1,
+                    //     area_id: $area,
+                    //     city_id: $city_id,
+                    //     state: $coverage_list_item["state"],
+                    //     country: $coverage_list_item["country"],
+                    //     branch_id: $branch->id,
+                    // );
+                    // foreach ($coverage_list_item['delivery_slots'] as $key => $delivery_slot_id) {
+                    //     $this->branchCoverageDeliverySlotRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
+                    // }
                 }
             }
+
             $this->signInBusinessAdminUponRegistration($request->get("email"), $request->get("password"), $user->id);
 
 
@@ -229,9 +298,8 @@ class BusinessOnboardingController extends Controller
     //     return view('businessservice::edit');
     // }
 
-    public function pricingCalculator(Request $request){
+    public function pricingCalculator(Request $request)
+    {
         return view("businessservice::onboarding.pricing");
-
     }
-
 }

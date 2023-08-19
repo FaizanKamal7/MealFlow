@@ -1085,7 +1085,7 @@
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Base Pricing (Delivery Slot Wise)</span>
+                            <span class="menu-title">Pricing (Delivery Slot Wise)</span>
                         </a>
                     </div>
                     <div class="menu-item">
@@ -1093,7 +1093,7 @@
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Base Pricing (Daily Range Wise)</span>
+                            <span class="menu-title">Pricing (Daily Range Wise)</span>
                         </a>
                     </div>
 

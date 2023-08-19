@@ -7,6 +7,7 @@ use Livewire\Component;
 class DeliverySlotPricingComponent extends Component
 {
     public $cities_delivery_slots;
+    public $business_id;
     public $cities;
 
 

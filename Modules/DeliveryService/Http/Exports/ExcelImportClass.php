@@ -16,31 +16,60 @@ class ExcelImportClass implements  WithHeadingRow, onEachRow
     {
 
         $rowIndex = $row->getIndex();
+        $sheetTitle = $row->getWorksheet()->getTitle();
 
-        // Get the value of the customer cell in the current row
-        $customer = $row->toArray()["customer"];
+        if($sheetTitle === 'Worksheet'){
+            // Get the value of the customer cell in the current row
+            $customer = $row->toArray()["customer"];
 
-        // Check if the value already exists in the $selectedCustomers array
-        if (in_array($customer, $this->selectedCustomers)) {
-            // Value is a duplicate, handle the error as needed
-            // For demonstration, I'll just print a message here
-            echo "Duplicate value found in row: " . $rowIndex . PHP_EOL;
-        } else {
-            $address = $row->toArray()["delivery_address"];
-            $deliverySlot = $row->toArray()["delivery_slot"];
-            $item_type = $row->toArray()["item_type_optional"];
-            $enableSMSNotifications = $row->toArray()["enable_sms_notifications_optional"];
-            $enableEmailNotifications = $row->toArray()["enable_email_notifications_optional"];
-            $special_instructions = $row->toArray()["special_instructions_optional"];
-            $notes = $row->toArray()["notes_optional"];
-            $codAmount = $row->toArray()["cod_amount_optional"];
-            // Value is not a duplicate, add it to the selectedOptions array
-            $this->selectedCustomers[] = $customer;
+            // Check if the value already exists in the $selectedCustomers array
+            if (in_array($customer, $this->selectedCustomers)) {
+                // Value is a duplicate, handle the error as needed
+                // For demonstration, I'll just print a message here
+                echo "Duplicate value found in row: " . $rowIndex . PHP_EOL;
+            } else {
+                $address = $row->toArray()["delivery_address"];
+                $deliverySlot = $row->toArray()["delivery_slot"];
+                $item_type = $row->toArray()["item_type_optional"];
+                $enableSMSNotifications = $row->toArray()["enable_sms_notifications_optional"];
+                $enableEmailNotifications = $row->toArray()["enable_email_notifications_optional"];
+                $special_instructions = $row->toArray()["special_instructions_optional"];
+                $notes = $row->toArray()["notes_optional"];
+                $codAmount = $row->toArray()["cod_amount_optional"];
+                // Value is not a duplicate, add it to the selectedOptions array
+                $this->selectedCustomers[] = $customer;
 
-            dd($customer,$address,$deliverySlot,$item_type,$enableSMSNotifications,$enableEmailNotifications,$special_instructions,$notes,$codAmount);
+//                dd($customer,$address,$deliverySlot,$item_type,$enableSMSNotifications,$enableEmailNotifications,$special_instructions,$notes,$codAmount);
 
-            //TODO::Push delivery data to database table (Delivery)
+                //TODO::Push delivery data to database table (Delivery)
+            }
+        }else if($sheetTitle == "New Customers"){
+            // Import data from the "New Customers" sheet
+            $customer = $row->toArray()["customer"];
+
+            if (in_array($customer, $this->selectedCustomers)) {
+                // Value is a duplicate, handle the error as needed
+                // For demonstration, I'll just print a message here
+                echo "Duplicate value found in row: " . $rowIndex . " of sheet: " . $sheetTitle . PHP_EOL;
+            } else {
+                $address = $row->toArray()["delivery_address"];
+                $deliverySlot = $row->toArray()["delivery_slot"];
+                $item_type = $row->toArray()["item_type_optional"];
+                $enableSMSNotifications = $row->toArray()["enable_sms_notifications_optional"];
+                $enableEmailNotifications = $row->toArray()["enable_email_notifications_optional"];
+                $special_instructions = $row->toArray()["special_instructions_optional"];
+                $notes = $row->toArray()["notes_optional"];
+                $codAmount = $row->toArray()["cod_amount_optional"];
+
+                // Value is not a duplicate, add it to the selectedOptions array
+                $this->selectedCustomers[] = $customer;
+
+                dd($customer,$address,$deliverySlot,$item_type,$enableSMSNotifications,$enableEmailNotifications,$special_instructions,$notes,$codAmount);
+
+                // TODO: Push delivery data to the database table (Delivery)
+            }
         }
+
 
     }
 
