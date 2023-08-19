@@ -10,6 +10,7 @@ use App\Models\State;
 use Illuminate\Support\Facades\Config;
 use Modules\CRM\Entities\Task;
 use Modules\DeliveryService\Entities\BagTimeline;
+use Modules\FinanceService\Entities\BusinessWallet;
 
 class Helper
 {
@@ -43,6 +44,19 @@ class Helper
             'description' => $description,
         ]);
     }
+
+    public function createWallet($business_id){
+        BusinessWallet::create([
+            'balance'=>0,
+            'business_id'=>$business_id,
+        ]);
+    }
+
+    public function deleteWallet($busines_id){
+        BusinessWallet::where('business_id',$busines_id)->delete;
+    }
+
+
 
 
     function getLocationFromCoordinates($latitude, $longitude)
