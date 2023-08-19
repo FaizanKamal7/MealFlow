@@ -7,6 +7,7 @@ use App\Interfaces\DeliverySlotInterface;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\BusinessPricingInterface;
 use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
 use Modules\BusinessService\Interfaces\RangePricingInterface;
@@ -21,10 +22,12 @@ class BusinessPricingController extends Controller
     private RangePricingInterface $rangePricingRepository;
     private PricingTypeInterface $pricingTypeRepository;
     private DeliverySlotPricingInterface $deliverySlotPricingRepository;
+    private BusinessInterface $businessRepository;
 
 
 
-    public function __construct(DeliverySlotInterface $deliverySlotRepository, CountryInterface $countryRepository, BusinessPricingInterface $businessPricingRepository, RangePricingInterface $rangePricingRepository, PricingTypeInterface $pricingTypeRepository, DeliverySlotPricingInterface $deliverySlotPricingRepository)
+
+    public function __construct(DeliverySlotInterface $deliverySlotRepository, CountryInterface $countryRepository, BusinessPricingInterface $businessPricingRepository, RangePricingInterface $rangePricingRepository, PricingTypeInterface $pricingTypeRepository, DeliverySlotPricingInterface $deliverySlotPricingRepository, BusinessInterface $businessRepository)
     {
         $this->deliverySlotRepository = $deliverySlotRepository;
         $this->countryRepository = $countryRepository;
@@ -32,6 +35,7 @@ class BusinessPricingController extends Controller
         $this->rangePricingRepository = $rangePricingRepository;
         $this->pricingTypeRepository = $pricingTypeRepository;
         $this->deliverySlotPricingRepository = $deliverySlotPricingRepository;
+        $this->businessRepository = $businessRepository;
     }
 
     /**
@@ -56,14 +60,18 @@ class BusinessPricingController extends Controller
     {
         $delivery_slots = $this->deliverySlotRepository->getAllDeliverySlots();
         $countries = $this->countryRepository->getAllActiveCountries();
-        return view('businessservice::pricing.add_delivery_slot_base_pricing', ['delivery_slots' => $delivery_slots, 'countries' => $countries]);
+        $businesses = $this->businessRepository->getActiveBusinesses();
+
+        return view('businessservice::pricing.add_delivery_slot_base_pricing', ['delivery_slots' => $delivery_slots, 'countries' => $countries, 'businesses' => $businesses]);
     }
 
     public function addRangeBasePricing()
     {
         $delivery_slots = $this->deliverySlotRepository->getAllDeliverySlots();
         $countries = $this->countryRepository->getAllActiveCountries();
-        return view('businessservice::pricing.add_range_base_pricing', ['delivery_slots' => $delivery_slots, 'countries' => $countries]);
+        $businesses = $this->businessRepository->getActiveBusinesses();
+
+        return view('businessservice::pricing.add_range_base_pricing', ['delivery_slots' => $delivery_slots, 'countries' => $countries, 'businesses' => $businesses]);
     }
 
 
@@ -91,10 +99,21 @@ class BusinessPricingController extends Controller
         return response()->json($range_pricing);
     }
 
+    public function getCitiesRangeBusinessPrice(Request $request)
+    {
+        $cities = $request->cities;
+        $cities = $cities[0] == ',' ? substr($cities, 1) : $cities;
+        $cities_arr = explode(",", $cities);
+        $business_id = $request->business_id;
+        $range_pricing = $this->rangePricingRepository->getAllRangeBusinessPricesOfCities($cities_arr, $business_id);
+        return response()->json($range_pricing);
+    }
+
     public function storeCityRangeBasePrice(Request $request)
     {
         $range_pricing_list = $request->range_pricing_list;
         $cities = json_decode($request->cities);
+        $business_id = $request->business_id;
 
         $all_cities_pricing = $this->rangePricingRepository->getAllRangeBasePricesOfCities($cities);
         $all_cities_pricing =  $all_cities_pricing->map(function ($data) {
@@ -138,6 +157,8 @@ class BusinessPricingController extends Controller
                         'same_loc_cash_collection_price' => $range_pricing['same_loc_price'],
                         'is_same_for_all_services' => true,
                         'city_id' => $city,
+                        'business_id' => $business_id,
+
                     ];
                     $added_pricing = $this->rangePricingRepository->create($data);
                 } else {
@@ -155,6 +176,8 @@ class BusinessPricingController extends Controller
                         'same_loc_cash_collection_price' => $range_pricing['same_loc_cash_collection_price'],
                         'is_same_for_all_services' => false,
                         'city_id' => $city,
+                        'business_id' => $business_id,
+
                     ];
                     $added_pricing =  $this->rangePricingRepository->create($data);
                 }
@@ -169,7 +192,8 @@ class BusinessPricingController extends Controller
     {
         $cities = json_decode($request->cities);
         $delivery_slot_pricing = $request->all();
-        // var_dump(gettype($delivery_slot_pricing));
+        $business_id = $request->business_id;
+
         $cities_delivery_slot_pricing = $request->input('cities_delivery_slot');
         foreach ($cities as $key => $city) {
             foreach ($cities_delivery_slot_pricing as $index => $delivery_slot_pricing) {
@@ -184,6 +208,7 @@ class BusinessPricingController extends Controller
                         'delivery_slot_id' => $delivery_slot_pricing['delivery_slot_id'],
                         'is_same_for_all_services' => true,
                         'city_id' => $city,
+                        'business_id' => $business_id,
                     ];
                     // echo '<pre> S A M E </pre>';
                     // echo '<pre> new_pricing_data : ' . var_export($data, true) . '</pre>';
@@ -200,6 +225,7 @@ class BusinessPricingController extends Controller
                         'delivery_slot_id' => $delivery_slot_pricing['delivery_slot_id'],
                         'is_same_for_all_services' => false,
                         'city_id' => $city,
+                        'business_id' => $business_id,
                     ];
                     // echo '<pre> D I F F </pre>';
                     // echo '<pre> new_pricing_data : ' . var_export($data, true) . '</pre>';

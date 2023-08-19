@@ -138,9 +138,10 @@
                     <!--begin::Form-->
                     <form class="my-auto pb-5" method="post" id="kt_create_account_form"
                         action="{{ route('business_onboarding_add') }}" enctype="multipart/form-data">
+                        {{ csrf_field() }}
                         <!--begin::Step 1-->
                         <div class="current" data-kt-stepper-element="content">
-                            {{ csrf_field() }}
+
 
                             <!--begin::Wrapper-->
                             <div class="w-lg-700px  mx-auto">
@@ -156,7 +157,60 @@
                                     <!--end::Link-->
                                 </div>
                                 <!--end::Heading-->
+                                <!--begin::Repeater-->
+                                <div id="kt_docs_repeater_basic">
+                                    <!--begin::Form group-->
+                                    <div class="form-group">
+                                        <div data-repeater-list="kt_docs_repeater_basic">
+                                            <div data-repeater-item>
+                                                <div class="form-group row">
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Name:</label>
+                                                        <input type="email" class="form-control mb-2 mb-md-0"
+                                                            placeholder="Enter full name" />
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Number:</label>
+                                                        <input type="email" class="form-control mb-2 mb-md-0"
+                                                            placeholder="Enter contact number" />
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div
+                                                            class="form-check form-check-custom form-check-solid mt-2 mt-md-11">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                id="form_checkbox" />
+                                                            <label class="form-check-label" for="form_checkbox">
+                                                                Primary
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <a href="javascript:;" data-repeater-delete
+                                                            class="btn btn-sm btn-light-danger mt-3 mt-md-8">
+                                                            <i class="ki-duotone ki-trash fs-5"><span
+                                                                    class="path1"></span><span
+                                                                    class="path2"></span><span
+                                                                    class="path3"></span><span
+                                                                    class="path4"></span><span class="path5"></span></i>
+                                                            Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end::Form group-->
 
+                                    <!--begin::Form group-->
+                                    <div class="form-group mt-5">
+                                        <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
+                                            <i class="ki-duotone ki-plus fs-3"></i>
+                                            Add
+                                        </a>
+                                    </div>
+                                    <!--end::Form group-->
+                                </div>
+                                <!--end::Repeater-->
                                 <!--begin::Separator-->
                                 <div class="d-flex align-items-center mb-10">
                                     <div class="border-bottom border-gray-300 mw-50 w-100"></div>
@@ -390,7 +444,7 @@
                                             <!--end::Wrapper-->
                                         </div>
                                         <!--end::Alert -->
-                                        <div id="address_map" style="height: 400px; width: 100%;"></div>
+                                        <div id="map" style="height: 400px; width: 100%;"></div>
                                         <input id="latitude" type="hidden" name="latitude">
                                         <input id="longitude" type="hidden" name="longitude">
 
@@ -506,7 +560,6 @@
 
 
                                 <div class="row fv-row mb-7">
-
                                     <!--begin::Repeater-->
                                     <div id="location_delivery_slots_repeater">
                                         <!--begin::Form group-->
@@ -514,15 +567,15 @@
                                             <div data-repeater-list="area_coverage_list">
                                                 <div data-repeater-item>
                                                     <div class="form-group row">
-                                                        <input type="hidden" id="is_repeater_item" value="true" />
                                                         <!--begin::Col-->
                                                         <div class="col-xl-4">
                                                             <label class="form-label required">Country</label>
+
                                                             <!--begin::Input group-->
                                                             <select id="country" class="form-select form-select-solid"
                                                                 name="country" data-control="select2"
                                                                 data-placeholder="Select an option"
-                                                                data-allow-clear="true" onchange="fetchStates(this)">
+                                                                data-allow-clear="true" onchange="fetchStates()">
 
                                                                 <option value="">Select country</option>
                                                                 @if ($countries->count())
@@ -535,6 +588,7 @@
                                                                 @endif
                                                             </select>
                                                             <!--end::Input group-->
+
                                                         </div>
                                                         <!--end::Col-->
                                                         <!--begin::Col-->
@@ -636,7 +690,7 @@
                                         <div class="form-group mt-5">
                                             <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
                                                 <i class="ki-duotone ki-plus fs-3"></i>
-                                                Add
+                                                Add another coverage area
                                             </a>
                                         </div>
                                         <!--end::Form group-->
@@ -990,7 +1044,7 @@
 <script src="{{ asset('static/plugins/custom/utilities/multiselect-dropdown.js')}}"></script>
 <script>
     $(document).ready(function() {
-        $('#location_delivery_slots_repeater').repeater({
+        $('#kt_docs_repeater_basic').repeater({
             initEmpty: false,
 
             defaultValues: {

@@ -6,6 +6,8 @@
         @csrf
         <!--hidden text field-->
         <input type="hidden" id="cities" name="cities" value={{json_encode($cities)}} />
+        <input type="hidden" id="business_id" name="business_id" value={{$business_id}}>
+
         <!--begin::Repeater-->
         <div id="kt_docs_repeater_basic">
             <!--begin::Form group-->
@@ -258,7 +260,7 @@
                                     collection and cash.
                                     collection.</b></p>
                             <button type="button" class="button-no-style"
-                                onclick="changeNewlyAddedPricingView(this)">Click
+                                onclick=" (this)">Click
                                 here</button>
                             <p id="pricing_text_id_new" style="display: inline;">
                                 to set same pricing for all services</p>

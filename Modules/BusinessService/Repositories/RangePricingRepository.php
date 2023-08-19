@@ -42,6 +42,16 @@ class RangePricingRepository implements RangePricingInterface
             ->get();
     }
 
+    public function getAllRangeBusinessPricesOfCities($cities, $business_id)
+    {
+        $business_id = $business_id == "" ? null : $business_id;
+        return RangePricing::whereIn('city_id', $cities)
+            ->where('active_status', 1)
+            ->where('business_id', $business_id)
+            ->get();
+    }
+
+
     public function getAllRangeBasePricesOfCity($city)
     {
         return RangePricing::where('city_id', $city)

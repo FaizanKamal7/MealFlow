@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('phone');
-            $table->string('status');
+            $table->string('active_status');
             $table->uuid('city_id');
             $table->uuid('state_id');
+            $table->string('map_selected_area')->nullable();
             $table->uuid('country_id');
             $table->uuid('business_id');
             $table->boolean('is_deleted');
@@ -33,6 +34,11 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // Schema::table('branches', function (Blueprint $table) {
+        //     $table->string('map_selected_area')->nullable();
+        //     $table->uuid('business_id');
+        //     $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
+        // });
     }
 
     /**
