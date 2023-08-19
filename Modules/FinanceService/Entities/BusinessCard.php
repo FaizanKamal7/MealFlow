@@ -17,7 +17,7 @@ class BusinessCard extends Model
     protected $fillable = [
         'card_number',
         'card_holder_name',
-        'cvv',
+        'brand',
         'expiry_month',
         'expiry_year',
         'wallet_id',

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->uuid("id")->primary(); 
             $table->unsignedSmallInteger("card_number");
             $table->string("card_holder_name");
-            $table->unsignedSmallInteger("cvv");
-            $table->unsignedSmallInteger('expiry_month'); 
-            $table->unsignedSmallInteger('expiry_year');
+            $table->string("brand",20);
+            $table->unsignedSmallInteger('exp_month'); 
+            $table->unsignedSmallInteger('exp_year');
 
             $table->uuid("wallet_id");
 

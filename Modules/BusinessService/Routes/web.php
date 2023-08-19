@@ -61,6 +61,8 @@ Route::prefix('businessservice')->group(function () {
 
         Route::group(['prefix' => 'credit/'], function () {
             Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
+            Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
+
     
         });
     });
