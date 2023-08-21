@@ -360,12 +360,12 @@ $(document).ready(function () {
     $.get('/api/config', function (data) {
         // Access the Google API key and use it in your JavaScript logic
         var googleApiKey = data.google_key;
-        
+
         // Now you can use the googleApiKey in your JavaScript code
         // For example, you can use it in your Google Maps API calls
         // Here's a basic example:
         var address_map = new google.maps.Map(document.getElementById('address_map'), {
-            center: {lat: -34.397, lng: 150.644},
+            center: { lat: -34.397, lng: 150.644 },
             zoom: 8
         });
     });
@@ -444,7 +444,7 @@ async function initMap() {
             // Add a new marker at the searched location
             marker = new google.maps.Marker({
                 position: place.geometry.location,
-                address_map: address_map,
+                map: address_map, // Fix the property name here
                 icon: {
                     url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
                     scaledSize: new google.maps.Size(40, 40)
@@ -477,6 +477,7 @@ async function initMap() {
     });
 }
 
+
 initMap();
 
 
@@ -494,14 +495,14 @@ function toggleLocationDiv() {
         googleMapDiv.style.display = "block";
         dropdownDiv.style.display = "none";
         console.log("inside googleMapDiv.style.display === none");
-       
+
     } else {
         // drop down view open 
         googleMapDiv.style.display = "none";
         dropdownDiv.style.display = "block";
         document.getElementById('latitude').value = 0;
         document.getElementById('longitude').value = 0;
-        
+
     }
 }
 

@@ -9,4 +9,5 @@ interface AreaInterface
     public function getWhere($where);
     public function getWhereSingle($where);
     public function getAreasOfCity($city_id);
+    public function updateOrInsertAreaIfAttributeExist($attribute, $value, $data);
 }

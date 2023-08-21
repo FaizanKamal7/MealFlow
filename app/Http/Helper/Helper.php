@@ -48,15 +48,14 @@ class Helper
     function getLocationFromCoordinates($latitude, $longitude)
     {
         $api_key = Config::get('services.google.key');
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$api_key";
-
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$api_key&language_code=en"; // Add &language=en
         $response = file_get_contents($url);
         $data = json_decode($response, true);
 
         $country = $state = $city = $area = '';
 
-        if ($data && isset($data['results'][0])) {
-            foreach ($data['results'][0]['address_components'] as $component) {
+        if ($data && isset($data['results'][1])) {
+            foreach ($data['results'][1]['address_components'] as $component) {
                 $types = $component['types'];
                 if (in_array('country', $types)) {
                     $country = $component['long_name'];
@@ -78,6 +77,7 @@ class Helper
         );
     }
 
+
     function findDBLocationsWithNames(...$parameters)
     {
         // $parameters is now an array containing all the passed arguments
@@ -85,6 +85,10 @@ class Helper
         $state_name = $parameters[1] ?? null;
         $city_name = $parameters[2] ?? null;
         $area_name = $parameters[3] ?? null;
+
+        echo "<pre> country: " . print_r($country_name, true) . "</pre>";
+        echo "<pre> state: " . print_r($state_name, true) . "</pre>";
+        echo "<pre> city: " . print_r($city_name, true) . "</pre>";
 
         $db_map_location_ids = [];
         if ($country_name) {
@@ -117,7 +121,25 @@ class Helper
             $db_map_location_ids['area_id'] = "";
         }
 
-
+        $this->print_array("db_map_location_ids", $db_map_location_ids);
         return $db_map_location_ids;
+    }
+
+
+    function print_array($title, $array)
+    {
+
+        if (is_array($array)) {
+
+            echo $title . "<br/>" .
+                "||---------------------------------||<br/>" .
+                "<pre>";
+            print_r($array);
+            echo "</pre>" .
+                "END " . $title . "<br/>" .
+                "||---------------------------------||<br/>";
+        } else {
+            echo $title . " is not an array.";
+        }
     }
 }
