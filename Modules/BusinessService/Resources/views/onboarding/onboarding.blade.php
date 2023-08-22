@@ -355,7 +355,7 @@
                                         <input class="form-control form-control-lg form-control-solid"
                                             id="search-location" type="text" placeholder="Enter you address here">
                                         <br><br>
-                                        <!--begin::Alert-->
+                                        <!--begin::HINTS-->
                                         <div class="alert alert-primary d-flex align-items-center p-5">
                                             <!--begin::Icon-->
                                             <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span
@@ -389,7 +389,7 @@
                                             </div>
                                             <!--end::Wrapper-->
                                         </div>
-                                        <!--end::Alert -->
+                                        <!--end::HINTS -->
                                         <div id="address_map" style="height: 400px; width: 100%;"></div>
                                         <input id="latitude" type="hidden" name="latitude">
                                         <input id="longitude" type="hidden" name="longitude">

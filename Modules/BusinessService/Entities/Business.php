@@ -18,11 +18,6 @@ class Business extends Model
     protected $fillable = [
         'name',
         'logo',
-        'card_name',
-        'card_number',
-        'card_expiry_month',
-        'card_expiry_year',
-        'card_cvv',
         'contract_file',
         'TRN',
         'status',
