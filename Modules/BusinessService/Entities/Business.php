@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\DeliveryService\Entities\Bags;
 use Illuminate\Support\Facades\Request;
 
@@ -14,6 +15,8 @@ class Business extends Model
 {
     use HasFactory;
     use HasUuids;
+    use SoftDeletes;
+
 
     protected $fillable = [
         'name',

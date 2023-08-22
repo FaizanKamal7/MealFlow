@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('business_wallet', function (Blueprint $table) {
+        Schema::create('business_wallets', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->decimal("balance", 8, 2);
 
