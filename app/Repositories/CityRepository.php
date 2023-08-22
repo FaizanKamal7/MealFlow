@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\CityInterface;
 use App\Models\City;
+use Modules\BusinessService\Entities\Business;
 use Yajra\DataTables\DataTables;
 
 class CityRepository implements CityInterface
