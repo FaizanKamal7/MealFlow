@@ -15,11 +15,17 @@ return new class extends Migration
     {
         Schema::create('states', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->boolean('active_status');
             $table->string('name');
+            $table->string('country_code');
+            $table->string('fips_code')->nullable();
+            $table->string('iso2');
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->boolean('flag')->default(0);
+            $table->text('wikiDataId')->nullable();
+            $table->boolean('active_status');
             $table->uuid('country_id');
             $table->timestamp('deleted_at')->nullable();
-            $table->boolean('is_deleted')->nullable();
             $table->timestamps();
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });

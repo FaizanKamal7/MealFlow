@@ -14,6 +14,8 @@
 use Modules\BusinessService\Http\Controllers\BusinessInfo\BusinessInfoController;
 use Modules\BusinessService\Http\Controllers\BusinessPricing\BusinessPricingController;
 use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsController;
+use Modules\FinanceService\Http\Controllers\WalletController;
+use Modules\FinanceService\Http\Controllers\WalletCreditController;
 
 Route::prefix('businessservice')->group(function () {
     Route::get("",[\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
@@ -54,7 +56,17 @@ Route::prefix('businessservice')->group(function () {
         Route::get("store-delivery-slot-pricing-in-base-price", [BusinessPricingController::class, "storeDeliverySlotPricingInBasePrice"])->name("store_delivery_slot_pricing_in_base_price");
     });
 
+    Route::group(['prefix' => 'wallet/'], function () {
+        Route::get("", [WalletController::class, "viewWallet"])->name("viewWallet");
 
+
+        Route::group(['prefix' => 'credit/'], function () {
+            Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
+            Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
+
+    
+        });
+    });
 
     Route::group(['prefix' => 'business-settings/'], function () {
     });
