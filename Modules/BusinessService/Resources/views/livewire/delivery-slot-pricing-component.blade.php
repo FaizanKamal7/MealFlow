@@ -5,7 +5,7 @@
     @if ($cities_delivery_slots)
     @foreach($cities_delivery_slots as $index => $cities_delivery_slot)
     <div class="row align-items-center justify-content-center">
-        <h4>Delivery Slot: {{ $cities_delivery_slot[1] }}</h4>
+        <h4>Delivery Slot: {{ $cities_delivery_slot[1] }} ({{ $cities_delivery_slot[2]['name'] }})</h4>
     </div>
     <input type="hidden" name="cities_delivery_slot[{{$index}}][is_same_price]" id="is_same_price_{{$index}}"
         value="true" />

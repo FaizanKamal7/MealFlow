@@ -118,12 +118,13 @@ class AreaController extends Controller
 
             $single_area =
                 [
-                    'actve_status' => 1,
+                    'active_status' => 1,
                     'name' => $city->name,
                     'city_id' =>  $city_id,
                     'coordinates' =>  $coordinates,
                 ];
-            $this->areaRepository->add($single_area);
+
+            $result =  $this->areaRepository->updateOrInsertAreaIfAttributeExist("name", $city->name, $single_area);
         }
         $this->cityRepository->update($city_id, ['active_status' => true]);
         $this->stateRepository->update($city->state_id, ['active_status' => true]);
