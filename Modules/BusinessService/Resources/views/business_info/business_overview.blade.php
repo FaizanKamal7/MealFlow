@@ -278,75 +278,30 @@
                     <!--end::Info-->
                 </div>
                 <!--end::Details-->
-               
+
             </div>
         </div>
         <!--end::Navbar-->
         <!--begin::Row-->
         <div class="row g-5 g-xxl-8">
             <!--begin::Col-->
-            <div class="col-xl-12">
+            <div class="col-xl-6">
                 <!--begin::Feeds Widget 1-->
                 <div class="card mb-5 mb-xxl-8">
                     <!--begin::Body-->
                     <div class="card-body pb-0">
                         <!--begin::Header-->
-                        <h3>Business Contract Info</h3>
-                        <!--end::Header-->
-                        <!--begin::Form-->
-                        <form id="kt_forms_widget_1_form" class="ql-quil ql-quil-plain pb-3">
-                            <!--begin::Editor-->
-                            <div id="kt_forms_widget_1_editor" class="py-6"></div>
-                            <!--end::Editor-->
-                            <div class="separator"></div>
-                            <!--begin::Toolbar-->
-                            <div id="kt_forms_widget_1_editor_toolbar" class="ql-toolbar d-flex flex-stack py-2">
-                                <div class="me-2">
-                                    <span class="ql-formats ql-size ms-0">
-                                        <select class="ql-size w-75px"></select>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-bold"></button>
-                                        <button class="ql-italic"></button>
-                                        <button class="ql-underline"></button>
-                                        <button class="ql-strike"></button>
-                                        <button class="ql-image"></button>
-                                        <button class="ql-link"></button>
-                                        <button class="ql-clean"></button>
-                                    </span>
-                                </div>
-                                <div class="me-n3">
-                                    <span class="btn btn-icon btn-sm btn-active-color-primary">
-                                        <i class="flaticon2-clip-symbol icon-ms"></i>
-                                    </span>
-                                    <span class="btn btn-icon btn-sm btn-active-color-primary">
-                                        <i class="flaticon2-pin icon-ms"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <!--end::Toolbar-->
-                        </form>
-                        <!--end::Form-->
-                    </div>
-                    <!--end::Body-->
-                </div>
-                <!--end::Feeds Widget 1-->
-                <!--begin::Feeds Widget 2-->
-                <div class="card mb-5 mb-xxl-8">
-                    <!--begin::Body-->
-                    <div class="card-body pb-0">
-                        <!--begin::Header-->
-                        <div class="d-flex align-items-center mb-5">
+                        <div class="d-flex align-items-center">
                             <!--begin::User-->
                             <div class="d-flex align-items-center flex-grow-1">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-45px me-5">
-                                    <img src="/media/avatars/300-23.jpg" alt="" />
+                                    <img src="/media/avatars/300-6.jpg" alt="" />
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Info-->
                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">Nick Logan</a>
+                                    <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">Grace Green</a>
                                     <span class="text-gray-400 fw-bold">PHP, SQLite, Artisan CLI</span>
                                 </div>
                                 <!--end::Info-->
@@ -446,13 +401,218 @@
                             <!--end::Menu-->
                         </div>
                         <!--end::Header-->
+                        <!--begin::Form-->
+                        <form id="kt_forms_widget_1_form" class="ql-quil ql-quil-plain pb-3">
+                            <!--begin::Editor-->
+                            <div id="kt_forms_widget_1_editor" class="py-6"></div>
+                            <!--end::Editor-->
+                            <div class="separator"></div>
+                            <!--begin::Toolbar-->
+                            <div id="kt_forms_widget_1_editor_toolbar" class="ql-toolbar d-flex flex-stack py-2">
+                                <div class="me-2">
+                                    <span class="ql-formats ql-size ms-0">
+                                        <select class="ql-size w-75px"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-bold"></button>
+                                        <button class="ql-italic"></button>
+                                        <button class="ql-underline"></button>
+                                        <button class="ql-strike"></button>
+                                        <button class="ql-image"></button>
+                                        <button class="ql-link"></button>
+                                        <button class="ql-clean"></button>
+                                    </span>
+                                </div>
+                                <div class="me-n3">
+                                    <span class="btn btn-icon btn-sm btn-active-color-primary">
+                                        <i class="flaticon2-clip-symbol icon-ms"></i>
+                                    </span>
+                                    <span class="btn btn-icon btn-sm btn-active-color-primary">
+                                        <i class="flaticon2-pin icon-ms"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <!--end::Toolbar-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Body-->
+                </div>
+                <!--end::Feeds Widget 1-->
+                <!--begin::Feeds Widget 2-->
+                <div class="card mb-5 mb-xxl-8">
+                    <!--begin::Body-->
+                    <div class="card-body pb-0">
+                        <!--begin::Header-->
+                        <h3>Business Contract Info</h3>
+                        <!--end::Header-->
                         <!--begin::Post-->
-                        <div class="mb-5">
+                        <div class="mb-5 m-6">
+                            <h4 class="text-center">
+                                SERVICE AGREEMENT
+                            </h4>
                             <!--begin::Text-->
-                            <p class="text-gray-800 fw-normal mb-5">Outlines keep you honest. They stop you from
-                                indulging in poorly thought-out metaphors about driving and keep you focused on the
-                                overall structure of your post</p>
+                            <p class="text-gray-800 fw-normal mb-5 text-center">
+
+
+                                This agreement (the “Agreement”) made in Dubai is effective from signature date.
+                                BETWEEN
+                                <b>L O G X Transport LLC (The “Service Provider”)</b>, with DED License Number 776770,
+                                and
+                                Address Office Warehouse B4, building 2, Al Quoz 3, Dubai, represented by Mr Abdul Sami
+                                Khan Shamshad Ali Khan and Mr Pir Abid Shah Abdurrehman Shah.
+                                <br>
+                                AND
+                                <br>
+                                <b> AZI GENERAL TRADING EST (The "Company")</b>, with Trade License CN-3861514 and Abu
+                                dhabi
+                                referred to as the “Parties”.
+
+                            </p>
                             <!--end::Text-->
+
+                            <h5 class="text-center">PREAMBLE</h5>
+                            <h5> WHEREAS:</h5>
+                            <p> - The Company has requested from the Service Provider Specific Delivery/Logistics
+                                services
+                                (the “Service(s)”.
+                                - The Service Provider, for the price and subject to the Terms and Conditions contained
+                                herein, is prepared to sell to the Company, on an ongoing basis and as its exclusive
+                                Delivery, and Company is prepared to buy on this basis from The Service Provider, all
+                                the
+                                Company’s Service requirements. NOW, THEREFORE, IN CONSIDERATION OF THE MUTUAL COVENANTS
+                                AND
+                                AGREEMENTS HERETO CONTAINED AND FOR OTHER GOOD AND VALUABLE CONSIDERATION, DULY
+                                RECEIVED,
+                                THE PARTIES HERETO AGREE AS FOLLOWS:
+                            </p>
+
+                            <h5>1. DEFINITIONS AND INTERPRETATION </h5>
+                            <p> 1.1 Whenever used in this Agreement, the schedules
+                                thereto, or any ancillary document thereto, the following terms, unless the subject
+                                matter
+                                or context otherwise requires, shall have the following meanings:<br>
+                            <p class="m-6">
+                                &nbsp 1.1.1 “Agreement” means or refers to this Agreement as amended from time to time
+                                and any
+                                indenture, agreement or instrument supplemental or ancillary hereto or in implementation
+                                hereof.<br>
+
+                                &nbsp 1.1.2 “Business Day” means every day of the week except Public Holidays, which in
+                                the
+                                U.A.E.
+                                is a legal holiday or a day on which financial institutions are authorized by law or by
+                                local proclamation to close.<br>
+
+                                &nbsp 1.1.3 “Client” means any individual, company, corporation, partnership, firm,
+                                trust,
+                                sole
+                                proprietorship, government or entity howsoever designated, agrees with the company to
+                                purchase Meal Plan through the website.<br>
+
+                                &nbsp 1.1.4 “Bags” refers to the portable insulated cooler bag that carries all meals
+                                for the
+                                client.<br>
+
+                                &nbsp 1.1.5 “Service(s)” means or refers to the specific Delivery of the bags from the
+                                place
+                                of
+                                preparing the meal to the client.<br>
+                            </p>
+                            </p>
+
+                            <h5>2. ORDERS AND DELIVERY OF SERVICES: </h5>
+                            <p> 2.1 Daily Delivery schedule for orders for Services purchased pursuant to this Agreement
+                                shall be communicated in advance (By 3pm for the next day delivery & for final bag
+                                collection by 5pm) always by email and in such other manner expressly agreed upon
+                                between the interested parties.<br><br>
+                                2.2 The Service Provider shall deliver Services to clients by the agreed cut-off time on
+                                specific days as required by Company – this being as agreed Delivery timings as agreed
+                                between both The Service Provider and Company..<br><br>
+                                2.3 Deliveries will be made between times mentioned below for Company to pick up the
+                                bags as soon as possible after the respective time slot finishes. No specific time is
+                                offered, bags will be dropped at the door of client’s location with a text or WhatsApp
+                                notification to inform Client as per the time slot. .<br><br>
+                            </p>
+
+                            <div class="d-flex flex-column m-3">
+                                <h6>Dubai</h6>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                            </div>
+
+                            <div class="d-flex flex-column m-3">
+                                <h6>Dubai</h6>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                            </div>
+                            <div class="d-flex flex-column m-3">
+                                <h6>Dubai</h6>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                            </div>
+                            <p>We are pleased to provide the Range Wise Pricing as well for your consideration:</p>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span>First 8 deliveries = USD
+                                5.4/Delivery
+                            </li>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span> 9 - 20 deliveries = USD
+                                5.13/Delivery
+
+                            </li>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span> 21 - 40 deliveries = USD
+                                4.59/Delivery
+
+                            </li>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span> 41 - 80 deliveries = USD
+                                4.32/Delivery
+
+                            </li>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span> 81 - 160 deliveries = USD
+                                4.05/Delivery
+
+                            </li>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span> 161 - 320 deliveries = USD
+                                3.78/Delivery
+
+                            </li>
+
+
                             <!--begin::Toolbar-->
                             <div class="d-flex align-items-center mb-5">
                                 <a href="#"
@@ -1222,7 +1382,401 @@
                 <!--end::Feeds widget 4, 5 load more-->
             </div>
             <!--end::Col-->
-           
+            <!--begin::Col-->
+            <div class="col-xl-6">
+                <!--begin::Charts Widget 1-->
+                <div class="card mb-5 mb-xxl-8">
+                    <!--begin::Header-->
+                    <div class="card-header border-0 pt-5">
+                        <!--begin::Title-->
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bolder fs-3 mb-1">Recent Statistics</span>
+                            <span class="text-muted fw-bold fs-7">More than 400 new members</span>
+                        </h3>
+                        <!--end::Title-->
+                        <!--begin::Toolbar-->
+                        <div class="card-toolbar">
+                            <!--begin::Menu-->
+                            <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                        viewBox="0 0 24 24">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="5" y="5" width="5" height="5" rx="1" fill="currentColor" />
+                                            <rect x="14" y="5" width="5" height="5" rx="1" fill="currentColor"
+                                                opacity="0.3" />
+                                            <rect x="5" y="14" width="5" height="5" rx="1" fill="currentColor"
+                                                opacity="0.3" />
+                                            <rect x="14" y="14" width="5" height="5" rx="1" fill="currentColor"
+                                                opacity="0.3" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </button>
+                            <!--begin::Menu 1-->
+                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
+                                id="kt_menu_624475bd422be">
+                                <!--begin::Header-->
+                                <div class="px-7 py-5">
+                                    <div class="fs-5 text-dark fw-bolder">Filter Options</div>
+                                </div>
+                                <!--end::Header-->
+                                <!--begin::Menu separator-->
+                                <div class="separator border-gray-200"></div>
+                                <!--end::Menu separator-->
+                                <!--begin::Form-->
+                                <div class="px-7 py-5">
+                                    <!--begin::Input group-->
+                                    <div class="mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label fw-bold">Status:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <div>
+                                            <select class="form-select form-select-solid" data-kt-select2="true"
+                                                data-placeholder="Select option"
+                                                data-dropdown-parent="#kt_menu_624475bd422be" data-allow-clear="true">
+                                                <option></option>
+                                                <option value="1">Approved</option>
+                                                <option value="2">Pending</option>
+                                                <option value="2">In Process</option>
+                                                <option value="2">Rejected</option>
+                                            </select>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label fw-bold">Member Type:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Options-->
+                                        <div class="d-flex">
+                                            <!--begin::Options-->
+                                            <label
+                                                class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                                <input class="form-check-input" type="checkbox" value="1" />
+                                                <span class="form-check-label">Author</span>
+                                            </label>
+                                            <!--end::Options-->
+                                            <!--begin::Options-->
+                                            <label class="form-check form-check-sm form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="checkbox" value="2"
+                                                    checked="checked" />
+                                                <span class="form-check-label">Customer</span>
+                                            </label>
+                                            <!--end::Options-->
+                                        </div>
+                                        <!--end::Options-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label fw-bold">Notifications:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Switch-->
+                                        <div
+                                            class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                name="notifications" checked="checked" />
+                                            <label class="form-check-label">Enabled</label>
+                                        </div>
+                                        <!--end::Switch-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Actions-->
+                                    <div class="d-flex justify-content-end">
+                                        <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2"
+                                            data-kt-menu-dismiss="true">Reset</button>
+                                        <button type="submit" class="btn btn-sm btn-primary"
+                                            data-kt-menu-dismiss="true">Apply</button>
+                                    </div>
+                                    <!--end::Actions-->
+                                </div>
+                                <!--end::Form-->
+                            </div>
+                            <!--end::Menu 1-->
+                            <!--end::Menu-->
+                        </div>
+                        <!--end::Toolbar-->
+                    </div>
+                    <!--end::Header-->
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <!--begin::Chart-->
+                        <div id="kt_charts_widget_1_chart" style="height: 350px"></div>
+                        <!--end::Chart-->
+                    </div>
+                    <!--end::Body-->
+                </div>
+                <!--end::Charts Widget 1-->
+                <!--begin::List Widget 5-->
+                <div class="card mb-5 mb-xxl-8">
+                    <!--begin::Header-->
+                    <div class="card-header align-items-center border-0 mt-4">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="fw-bolder mb-2 text-dark">Activities</span>
+                            <span class="text-muted fw-bold fs-7">890,344 Sales</span>
+                        </h3>
+                        <div class="card-toolbar">
+                            <!--begin::Menu-->
+                            <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                        viewBox="0 0 24 24">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="5" y="5" width="5" height="5" rx="1" fill="currentColor" />
+                                            <rect x="14" y="5" width="5" height="5" rx="1" fill="currentColor"
+                                                opacity="0.3" />
+                                            <rect x="5" y="14" width="5" height="5" rx="1" fill="currentColor"
+                                                opacity="0.3" />
+                                            <rect x="14" y="14" width="5" height="5" rx="1" fill="currentColor"
+                                                opacity="0.3" />
+                                        </g>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </button>
+                            <!--begin::Menu 1-->
+                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
+                                id="kt_menu_624475bd4303a">
+                                <!--begin::Header-->
+                                <div class="px-7 py-5">
+                                    <div class="fs-5 text-dark fw-bolder">Filter Options</div>
+                                </div>
+                                <!--end::Header-->
+                                <!--begin::Menu separator-->
+                                <div class="separator border-gray-200"></div>
+                                <!--end::Menu separator-->
+                                <!--begin::Form-->
+                                <div class="px-7 py-5">
+                                    <!--begin::Input group-->
+                                    <div class="mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label fw-bold">Status:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <div>
+                                            <select class="form-select form-select-solid" data-kt-select2="true"
+                                                data-placeholder="Select option"
+                                                data-dropdown-parent="#kt_menu_624475bd4303a" data-allow-clear="true">
+                                                <option></option>
+                                                <option value="1">Approved</option>
+                                                <option value="2">Pending</option>
+                                                <option value="2">In Process</option>
+                                                <option value="2">Rejected</option>
+                                            </select>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label fw-bold">Member Type:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Options-->
+                                        <div class="d-flex">
+                                            <!--begin::Options-->
+                                            <label
+                                                class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                                <input class="form-check-input" type="checkbox" value="1" />
+                                                <span class="form-check-label">Author</span>
+                                            </label>
+                                            <!--end::Options-->
+                                            <!--begin::Options-->
+                                            <label class="form-check form-check-sm form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="checkbox" value="2"
+                                                    checked="checked" />
+                                                <span class="form-check-label">Customer</span>
+                                            </label>
+                                            <!--end::Options-->
+                                        </div>
+                                        <!--end::Options-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label fw-bold">Notifications:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Switch-->
+                                        <div
+                                            class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                name="notifications" checked="checked" />
+                                            <label class="form-check-label">Enabled</label>
+                                        </div>
+                                        <!--end::Switch-->
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Actions-->
+                                    <div class="d-flex justify-content-end">
+                                        <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2"
+                                            data-kt-menu-dismiss="true">Reset</button>
+                                        <button type="submit" class="btn btn-sm btn-primary"
+                                            data-kt-menu-dismiss="true">Apply</button>
+                                    </div>
+                                    <!--end::Actions-->
+                                </div>
+                                <!--end::Form-->
+                            </div>
+                            <!--end::Menu 1-->
+                            <!--end::Menu-->
+                        </div>
+                    </div>
+                    <!--end::Header-->
+                    <!--begin::Body-->
+                    <div class="card-body pt-5">
+                        <!--begin::Timeline-->
+                        <div class="timeline-label">
+                            <!--begin::Item-->
+                            <div class="timeline-item">
+                                <!--begin::Label-->
+                                <div class="timeline-label fw-bolder text-gray-800 fs-6">08:42</div>
+                                <!--end::Label-->
+                                <!--begin::Badge-->
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-warning fs-1"></i>
+                                </div>
+                                <!--end::Badge-->
+                                <!--begin::Text-->
+                                <div class="fw-mormal timeline-content text-muted ps-3">Outlines keep you honest. And
+                                    keep structure</div>
+                                <!--end::Text-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="timeline-item">
+                                <!--begin::Label-->
+                                <div class="timeline-label fw-bolder text-gray-800 fs-6">10:00</div>
+                                <!--end::Label-->
+                                <!--begin::Badge-->
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-success fs-1"></i>
+                                </div>
+                                <!--end::Badge-->
+                                <!--begin::Content-->
+                                <div class="timeline-content d-flex">
+                                    <span class="fw-bolder text-gray-800 ps-3">AEOL meeting</span>
+                                </div>
+                                <!--end::Content-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="timeline-item">
+                                <!--begin::Label-->
+                                <div class="timeline-label fw-bolder text-gray-800 fs-6">14:37</div>
+                                <!--end::Label-->
+                                <!--begin::Badge-->
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-danger fs-1"></i>
+                                </div>
+                                <!--end::Badge-->
+                                <!--begin::Desc-->
+                                <div class="timeline-content fw-bolder text-gray-800 ps-3">Make deposit
+                                    <a href="#" class="text-primary">USD 700</a>. to ESL
+                                </div>
+                                <!--end::Desc-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="timeline-item">
+                                <!--begin::Label-->
+                                <div class="timeline-label fw-bolder text-gray-800 fs-6">16:50</div>
+                                <!--end::Label-->
+                                <!--begin::Badge-->
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-primary fs-1"></i>
+                                </div>
+                                <!--end::Badge-->
+                                <!--begin::Text-->
+                                <div class="timeline-content fw-mormal text-muted ps-3">Indulging in poorly driving and
+                                    keep structure keep great</div>
+                                <!--end::Text-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="timeline-item">
+                                <!--begin::Label-->
+                                <div class="timeline-label fw-bolder text-gray-800 fs-6">21:03</div>
+                                <!--end::Label-->
+                                <!--begin::Badge-->
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-danger fs-1"></i>
+                                </div>
+                                <!--end::Badge-->
+                                <!--begin::Desc-->
+                                <div class="timeline-content fw-bold text-gray-800 ps-3">New order placed
+                                    <a href="#" class="text-primary">#XF-2356</a>.
+                                </div>
+                                <!--end::Desc-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="timeline-item">
+                                <!--begin::Label-->
+                                <div class="timeline-label fw-bolder text-gray-800 fs-6">16:50</div>
+                                <!--end::Label-->
+                                <!--begin::Badge-->
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-primary fs-1"></i>
+                                </div>
+                                <!--end::Badge-->
+                                <!--begin::Text-->
+                                <div class="timeline-content fw-mormal text-muted ps-3">Indulging in poorly driving and
+                                    keep structure keep great</div>
+                                <!--end::Text-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="timeline-item">
+                                <!--begin::Label-->
+                                <div class="timeline-label fw-bolder text-gray-800 fs-6">21:03</div>
+                                <!--end::Label-->
+                                <!--begin::Badge-->
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-danger fs-1"></i>
+                                </div>
+                                <!--end::Badge-->
+                                <!--begin::Desc-->
+                                <div class="timeline-content fw-bold text-gray-800 ps-3">New order placed
+                                    <a href="#" class="text-primary">#XF-2356</a>.
+                                </div>
+                                <!--end::Desc-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="timeline-item mb-9">
+                                <!--begin::Label-->
+                                <div class="timeline-label fw-bolder text-gray-800 fs-6">10:30</div>
+                                <!--end::Label-->
+                                <!--begin::Badge-->
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-success fs-1"></i>
+                                </div>
+                                <!--end::Badge-->
+                                <!--begin::Text-->
+                                <div class="timeline-content fw-mormal text-muted ps-3">Finance KPI Mobile app launch
+                                    preparion meeting</div>
+                                <!--end::Text-->
+                            </div>
+                            <!--end::Item-->
+                        </div>
+                        <!--end::Timeline-->
+                    </div>
+                    <!--end: Card Body-->
+                </div>
+                <!--end: List Widget 5-->
+            </div>
+            <!--end::Col-->
         </div>
         <!--end::Row-->
     </div>

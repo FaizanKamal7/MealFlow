@@ -21,4 +21,5 @@ interface BusinessInterface
     public function get();
     public function getActiveBusinesses();
     public function getBusiness($id);
+    
 }
