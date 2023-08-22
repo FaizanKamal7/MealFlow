@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('contract_file');
             $table->string('TRN');
+            $table->string('logo');
             $table->boolean('status');
-
             $table->uuid('admin_id');
             $table->uuid('business_category_id');
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');

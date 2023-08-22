@@ -2,6 +2,7 @@
 
 namespace Modules\BusinessService\Http\Controllers\BusinessPricing;
 
+use App\Interfaces\CityInterface;
 use App\Interfaces\CountryInterface;
 use App\Interfaces\DeliverySlotInterface;
 use Illuminate\Contracts\Support\Renderable;
@@ -18,6 +19,7 @@ class BusinessPricingController extends Controller
 
     private DeliverySlotInterface $deliverySlotRepository;
     private CountryInterface $countryRepository;
+    private CityInterface $cityRepository;
     private BusinessPricingInterface $businessPricingRepository;
     private RangePricingInterface $rangePricingRepository;
     private PricingTypeInterface $pricingTypeRepository;
@@ -27,10 +29,11 @@ class BusinessPricingController extends Controller
 
 
 
-    public function __construct(DeliverySlotInterface $deliverySlotRepository, CountryInterface $countryRepository, BusinessPricingInterface $businessPricingRepository, RangePricingInterface $rangePricingRepository, PricingTypeInterface $pricingTypeRepository, DeliverySlotPricingInterface $deliverySlotPricingRepository, BusinessInterface $businessRepository)
+    public function __construct(DeliverySlotInterface $deliverySlotRepository, CountryInterface $countryRepository, CityInterface $cityRepository, BusinessPricingInterface $businessPricingRepository, RangePricingInterface $rangePricingRepository, PricingTypeInterface $pricingTypeRepository, DeliverySlotPricingInterface $deliverySlotPricingRepository, BusinessInterface $businessRepository)
     {
         $this->deliverySlotRepository = $deliverySlotRepository;
         $this->countryRepository = $countryRepository;
+        $this->cityRepository = $cityRepository;
         $this->businessPricingRepository = $businessPricingRepository;
         $this->rangePricingRepository = $rangePricingRepository;
         $this->pricingTypeRepository = $pricingTypeRepository;
@@ -85,7 +88,8 @@ class BusinessPricingController extends Controller
         $delivery_slots = $this->deliverySlotRepository->getAllDeliverySlotsOfCities($cities_arr);
         $final_delivery_slot = [];
         foreach ($delivery_slots as $key => $value) {
-            array_push($final_delivery_slot, [$value['id'], $value['start_time'] . "-" . $value['end_time']]);
+            $city = $this->cityRepository->get($value['city_id']);
+            array_push($final_delivery_slot, [$value['id'], $value['start_time'] . "-" . $value['end_time'], $city]);
         }
         return response()->json($final_delivery_slot);
     }
