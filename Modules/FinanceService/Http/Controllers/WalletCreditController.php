@@ -2,12 +2,24 @@
 
 namespace Modules\FinanceService\Http\Controllers;
 
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-
+use Modules\FinanceService\Helper\PaymentHelper;
+use Modules\FinanceService\Interfaces\BusinessCardInterface;
+use Stripe;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class WalletCreditController extends Controller
 {
+
+    private $paymentHelper;
+    private BusinessCardInterface $businessCardRepository;
+    public function __construct(PaymentHelper $payment_helper,BusinessCardInterface $businessCardRepository)
+    {
+        $this->paymentHelper  = $payment_helper;
+        $this->businessCardRepository = $businessCardRepository;
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -33,9 +45,60 @@ class WalletCreditController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+    
+           
+
+
+        $validatedData = $request->validate([
+            'card_number'=> ['required'],
+            'card_holder_name' =>['required'],
+            'cvv'=>['required','max:3'],
+            'expiry_month' =>['required'],
+            'expiry_year' =>['required'],
+            'amount'=>['required'],
+            'stripe_token'=>[],
+            'save_card'=>[]
+        ]);
+
+
+        if($request->save_card){
+            echo"save card";
+        }
+
+        $charge= $this->paymentHelper->createStripeSession($validatedData);
+       return redirect()->away($charge->url);
+        dd($charge);
+
+
+
+
+    }catch(Exception $e)
+    {
+        dd($e);
+    }
     }
 
+
+    public function paymentSuccess($session_id)
+    {
+
+        $session = $this->paymentHelper->retrieveSession($session_id);
+        // dd($session->payment_intent->payment_method->card);
+        $payment_intent =$session->payment_intent; 
+        echo($payment_intent->payment_method->card['exp_month']);
+
+        dd($payment_intent);
+
+        $this->businessCardRepository->createBusinessCard($payment_intent->payment_method->card['last4'],
+                                                         $payment_intent->payment_method->billing_details['name'],
+                                                         $payment_intent->payment_method->billing_details['brand'],
+                                                         $payment_intent->payment_method->card['exp_month'],
+                                                         $payment_intent->payment_method->card['exp_year']);
+        echo "payment successfull";
+        // return view('financeservice::show');
+    }
     /**
      * Show the specified resource.
      * @param int $id
