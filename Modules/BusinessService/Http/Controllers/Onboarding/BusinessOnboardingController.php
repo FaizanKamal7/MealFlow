@@ -156,6 +156,11 @@ class BusinessOnboardingController extends Controller
                 user_id: $user->id,
             );
 
+            // echo "<pre> address_country: " . print_r($address_country, true) . "</pre>";
+            // echo "<pre> address_state: " . print_r($address_state, true) . "</pre>";
+            // echo "<pre> address_city: " . print_r($address_city, true) . "</pre>";
+            // echo "<pre> address_area: " . print_r($address_area, true) . "</pre>";
+
             $branch = $this->branchRepository->createBranch(
                 name: "Main Branch",
                 phone: $phone,
@@ -168,47 +173,38 @@ class BusinessOnboardingController extends Controller
                 is_main_branch: 1,
                 business_id: $business->id,
             );
-            var_dump($area_coverage_list);
-            echo "<pre></pre>";
-            var_dump($cities);
-            dd();
-            // TODO: FIX BUG: Repeater form coverage_list not fetching data poperly. Commenting below code and sending only 1 state's cities for now
-            // if ($area_coverage_list) {
-            //     foreach ($area_coverage_list as $key => $coverage_list_item) {
-            //         $areas = $coverage_list_item["area"];
-            //         foreach ($areas as $key => $area) {
-            //             $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
-            //                 active_status: 1,
-            //                 area_id: $area,
-            //                 city_id: $coverage_list_item["city"],
-            //                 state: $coverage_list_item["state"],
-            //                 country: $coverage_list_item["country"],
-            //                 branch_id: $branch->id,
-            //             );
-            //             foreach ($coverage_list_item['delivery_slots'] as $key => $delivery_slot_id) {
-            //                 $this->branchCoverageDeliverySlotRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
-            //             }
-            //         }
-            //     }
-            // }
-            foreach ($cities as $key => $city_id) {
-                $city_areas = $this->areaRepository->getAreasOfCity($city_id);
-                foreach ($city_areas as $key => $area) {
+            $this->helper->print_array("area_coverage_list", $area_coverage_list);
+            // echo "<pre>  ================================= </pre>";
 
-                    // $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
-                    //     active_status: 1,
-                    //     area_id: $area,
-                    //     city_id: $city_id,
-                    //     state: $coverage_list_item["state"],
-                    //     country: $coverage_list_item["country"],
-                    //     branch_id: $branch->id,
-                    // );
-                    // foreach ($coverage_list_item['delivery_slots'] as $key => $delivery_slot_id) {
-                    //     $this->branchCoverageDeliverySlotRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
-                    // }
+            if ($area_coverage_list) {
+                foreach ($area_coverage_list as $coverage_list_item) {
+                    $cities = $coverage_list_item["city"];
+
+                    foreach ($cities as $city) {
+                        $areas = $this->areaRepository->getAreasOfCity($city);
+                        $areas = $areas->toArray();
+                        echo "<pre> city: " . print_r($city, true) . "</pre>";
+
+                        $this->helper->print_array("AREAS", $areas);
+
+                        foreach ($areas as $area) {
+                            $this->branchCoverageRepository->createBranchCoverage(
+                                active_status: 1,
+                                area_id: $area['id'],
+                                city_id: $city,
+                                state: $coverage_list_item["state"],
+                                country: $coverage_list_item["country"],
+                                branch_id: $branch->id,
+                            );
+
+                            // foreach ($coverage_list_item['delivery_slots'] as $delivery_slot_id) {
+                            //     $this->branchCoverageDeliverySlotRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
+                            // }
+                        }
+                    }
                 }
             }
-
+            //  Sign in the newly onboarded customer
             $this->signInBusinessAdminUponRegistration($request->get("email"), $request->get("password"), $user->id);
 
 
