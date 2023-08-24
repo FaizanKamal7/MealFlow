@@ -66,8 +66,11 @@ class User extends Authenticatable
         return $this->hasMany(BusinessUser::class);
     }
 
-    public function businesses()
+    public function business()
     {
-        return $this->hasMany(Business::class);
+        return $this->hasOne(Business::class,'admin_id');
+    }
+    public function is_admin(){
+        return $this->business()->exists();
     }
 }
