@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Request;
 use App\Http\Helper\Helper;
+use Modules\BusinessService\Entities\Business;
 class BusinessWallet extends Model
 {
     use HasFactory;
@@ -20,7 +21,11 @@ class BusinessWallet extends Model
         'business_id',
 
     ];
-    
+
+
+    public function business(){
+        return $this->belongsTo(Business::class);
+    }
     public function cards(){
         return $this->hasMany(BusinessCard::class);
     }
