@@ -16,13 +16,16 @@ use Modules\BusinessService\Http\Controllers\BusinessPricing\BusinessPricingCont
 use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsController;
 use Modules\FinanceService\Http\Controllers\WalletController;
 use Modules\FinanceService\Http\Controllers\WalletCreditController;
+use Modules\BusinessService\Http\Middleware\BusinessCheck;
+
+
 
 Route::prefix('businessservice')->group(function () {
-    Route::get("",[\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
-    Route::get("deliveries/upload",[\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "uploadDeliveriesByForm"])->name("partner_upload_deliveries");
-    Route::get("deliveries",[\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "viewAllDeliveries"])->name("partner_all_deliveries");
+    Route::get("", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
+    Route::get("deliveries/upload", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "uploadDeliveriesByForm"])->name("partner_upload_deliveries");
+    Route::get("deliveries", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "viewAllDeliveries"])->name("partner_all_deliveries");
     Route::get("home/", [\Modules\BusinessService\Http\Controllers\BusinessSettings\BusinessSettingsController::class, "index"])->name("business_home");
-    Route::get("customers",[\Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController::class, "viewAllCustomers"])->name("partner_all_customers");
+    Route::get("customers", [\Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController::class, "viewAllCustomers"])->name("partner_all_customers");
 
     Route::group(['prefix' => 'business_info/'], function () {
         Route::get("overview/{business_id}", [BusinessInfoController::class, "index"])->name("business_overview");
@@ -55,16 +58,18 @@ Route::prefix('businessservice')->group(function () {
         Route::get("get-delivery-slots-of-city-in-base-price", [BusinessPricingController::class, "getDeliverySlotsOfCityInBasePrice"])->name("get_delivery_slots_of_city_in_base_price");
         Route::get("store-delivery-slot-pricing-in-base-price", [BusinessPricingController::class, "storeDeliverySlotPricingInBasePrice"])->name("store_delivery_slot_pricing_in_base_price");
     });
+    Route::middleware(['businessCheck'])->group(function () {
+        
+        Route::group(['prefix' => 'wallet/'], function () {
+            Route::get("", [WalletController::class, "viewWallet"])->name("viewWallet");
 
-    Route::group(['prefix' => 'wallet/'], function () {
-        Route::get("", [WalletController::class, "viewWallet"])->name("viewWallet");
 
+            Route::group(['prefix' => 'credit/'], function () {
 
-        Route::group(['prefix' => 'credit/'], function () {
-            Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
-            Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
+                Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
+                Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
+            });
 
-    
         });
     });
 
