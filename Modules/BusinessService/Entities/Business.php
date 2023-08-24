@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\DeliveryService\Entities\Bags;
 use Illuminate\Support\Facades\Request;
+use Modules\FinanceService\Entities\BusinessWallet;
 
 class Business extends Model
 {
@@ -61,11 +62,14 @@ class Business extends Model
     public function bags(){
         return $this->hasMany(Bags::class);
     }
-
+    public function wallet(){
+        return $this->hasOne(BusinessWallet::class);
+    }
     protected static function newFactory()
     {
         return \Modules\BusinessService\Database\factories\BusinessFactory::new();
     }
+
 
     public static function boot()
     {
