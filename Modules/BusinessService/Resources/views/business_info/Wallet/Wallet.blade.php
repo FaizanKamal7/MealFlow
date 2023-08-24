@@ -408,13 +408,35 @@
                         <div class="card-body">
                             <!--begin::Tab Content-->
                             <div class="tab-content">
-
+                                <form id="kt_modal_new_card_form" class="form" action="{{route('storeCredit')}}" method="POST" 
+                                data-cc-on-file="false"
+                                data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
+                                    @csrf
+                                <div class="d-flex flex-column mb-7 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold form-label mb-2">Amount</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input wrapper-->
+                                    <div class="position-relative">
+                                        <!--begin::Input-->
+                                        <input type="number" class="form-control form-control-solid" placeholder="Enter amount"
+                                            name="amount" value="" />
+                                        <!--end::Input-->
+                                        @error('amount')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror 
+                                    </div>
+                                    <!--end::Input wrapper-->
+                                </div>
+                             
                                 <!--begin::Action-->
                                 <div class="d-flex align-items-end">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_new_card"
-                                        class="btn btn-primary fs-3 w-100">Top Up</a>
+                                    <button  class="btn btn-primary fs-3 w-100" type="submit">Top up </button>
+                                    {{-- <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_new_card"
+                                        class="btn btn-primary fs-3 w-100">Top Up</a> --}}
                                 </div>
                                 <!--end::Action-->
+                            </form>
                             </div>
 
                         </div>
