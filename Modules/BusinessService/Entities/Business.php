@@ -7,13 +7,17 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\DeliveryService\Entities\Bags;
 use Illuminate\Support\Facades\Request;
+use Modules\FinanceService\Entities\BusinessWallet;
 
 class Business extends Model
 {
     use HasFactory;
     use HasUuids;
+    use SoftDeletes;
+
 
     protected $fillable = [
         'name',
@@ -58,11 +62,14 @@ class Business extends Model
     public function bags(){
         return $this->hasMany(Bags::class);
     }
-
+    public function wallet(){
+        return $this->hasOne(BusinessWallet::class);
+    }
     protected static function newFactory()
     {
         return \Modules\BusinessService\Database\factories\BusinessFactory::new();
     }
+
 
     public static function boot()
     {

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign("wallet_id")->references("id")->on("business_wallet")->onDelete("cascade");
+            $table->foreign("wallet_id")->references("id")->on("business_wallets")->onDelete("cascade");
             $table->foreign("invoice_item_id")->references("id")->on("invoice_items")->onDelete("set null");
         });
     }
