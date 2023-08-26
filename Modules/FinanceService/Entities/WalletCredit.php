@@ -23,6 +23,12 @@ class WalletCredit extends Model
         'card_id',
     ];
     
+    public function card(){
+        return $this->belongsTo(BusinessCard::class);
+    }
+    public function wallet(){
+        return $this->belongsTo(BusinessWallet::class);
+    }
     protected static function newFactory()
     {
         return \Modules\FinanceService\Database\factories\WalletCreditFactory::new();
