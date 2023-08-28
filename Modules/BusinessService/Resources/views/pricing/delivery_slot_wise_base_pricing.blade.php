@@ -17,7 +17,7 @@
 					<!--begin::Card title-->
 					<div class="card-title">
 						<!--begin::Search-->
-						<h3 class="modal-title">Base Pricing Info (Delivery Slot Wise)</h3>
+						<h3 class="modal-title">Pricing Info (Delivery Slot Wise)</h3>
 						<!--end::Search-->
 					</div>
 					<!--end::Card title-->
@@ -47,6 +47,7 @@
 							<tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
 								<th class="min-w-125px">City</th>
 								<th class="min-w-1px">Delivery Slot</th>
+								<th class="min-w-1px">Business</th>
 								<th class="min-w-1px">Delivery Price <br>(Same Location)</th>
 								<th class="min-w-1px">Bag Collection Price <br>(Same Location)</th>
 								<th class="min-w-1px">Cash Collection Price <br>(Same Location)</th>
@@ -65,7 +66,7 @@
 									{{$pricing->city->state->country->name}})</td>
 								<td>{{ $pricing->delivery_slot_id ? ($pricing->deliverySlot->start_time . ' - ' .
 									$pricing->deliverySlot->end_time) : "" }}</td>
-
+								<td> {{$pricing->business ?  $pricing->business->name : "BASE"}}</td>
 								<td>{{$pricing->delivery_price}} ({{$pricing->same_loc_delivery_price}})</td>
 								<td>{{$pricing->bag_collection_price}} ({{$pricing->same_loc_bag_collection_price}})
 								</td>

@@ -32,7 +32,6 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete("set null");
             $table->softDeletes();
-            $table->foreign("business_id")->references("id")->on("businesses")->onDelete("set null");
 
         });
     }

@@ -13,10 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('partner_delivery_slots', function (Blueprint $table) {
-            $table->id();
+        Schema::create('business_wallets', function (Blueprint $table) {
+            $table->uuid("id")->primary();
+            $table->decimal("balance", 8, 2);
+
+            $table->uuid("business_id");
 
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign("business_id")->references("id")->on("businesses")->onDelete("cascade");
         });
     }
 
@@ -27,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('partner_delivery_slots');
+        Schema::dropIfExists('business_wallet');
     }
 };

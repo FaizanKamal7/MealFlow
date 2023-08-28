@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/get-google-api-key', function () {
+    return response()->json([
+        'google_api_key' => config('services.google.key')
+    ]);
+});
+

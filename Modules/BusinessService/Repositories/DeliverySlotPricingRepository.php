@@ -22,6 +22,6 @@ class DeliverySlotPricingRepository implements DeliverySlotPricingInterface
 
     public function create($data)
     {
-        return DeliverySlotPricing::create($data);
+        return DeliverySlotPricing::createOrUpdate($data);
     }
 }

@@ -148,6 +148,24 @@ class DeliveryTemplateClass implements FromCollection, WithHeadings, WithEvents
 
                 }
 
+                $event->sheet->getParent()->createSheet();
+
+                // Get the newly created sheet by index (it will be the last sheet)
+                $newCustomersSheet = $event->sheet->getParent()->getSheet(count($event->sheet->getParent()->getAllSheets()) - 1);
+
+                // Set the title of the new sheet
+                $newCustomersSheet->setTitle('New Customers');
+
+                $newCustomersSheet->setCellValue('A1', 'Customer');
+                $newCustomersSheet->setCellValue('B1', 'Delivery Address');
+                $newCustomersSheet->setCellValue('C1', 'Delivery Slot');
+                $newCustomersSheet->setCellValue('D1', 'Item Type (optional)');
+                $newCustomersSheet->setCellValue('E1', 'Enable SMS Notifications (optional)');
+                $newCustomersSheet->setCellValue('F1', 'Enable Email Notifications (optional)');
+                $newCustomersSheet->setCellValue('G1', 'Special Instructions (optional)');
+                $newCustomersSheet->setCellValue('H1', 'Notes (optional)');
+                $newCustomersSheet->setCellValue('I1', 'COD Amount (optional)');
+
             }
         ];
     }

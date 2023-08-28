@@ -15,18 +15,18 @@ return new class extends Migration
     {
         Schema::create('business_cards', function (Blueprint $table) {
             $table->uuid("id")->primary(); 
-            
+            $table->unsignedSmallInteger("card_number");
             $table->string("card_holder_name");
-            $table->unsignedSmallInteger("cvv");
-            $table->unsignedSmallInteger('expiry_month'); 
-            $table->unsignedSmallInteger('expiry_year');
+            $table->string("brand",20);
+            $table->unsignedSmallInteger('exp_month'); 
+            $table->unsignedSmallInteger('exp_year');
 
             $table->uuid("wallet_id");
 
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign("wallet_id")->references("id")->on("business_wallet")->onDelete("cascade");
+            $table->foreign("wallet_id")->references("id")->on("business_wallets")->onDelete("cascade");
 
         });
     }
