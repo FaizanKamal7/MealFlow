@@ -64,6 +64,7 @@ function fetchStates(...parameters) {
     }
 }
 
+
 function fetchStatesWithMultiSelectOption() {
     var countryId = document.getElementById("country").value;
     var stateDropdown = document.getElementById("state");
@@ -142,6 +143,7 @@ function fetchCities() {
         });
     }
 }
+
 
 function fetchCitiesWithMultiSelectOption() {
     var stateID = document.getElementById("state").value;
