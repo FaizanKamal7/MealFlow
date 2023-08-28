@@ -20,7 +20,7 @@ class VehicleMaintenanceController extends Controller
     private MaintenanceCategoryInterface $maintenanCategoryRepository;
     private VehicleMaintenanceInterface $VehicleMaintenanceRepository;
     private EmployeesInterface $employeeRepository;
-    public function __construct(VehicleInterface $vehicleRepository, MaintenanceCategoryInterface $maintenanCategoryRepository,VehicleMaintenanceInterface $vehicleMaintenanceRepository,EmployeesInterface $employeeRepository)
+    public function __construct(VehicleInterface $vehicleRepository, MaintenanceCategoryInterface $maintenanCategoryRepository, VehicleMaintenanceInterface $vehicleMaintenanceRepository, EmployeesInterface $employeeRepository)
     {
         $this->vehicleRepository = $vehicleRepository;
         $this->maintenanCategoryRepository = $maintenanCategoryRepository;
@@ -35,12 +35,12 @@ class VehicleMaintenanceController extends Controller
      */
     public function viewFleetMaintenance()
     {
-    
-          $context = [
+
+        $context = [
             "vehicles" => $this->vehicleRepository->getVehicles(),
             "maintenanceCategories" => $this->maintenanCategoryRepository->getMaintenanceCategories(),
-            "employees"=>$this->employeeRepository->getEmployees(),
-            "vehiclesMaintenances"=>$this->VehicleMaintenanceRepository->getVehiclesMaintenances(),
+            "employees" => $this->employeeRepository->getEmployees(),
+            "vehiclesMaintenances" => $this->VehicleMaintenanceRepository->getVehiclesMaintenances(),
         ];
         return view('fleetservice::Fleets.logs.maintenance', $context);
     }
@@ -61,19 +61,19 @@ class VehicleMaintenanceController extends Controller
             'meter_reading' => 'nullable|integer',
             'maintenance_category_id' => 'required',
             'quantity' => 'required|string',
-            "maintenance_detail"=>'',
+            "maintenance_detail" => '',
             'cost' => 'required|numeric',
             'payment_status' => 'required|in:paid,unpaid',
             'paid_date' => 'nullable|date',
             'garage' => 'nullable|string',
-            "notes"=>'',
+            "notes" => '',
         ]);
         try {
 
             $vehicleMaintenance = $this->VehicleMaintenanceRepository->createVehicleMaintenance($data);
 
             if (!$vehicleMaintenance) {
-               return redirect()->back()->with("error", "Something went wrong! contact support");
+                return redirect()->back()->with("error", "Something went wrong! contact support");
             }
 
             return redirect()->back()->with('success', 'Maintenance record created successfully.');
