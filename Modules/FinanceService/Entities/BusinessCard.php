@@ -18,8 +18,8 @@ class BusinessCard extends Model
         'card_number',
         'card_holder_name',
         'brand',
-        'expiry_month',
-        'expiry_year',
+        'exp_month',
+        'exp_year',
         'wallet_id',
     ];
     

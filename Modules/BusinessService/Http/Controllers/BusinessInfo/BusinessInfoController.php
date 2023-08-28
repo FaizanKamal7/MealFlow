@@ -22,6 +22,8 @@ class BusinessInfoController extends Controller
     public function index($business_id)
     {
         $business = $this->businessRepository->getBusiness($business_id);
+        $business_cities = $this->businessRepository->getBusiness($business_id);
+        
         return view('businessservice::business_info.business_overview', ['business' => $business]);
     }
 

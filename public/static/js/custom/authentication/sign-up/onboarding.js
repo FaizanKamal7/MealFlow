@@ -389,6 +389,7 @@ $(document).ready(function () {
         // Now you can use the googleApiKey in your JavaScript code
         // For example, you can use it in your Google Maps API calls
         // Here's a basic example:
+
         var address_map = new google.maps.Map(
             document.getElementById("address_map"),
             {
@@ -396,6 +397,7 @@ $(document).ready(function () {
                 zoom: 8,
             }
         );
+
     });
 });
 
@@ -519,6 +521,7 @@ async function initMap() {
     });
 }
 
+
 initMap();
 
 function showMap() {
@@ -535,10 +538,12 @@ function toggleLocationDiv() {
         googleMapDiv.style.display = "block";
         dropdownDiv.style.display = "none";
         console.log("inside googleMapDiv.style.display === none");
+
     } else {
         // drop down view open
         googleMapDiv.style.display = "none";
         dropdownDiv.style.display = "block";
+
         document.getElementById("latitude").value = 0;
         document.getElementById("longitude").value = 0;
     }
