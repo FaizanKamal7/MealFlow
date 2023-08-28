@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Attribute;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,7 +30,7 @@ class User extends Authenticatable
         'is_superuser',
         'last_login',
     ];
-
+    protected $appends = ['is_admin'];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -53,7 +54,6 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPassword($token));
     }
-
 
     public function userRoles()
     {

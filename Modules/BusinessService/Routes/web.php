@@ -69,10 +69,7 @@ Route::middleware(['businessCheck'])->group(function () {
                 Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
                 Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
             });
-
-
         });
-
         Route::group(['prefix' => 'business-settings/'], function () {
         });
     });
