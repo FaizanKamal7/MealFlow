@@ -498,7 +498,7 @@
                                     <span class="fs-4 fw-bold text-gray-400 align-self-start me-1">$</span>
                                     <!--end::Currency-->
                                     <!--begin::Value-->
-                                    <span class="fs-2hx fw-bolder text-gray-800 me-2 lh-1 ls-n2">12,706</span>
+                                    <span class="fs-2hx fw-bolder text-gray-800 me-2 lh-1 ls-n2">{{ $wallet->balance }}</span>
                                     <!--end::Value-->
                                     <!--begin::Label-->
                                     <span class="badge badge-success fs-base">

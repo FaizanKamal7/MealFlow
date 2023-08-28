@@ -6,8 +6,10 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\FinanceService\Interfaces\BusinessCardInterface;
 use Modules\FinanceService\Interfaces\BusinessWalletInterface;
+use Modules\FinanceService\Interfaces\WalletCreditInterface;
 use Modules\FinanceService\Repositories\BusinessCardRepository;
 use Modules\FinanceService\Repositories\BusinessWalletRepository;
+use Modules\FinanceService\Repositories\WalletCreditRepository;
 
 class FinanceServiceServiceProvider extends ServiceProvider
 {
@@ -44,6 +46,7 @@ class FinanceServiceServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
         $this->app->bind(BusinessWalletInterface::class,BusinessWalletRepository::class);
         $this->app->bind(BusinessCardInterface::class,BusinessCardRepository::class);
+        $this->app->bind(WalletCreditInterface::class,WalletCreditRepository::class);
 
 
     }
