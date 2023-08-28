@@ -4,8 +4,8 @@
 @section('main_content')
 
 
-<!--begin::Root-->
-<div class="d-flex flex-column flex-root">
+    <!--begin::Root-->
+    {{-- <div class="d-flex flex-column flex-root">
     <!--begin::Authentication - Sign-in -->
     <div class="d-flex flex-column flex-lg-row flex-column-fluid">
         <!--begin::Aside-->
@@ -58,7 +58,7 @@
                         </div>
 
                         <!--begin::Heading-->
-                        @if(Session::has('error'))
+                        @if (Session::has('error'))
                         <p class="alert {{ Session::get('alert-class') }}">{{ Session::get('error') }}</p>
                         @endif
                         <!--begin::Input group-->
@@ -132,29 +132,119 @@
         <!--end::Body-->
     </div>
     <!--end::Authentication - Sign-in-->
-</div>
-<!--end::Root-->
+</div> --}}
+    <!--end::Root-->
+
+    <div class="bg">
+        <div class="main">
+            <div class="side-img">
+                <div class="logo">
+                    <!--begin::Logo-->
+                    <a href="#">
+                        <img alt="Logo" src="{{ asset('static/media\logos\logo_white_verticle.png') }}" />
+                    </a>
+                    <!--end::Logo-->
+                </div>
+                <div class="welcome">
+                    <h1 class="fw-bolder fs-2qx pb-5 pb-md-10">Welcome to NIXUS</h1>
+                    <!--begin::Description-->
+                    <p class="fw-bold fs-2">One stop solution
+                        <br />for all your logistics needs
+                    </p>
+                </div>
+                {{-- style="background-image: url({{ asset('static/media/Isolation_Mode.png') }})" --}}
+                <div class="big-img">
+                    <img alt="bigImage" class="img-big" src="{{ asset('static/media/Isolation_Mode.png') }}" />
+
+                </div>
+            </div>
+            <div class="login">
+                <div class="login-form">
+                    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" method="post"
+                        action="{{ route('login_user') }}">
+                        @csrf
+                        <!--begin::Heading-->
+                        <div class="mb-10">
+                            <!--begin::Title-->
+                            <h1 class="text-dark mb-3">Login</h1>
+                            <!--end::Title-->
+                        </div>
+
+                        <!--begin::Heading-->
+                        @if (Session::has('error'))
+                            <p class="alert {{ Session::get('alert-class') }}">{{ Session::get('error') }}</p>
+                        @endif
+                        <!--begin::Input group-->
+                        <div class="mb-10">
+                            <label for="email"
+                                class="user-label required form-label fs-6 fw-bolder text-dark">Email</label>
+                            <input type="email" name="email" autocomplete="off"
+                                class="user-input form-control form-control-solid" placeholder="Email" />
+                        </div>
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Wrapper-->
+                            <div class="mb-10">
+                                <label for="password"
+                                    class="user-label required form-label fw-bolder text-dark fs-6">Password</label>
+                                <input type="password" name="password" autocomplete="off"
+                                    class="user-input form-control form-control-solid" placeholder="Password" />
+                            </div>
+                            <a href="../../demo1/dist/authentication/layouts/basic/password-reset.html"
+                                class="forgot fs-6 fw-bolder">Forgot Password ?</a>
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Actions-->
+                        <div class="text-center">
+                            <!--begin::Submit button-->
+                            <button type="submit" id="kt_sign_in_submit" class="submit_btn btn btn-lg w-100 mb-5">
+                                <span class="indicator-label">Continue</span>
+                                <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                            <!--end::Submit button-->
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+
+                </div>
+                <div class="dont">
+                    <p class="p-dont">
+                        Don’t have an account? <a href="{{ route('business_onboarding') }}">
+                            <span class="link-primary"> Register</span> </p>
+                    </a>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
 @endsection
 
 @section('extra_scripts')
-<script src="{{ asset('static/js/custom/authentication/sign-in/general.js')}}"></script>
-<script>
-    $(document).ready(function() {
-        $('#kt_docs_repeater_basic').repeater({
-            initEmpty: false,
+    <script src="{{ asset('static/js/custom/authentication/sign-in/general.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#kt_docs_repeater_basic').repeater({
+                initEmpty: false,
 
-            defaultValues: {
-                'text-input': 'foo'
-            },
+                defaultValues: {
+                    'text-input': 'foo'
+                },
 
-            show: function () {
-                $(this).slideDown();
-            },
+                show: function() {
+                    $(this).slideDown();
+                },
 
-            hide: function (deleteElement) {
-                $(this).slideUp(deleteElement);
-            }
+                hide: function(deleteElement) {
+                    $(this).slideUp(deleteElement);
+                }
+            });
         });
-    });
-</script>
+    </script>
 @endsection
