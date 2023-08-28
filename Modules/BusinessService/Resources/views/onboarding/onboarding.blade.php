@@ -367,6 +367,7 @@
                                         class="form-control form-control-lg form-control-solid" />
                                     <!--end::Input-->
                                 </div> --}}
+
                                     <div class="fv-row mb-10">
                                         <label class="form-label required">Address (Business Main Branch Address)</label>
                                         <br>
@@ -380,6 +381,7 @@
                                                 <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span
                                                         class="path1"></span><span class="path2"></span></i>
                                                 <!--end::Icon-->
+
 
                                                 <!--begin::Wrapper-->
                                                 <div class="d-flex flex-column">
@@ -415,6 +417,10 @@
                                             <input id="longitude" type="hidden" name="longitude">
 
                                         </div>
+                                        <!--end::HINTS -->
+                                        <div id="address_map" style="height: 400px; width: 100%;"></div>
+                                        <input id="latitude" type="hidden" name="latitude">
+                                        <input id="longitude" type="hidden" name="longitude">
                                         <br>
                                         <div class="form-group row" id="dropdown_address_selection"
                                             style="display: none;">

@@ -1,5 +1,5 @@
 "use strict";
-
+// --------------- THIS CODE IS FOR INTEGRATING STRIPE IN OUT WEBSITE WITHOUT SESSION ---------------
 const creditAmount = document.getElementById('kt_modal_new_card_form');
 const creditAmountModel = new bootstrap.Modal(document.querySelector("#kt_modal_new_card"));
 var creditAmountValidator = FormValidation.formValidation(
@@ -12,8 +12,6 @@ var creditAmountValidator = FormValidation.formValidation(
                     notEmpty: { message: "Card holder name is required" },
                 },
             },
-
-
             'card_number': {
                 validators: {
                     notEmpty: { message: "card number is required" },

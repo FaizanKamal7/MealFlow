@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
             $table->timestamp('deleted_at')->nullable();
-            $table->boolean('is_deleted');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
