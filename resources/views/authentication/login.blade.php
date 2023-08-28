@@ -33,7 +33,7 @@
                 <!--end::Content-->
                 <!--begin::Illustration-->
                 <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
-                    style="background-image: url({{ asset("static/media/illustrations/sketchy-1/13.png") }})"></div>
+                    style="background-image: url({{ asset('static/media/illustrations/sketchy-1/13.png') }})"></div>
                 <!--end::Illustration-->
             </div>
             <!--end::Wrapper-->
@@ -41,21 +41,22 @@
         <!--end::Aside-->
         <!--begin::Body-->
         <div class="d-flex flex-column flex-lg-row-fluid py-10">
+
             <!--begin::Content-->
             <div class="d-flex flex-center flex-column flex-column-fluid">
                 <!--begin::Wrapper-->
                 <div class="w-lg-500px p-10 p-lg-15 mx-auto">
                     <!--begin::Form-->
                     <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" method="post"
-                        action="{{ route("login_user") }}">
+                        action="{{ route('login_user') }}">
                         @csrf
                         <!--begin::Heading-->
                         <div class="text-center mb-10">
                             <!--begin::Title-->
                             <h1 class="text-dark mb-3">Sign In</h1>
                             <!--end::Title-->
-
                         </div>
+
                         <!--begin::Heading-->
                         @if(Session::has('error'))
                         <p class="alert {{ Session::get('alert-class') }}">{{ Session::get('error') }}</p>
@@ -137,5 +138,23 @@
 
 @section('extra_scripts')
 <script src="{{ asset('static/js/custom/authentication/sign-in/general.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $('#kt_docs_repeater_basic').repeater({
+            initEmpty: false,
 
+            defaultValues: {
+                'text-input': 'foo'
+            },
+
+            show: function () {
+                $(this).slideDown();
+            },
+
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            }
+        });
+    });
+</script>
 @endsection

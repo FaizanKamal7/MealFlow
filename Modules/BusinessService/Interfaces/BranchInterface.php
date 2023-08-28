@@ -4,6 +4,7 @@ namespace Modules\BusinessService\Interfaces;
 
 interface BranchInterface
 {
+    public function getBranch();
     public function createBranch(
         $name,
         $phone,
@@ -16,4 +17,6 @@ interface BranchInterface
         $is_main_branch,
         $business_id
     );
+
+    public function getBusinessCities($business_id);
 }

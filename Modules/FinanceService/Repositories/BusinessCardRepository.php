@@ -7,15 +7,29 @@ use Modules\FinanceService\Interfaces\BusinessCardInterface;
 class BusinessCardRepository implements BusinessCardInterface
 {
 
-    public function createBusinessCard($card_holder_name,$cvv,$expiry_month,$expiry_year,$wallet_id)
+    public function createBusinessCard($card_number, $card_holder_name, $brand, $exp_month, $exp_year, $wallet_id)
     {
-        return BusinessCard::create([
-            'card_holder_name'=> $card_holder_name,
-            'cvv'=> $cvv,
-            'expiry_month'=>$expiry_month ,
-            'expiry_year'=> $expiry_year,
-            'wallet_id'=> $wallet_id,
-        ]);
+        $existing_card = BusinessCard::where([
+            'card_number' => $card_number,
+            'card_holder_name' => $card_holder_name,
+            'brand' => $brand,
+            'exp_month' => $exp_month,
+            'exp_year' => $exp_year,
+            'wallet_id' => $wallet_id,
+        ])->first();
+
+        if (!$existing_card) {
+            return BusinessCard::create([
+                'card_number' => $card_number,
+                'card_holder_name' => $card_holder_name,
+                'brand' => $brand,
+                'exp_month' => $exp_month,
+                'exp_year' => $exp_year,
+                'wallet_id' => $wallet_id,
+            ]);
+        }
+        return $existing_card;
+
     }
     public function getBusinessCard($id)
     {

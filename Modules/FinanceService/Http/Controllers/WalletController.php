@@ -11,16 +11,19 @@ class WalletController extends Controller
 {
     private BusinessWalletInterface $businessWalletRepository;
 
-    public function __construct(BusinessWalletInterface $businessWalletRepository){
+    public function __construct(BusinessWalletInterface $businessWalletRepository)
+    {
         $this->businessWalletRepository = $businessWalletRepository;
     }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function viewWallet()
     {
-        return view('financeservice::index');
+        $business = view()->shared('business');
+        $data = ['wallet' => $business->wallet];
+        return view('businessservice::business_info.wallet.Wallet', $data);
     }
 
     /**

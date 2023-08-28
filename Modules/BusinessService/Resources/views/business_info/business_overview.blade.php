@@ -278,46 +278,7 @@
                     <!--end::Info-->
                 </div>
                 <!--end::Details-->
-                <!--begin::Navs-->
-                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder">
-                    <!--begin::Nav item-->
-                    <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
-                            href="../../demo1/dist/pages/user-profile/overview.html">Overview</a>
-                    </li>
-                    <!--end::Nav item-->
-                    <!--begin::Nav item-->
-                    <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5"
-                            href="../../demo1/dist/pages/user-profile/projects.html">Projects</a>
-                    </li>
-                    <!--end::Nav item-->
-                    <!--begin::Nav item-->
-                    <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5"
-                            href="../../demo1/dist/pages/user-profile/campaigns.html">Campaigns</a>
-                    </li>
-                    <!--end::Nav item-->
-                    <!--begin::Nav item-->
-                    <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5"
-                            href="../../demo1/dist/pages/user-profile/documents.html">Documents</a>
-                    </li>
-                    <!--end::Nav item-->
-                    <!--begin::Nav item-->
-                    <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5"
-                            href="../../demo1/dist/pages/user-profile/followers.html">Followers</a>
-                    </li>
-                    <!--end::Nav item-->
-                    <!--begin::Nav item-->
-                    <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5"
-                            href="../../demo1/dist/pages/user-profile/activity.html">Activity</a>
-                    </li>
-                    <!--end::Nav item-->
-                </ul>
-                <!--begin::Navs-->
+
             </div>
         </div>
         <!--end::Navbar-->
@@ -483,123 +444,175 @@
                     <!--begin::Body-->
                     <div class="card-body pb-0">
                         <!--begin::Header-->
-                        <div class="d-flex align-items-center mb-5">
-                            <!--begin::User-->
-                            <div class="d-flex align-items-center flex-grow-1">
-                                <!--begin::Avatar-->
-                                <div class="symbol symbol-45px me-5">
-                                    <img src="/media/avatars/300-23.jpg" alt="" />
-                                </div>
-                                <!--end::Avatar-->
-                                <!--begin::Info-->
-                                <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">Nick Logan</a>
-                                    <span class="text-gray-400 fw-bold">PHP, SQLite, Artisan CLI</span>
-                                </div>
-                                <!--end::Info-->
-                            </div>
-                            <!--end::User-->
-                            <!--begin::Menu-->
-                            <div class="my-0">
-                                <button type="button"
-                                    class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                                            viewBox="0 0 24 24">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="5" y="5" width="5" height="5" rx="1" fill="currentColor" />
-                                                <rect x="14" y="5" width="5" height="5" rx="1" fill="currentColor"
-                                                    opacity="0.3" />
-                                                <rect x="5" y="14" width="5" height="5" rx="1" fill="currentColor"
-                                                    opacity="0.3" />
-                                                <rect x="14" y="14" width="5" height="5" rx="1" fill="currentColor"
-                                                    opacity="0.3" />
-                                            </g>
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </button>
-                                <!--begin::Menu 2-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px"
-                                    data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Quick Actions</div>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu separator-->
-                                    <div class="separator mb-3 opacity-75"></div>
-                                    <!--end::Menu separator-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">New Ticket</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">New Customer</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                        data-kt-menu-placement="right-start">
-                                        <!--begin::Menu item-->
-                                        <a href="#" class="menu-link px-3">
-                                            <span class="menu-title">New Group</span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu sub-->
-                                        <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Admin Group</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Staff Group</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Member Group</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu sub-->
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">New Contact</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu separator-->
-                                    <div class="separator mt-3 opacity-75"></div>
-                                    <!--end::Menu separator-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content px-3 py-3">
-                                            <a class="btn btn-primary btn-sm px-4" href="#">Generate Reports</a>
-                                        </div>
-                                    </div>
-                                    <!--end::Menu item-->
-                                </div>
-                                <!--end::Menu 2-->
-                            </div>
-                            <!--end::Menu-->
-                        </div>
+                        <h3>Business Contract Info</h3>
                         <!--end::Header-->
                         <!--begin::Post-->
-                        <div class="mb-5">
+                        <div class="mb-5 m-6">
+                            <h4 class="text-center">
+                                SERVICE AGREEMENT
+                            </h4>
                             <!--begin::Text-->
-                            <p class="text-gray-800 fw-normal mb-5">Outlines keep you honest. They stop you from
-                                indulging in poorly thought-out metaphors about driving and keep you focused on the
-                                overall structure of your post</p>
+                            <p class="text-gray-800 fw-normal mb-5 text-center">
+
+
+                                This agreement (the “Agreement”) made in Dubai is effective from signature date.
+                                BETWEEN
+                                <b>L O G X Transport LLC (The “Service Provider”)</b>, with DED License Number 776770,
+                                and
+                                Address Office Warehouse B4, building 2, Al Quoz 3, Dubai, represented by Mr Abdul Sami
+                                Khan Shamshad Ali Khan and Mr Pir Abid Shah Abdurrehman Shah.
+                                <br>
+                                AND
+                                <br>
+                                <b> AZI GENERAL TRADING EST (The "Company")</b>, with Trade License CN-3861514 and Abu
+                                dhabi
+                                referred to as the “Parties”.
+
+                            </p>
                             <!--end::Text-->
+
+                            <h5 class="text-center">PREAMBLE</h5>
+                            <h5> WHEREAS:</h5>
+                            <p> - The Company has requested from the Service Provider Specific Delivery/Logistics
+                                services
+                                (the “Service(s)”.
+                                - The Service Provider, for the price and subject to the Terms and Conditions contained
+                                herein, is prepared to sell to the Company, on an ongoing basis and as its exclusive
+                                Delivery, and Company is prepared to buy on this basis from The Service Provider, all
+                                the
+                                Company’s Service requirements. NOW, THEREFORE, IN CONSIDERATION OF THE MUTUAL COVENANTS
+                                AND
+                                AGREEMENTS HERETO CONTAINED AND FOR OTHER GOOD AND VALUABLE CONSIDERATION, DULY
+                                RECEIVED,
+                                THE PARTIES HERETO AGREE AS FOLLOWS:
+                            </p>
+
+                            <h5>1. DEFINITIONS AND INTERPRETATION </h5>
+                            <p> 1.1 Whenever used in this Agreement, the schedules
+                                thereto, or any ancillary document thereto, the following terms, unless the subject
+                                matter
+                                or context otherwise requires, shall have the following meanings:<br>
+                            <p class="m-6">
+                                &nbsp 1.1.1 “Agreement” means or refers to this Agreement as amended from time to time
+                                and any
+                                indenture, agreement or instrument supplemental or ancillary hereto or in implementation
+                                hereof.<br>
+
+                                &nbsp 1.1.2 “Business Day” means every day of the week except Public Holidays, which in
+                                the
+                                U.A.E.
+                                is a legal holiday or a day on which financial institutions are authorized by law or by
+                                local proclamation to close.<br>
+
+                                &nbsp 1.1.3 “Client” means any individual, company, corporation, partnership, firm,
+                                trust,
+                                sole
+                                proprietorship, government or entity howsoever designated, agrees with the company to
+                                purchase Meal Plan through the website.<br>
+
+                                &nbsp 1.1.4 “Bags” refers to the portable insulated cooler bag that carries all meals
+                                for the
+                                client.<br>
+
+                                &nbsp 1.1.5 “Service(s)” means or refers to the specific Delivery of the bags from the
+                                place
+                                of
+                                preparing the meal to the client.<br>
+                            </p>
+                            </p>
+
+                            <h5>2. ORDERS AND DELIVERY OF SERVICES: </h5>
+                            <p> 2.1 Daily Delivery schedule for orders for Services purchased pursuant to this Agreement
+                                shall be communicated in advance (By 3pm for the next day delivery & for final bag
+                                collection by 5pm) always by email and in such other manner expressly agreed upon
+                                between the interested parties.<br><br>
+                                2.2 The Service Provider shall deliver Services to clients by the agreed cut-off time on
+                                specific days as required by Company – this being as agreed Delivery timings as agreed
+                                between both The Service Provider and Company..<br><br>
+                                2.3 Deliveries will be made between times mentioned below for Company to pick up the
+                                bags as soon as possible after the respective time slot finishes. No specific time is
+                                offered, bags will be dropped at the door of client’s location with a text or WhatsApp
+                                notification to inform Client as per the time slot. .<br><br>
+                            </p>
+
+                            <div class="d-flex flex-column m-3">
+                                <h6>Dubai</h6>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                            </div>
+
+                            <div class="d-flex flex-column m-3">
+                                <h6>Dubai</h6>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                            </div>
+                            <div class="d-flex flex-column m-3">
+                                <h6>Dubai</h6>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                                <li class="d-flex align-items-center py-2">
+                                    <span class="bullet bullet-dot bg-info me-5"></span> 3am to 6am (5$ per delivery)
+                                </li>
+                            </div>
+                            <p>We are pleased to provide the Range Wise Pricing as well for your consideration:</p>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span>First 8 deliveries = USD
+                                5.4/Delivery
+                            </li>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span> 9 - 20 deliveries = USD
+                                5.13/Delivery
+
+                            </li>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span> 21 - 40 deliveries = USD
+                                4.59/Delivery
+
+                            </li>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span> 41 - 80 deliveries = USD
+                                4.32/Delivery
+
+                            </li>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span> 81 - 160 deliveries = USD
+                                4.05/Delivery
+
+                            </li>
+                            <li class="d-flex align-items-center py-2">
+                                <span class="bullet bullet-dot bg-info me-5"></span> 161 - 320 deliveries = USD
+                                3.78/Delivery
+
+                            </li>
+
+
                             <!--begin::Toolbar-->
                             <div class="d-flex align-items-center mb-5">
                                 <a href="#"

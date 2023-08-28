@@ -9,6 +9,8 @@ class RangePricing extends Component
 
     public $available_base_range_pricings;
     public $cities;
+    public $business_id;
+
 
 
     public function mount($available_base_range_pricings)

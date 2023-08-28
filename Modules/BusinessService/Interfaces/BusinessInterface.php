@@ -18,6 +18,8 @@ interface BusinessInterface
     );
 
     public function getNewBusinesses();
-    public function getBusinesses();
+    public function get();
+    public function getActiveBusinesses();
     public function getBusiness($id);
+    
 }
