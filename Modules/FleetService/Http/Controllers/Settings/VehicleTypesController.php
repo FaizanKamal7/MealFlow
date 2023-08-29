@@ -2,12 +2,10 @@
 
 namespace Modules\FleetService\Http\Controllers\Settings;
 
-use Illuminate\Contracts\Support\Renderable;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
-use Modules\FleetService\Http\Requests\VehicleTypeRequest;
 use Modules\FleetService\Interfaces\VehicleTypeInterface;
 
 class VehicleTypesController extends Controller
@@ -38,26 +36,31 @@ class VehicleTypesController extends Controller
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function storeVehicleType(VehicleTypeRequest $request)
+    public function storeVehicleType(Request $request)
     {
-        $request->validated();
-      
+        $request->validate([
+            'vehicle_type'=>['required','unique:vehicle_types,name'],
+            'vehicle_capacity'=>['required'],
+            'vehicle_icon'=>['required'],
+        ]);
+
         try {
-            $type = strtolower($request->get("vehicle_type"));
+            $type = $request->get("vehicle_type");
             $capacity = $request->get("vehicle_capacity");
-            $icon = $request->get("icon");
+            $icon = $request->get("vehicle_icon");
             $active_status = $request->has("active_status") ? 1 : 0;
 
             if ($this->vehicleTypeRepository->isVehicleTypeExists($type)) {
                 return redirect()->route("view_vehicle_types")->with("error", "Vehicle Type Already exist");
             }
-            $vehicle_type = $this->vehicleTypeRepository->createVehicleType($type, $capacity,$icon, $active_status);
+            $vehicle_type = $this->vehicleTypeRepository->createVehicleType($type, $capacity, $icon, $active_status);
             if (!$vehicle_type) {
                 return redirect()->route("view_vehicle_types")->with("error", "Something went wrong! Contact support");
             }
             return redirect()->route("view_vehicle_types")->with("success", "Vehicle Type Added Successfully");
 
         } catch (Exception $exception) {
+            echo $exception;
             Log::error($exception);
             error_log("error " . $exception);
         }
@@ -78,9 +81,13 @@ class VehicleTypesController extends Controller
      * @param Request $request
      * @param int $id
      */
-    public function updateVehicleType(CreateVehicleTypeRequest $request, $id)
+    public function updateVehicleType(Request $request, $id)
     {
-        $request->validated();
+        $request->validate([
+            'vehicle_type'=>['required','unique:vehicle_types,name'],
+            'vehicle_capacity'=>['required'],
+            'vehicle_icon'=>['required'],
+        ]);
         try {
             $type = strtolower($request->get("updated_type_name"));
             $capacity = $request->get("updated_type_capacity");
@@ -90,7 +97,7 @@ class VehicleTypesController extends Controller
             // if ($this->vehicleTypeRepository->isVehicleTypeExists($type)){
             //     return redirect()->route("view_vehicle_types")->with("error", "Vehicle Type Already exist");
             // }
-            $vehicle_type = $this->vehicleTypeRepository->updateVehicleType($id, $type, $capacity,$icon, $active_status);
+            $vehicle_type = $this->vehicleTypeRepository->updateVehicleType($id, $type, $capacity, $icon, $active_status);
             if (!$vehicle_type) {
                 return redirect()->route("view_vehicle_types")->with("error", "Something went wrong! Contact support");
             }
