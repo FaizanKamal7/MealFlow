@@ -270,6 +270,45 @@
                 $(this).closest("tr").remove();
                 reInitializeDataValidation();
             });
+
+
+
+        });
+
+        //Update customer addresses dropdown
+        $("select[name='customer[]']").change(function(){
+            console.log("im here");
+        });
+        $(document).on("change", "select[name='customer[]']", function() {
+            console.log("im here");
+            var selectedCustomer = $(this).val();
+            var deliveryAddressDropdown = $(this).closest("tr").find("select[name='delivery_address[]']");
+
+            deliveryAddressDropdown.empty(); // Clear existing options
+            deliveryAddressDropdown.append($('<option></option>')); // Add empty option
+            deliveryAddressDropdown.append($('<option></option>').attr('value', "abc").text("abc"));
+            deliveryAddressDropdown.select2();
+            // Fetch delivery addresses via AJAX
+            // $.ajax({
+            //     url: "/get-delivery-addresses",
+            //     type: "GET",
+            //     data: { customer: selectedCustomer },
+            //     success: function(response) {
+            //         deliveryAddressDropdown.empty(); // Clear existing options
+            //         deliveryAddressDropdown.append($('<option></option>')); // Add empty option
+            //
+            //         // Populate delivery addresses
+            //         $.each(response.deliveryAddresses, function(index, address) {
+            //             deliveryAddressDropdown.append($('<option></option>').attr('value', address).text(address));
+            //         });
+            //
+            //         // Reinitialize Select2 on the updated dropdown
+            //         deliveryAddressDropdown.select2();
+            //     },
+            //     error: function(error) {
+            //         console.log(error);
+            //     }
+            // });
         });
     </script>
 @endsection
