@@ -31,8 +31,6 @@ class Business extends Model
         'deleted_at',
         'created_at',
         'updated_at',
-
-
     ];
 
     public function business_users()
@@ -59,12 +57,27 @@ class Business extends Model
     {
         return $this->belongsTo(BusinessCategory::class, 'business_category_id');
     }
-    public function bags(){
+
+    public function bags()
+    {
         return $this->hasMany(Bags::class);
     }
-    public function wallet(){
+
+    public function wallet()
+    {
         return $this->hasOne(BusinessWallet::class);
     }
+
+    public function delivery_slot_pricings()
+    {
+        return $this->hasMany(DeliverySlotPricing::class);
+    }
+
+    public function mainBranch()
+    {
+        return $this->hasOne(Branch::class)->where('name', 'Main Branch');
+    }
+
     protected static function newFactory()
     {
         return \Modules\BusinessService\Database\factories\BusinessFactory::new();

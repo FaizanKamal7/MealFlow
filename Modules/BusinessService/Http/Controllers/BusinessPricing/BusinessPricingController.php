@@ -100,7 +100,7 @@ class BusinessPricingController extends Controller
         $cities = $cities[0] == ',' ? substr($cities, 1) : $cities;
         $cities_arr = explode(",", $cities);
         $range_pricing = $this->rangePricingRepository->getAllRangeBasePricesOfCities($cities_arr);
-        return response()->json($range_pricing);
+        return $range_pricing;
     }
 
     public function getCitiesRangeBusinessPrice(Request $request)
@@ -115,17 +115,41 @@ class BusinessPricingController extends Controller
 
     public function storeCityRangeBasePrice(Request $request)
     {
-        $range_pricing_list = $request->range_pricing_list;
-        $cities = json_decode($request->cities);
-        $business_id = $request->business_id;
+        $data = $request->all();
 
-        $all_cities_pricing = $this->rangePricingRepository->getAllRangeBasePricesOfCities($cities);
-        $all_cities_pricing =  $all_cities_pricing->map(function ($data) {
-            return $data->attributesToArray();
-        })->toArray();
+        // --- TODO: There was issue fetching repeater data when no new repeater item is added
+        if (!(array_key_exists("range_pricing_list", []))) {
 
-        foreach ($cities as $key => $city) {
-            foreach ($range_pricing_list as $key => $range_pricing) {
+            $data = [
+                "_token" =>  $data['_token'],
+                "cities" =>  $data['cities'],
+                "business_id" =>  $data['business_id'],
+                "range_pricing_list" => [
+                    "is_same_price" => $data['is_same_price'],
+                    "same_min_range" => $data['same_min_range'],
+                    "same_max_range" => $data['same_max_range'],
+                    "price" => $data['price'],
+                    "same_loc_price" => $data['same_loc_price'],
+                    "min_range" => $data['min_range'],
+                    "max_range" => $data['max_range'],
+                    "delivery_price" => $data['delivery_price'],
+                    "bag_collection_price" => $data['bag_collection_price'],
+                    "cash_collection_price" => $data['cash_collection_price'],
+                    "same_loc_delivery_price" => $data['same_loc_delivery_price'],
+                    "same_loc_bag_collection_price" => $data['same_loc_bag_collection_price'],
+                    "same_loc_cash_collection_price" => $data['same_loc_cash_collection_price'],
+                ]
+            ];
+        }
+
+
+        $cities = json_decode($data['cities']);
+        $business_id = $data['business_id'];
+        $range_pricing_list = $data['range_pricing_list'];
+
+        foreach ($cities as $city) {
+            echo '<pre> C I T Y' . $city . ' </pre>';
+            foreach ($range_pricing_list as $range_pricing) {
 
                 // -- For existing ranges, update the data
                 if (array_key_exists("available_base_range_pricing_id", $range_pricing)) {
@@ -164,7 +188,7 @@ class BusinessPricingController extends Controller
                         'business_id' => $business_id,
 
                     ];
-                    $added_pricing = $this->rangePricingRepository->create($data);
+                    $this->rangePricingRepository->create($data);
                 } else {
                     echo '<pre> D I F F E R E N T </pre>';
                     echo '<pre> new_pricing_data : ' . var_export($range_pricing, true) . '</pre>';
@@ -183,7 +207,7 @@ class BusinessPricingController extends Controller
                         'business_id' => $business_id,
 
                     ];
-                    $added_pricing =  $this->rangePricingRepository->create($data);
+                    $this->rangePricingRepository->create($data);
                 }
             }
         }
@@ -199,43 +223,36 @@ class BusinessPricingController extends Controller
         $business_id = $request->business_id;
 
         $cities_delivery_slot_pricing = $request->input('cities_delivery_slot');
-        foreach ($cities as $key => $city) {
-            foreach ($cities_delivery_slot_pricing as $index => $delivery_slot_pricing) {
-                if ($delivery_slot_pricing['is_same_price'] == "true") {
-                    $data = [
-                        'delivery_price' => $delivery_slot_pricing['price'],
-                        'bag_collection_price' => $delivery_slot_pricing['price'],
-                        'cash_collection_price' => $delivery_slot_pricing['price'],
-                        'same_loc_delivery_price' => $delivery_slot_pricing['same_loc_price'],
-                        'same_loc_bag_collection_price' => $delivery_slot_pricing['same_loc_price'],
-                        'same_loc_cash_collection_price' => $delivery_slot_pricing['same_loc_price'],
-                        'delivery_slot_id' => $delivery_slot_pricing['delivery_slot_id'],
-                        'is_same_for_all_services' => true,
-                        'city_id' => $city,
-                        'business_id' => $business_id,
-                    ];
-                    // echo '<pre> S A M E </pre>';
-                    // echo '<pre> new_pricing_data : ' . var_export($data, true) . '</pre>';
 
-                    $this->deliverySlotPricingRepository->create($data);
-                } else {
-                    $data = [
-                        'delivery_price' => $delivery_slot_pricing['delivery_price'],
-                        'bag_collection_price' => $delivery_slot_pricing['bag_collection_price'],
-                        'cash_collection_price' => $delivery_slot_pricing['cash_collection_price'],
-                        'same_loc_delivery_price' => $delivery_slot_pricing['same_loc_delivery_price'],
-                        'same_loc_bag_collection_price' => $delivery_slot_pricing['same_loc_bag_collection_price'],
-                        'same_loc_cash_collection_price' => $delivery_slot_pricing['same_loc_cash_collection_price'],
-                        'delivery_slot_id' => $delivery_slot_pricing['delivery_slot_id'],
-                        'is_same_for_all_services' => false,
-                        'city_id' => $city,
-                        'business_id' => $business_id,
-                    ];
-                    // echo '<pre> D I F F </pre>';
-                    // echo '<pre> new_pricing_data : ' . var_export($data, true) . '</pre>';
-
-                    $this->deliverySlotPricingRepository->create($data);
-                }
+        foreach ($cities_delivery_slot_pricing as $delivery_slot_pricing) {
+            if ($delivery_slot_pricing['is_same_price'] == "true") {
+                $data = [
+                    'delivery_price' => $delivery_slot_pricing['price'],
+                    'bag_collection_price' => $delivery_slot_pricing['price'],
+                    'cash_collection_price' => $delivery_slot_pricing['price'],
+                    'same_loc_delivery_price' => $delivery_slot_pricing['same_loc_price'],
+                    'same_loc_bag_collection_price' => $delivery_slot_pricing['same_loc_price'],
+                    'same_loc_cash_collection_price' => $delivery_slot_pricing['same_loc_price'],
+                    'delivery_slot_id' => $delivery_slot_pricing['delivery_slot_id'],
+                    'is_same_for_all_services' => true,
+                    'city_id' => $delivery_slot_pricing['city'],
+                    'business_id' => $business_id,
+                ];
+                $this->deliverySlotPricingRepository->create($data);
+            } else {
+                $data = [
+                    'delivery_price' => $delivery_slot_pricing['delivery_price'],
+                    'bag_collection_price' => $delivery_slot_pricing['bag_collection_price'],
+                    'cash_collection_price' => $delivery_slot_pricing['cash_collection_price'],
+                    'same_loc_delivery_price' => $delivery_slot_pricing['same_loc_delivery_price'],
+                    'same_loc_bag_collection_price' => $delivery_slot_pricing['same_loc_bag_collection_price'],
+                    'same_loc_cash_collection_price' => $delivery_slot_pricing['same_loc_cash_collection_price'],
+                    'delivery_slot_id' => $delivery_slot_pricing['delivery_slot_id'],
+                    'is_same_for_all_services' => false,
+                    'city_id' => $delivery_slot_pricing['city'],
+                    'business_id' => $business_id,
+                ];
+                $this->deliverySlotPricingRepository->create($data);
             }
         }
         return redirect()->back()->with("success", "Delivery Slot pricing added successfully");
