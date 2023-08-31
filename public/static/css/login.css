@@ -1,0 +1,165 @@
+.bg {
+    background-image: url("../media/bg_gradient.png");
+    /* width: 100%; */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.main {
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    margin: 20px 20px;
+    flex: 1;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 24px;
+    height: unset;
+    overflow: hidden;
+}
+
+.big-img {
+    /* height: 60%;
+    width: auto;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: block;
+    min-width: 100%;
+    margin-left: 16%;
+    margin-top: 4%;
+     */
+    display: flex;
+    justify-content: center;
+}
+img.img-big {
+    background-repeat: no-repeat;
+    object-fit: contain;
+    height: auto;
+    width: 60%;
+}
+
+.side-img {
+    /* border-radius: 24px 0 0 24px; */
+    background-image: linear-gradient(
+        125deg,
+        hsl(180deg 100% 100%) 0%,
+        hsl(183deg 50% 99%) 28%,
+        hsl(186deg 49% 98%) 65%,
+        hsl(189deg 50% 96%) 83%,
+        hsl(192deg 51% 95%) 92%,
+        hsl(194deg 53% 95%) 96%,
+        hsl(196deg 55% 94%) 99%,
+        hsl(199deg 57% 93%) 100%,
+        hsl(201deg 58% 92%) 100%,
+        hsl(203deg 59% 91%) 100%
+    );
+    margin: 0 auto;
+    padding: 0 20px;
+    /* min-width: 40%; */
+}
+
+.logo {
+    position: relative;
+    position: relative;
+    bottom: -1%;
+    right: 10%;
+    /* height: 10px; */
+}
+.welcome {
+    text-align: center;
+}
+
+.logo img {
+    height: 82px;
+}
+
+.welcome h1 {
+    font-size: 30px !important;
+    color: #00426e;
+}
+
+.welcome p {
+    color: #00426e;
+    font-size: 24px !important;
+    text-align: center;
+    line-height: 30px;
+}
+
+.login {
+    padding: 60px;
+    /* border-radius: 0 24px 24px 0; */
+    background-image: linear-gradient(
+        145deg,
+        hsl(203deg 100% 96%) 0%,
+        hsl(203deg 86% 95%) 38%,
+        hsl(203deg 75% 94%) 48%,
+        hsl(203deg 67% 94%) 55%,
+        hsl(202deg 60% 93%) 59%,
+        hsl(202deg 55% 92%) 64%,
+        hsl(202deg 50% 92%) 69%,
+        hsl(202deg 47% 91%) 76%,
+        hsl(202deg 43% 90%) 86%,
+        hsl(202deg 41% 89%) 100%
+    );
+    flex: 1;
+}
+
+label.user-label {
+    font-size: 15px !important;
+}
+
+.form h1 {
+    font-size: 40px;
+}
+
+a.forgot {
+    line-height: 20px;
+    color: #00426e;
+    float: right;
+    margin-top: -18px;
+    font-size: 16px !important;
+}
+
+.submit_btn {
+    width: 500px;
+    background: #00426e;
+    color: white;
+    margin-top: 6%;
+}
+
+p.p-dont {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.dont span {
+    color: #00426e;
+}
+
+.login-form {
+    margin-top: 4%;
+    margin-left: 5%;
+}
+
+input.user-input {
+    width: 100%;
+}
+
+@media screen  and (max-width:1024px) and (min-width:600px){
+    .side-img{
+        flex: 1;
+    }
+    
+}
+
+@media screen  and (max-width:599px) {
+    .bg{
+        height: auto;
+    }
+    .main{
+        display: block;
+        width: unset;
+        
+    }
+    
+}

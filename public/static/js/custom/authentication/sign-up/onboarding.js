@@ -21,34 +21,34 @@ var KTCreateAccount = (function () {
                 (r = new KTStepper(t)).on("kt.stepper.changed", function (e) {
                     4 === r.getCurrentStepIndex()
                         ? (o.classList.remove("d-none"),
-                            o.classList.add("d-inline-block"),
-                            s.classList.add("d-none"))
+                          o.classList.add("d-inline-block"),
+                          s.classList.add("d-none"))
                         : 5 === r.getCurrentStepIndex()
-                            ? (o.classList.add("d-none"), s.classList.add("d-none"))
-                            : (o.classList.remove("d-inline-block"),
-                                o.classList.remove("d-none"),
-                                s.classList.remove("d-none"));
+                        ? (o.classList.add("d-none"), s.classList.add("d-none"))
+                        : (o.classList.remove("d-inline-block"),
+                          o.classList.remove("d-none"),
+                          s.classList.remove("d-none"));
                 }),
                 r.on("kt.stepper.next", function (e) {
                     console.log("stepper.next");
                     var t = a[e.getCurrentStepIndex() - 1];
                     t
                         ? t.validate().then(function (t) {
-                            console.log("validated!"),
-                                "Valid" == t
-                                    ? (e.goNext(), KTUtil.scrollTop())
-                                    : Swal.fire({
-                                        text: "Sorry, looks like there are some errors detected, please try again.",
-                                        icon: "error",
-                                        buttonsStyling: !1,
-                                        confirmButtonText: "Ok, got it!",
-                                        customClass: {
-                                            confirmButton: "btn btn-light",
-                                        },
-                                    }).then(function () {
-                                        KTUtil.scrollTop();
-                                    });
-                        })
+                              console.log("validated!"),
+                                  "Valid" == t
+                                      ? (e.goNext(), KTUtil.scrollTop())
+                                      : Swal.fire({
+                                            text: "Sorry, looks like there are some errors detected, please try again.",
+                                            icon: "error",
+                                            buttonsStyling: !1,
+                                            confirmButtonText: "Ok, got it!",
+                                            customClass: {
+                                                confirmButton: "btn btn-light",
+                                            },
+                                        }).then(function () {
+                                            KTUtil.scrollTop();
+                                        });
+                          })
                         : (e.goNext(), KTUtil.scrollTop());
                 }),
                 r.on("kt.stepper.previous", function (e) {
@@ -68,15 +68,25 @@ var KTCreateAccount = (function () {
                             },
                             first_name: {
                                 validators: {
-                                    notvalidatorsEmpty: {
-                                        message: "first name is required",
+                                    notEmpty: {
+                                        message: "First name is required",
+                                    },
+                                    regexp: {
+                                        regexp: /^[^\d]+$/,
+                                        message:
+                                            "First name should not contain digits",
                                     },
                                 },
                             },
                             last_name: {
                                 validators: {
                                     notEmpty: {
-                                        message: "last name is required",
+                                        message: "Last name is required",
+                                    },
+                                    regexp: {
+                                        regexp: /^[^\d]+$/,
+                                        message:
+                                            "First name should not contain digits",
                                     },
                                 },
                             },
@@ -105,7 +115,11 @@ var KTCreateAccount = (function () {
                             email: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Email Adress is required",
+                                        message: "Email Address is required",
+                                    },
+                                    emailAddress: {
+                                        message:
+                                            "The input is not a valid email address",
                                     },
                                 },
                             },
@@ -117,7 +131,19 @@ var KTCreateAccount = (function () {
                                 },
                             },
                             confirm_password: {
-                                validators: { notEmpty: { message: "" } },
+                                validators: {
+                                    notEmpty: {
+                                        message: "Confirm Password is required",
+                                    },
+
+                                    identical: {
+                                        compare: function () {
+                                            return $('[name="password"]').val();
+                                        },
+                                        message:
+                                            "The password and its confirm must be the same",
+                                    },
+                                },
                             },
                         },
                         plugins: {
@@ -265,42 +291,42 @@ var KTCreateAccount = (function () {
                         console.log("validated!"),
                             "Valid" == t
                                 ? (e.preventDefault(),
-                                    //   (o.disabled = !0),
-                                    //   o.setAttribute("data-kt-indicator", "on"),
-                                    //   setTimeout(function () {
-                                    //         e.submit(),
-                                    //       o.removeAttribute("data-kt-indicator"),
-                                    //           (o.disabled = !1),
-                                    //           r.goNext();
-                                    //   }, 2e3))
+                                  //   (o.disabled = !0),
+                                  //   o.setAttribute("data-kt-indicator", "on"),
+                                  //   setTimeout(function () {
+                                  //         e.submit(),
+                                  //       o.removeAttribute("data-kt-indicator"),
+                                  //           (o.disabled = !1),
+                                  //           r.goNext();
+                                  //   }, 2e3))
 
-                                    // Get the form element by its ID
+                                  // Get the form element by its ID
 
-                                    (o.disabled = true),
-                                    o.setAttribute("data-kt-indicator", "on"),
-                                    setTimeout(function () {
-                                        // Submit the form programmatically
-                                        var form = document.getElementById(
-                                            "kt_create_account_form"
-                                        );
+                                  (o.disabled = true),
+                                  o.setAttribute("data-kt-indicator", "on"),
+                                  setTimeout(function () {
+                                      // Submit the form programmatically
+                                      var form = document.getElementById(
+                                          "kt_create_account_form"
+                                      );
 
-                                        form.submit();
+                                      form.submit();
 
-                                        o.removeAttribute("data-kt-indicator");
-                                        o.disabled = false;
-                                        r.goNext();
-                                    }, 2e3))
+                                      o.removeAttribute("data-kt-indicator");
+                                      o.disabled = false;
+                                      r.goNext();
+                                  }, 2e3))
                                 : Swal.fire({
-                                    text: "Sorry, looks like there are some errors detected, please try again.",
-                                    icon: "error",
-                                    buttonsStyling: !1,
-                                    confirmButtonText: "Ok, got it!",
-                                    customClass: {
-                                        confirmButton: "btn btn-light",
-                                    },
-                                }).then(function () {
-                                    KTUtil.scrollTop();
-                                });
+                                      text: "Sorry, looks like there are some errors detected, please try again.",
+                                      icon: "error",
+                                      buttonsStyling: !1,
+                                      confirmButtonText: "Ok, got it!",
+                                      customClass: {
+                                          confirmButton: "btn btn-light",
+                                      },
+                                  }).then(function () {
+                                      KTUtil.scrollTop();
+                                  });
                     });
                 }),
                 $(i.querySelector('[name="card_expiry_month"]')).on(
@@ -352,27 +378,34 @@ $("#email_address").keyup(function () {
     });
 });
 
-
 // config.js
 
 $(document).ready(function () {
     // Make an AJAX request to the Laravel route that returns the config values
-    $.get('/api/config', function (data) {
+    $.get("/api/config", function (data) {
         // Access the Google API key and use it in your JavaScript logic
         var googleApiKey = data.google_key;
 
         // Now you can use the googleApiKey in your JavaScript code
         // For example, you can use it in your Google Maps API calls
         // Here's a basic example:
-        var address_map = new google.maps.Map(document.getElementById('address_map'), {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8
-        });
+
+        var address_map = new google.maps.Map(
+            document.getElementById("address_map"),
+            {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8,
+            }
+        );
+
     });
 });
 
-(g => {
-    var h, a, k, p = "The Google Maps JavaScript API",
+((g) => {
+    var h,
+        a,
+        k,
+        p = "The Google Maps JavaScript API",
         c = "google",
         l = "importLibrary",
         q = "__ib__",
@@ -380,33 +413,38 @@ $(document).ready(function () {
         b = window;
     b = b[c] || (b[c] = {});
     var d = b.maps || (b.maps = {}),
-        r = new Set,
-        e = new URLSearchParams,
-        u = () => h || (h = new Promise(async (f, n) => {
-            await (a = m.createElement("script"));
-            e.set("libraries", [...r] + "");
-            for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
-            e.set("callback", c + ".maps." + q);
-            a.src = `https://maps.${c}apis.com/maps/api/js?` + e; // Removed the API key from here
-            d[q] = f;
-            a.onerror = () => h = n(Error(p + " could not load."));
-            a.nonce = m.querySelector("script[nonce]")?.nonce || "";
-            m.head.append(a);
-        }));
-    d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n));
+        r = new Set(),
+        e = new URLSearchParams(),
+        u = () =>
+            h ||
+            (h = new Promise(async (f, n) => {
+                await (a = m.createElement("script"));
+                e.set("libraries", [...r] + "");
+                for (k in g)
+                    e.set(
+                        k.replace(/[A-Z]/g, (t) => "_" + t[0].toLowerCase()),
+                        g[k]
+                    );
+                e.set("callback", c + ".maps." + q);
+                a.src = `https://maps.${c}apis.com/maps/api/js?` + e; // Removed the API key from here
+                d[q] = f;
+                a.onerror = () => (h = n(Error(p + " could not load.")));
+                a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+                m.head.append(a);
+            }));
+    d[l]
+        ? console.warn(p + " only loads once. Ignoring:", g)
+        : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
 })({
     key: "AIzaSyC45M9bSvmoPH_wfAcwmxCAWCavsUURp3w",
     libraries: "places",
-    v: "weekly"
+    v: "weekly",
 });
-
-
-
 
 var address_map;
 var marker;
 var searchBox;
-var searchInput = document.getElementById('search-location');
+var searchInput = document.getElementById("search-location");
 
 async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
@@ -418,7 +456,7 @@ async function initMap() {
 
     searchBox = new google.maps.places.SearchBox(searchInput);
 
-    searchBox.addListener('places_changed', function () {
+    searchBox.addListener("places_changed", function () {
         var places = searchBox.getPlaces();
         if (places.length === 0) {
             return;
@@ -446,30 +484,36 @@ async function initMap() {
                 position: place.geometry.location,
                 map: address_map, // Fix the property name here
                 icon: {
-                    url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-                    scaledSize: new google.maps.Size(40, 40)
+                    url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                    scaledSize: new google.maps.Size(40, 40),
                 },
-                draggable: true // Make the marker draggable
+                draggable: true, // Make the marker draggable
             });
 
             // Update the position input with the new marker position
-            document.getElementById('latitude').value = place.geometry.location.lat();
-            document.getElementById('longitude').value = place.geometry.location.lng();
+            document.getElementById("latitude").value =
+                place.geometry.location.lat();
+            document.getElementById("longitude").value =
+                place.geometry.location.lng();
 
             // Update position when marker is moved
-            marker.addListener('dragend', function (event) {
-                document.getElementById('latitude').value = event.latLng.lat();
-                document.getElementById('longitude').value = event.latLng.lng();
+            marker.addListener("dragend", function (event) {
+                document.getElementById("latitude").value = event.latLng.lat();
+                document.getElementById("longitude").value = event.latLng.lng();
 
                 // Get the address of the new marker position and update search input
                 var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({ location: event.latLng }, function (results, status) {
-                    if (status === 'OK') {
-                        if (results[0]) {
-                            searchInput.value = results[0].formatted_address;
+                geocoder.geocode(
+                    { location: event.latLng },
+                    function (results, status) {
+                        if (status === "OK") {
+                            if (results[0]) {
+                                searchInput.value =
+                                    results[0].formatted_address;
+                            }
                         }
                     }
-                });
+                );
             });
         });
 
@@ -479,7 +523,6 @@ async function initMap() {
 
 
 initMap();
-
 
 function showMap() {
     var address_map = document.getElementById("address_map");
@@ -497,12 +540,12 @@ function toggleLocationDiv() {
         console.log("inside googleMapDiv.style.display === none");
 
     } else {
-        // drop down view open 
+        // drop down view open
         googleMapDiv.style.display = "none";
         dropdownDiv.style.display = "block";
-        document.getElementById('latitude').value = 0;
-        document.getElementById('longitude').value = 0;
 
+        document.getElementById("latitude").value = 0;
+        document.getElementById("longitude").value = 0;
     }
 }
 

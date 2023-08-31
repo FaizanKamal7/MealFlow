@@ -70,7 +70,7 @@ class ExcelImportClass implements  WithHeadingRow, onEachRow
             }
         }
 
-
+        return $this->selectedCustomers;
     }
 
 //    public function model(array $row)

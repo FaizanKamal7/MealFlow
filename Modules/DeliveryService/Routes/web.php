@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('admin/deliveries')->group(function() {
+Route::prefix('admin/deliveries')->group(function () {
     Route::get('download-excel', 'DeliveryServiceController@downloadExcel');
 //    Route::get('/upload', 'DeliveryServiceController@uploadDeliveryView');
     Route::post('/upload/bulk', 'DeliveryServiceController@addBulk')->name("bulk_delivery_add");
@@ -20,13 +20,15 @@ Route::prefix('admin/deliveries')->group(function() {
     Route::get('/', 'DeliveryServiceController@index');
 
 
-
 //    Route::group(['prefix'=> 'deliveries'], function (){
 
-        Route::get('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveries"])->name("upload_deliveries");
-        Route::post('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByForm"])->name("upload_deliveries_by_form");
-        Route::get('generate-template', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "generateAndDownloadDeliveryTemplate"])->name("generate_delivery_template");
-        Route::post('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
+    Route::get('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveries"])->name("upload_deliveries");
+    Route::post('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByForm"])->name("upload_deliveries_by_form");
+    Route::get('generate-template', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "generateAndDownloadDeliveryTemplate"])->name("generate_delivery_template");
+    Route::post('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
+    //TODO:: This route will be moved to Customers Module
+    Route::get('get-delivery-addresses', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "getAddresses"])->name("get_customer_address");
+
 //    });
 
     Route::group(['prefix' => 'bag/'], function () {
