@@ -62,11 +62,11 @@ class Business extends Model
     {
         return $this->hasMany(Bags::class);
     }
-<<<<<<< Updated upstream
-    public function wallet(){
+
+    public function wallet()
+    {
         return $this->hasOne(BusinessWallet::class);
     }
-=======
 
     public function delivery_slot_pricings()
     {
@@ -78,7 +78,6 @@ class Business extends Model
         return $this->hasOne(Branch::class)->where('name', 'Main Branch');
     }
 
->>>>>>> Stashed changes
     protected static function newFactory()
     {
         return \Modules\BusinessService\Database\factories\BusinessFactory::new();
