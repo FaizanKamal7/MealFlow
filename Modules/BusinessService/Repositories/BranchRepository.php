@@ -48,11 +48,8 @@ class BranchRepository implements BranchInterface
     {
         return Branch::all();
     }
-<<<<<<< Updated upstream
 
-    public function getBusinessCities($business_id){
-         
+    public function getBusinessCities($business_id)
+    {
     }
-=======
->>>>>>> Stashed changes
 }
