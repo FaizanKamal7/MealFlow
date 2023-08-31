@@ -23,7 +23,9 @@ class BranchRepository implements BranchInterface
         $area_id,
         $active_status = null,
         $business_id,
-        $is_main_branch = null
+        $is_main_branch = null,
+        $latitude = null,
+        $longitude = null
     ) {
         $branch = Branch::create([
             "name" => $name,
@@ -46,8 +48,11 @@ class BranchRepository implements BranchInterface
     {
         return Branch::all();
     }
+<<<<<<< Updated upstream
 
     public function getBusinessCities($business_id){
          
     }
+=======
+>>>>>>> Stashed changes
 }

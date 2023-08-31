@@ -184,12 +184,12 @@
                 dataType: "json",
                 data: { cities: cities },
                 success: function(cities_delivery_slots) {
+                  
                     city_pricings_arr = Object.values(cities_delivery_slots);
                     if (city_pricings_arr.length === 0) {
                         no_delivery_slot.style.display = "block"
                     } else {
                         delivery_slot_pricing_component.style.display = "block";
-
                     }
                     var componentId = document.querySelector('#delivery-slot-pricing-component-id [wire\\:id]').getAttribute('wire:id');
                     var component = Livewire.find(componentId);

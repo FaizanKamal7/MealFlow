@@ -139,7 +139,7 @@
                             </div>
 
                             <div id="range-pricing-component-id" style="display: none">
-                                @livewire('businessservice::range-pricing', ['available_base_range_pricings' =>[]])
+                                @livewire('businessservice::range-pricing-component')
                             </div>
 
                             <div id="no-range-pricing" class="text-center" style="display: none">
@@ -202,30 +202,39 @@
         var business_id = document.getElementById("business").value;
         var no_range_pricing = document.getElementById("no-range-pricing");
 
-        
+        // Split the cities into an array
+        var selectedCities = cities.split(',');
+
+        // Remove any empty values from the array
+        selectedCities = selectedCities.filter(city => city !== "");
+
+        // Convert the array back to a comma-separated string
+        cities = selectedCities.join(',');
+
         var base_url = "/businessservice/pricing/get-base-range-pricing";
         var business_url = "/businessservice/pricing/get-business-range-pricing";
         
-     
-            $.ajax({
-                url: business_id == "" ? base_url : business_url,
-                dataType: "json",
-                 data: business_id == "" ? { cities: cities, business_id: business_id } : { cities: cities },
-                success: function(city_pricings) {
-                    range_pricing_component.style.display = "block";
-                    var componentId = document.querySelector('#range-pricing-component-id [wire\\:id]').getAttribute('wire:id');
-                    var component = Livewire.find(componentId);
-                    component.set('available_base_range_pricings',city_pricings);
-                    component.set('cities', cities.split(',')); 
-                    component.set('business_id', business_id); 
-                    
-                },
-                error: function(errors) {
-                    console.log(errors);
-                }
-            });
+        $.ajax({
+            url: business_id == "" ? base_url : business_url,
+            dataType: "json",
+            data: business_id == "" ? { cities: cities, business_id: business_id } : { cities: cities },
+            success: function(city_pricings) {
+                console.log("TYPE");
+                console.log(typeof city_pricings);  
 
+                range_pricing_component.style.display = "block";
+                var component_id = document.querySelector('#range-pricing-component-id [wire\\:id]').getAttribute('wire:id');
+                var component = Livewire.find(component_id);
+                component.set('available_base_range_pricings',city_pricings);
+                component.set('cities', cities.split(',')); 
+                component.set('business_id', business_id); 
+            },
+            error: function(errors) {
+                console.log(errors);
+            }
+        });
     }
+
 
     $(document).ready(function(){
         $('#city').change(function(){
