@@ -2,6 +2,7 @@
 
 namespace Modules\BusinessService\Repositories;
 
+use Illuminate\Support\Facades\DB;
 use Modules\BusinessService\Entities\Branch;
 use Modules\BusinessService\Entities\BranchCoverage;
 use Modules\BusinessService\Entities\BranchCoverageDeliverySlots;
@@ -38,5 +39,15 @@ class BranchCoverageRepository implements BranchCoverageInterface
     public function getBranchCoverage()
     {
         return BranchCoverage::all();
+    }
+
+    public function getUniqueBranchCoverageBasedOnCities($city_ids)
+    {
+        // BranchCoverage::whereIn('city_id', $uniqueCityIds)
+
+        $first_coverages = BranchCoverage::whereIn('city_id', $city_ids)->groupBy('city_id')
+            ->select(DB::raw('MIN(id) as id'))
+            ->get();
+        return BranchCoverage::whereIn('id', $first_coverages->pluck('id'))->get();
     }
 }

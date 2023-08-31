@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\BusinessService\Entities\DeliverySlotPricing;
 use Modules\BusinessService\Entities\Pricing;
+use Modules\BusinessService\Entities\RangePricing;
 
 class City extends Model
 {
@@ -35,8 +37,13 @@ class City extends Model
         return $this->belongsTo(State::class);
     }
 
-    public function pricings()
+    public function delivery_slot_pricings()
     {
-        return $this->hasMany(Pricing::class);
+        return $this->hasMany(DeliverySlotPricing::class);
+    }
+
+    public function range_pricings()
+    {
+        return $this->hasMany(RangePricing::class);
     }
 }

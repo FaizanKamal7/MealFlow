@@ -125,6 +125,7 @@ class BusinessOnboardingController extends Controller
             $address_area = $db_map_location_ids['area_id'] != '' ?  $db_map_location_ids['area_id'] : null;
         }
 
+
         try {
             // --- Adding data in users table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -172,6 +173,8 @@ class BusinessOnboardingController extends Controller
                 active_status: true,
                 is_main_branch: 1,
                 business_id: $business->id,
+                latitude: $latitude,
+                longitude: $longitude
             );
             $this->helper->print_array("area_coverage_list", $area_coverage_list);
             // echo "<pre>  ================================= </pre>";
@@ -179,7 +182,7 @@ class BusinessOnboardingController extends Controller
             if ($area_coverage_list) {
                 foreach ($area_coverage_list as $coverage_list_item) {
                     $cities = $coverage_list_item["city"];
-
+                    // $cities = json_decode($cities);
                     foreach ($cities as $city) {
                         $areas = $this->areaRepository->getAreasOfCity($city);
                         $areas = $areas->toArray();

@@ -45,18 +45,18 @@ class Helper
         ]);
     }
 
-    public function createWallet($business_id){
+    public function createWallet($business_id)
+    {
         BusinessWallet::create([
-            'balance'=>0,
-            'business_id'=>$business_id,
+            'balance' => 0,
+            'business_id' => $business_id,
         ]);
     }
 
-    public function deleteWallet($busines_id){
-        BusinessWallet::where('business_id',$busines_id)->delete;
+    public function deleteWallet($busines_id)
+    {
+        BusinessWallet::where('business_id', $busines_id)->delete;
     }
-
-
 
 
     function getLocationFromCoordinates($latitude, $longitude)
@@ -106,14 +106,14 @@ class Helper
 
         $db_map_location_ids = [];
         if ($country_name) {
-            $country_record = Country::where('name', $country_name)->first();
+            $country_record = Country::where('name', 'LIKE', '%' . $country_name . '%')->first();
             $db_map_location_ids['country_id'] = $country_record ? $country_record->id : "";
         } else {
             $db_map_location_ids['country_id'] = "";
         }
 
         if ($state_name) {
-            $state_record = State::where('name', $state_name)->first();
+            $state_record = State::where('name', 'LIKE', '%' . $state_name . '%')->first();
             $db_map_location_ids['state_id'] = $state_record ? $state_record->id : "";
         } else {
             $db_map_location_ids['state_id'] = "";
@@ -121,7 +121,7 @@ class Helper
 
 
         if ($city_name) {
-            $city_record = City::where('name', $city_name)->first();
+            $city_record = City::where('name', 'LIKE', '%' . $city_name . '%')->first();
             $db_map_location_ids['city_id'] = $city_record ? $city_record->id : "";
         } else {
             $db_map_location_ids['city_id'] = "";
@@ -129,7 +129,7 @@ class Helper
 
 
         if ($area_name) {
-            $area_record = Area::where('name', $area_name)->first();
+            $area_record = Area::where('name', 'LIKE', '%' . $area_name . '%')->first();
             $db_map_location_ids['area_id'] = $area_record ? $area_record->id : "";
         } else {
             $db_map_location_ids['area_id'] = "";

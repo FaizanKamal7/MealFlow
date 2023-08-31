@@ -2,19 +2,31 @@
 
 namespace Modules\BusinessService\Http\Controllers\BusinessInfo;
 
+use App\Http\Helper\Helper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\BusinessService\Interfaces\BranchCoverageInterface;
 use Modules\BusinessService\Interfaces\BusinessInterface;
+use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
+use Modules\BusinessService\Interfaces\RangePricingInterface;
+use PHPUnit\TextUI\Help;
 
 class BusinessInfoController extends Controller
 {
     private BusinessInterface $businessRepository;
+    private DeliverySlotPricingInterface $deliverySlotPricingRepository;
+    private RangePricingInterface $rangePricingRepository;
+    private BranchCoverageInterface $branchCoverageRepository;
 
-    public function __construct(BusinessInterface $businessRepository)
+    public function __construct(BusinessInterface $businessRepository, DeliverySlotPricingInterface $deliverySlotPricingRepository, RangePricingInterface $rangePricingRepository, BranchCoverageInterface $branchCoverageRepository)
     {
         $this->businessRepository = $businessRepository;
+        $this->deliverySlotPricingRepository = $deliverySlotPricingRepository;
+        $this->rangePricingRepository = $rangePricingRepository;
+        $this->branchCoverageRepository = $branchCoverageRepository;
     }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -22,68 +34,75 @@ class BusinessInfoController extends Controller
     public function index($business_id)
     {
         $business = $this->businessRepository->getBusiness($business_id);
-        $business_cities = $this->businessRepository->getBusiness($business_id);
-        
-        return view('businessservice::business_info.business_overview', ['business' => $business]);
+
+        // Getting business delivery slot pricing 
+        $business_delivery_slot_pricing = $this->deliverySlotPricingRepository->getBusinessPricing($business_id);
+        if ($business_delivery_slot_pricing->isEmpty()) {
+            $business_delivery_slot_pricing = $this->getBusinessBaseDeliverySlotPricing($business);
+        }
+
+        // Getting business range pricing 
+        $business_range_pricing = $this->rangePricingRepository->getBusinessPricing($business_id);
+        if ($business_range_pricing->isEmpty()) {
+            $business_range_pricing = $this->getBusinessBaseRangePricing($business);
+        }
+        return view('businessservice::business_info.business_overview', ['business' =>  $business, 'business_delivery_slot_pricing' => $business_delivery_slot_pricing, 'business_range_pricing' => $business_range_pricing]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
+    public function getBusinessBaseDeliverySlotPricing($business)
     {
-        return view('businessservice::create');
+        $business_branches_coverages = $this->getBusinessCoveragesCities($business);
+        foreach ($business_branches_coverages as $key => $value) {
+            echo "<pre>" . $value .  "</pre>";
+        }
+        $city_delivery_slot_wise_business_base_price = $business_branches_coverages->map(function ($branch_coverage) {
+            $null_pricing = $branch_coverage->city->delivery_slot_pricings()->businessNull()->get();
+            return $null_pricing ? $null_pricing : null;
+        });
+        return $city_delivery_slot_wise_business_base_price;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function getBusinessBaseRangePricing($business)
     {
-        //
+        $business_branches_coverages = $this->getBusinessCoveragesCities($business);
+        $city_range_wise_business_base_price = $business_branches_coverages->map(function ($branch_coverage) {
+            $null_pricing = $branch_coverage->city->range_pricings()->businessNull()->get();
+            return $null_pricing ? $null_pricing : null;
+        });
+        return $city_range_wise_business_base_price;
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
+    public function getBusinessCoveragesCities($business)
     {
-        return view('businessservice::show');
+        $unique_city_ids = $business->branches->flatMap(function ($branch) {
+            return $branch->branch_coverages->pluck('city_id');
+        })->unique();
+
+        $business_branches_coverages = $this->branchCoverageRepository->getUniqueBranchCoverageBasedOnCities($unique_city_ids);
+
+        return $business_branches_coverages;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
+
+    public function getAllCityPricing()
     {
-        return view('businessservice::edit');
+        $coverageCities = $this->getAllCoverageCities();
+
+        $cityPricing = $coverageCities->map(function ($city) {
+            $nullPricing = $city->city->delivery_slot_pricings()->businessNull()->first();
+
+            return [
+                'city_name' => $city->city->name,
+                'pricing' => $nullPricing ? $nullPricing : null,
+            ];
+        });
+
+        return $cityPricing;
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    public function sendContractFile($business_id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+        $this->businessRepository->update($business_id, ['status' => 'CONTRACT_SENT']);
+        return redirect()->back()->with("success", "Contract file sent successfully");
     }
 }
