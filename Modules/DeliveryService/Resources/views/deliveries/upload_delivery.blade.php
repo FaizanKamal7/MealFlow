@@ -365,5 +365,33 @@
             reInitializeDataValidation();
         });
     });
+
+
+    $(document).on("change", "select[name='customer[]']", function() {
+        var selectedCustomer = $(this).val();
+        var deliveryAddressDropdown = $(this).closest("tr").find("select[name='delivery_address[]']");
+
+        // Fetch delivery addresses via AJAX
+        $.ajax({
+            url: "/get-delivery-addresses",
+            type: "GET",
+            data: { customer: selectedCustomer },
+            success: function(response) {
+                deliveryAddressDropdown.empty(); // Clear existing options
+                deliveryAddressDropdown.append($('<option></option>')); // Add empty option
+
+                // Populate delivery addresses
+                $.each(response.deliveryAddresses, function(index, address) {
+                    deliveryAddressDropdown.append($('<option></option>').attr('value', address).text(address));
+                });
+
+                // Reinitialize Select2 on the updated dropdown
+                deliveryAddressDropdown.select2();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
 </script>
 @endsection
