@@ -17,7 +17,7 @@ class VehicleTypeRequest extends FormRequest
             'vehicle_type'=>['required','unique:vehicle_types,name'],
             'vehicle_capacity'=>['required'],
             'vehicle_icon'=>['required'],
-            'updated_type_name'=>['required','unique:vehicle_types,name'],
+            // 'updated_type_name'=>['required','unique:vehicle_types,name'],
             
         ];
     }
