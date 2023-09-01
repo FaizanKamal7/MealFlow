@@ -12,7 +12,6 @@ class DeliveryLog extends Model
 use HasUuids;
     protected $fillable = [
         "delivery_id",
-
         "log_type",
         "log_message",
         "logged_by",

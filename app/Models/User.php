@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\BusinessService\Entities\Business;
 use Modules\BusinessService\Entities\BusinessUser;
+use Modules\BusinessService\Entities\Customer;
 
 class User extends Authenticatable
 {
@@ -26,6 +27,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
         'is_active',
         'is_superuser',
@@ -66,11 +68,17 @@ class User extends Authenticatable
         return $this->hasMany(BusinessUser::class);
     }
 
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
+
     public function business()
     {
-        return $this->hasOne(Business::class,'admin_id');
+        return $this->hasOne(Business::class, 'admin_id');
     }
-    public function is_admin(){
+    public function is_admin()
+    {
         return $this->business()->exists();
     }
 }

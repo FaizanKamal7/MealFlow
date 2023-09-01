@@ -24,8 +24,6 @@ return new class extends Migration
             $table->uuid('business_category_id');
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('business_category_id')->references('id')->on('business_categories')->onDelete('cascade');
-            $table->timestamp('deleted_at')->nullable();
-
             $table->softDeletes();
             $table->timestamps();
         });

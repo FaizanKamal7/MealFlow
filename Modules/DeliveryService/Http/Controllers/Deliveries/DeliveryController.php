@@ -56,27 +56,24 @@ class DeliveryController extends Controller
 
         }
         return redirect()->route("upload_deliveries")->with("success", "Deliveries uploaded successfully");
-
     }
 
     public function generateAndDownloadDeliveryTemplate(Request $request)
     {
-        $data = [
-
-        ];
+        $data = [];
         return Excel::download(new DeliveryTemplateClass($data, $request->get("total_deliveries")), 'delivery_template.xlsx');
     }
 
     public function uploadDeliveriesByExcel(Request $request)
     {
         $request->validate([
-            'excel_file' => 'required|mimes:xlsx,xls'
+            'excel_file' => 'required|mimes:xlsx,xls,csv'
         ]);
         $file = $request->file('excel_file');
 
         try {
             // Load the Excel file using the import class
-             Excel::import(new ExcelImportClass, $file);
+            Excel::import(new ExcelImportClass, $file);
             return redirect()->back()->with('success', 'Data successfully imported.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error importing data: ' . $e->getMessage());

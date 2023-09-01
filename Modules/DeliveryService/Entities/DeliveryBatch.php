@@ -20,7 +20,6 @@ class DeliveryBatch extends Model
         "logs",
         "total_deliveries_assigned",
         "scheduled_datetime",
-
         "created_by",
         "vehicle_id",
         "driver_id",

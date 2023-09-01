@@ -34,8 +34,7 @@ return new class extends Migration
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
-            $table->timestamp('deleted_at')->nullable();
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }
