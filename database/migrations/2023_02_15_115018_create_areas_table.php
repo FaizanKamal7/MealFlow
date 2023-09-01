@@ -20,8 +20,7 @@ return new class extends Migration
             $table->uuid('city_id');
             $table->bigInteger('geoname_id');
             $table->string('coordinates');
-            $table->timestamp('deleted_at')->nullable();
-            $table->boolean('is_deleted')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });

@@ -25,8 +25,8 @@ return new class extends Migration
             $table->text('wikiDataId')->nullable();
             $table->boolean('active_status');
             $table->uuid('country_id');
-            $table->timestamp('deleted_at')->nullable();
-            $table->timestamps();
+            $table->softDeletes();
+
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
     }
