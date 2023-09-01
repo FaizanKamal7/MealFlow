@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('start_time');
             $table->string('end_time');
             $table->boolean('active_status')->default(true);
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });
