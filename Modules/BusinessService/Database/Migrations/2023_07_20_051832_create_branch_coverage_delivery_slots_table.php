@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid()->primary();
             $table->uuid('branch_coverage_id');
             $table->uuid('delivery_slot_id');
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('branch_coverage_id')->references('id')->on('branch_coverages')->onDelete('cascade');
             $table->foreign('delivery_slot_id')->references('id')->on('delivery_slots')->onDelete('cascade');

@@ -26,8 +26,6 @@ use HasUuids;
         "google_map_link",
         "assignment_type", //auto, manual
         "assigned_at",
-
-
         "customer_id",
         "delivery_slot_id", //inherited from partner delivery slots
         "pickup_batch_id",

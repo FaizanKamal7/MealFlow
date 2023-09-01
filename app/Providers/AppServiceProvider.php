@@ -40,6 +40,8 @@ use Modules\BusinessService\Repositories\DeliverySlotPricingRepository;
 use Modules\BusinessService\Repositories\PricingRepository;
 use Modules\BusinessService\Repositories\PricingTypeRepository;
 use Modules\BusinessService\Repositories\RangePricingRepository;
+use Modules\DeliveryService\Interfaces\DeliveryInterface;
+use Modules\DeliveryService\Repositories\DeliveryRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -66,6 +68,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RangePricingInterface::class, RangePricingRepository::class);
         $this->app->bind(PricingTypeInterface::class, PricingTypeRepository::class);
         $this->app->bind(DeliverySlotPricingInterface::class, DeliverySlotPricingRepository::class);
+        $this->app->bind(DeliveryInterface::class, DeliveryRepository::class);
     }
 
     /**
