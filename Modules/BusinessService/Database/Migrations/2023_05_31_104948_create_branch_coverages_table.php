@@ -21,9 +21,8 @@ return new class extends Migration
             $table->uuid('state_id');
             $table->uuid('country_id');
             $table->uuid('branch_id');
-            $table->timestamp('deleted_at')->nullable();
-            $table->boolean('is_deleted')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');

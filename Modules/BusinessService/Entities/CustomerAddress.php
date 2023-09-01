@@ -25,12 +25,18 @@ class CustomerAddress extends Model
         'state_id',
         'country_id',
         'branch_id',
+        'customer_id',
         'is_deleted',
     ];
 
     protected static function newFactory()
     {
         return \Modules\BusinessService\Database\factories\CustomerAddressFactory::new();
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
 

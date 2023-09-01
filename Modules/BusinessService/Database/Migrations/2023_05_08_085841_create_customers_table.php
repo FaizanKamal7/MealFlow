@@ -15,15 +15,12 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->string('name');
             $table->boolean('is_notification_enabled');
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamp('deleted_at')->nullable();
-            $table->boolean('is_deleted');
+            $table->softDeletes();
             $table->timestamps();
         });
-       
     }
 
     /**
