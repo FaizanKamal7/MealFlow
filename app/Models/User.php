@@ -33,7 +33,6 @@ class User extends Authenticatable
         'is_superuser',
         'last_login',
     ];
-    protected $appends = ['is_admin'];
     /**
      * The attributes that should be hidden for serialization.
      *
