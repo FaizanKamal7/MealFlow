@@ -24,8 +24,8 @@ return new class extends Migration
             $table->uuid('city_id');
             $table->uuid('state_id');
             $table->string('map_selected_area')->nullable();
-            $table->decimal('latitude', 10, 7);  // 10 digits total, 7 after the decimal point
-            $table->decimal('longitude', 10, 7); // 10 digits total, 7 after the decimal point
+            $table->decimal('latitude', 10, 7)->nullable();  // 10 digits total, 7 after the decimal point
+            $table->decimal('longitude', 10, 7)->nullable(); // 10 digits total, 7 after the decimal point
             $table->uuid('country_id');
             $table->uuid('business_id');
             $table->boolean('is_deleted');
