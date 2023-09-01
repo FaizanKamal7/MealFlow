@@ -34,7 +34,7 @@ return new class extends Migration
             $table->text('emojiU');
             $table->text('wikiDataId')->nullable();
             $table->boolean('active_status')->default(true);
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
