@@ -28,10 +28,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api')
                 ->prefix('api/v1')
                 ->group(base_path('Modules/FleetService/routes/api.php'));
+                
+                Route::middleware('web')
+                ->group(base_path('Modules/FleetService/routes/web.php'));
         });
         
-        Route::middleware('web')
-        ->group(base_path('Modules/FleetService/routes/web.php'));
+       
     }
 
     /**
