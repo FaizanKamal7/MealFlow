@@ -23,7 +23,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        parent::boot();
+         $this->routes(function (){
+            Route::middleware('api')
+                ->prefix('api')
+                ->prefix('api/v1')
+                ->group(base_path('modules/FleetService/routes/api.php'));
+        });
     }
 
     /**
