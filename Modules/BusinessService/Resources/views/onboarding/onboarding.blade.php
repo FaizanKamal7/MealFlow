@@ -10,7 +10,7 @@
         <div class="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column division-div"
             id="kt_create_account_stepper">
             <!--begin::Aside-->
-            <div class="d-flex flex-column flex-lg-row-auto w-xl-400px bg-lighten shadow-sm aside">
+            <div class="d-flex flex-column flex-lg-row-auto w-xl-400px aside">
                 <!--begin::Wrapper-->
                 <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-400px scroll-y ">
                     {{-- position-xl-fixed top-0 bottom-0 w-xl-400px scroll-y --}}
@@ -147,7 +147,7 @@
                                 {{ csrf_field() }}
 
                                 <!--begin::Wrapper-->
-                                <div class="w-lg-700px  mx-auto">
+                                <div class="w-lg-auto  mx-auto">
                                     <!--begin::Heading-->
                                     <div class="mb-10 text-center">
                                         <!--begin::Title-->
@@ -412,9 +412,9 @@
                                                 <!--end::Wrapper-->
                                             </div>
                                             <!--end::HINTS -->
-                                            <div id="address_map" style="height: 400px; width: 100%;"></div>
+                                            {{-- <div id="address_map" style="height: 400px; width: 100%;"></div>
                                             <input id="latitude" type="hidden" name="latitude">
-                                            <input id="longitude" type="hidden" name="longitude">
+                                            <input id="longitude" type="hidden" name="longitude"> --}}
 
                                         </div>
                                         <!--end::HINTS -->
@@ -595,7 +595,7 @@
                                                                         data-placeholder="Choose City" 
                                                                         name="city"
                                                                         data-allow-clear="true"
-                                                                        {{-- multiple  --}}
+                                                                        multiple 
                                                                         >
                                                                     </select>
                                                                     <!--hidden text field-->

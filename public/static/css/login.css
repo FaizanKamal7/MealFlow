@@ -1,60 +1,89 @@
 .bg {
-    background-image: url("../media/bg_gradient.png");
+    background-image: url("../media/bg_gradient1.png");
     /* width: 100%; */
-    height: 100%;
+    height: auto;
     display: flex;
     justify-content: center;
-}
-.main {
-    display: flex;
-    justify-content: center;
-    width: fit-content;
-    margin: 20px 20px;
-    flex: 1;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 24px;
-    height: unset;
-    overflow: hidden;
+    overflow: auto;
 }
 
+.bg-login {
+    background-image: url("../media/bg_gradient1.png");
+    /* width: 100%; */
+    height: auto;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    background-size: cover;
+}
+.margin-div {
+    margin: 2%;
+    background: linear-gradient(
+        123.16deg,
+        rgba(255, 255, 255, 0.6) 0.66%,
+        rgba(255, 255, 255, 0.21) 100%
+    );
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        118.35deg,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.3) 100.8%
+    );
+    border-radius: 24px !important;
+    overflow: hidden;
+    box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.07) !important;
+}
+
+.side-div {
+    background: linear-gradient(
+            151.96deg,
+            rgba(255, 255, 255, 0.8) 0.49%,
+            rgba(255, 255, 255, 0.42) 97.45%
+        ),
+        linear-gradient(0deg, #ffffff, #ffffff);
+}
+
+.login-div {
+    background: linear-gradient(
+        123.16deg,
+        rgba(255, 255, 255, 0.6) 0.66%,
+        rgba(255, 255, 255, 0.21) 100%
+    );
+}
+
+.main {
+    margin: 2%;
+    border-radius: 24px !important;
+    /* border: 4px solid; */
+    overflow: hidden;
+}
 .big-img {
-    /* height: 60%;
-    width: auto;
-    background-repeat: no-repeat;
-    background-size: contain;
-    display: block;
-    min-width: 100%;
-    margin-left: 16%;
-    margin-top: 4%;
-     */
     display: flex;
     justify-content: center;
 }
 img.img-big {
     background-repeat: no-repeat;
     object-fit: contain;
-    height: auto;
-    width: 60%;
+    height: 240px;
+}
+
+@media screen and (min-width: 1024px) {
+    img.img-big {
+        /* height: 300px; */
+    }
 }
 
 .side-img {
-    /* border-radius: 24px 0 0 24px; */
-    background-image: linear-gradient(
-        125deg,
-        hsl(180deg 100% 100%) 0%,
-        hsl(183deg 50% 99%) 28%,
-        hsl(186deg 49% 98%) 65%,
-        hsl(189deg 50% 96%) 83%,
-        hsl(192deg 51% 95%) 92%,
-        hsl(194deg 53% 95%) 96%,
-        hsl(196deg 55% 94%) 99%,
-        hsl(199deg 57% 93%) 100%,
-        hsl(201deg 58% 92%) 100%,
-        hsl(203deg 59% 91%) 100%
-    );
     margin: 0 auto;
     padding: 0 20px;
     /* min-width: 40%; */
+    border: 1px solid rgba(255, 255, 255, 1);
+    background: linear-gradient(
+            151.96deg,
+            rgba(255, 255, 255, 0.8) 0.49%,
+            rgba(255, 255, 255, 0.42) 97.45%
+        ),
+        linear-gradient(0deg, #ffffff, #ffffff);
 }
 
 .logo {
@@ -86,21 +115,19 @@ img.img-big {
 
 .login {
     padding: 60px;
-    /* border-radius: 0 24px 24px 0; */
-    background-image: linear-gradient(
-        145deg,
-        hsl(203deg 100% 96%) 0%,
-        hsl(203deg 86% 95%) 38%,
-        hsl(203deg 75% 94%) 48%,
-        hsl(203deg 67% 94%) 55%,
-        hsl(202deg 60% 93%) 59%,
-        hsl(202deg 55% 92%) 64%,
-        hsl(202deg 50% 92%) 69%,
-        hsl(202deg 47% 91%) 76%,
-        hsl(202deg 43% 90%) 86%,
-        hsl(202deg 41% 89%) 100%
-    );
     flex: 1;
+    background: linear-gradient(
+        123.16deg,
+        rgba(255, 255, 255, 0.6) 0.66%,
+        rgba(255, 255, 255, 0.21) 100%
+    );
+    border: 1px solid;
+
+    border-image-source: linear-gradient(
+        118.35deg,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.3) 100.8%
+    );
 }
 
 label.user-label {
@@ -136,30 +163,40 @@ p.p-dont {
     color: #00426e;
 }
 
-.login-form {
-    margin-top: 4%;
-    margin-left: 5%;
-}
-
-input.user-input {
-    width: 100%;
-}
-
-@media screen  and (max-width:1024px) and (min-width:600px){
-    .side-img{
+/* @media screen and (max-width: 1024px) and (min-width: 600px) {
+    .side-img {
         flex: 1;
     }
-    
 }
 
-@media screen  and (max-width:599px) {
-    .bg{
+@media screen and (max-width: 599px) {
+    .bg {
         height: auto;
     }
-    .main{
+    .main {
         display: block;
         width: unset;
-        
     }
-    
-}
+    .welcome h1 {
+        font-size: 24px !important;
+        padding-bottom: unset !important ;
+    }
+    .welcome p {
+        font-size: 16px !important;
+        line-height: 15px;
+    }
+    .login {
+        padding: 20px;
+    }
+    .login-form {
+        margin: unset;
+    }
+    .form h1 {
+        font-size: 30px !important;
+        margin: unset !important;
+    }
+
+    img.img-big {
+        width: 50% !important;
+    }
+} */
