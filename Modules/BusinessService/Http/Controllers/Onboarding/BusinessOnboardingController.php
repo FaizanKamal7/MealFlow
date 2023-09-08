@@ -179,7 +179,7 @@ class BusinessOnboardingController extends Controller
             if ($area_coverage_list) {
                 foreach ($area_coverage_list as $coverage_list_item) {
                     $cities = $coverage_list_item["city"];
-
+                    // $cities = json_decode($cities);
                     foreach ($cities as $city) {
                         $areas = $this->areaRepository->getAreasOfCity($city);
                         $areas = $areas->toArray();

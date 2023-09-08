@@ -1,0 +1,96 @@
+.menu-state-bullet-primary
+    .menu-item.hover:not(.here)
+    > .menu-link:not(.disabled):not(.active):not(.here),
+.menu-state-bullet-primary
+    .menu-item:not(.here)
+    .menu-link:hover:not(.disabled):not(.active):not(.here) {
+    background: linear-gradient(
+        120.29deg,
+        rgba(179, 225, 255, 0.5) 0%,
+        rgba(161, 211, 243, 0.6) 54.03%,
+        rgba(143, 197, 232, 0.7) 98.79%
+    );
+    background-blend-mode: luminosity;
+    /* background: #FFFFFF33; */
+    box-shadow: 0px 9px 14px 0px rgba(0, 83, 138, 0.17);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.menu-state-icon-primary
+    .menu-item.hover:not(.here)
+    > .menu-link:not(.disabled):not(.active):not(.here)
+    .menu-icon,
+.menu-state-icon-primary
+    .menu-item.hover:not(.here)
+    > .menu-link:not(.disabled):not(.active):not(.here)
+    .menu-icon
+    .svg-icon,
+.menu-state-icon-primary
+    .menu-item.hover:not(.here)
+    > .menu-link:not(.disabled):not(.active):not(.here)
+    .menu-icon
+    i,
+.menu-state-icon-primary
+    .menu-item:not(.here)
+    .menu-link:hover:not(.disabled):not(.active):not(.here)
+    .menu-icon,
+.menu-state-icon-primary
+    .menu-item:not(.here)
+    .menu-link:hover:not(.disabled):not(.active):not(.here)
+    .menu-icon
+    .svg-icon,
+.menu-state-icon-primary
+    .menu-item:not(.here)
+    .menu-link:hover:not(.disabled):not(.active):not(.here)
+    .menu-icon
+    i {
+    color: #00426e;
+}
+
+.menu-state-title-primary
+    .menu-item.hover:not(.here)
+    > .menu-link:not(.disabled):not(.active):not(.here)
+    .menu-title,
+.menu-state-title-primary
+    .menu-item:not(.here)
+    .menu-link:hover:not(.disabled):not(.active):not(.here)
+    .menu-title {
+    color: #00426e;
+    font-weight: bold;
+}
+
+.side-icon {
+    color: rgba(0, 83, 138, 1) !important;
+    background: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    background-blend-mode: luminosity;
+    box-shadow: 0px 9px 14px 0px rgba(0, 83, 138, 0.17);
+    /* background: rgba(255, 255, 255, 0.08); */
+    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    padding: 10px 7px 10px 7px;
+    border-radius: 10px;
+    line-height: 1;
+}
+
+.whole-sidebar {
+    background-blend-mode: luminosity;
+    background: rgba(255, 255, 255, 0.4) !important;
+    border: 0.5px solid;
+    border-image-source: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        rgba(255, 255, 255, 0.52) 100%
+    );
+    box-shadow: 0px 44px 46px -10px rgba(0, 83, 138, 0.1);
+}
+.menu-item .menu-link {
+    padding-left: 15px !important;
+    padding-right: 10px !important;
+}
+.menu-title {
+    color: rgba(0, 66, 110, 1) !important;
+}
