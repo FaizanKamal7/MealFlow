@@ -23,14 +23,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-         $this->routes(function (){
-            Route::middleware('api')
-                ->prefix('api')
-                ->prefix('api/v1')
-                ->group(base_path('Modules/FleetService/Routes/api.php'));
-                Route::middleware('web')
-                ->group(base_path('Modules/FleetService/Routes/web.php'));
-        });
         parent::boot();
        
     }
@@ -71,6 +63,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
+            ->prefix('api/v1')
             ->middleware('api')
             ->namespace($this->moduleNamespace)
             ->group(module_path('FleetService', '/Routes/api.php'));

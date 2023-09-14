@@ -46,6 +46,7 @@ class VehicleTypesController extends Controller
             return $this->error($e, "Something went wrong, contact support");
         }
     }
+    
     /**
      * Store a newly created resource in storage.
      * @param Request $request
