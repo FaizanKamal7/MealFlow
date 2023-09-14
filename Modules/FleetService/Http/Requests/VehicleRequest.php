@@ -17,7 +17,7 @@ class VehicleRequest extends FormRequest
             'registration_number' => ['required', 'unique:vehicles'],
             'engine_number' => ['required', 'unique:vehicles'],
             'chassis_number' => ['required', 'unique:vehicles'],
-            'vehicle_make' => ['required', 'string'],
+            // 'vehicle_make' => ['required', 'string'],
             'vehicle_model' => ['required', 'string'],
             'vehicle_color' => ['nullable', 'string'],
             'vehicle_status' => ['required'],
