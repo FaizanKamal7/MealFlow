@@ -135,7 +135,7 @@ class VehicleController extends Controller
         } catch (Exception $exception) {
             Log::error($exception);
             error_log("error " . $exception);
-            return $this->error($exception, "Vehicle added successfully");
+            return $this->error($exception,$exception->errorInfo,500);
 
 
         }
