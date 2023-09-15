@@ -50,6 +50,11 @@ class AreaController extends Controller
 
     public function extractAreasOfCityFromAPI($city_id, $city_name)
     {
+        if ($city_id) {
+            $city = $this->cityRepository->get($city_id);
+        } else {
+            // $city is not provided
+        }
         $city_name = $replacedText = str_replace(' ', '%20', $city_name);
         $user_name = "faizankamal_";
         $maxRows = 200;
@@ -57,16 +62,19 @@ class AreaController extends Controller
         $featureCode_2 = 'PPL';
 
         $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://api.geonames.org/search?q=' . $city_name . '&maxRows=' . $maxRows . '&username=' . $user_name . '&featureCode=' . $featureCode_1 . '&featureCode=' . $featureCode_2,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-        ));
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => 'http://api.geonames.org/search?q=' . $city_name . '&maxRows=' . $maxRows . '&username=' . $user_name . '&featureCode=' . $featureCode_1 . '&featureCode=' . $featureCode_2,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+            )
+        );
         $response = curl_exec($curl);
 
         curl_close($curl);
@@ -76,11 +84,11 @@ class AreaController extends Controller
         $areas_array = json_decode($responce, true);
 
         // Removed elements with duplicated names
-        $areas_unique_name_array = $this->removeArrayDuplicatesWithProperty($areas_array['totalResultsCount'] != 0 ?  $areas_array['geoname'] : '', 'name');
+        $areas_unique_name_array = $this->removeArrayDuplicatesWithProperty($areas_array['totalResultsCount'] != 0 ? $areas_array['geoname'] : '', 'name');
 
         // Re-index the array if needed
         $api_areas_object = (object) $areas_unique_name_array;
-        return View::make("admin.locations.city_location_activation", ['areas' => $api_areas_object, 'selected_city_id' => $city_id]);
+        return View::make("admin.locations.city_location_activation", ['areas' => $api_areas_object, 'selected_city_id' => $city_id, 'city' => $city]);
     }
 
 
@@ -105,9 +113,9 @@ class AreaController extends Controller
                         [
                             'actve_status' => 1,
                             'name' => $area_object->name,
-                            'city_id' =>  $city_id,
-                            'geoname_id' =>  $area_object->geonameId,
-                            'coordinates' =>  $coordinates,
+                            'city_id' => $city_id,
+                            'geoname_id' => $area_object->geonameId,
+                            'coordinates' => $coordinates,
 
                         ];
                     $this->areaRepository->add($single_area);
@@ -120,11 +128,11 @@ class AreaController extends Controller
                 [
                     'active_status' => 1,
                     'name' => $city->name,
-                    'city_id' =>  $city_id,
-                    'coordinates' =>  $coordinates,
+                    'city_id' => $city_id,
+                    'coordinates' => $coordinates,
                 ];
 
-            $result =  $this->areaRepository->updateOrInsertAreaIfAttributeExist("name", $city->name, $single_area);
+            $result = $this->areaRepository->updateOrInsertAreaIfAttributeExist("name", $city->name, $single_area);
         }
         $this->cityRepository->update($city_id, ['active_status' => true]);
         $this->stateRepository->update($city->state_id, ['active_status' => true]);

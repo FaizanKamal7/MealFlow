@@ -26,6 +26,21 @@ class LocationController extends Controller
         return view('admin.locations.activate_location', ['cities' => $cities]);
     }
 
+    public function table_data(Request $request)
+    {
+        $cities = $this->cityRepository->getAllCities();
+        return view('includes.location_table', ['cities' => $cities])->render();
+    }
+    
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $cities = $this->cityRepository->getSearchCities($query);
+        return view('admin.locations.activate_location', compact('cities'));
+    }
+
+
+
     public function activatedLocations()
     {
         $countries = $this->countryRepository->getCountryWithItsLocations();
