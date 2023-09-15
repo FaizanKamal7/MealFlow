@@ -70,7 +70,7 @@ var KTAppEcommerceCategories = (function () {
                 e = $(t).DataTable({
                     info: false,
                     order: [],
-                    pageLength: 10,
+                    pageLength: 50,
                     columnDefs: [
                         { orderable: false, targets: 0 },
                         { orderable: false, targets: 3 },

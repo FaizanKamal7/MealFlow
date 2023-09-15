@@ -14,6 +14,7 @@
 use Modules\BusinessService\Http\Controllers\BusinessInfo\BusinessInfoController;
 use Modules\BusinessService\Http\Controllers\BusinessPricing\BusinessPricingController;
 use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsController;
+use Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController;
 use Modules\FinanceService\Http\Controllers\WalletController;
 use Modules\FinanceService\Http\Controllers\WalletCreditController;
 use Modules\BusinessService\Http\Middleware\BusinessCheck;
@@ -75,8 +76,16 @@ Route::middleware(['businessCheck'])->group(function () {
                 Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
                 Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
             });
+
             Route::group(['prefix' => 'business-settings/'], function () {
             });
+        });
+
+
+        Route::group(['prefix' => 'customers/'], function () {
+            Route::get('/', [CustomersController::class, "viewAllCustomers"])->name("view_all_customers");
+            Route::get('add/', [CustomersController::class, "viewAddCustomer"])->name("add_new_customer_view");
+            Route::post('store/', [CustomersController::class, "storeNewCustomer"])->name("store_new_customer");
         });
     });
 });

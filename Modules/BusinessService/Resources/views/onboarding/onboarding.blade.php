@@ -1161,7 +1161,6 @@
 
 
 
-
         $('#city').change(function() {
             var selectedCities = $(this).val();
             if (!Array.isArray(selectedCities)) {

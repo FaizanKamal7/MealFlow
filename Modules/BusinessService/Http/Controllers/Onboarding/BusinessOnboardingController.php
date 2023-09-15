@@ -116,7 +116,7 @@ class BusinessOnboardingController extends Controller
         $latitude = $request->latitude;
         $longitude = $request->longitude;
         $area_coverage_list = $request->area_coverage_list;
-        $cities = $this->extractCitiesFromCoveragesSelection($area_coverage_list);
+        $cities = $this->helper->extractCitiesFromCoveragesSelection($area_coverage_list);
 
 
         // echo "<pre>" . $latitude . "-" . $longitude . "</pre>";
@@ -142,12 +142,13 @@ class BusinessOnboardingController extends Controller
         try {
             // --- Adding data in users table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $user = $this->userRepository->createUser(
-                name: $first_name . " " . $last_name,
-                email: $email,
-                password: Hash::make($password),
-                isActive: true
-            );
+            $user = $this->userRepository->createUser([
+                'name' => $first_name . " " . $last_name,
+                'email' =>  $email,
+                'password' => Hash::make($password),
+                'isActive' => true
+            ]);
+
 
             // --- Adding data in business table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -251,20 +252,7 @@ class BusinessOnboardingController extends Controller
         return response()->json($states->toArray());
     }
 
-    public function extractCitiesFromCoveragesSelection($area_coverage_list)
-    {
-        $cities = [];
-        foreach ($area_coverage_list as $area) {
-            if (isset($area["city"])) {
-                foreach ($area["city"] as $city) {
-                    if ($city !== null && !in_array($city, $cities)) {
-                        $cities[] = $city;
-                    }
-                }
-            }
-        }
-        return $cities;
-    }
+
 
     // function getDependentCountryStateCity()
     // {

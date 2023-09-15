@@ -31,17 +31,27 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
 use Modules\BusinessService\Interfaces\BusinessPricingInterface;
+use Modules\BusinessService\Interfaces\CustomerAddressInterface;
+use Modules\BusinessService\Interfaces\CustomerInterface;
+use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
 use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
 use Modules\BusinessService\Interfaces\PricingTypeInterface;
 use Modules\BusinessService\Interfaces\RangePricingInterface;
+use Modules\BusinessService\Repositories\BusinessCustomerRepository;
 use Modules\BusinessService\Repositories\BusinessPricingRepository;
+use Modules\BusinessService\Repositories\CustomerAddressRepository;
+use Modules\BusinessService\Repositories\CustomerRepository;
+use Modules\BusinessService\Repositories\CustomerSecondaryNumberRepository;
 use Modules\BusinessService\Repositories\DeliverySlotPricingRepository;
 use Modules\BusinessService\Repositories\PricingRepository;
 use Modules\BusinessService\Repositories\PricingTypeRepository;
 use Modules\BusinessService\Repositories\RangePricingRepository;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
+use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\DeliveryService\Repositories\DeliveryRepository;
+use Modules\DeliveryService\Repositories\DeliveryTypeRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -69,6 +79,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PricingTypeInterface::class, PricingTypeRepository::class);
         $this->app->bind(DeliverySlotPricingInterface::class, DeliverySlotPricingRepository::class);
         $this->app->bind(DeliveryInterface::class, DeliveryRepository::class);
+        $this->app->bind(CustomerInterface::class, CustomerRepository::class);
+        $this->app->bind(CustomerAddressInterface::class, CustomerAddressRepository::class);
+        $this->app->bind(CustomerSecondaryNumberInterface::class, CustomerSecondaryNumberRepository::class);
+        $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
+        $this->app->bind(DeliveryTypeInterface::class, DeliveryTypeRepository::class);
     }
 
     /**

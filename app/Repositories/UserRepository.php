@@ -9,18 +9,9 @@ use Illuminate\Support\Facades\Hash;
 class UserRepository implements UserInterface
 {
 
-    public function createUser($name, $email, $password, $isActive = true, $isSuperUser = false)
+    public function createUser($data)
     {
-        $user = new User([
-            "name" => $name,
-            "email" => $email,
-            "password" => $password,
-            "is_active" => $isActive,
-            "is_superuser" => $isSuperUser
-        ]);
-
-        $user->save();
-        return $user;
+        return User::create($data);
     }
 
     public function editUser($id, $name, $email, $password = null, $isActive = true, $isSuperUser = false)

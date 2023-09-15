@@ -16,14 +16,12 @@ return new class extends Migration
         Schema::create('customer_addresses', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->string('address');
-            $table->string('area_name');
-            $table->string('city_name');
-            $table->string('state_name');
-            $table->string('country_name');
             $table->string('address_type');
-            $table->string('google_coordinates');
+            $table->string('address_status');
+            $table->double('latitude');
+            $table->double('longitude');
             $table->uuid('customer_id');
-            $table->uuid('area_id');
+            $table->uuid('area_id')->nullable();
             $table->uuid('city_id');
             $table->uuid('state_id');
             $table->uuid('country_id');
