@@ -387,7 +387,7 @@
                                                   fill="currentColor" />
                                         </svg></span>
                                     <!--end::Svg Icon-->
-                                    <span class="menu-title mx-2">Patners</span>
+                                    <span class="menu-title mx-2">Partners</span>
 
                                 </span>
 
