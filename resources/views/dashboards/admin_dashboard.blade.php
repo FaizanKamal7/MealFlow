@@ -868,15 +868,12 @@
                 <!--end::Col-->
             </div>
             <!--end::Row-->
-
-            {{-- copy --}}
-
-            <div class="row ">
+            {{-- <div class="row ">
                 <!--begin::Col-->
                 <!--begin::Col-->
                 <div class="col-xl-6">
                     <div class="row">
-
+    
                         <!--begin::Modals-->
                         <!--begin::Modal - New Product-->
                         <div class="modal fade" id="kt_modal_add_event" tabindex="-1" aria-hidden="true">
@@ -1043,7 +1040,7 @@
                                 </div>
                             </div>
                         </div>
-
+    
                         <!--end::Modal - New Product-->
                         <!--begin::Modal - New Product-->
                         <div class="modal fade" id="kt_modal_view_event" tabindex="-1" aria-hidden="true">
@@ -1225,10 +1222,14 @@
                     </div>
                     <!--end::Container-->
                 </div>
+            </div>
+             --}}
                 <!--end::Post-->
-            @endsection
 
-
+                {{-- closing 1st and 2nd div --}}
+        </div>
+    </div>
+@endsection
 
             @section('extra_scripts')
 

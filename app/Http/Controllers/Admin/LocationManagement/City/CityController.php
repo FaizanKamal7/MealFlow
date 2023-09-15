@@ -23,6 +23,21 @@ class CityController extends Controller
      */
 
 
+    //loading cities
+
+    public function loadCities(Request $request)
+    {
+        // dd("inside");
+
+        // try {
+        //     $cities = City::paginate(20);
+        //     return view('locations.activate_location', compact('cities'));
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => $e->getMessage()], 500);
+        // }
+    }
+
+
     public function getCitiesOfState(Request $request)
     {
         $cities = [];

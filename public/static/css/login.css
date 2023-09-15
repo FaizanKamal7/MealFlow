@@ -68,9 +68,8 @@ img.img-big {
 }
 
 @media screen and (min-width: 1024px) {
-    img.img-big {
-        /* height: 300px; */
-    }
+    /* img.img-big {
+    } */
 }
 
 .side-img {
