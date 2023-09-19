@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('is_main_branch');
             $table->uuid('area_id');
             $table->uuid('city_id');
-            $table->uuid('state_id');
+            $table->uuid('state_id');  
             $table->string('map_selected_area')->nullable();
             $table->decimal('latitude', 10, 7)->nullable();  // 10 digits total, 7 after the decimal point
             $table->decimal('longitude', 10, 7)->nullable(); // 10 digits total, 7 after the decimal point

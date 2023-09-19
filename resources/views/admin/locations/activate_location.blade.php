@@ -116,7 +116,7 @@
 
                             </tbody>
                         </table>
-                        {{-- {{ $cities->links() }} --}}
+                        {{ $cities->links() }}
 
                     </div>
                     <!--end::Card body-->

@@ -13,7 +13,6 @@ class Customer extends Model
     use HasUuids;
 
     protected $fillable = [
-        'name',
         'is_notification_enabled',
         'user_id',
         'is_deleted',
@@ -23,7 +22,7 @@ class Customer extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
     public function customerAddresses()
     {
         return $this->hasMany(CustomerAddress::class);
@@ -34,6 +33,10 @@ class Customer extends Model
         return $this->hasMany(BusinessCustomer::class);
     }
 
+    public function secondaryNumbers()
+    {
+        return $this->hasMany(CustomerSecondaryNumber::class);
+    }
 
 
     protected static function newFactory()

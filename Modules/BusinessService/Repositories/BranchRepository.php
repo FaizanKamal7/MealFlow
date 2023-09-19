@@ -49,7 +49,8 @@ class BranchRepository implements BranchInterface
         return Branch::all();
     }
 
-    public function getBusinessCities($business_id)
+    public function getBusinessBranches($business_id)
     {
+        return Branch::where(['business_id' => $business_id])->get();
     }
 }

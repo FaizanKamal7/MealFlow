@@ -19,4 +19,5 @@ interface BranchInterface
         $latitude,
         $longitude
     );
+    public function getBusinessBranches($business_id);
 }

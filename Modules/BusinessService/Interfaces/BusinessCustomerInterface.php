@@ -4,5 +4,6 @@ namespace Modules\BusinessService\Interfaces;
 
 interface BusinessCustomerInterface
 {
-    public function createBusinessCustomer($name, $status);
+    public function create($data);
+    public function getBusinessCustomer($business_id);
 }

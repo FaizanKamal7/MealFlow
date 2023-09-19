@@ -40,4 +40,13 @@ class AreaRepository implements AreaInterface
             $data
         );
     }
+    public function searchArea($searchTerm)
+    {
+        return Area::where('name', 'like', "%{$searchTerm}%")->get();
+    }
+
+    public function searchAreaFirst($searchTerm)
+    {
+        return Area::where('name', 'like', "%{$searchTerm}%")->first();
+    }
 }
