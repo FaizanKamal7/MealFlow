@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('address');
             $table->string('address_type');
             $table->string('address_status');
-            $table->double('latitude');
-            $table->double('longitude');
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();;
             $table->uuid('customer_id');
             $table->uuid('area_id')->nullable();
             $table->uuid('city_id');

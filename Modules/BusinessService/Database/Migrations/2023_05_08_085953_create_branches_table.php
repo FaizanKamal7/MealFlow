@@ -16,19 +16,18 @@ return new class extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->string('name');
-            $table->string('address');
-            $table->string('phone');
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
             $table->string('active_status');
             $table->boolean('is_main_branch');
             $table->uuid('area_id');
             $table->uuid('city_id');
-            $table->uuid('state_id');  
+            $table->uuid('state_id');
             $table->string('map_selected_area')->nullable();
             $table->decimal('latitude', 10, 7)->nullable();  // 10 digits total, 7 after the decimal point
             $table->decimal('longitude', 10, 7)->nullable(); // 10 digits total, 7 after the decimal point
             $table->uuid('country_id');
             $table->uuid('business_id');
-            $table->boolean('is_deleted');
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
