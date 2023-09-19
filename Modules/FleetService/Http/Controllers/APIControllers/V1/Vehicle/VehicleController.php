@@ -148,6 +148,7 @@ class VehicleController extends Controller
      */
     public function getVehicleDetail(Request $request)
     {
+        
         $id= $request->get('id');
         $vehicle = $this->vehicleRepository->getVehicle($id);
         $data = ['vehicle' => $vehicle];

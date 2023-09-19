@@ -52,6 +52,7 @@ class VehicleController extends Controller
 
     public function viewVehicles()
     {
+
         // abort_if(Gate::denies('view_vehicle'),Response::HTTP_FORBIDDEN,'403 Forbidden');
         $vehicles = $this->vehicleRepository->getDetailedVehicles();
         $vehicleTypes = $this->vehicleTypeRepository->getActiveVehicletypes();
