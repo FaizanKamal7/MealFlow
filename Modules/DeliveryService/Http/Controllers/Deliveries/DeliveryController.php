@@ -130,6 +130,8 @@ class DeliveryController extends Controller
 
     public function uploadDeliveriesByExcel(Request $request)
     {
+        $businesses = $this->businessRepository->getActiveBusinesses();
+
         $request->validate([
             'excel_file' => 'required|mimes:xlsx,xls,csv'
         ]);
@@ -323,12 +325,10 @@ class DeliveryController extends Controller
             // }
         }
 
-        dd($chunks);
 
+        // return redirect()->back()->with('success', 'Data successfully imported.');3
+        return view('deliveryservice::deliveries.upload_delivery', ['batch' =>  $batch, 'businesses' =>  $businesses]);
 
-
-        dd();
-        return $batch;
         // try {
         //     // Load the Excel file using the import class
         //     Excel::import(app(ExcelImportClass::class), $file);
@@ -353,7 +353,6 @@ class DeliveryController extends Controller
         if (count($batches) > 0) {
             return Bus::findBatch($batches[0]->id);
         }
-
         return [];
     }
 

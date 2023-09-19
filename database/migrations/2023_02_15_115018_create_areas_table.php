@@ -18,8 +18,8 @@ return new class extends Migration
             $table->boolean('active_status');
             $table->string('name');
             $table->uuid('city_id');
-            $table->bigInteger('geoname_id');
-            $table->string('coordinates');
+            $table->bigInteger('geoname_id')->nullable();
+            $table->string('coordinates')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
