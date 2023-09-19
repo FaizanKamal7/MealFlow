@@ -48,7 +48,15 @@ class UsersController extends Controller
     {
         try {
             abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $user = $this->userRepository->createUser(name: $request->get("user_name"), email: $request->get("user_email"), password: $request->get("user_password"), isActive: true);
+            $user = $this->userRepository->createUser(
+                [
+                    'name' =>  $request->get("user_name"),
+                    'email' => $request->get("user_email"),
+                    'password' => $request->get("user_password"),
+                    'isActive' => true
+                ]
+            );
+
             if ($request->get("user_roles") != null) {
                 foreach ($request->get("user_roles") as $role) {
                     $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role);
@@ -73,7 +81,6 @@ class UsersController extends Controller
             Log::error($exception);
             return redirect()->route("users_view")->with("error", "Something went wrong! Contact Support");
         }
-
     }
 
 
@@ -88,7 +95,7 @@ class UsersController extends Controller
 
             $assigned_roles = [];
             foreach ($user_roles as $role) {
-                $assigned_roles [] = $role->role->id;
+                $assigned_roles[] = $role->role->id;
             }
 
             $roles_to_assign = array_diff($roles, $assigned_roles);
@@ -104,7 +111,6 @@ class UsersController extends Controller
                 foreach ($roles_to_revoke as $role) {
                     $this->userRoleRepository->deleteUserRole($role);
                 }
-
             }
 
 
@@ -113,8 +119,6 @@ class UsersController extends Controller
             Log::error($exception);
             return redirect()->route("users_view")->with("error", "Something went wrong! Contact Support");
         }
-
-
     }
 
 
@@ -129,6 +133,5 @@ class UsersController extends Controller
             Log::error($exception);
             return redirect()->route("users_view")->with("error", "Something went wrong! Contact Support");
         }
-
     }
 }

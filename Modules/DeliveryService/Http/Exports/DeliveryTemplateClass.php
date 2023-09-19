@@ -17,10 +17,11 @@ use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 class DeliveryTemplateClass implements FromCollection, WithHeadings, WithEvents
 {
     protected $data;
-
-    public function __construct(array $data)
+    protected $totalDeliveries;
+    public function __construct(array $data, $totalDeliveries)
     {
         $this->data = $data;
+        $this->totalDeliveries = $totalDeliveries;
     }
 
     public function collection()
@@ -68,7 +69,7 @@ class DeliveryTemplateClass implements FromCollection, WithHeadings, WithEvents
 
                 // Ask user total number of deliveries they want to upload,then run the for loop til that number to generate rows.
                 //in this case, I have selected 10 for example purpose.
-                for ($i = 2; $i <= 11; $i++) {
+                for ($i = 2; $i <= $this->totalDeliveries; $i++) {
                     // Set the value of cell B in the current row
                     $cellValue = "Select Customer";
                     $sheet->setCellValue('A' . $i, $cellValue);
@@ -146,6 +147,24 @@ class DeliveryTemplateClass implements FromCollection, WithHeadings, WithEvents
                     $objValidation->setFormula1('"' . $enableNotifications . '"');
 
                 }
+
+                $event->sheet->getParent()->createSheet();
+
+                // Get the newly created sheet by index (it will be the last sheet)
+                $newCustomersSheet = $event->sheet->getParent()->getSheet(count($event->sheet->getParent()->getAllSheets()) - 1);
+
+                // Set the title of the new sheet
+                $newCustomersSheet->setTitle('New Customers');
+
+                $newCustomersSheet->setCellValue('A1', 'Customer');
+                $newCustomersSheet->setCellValue('B1', 'Delivery Address');
+                $newCustomersSheet->setCellValue('C1', 'Delivery Slot');
+                $newCustomersSheet->setCellValue('D1', 'Item Type (optional)');
+                $newCustomersSheet->setCellValue('E1', 'Enable SMS Notifications (optional)');
+                $newCustomersSheet->setCellValue('F1', 'Enable Email Notifications (optional)');
+                $newCustomersSheet->setCellValue('G1', 'Special Instructions (optional)');
+                $newCustomersSheet->setCellValue('H1', 'Notes (optional)');
+                $newCustomersSheet->setCellValue('I1', 'COD Amount (optional)');
 
             }
         ];

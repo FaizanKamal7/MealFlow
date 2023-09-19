@@ -15,10 +15,26 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->boolean('active_status');
             $table->string('name');
-            $table->timestamp('deleted_at')->nullable();
-            $table->boolean('is_deleted')->nullable();
+            $table->string('iso3');
+            $table->string('iso2');
+            $table->string('phonecode');
+            $table->string('capital');
+            $table->string('currency');
+            $table->string('currency_symbol');
+            $table->string('tld');
+            $table->string('native')->nullable();
+            $table->string('region');
+            $table->string('subregion');
+            $table->text('timezones');
+            $table->text('translations')->nullable();
+            $table->text('latitude');
+            $table->text('longitude');
+            $table->text('emoji');
+            $table->text('emojiU');
+            $table->text('wikiDataId')->nullable();
+            $table->boolean('active_status')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

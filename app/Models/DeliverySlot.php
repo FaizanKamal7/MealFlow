@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\BusinessService\Entities\DeliverySlotPricing;
+use Modules\BusinessService\Entities\Pricing;
 
 class DeliverySlot extends Model
 {
@@ -17,7 +19,7 @@ class DeliverySlot extends Model
         "city_id",
         "start_time",
         "end_time",
-        ];
+    ];
 
 
     public function city()
@@ -25,4 +27,9 @@ class DeliverySlot extends Model
         return $this->belongsTo(City::class, 'city_id');
     }
 
+
+    public function deliverySlotPricings()
+    {
+        return $this->hasMany(DeliverySlotPricing::class);
+    }
 }
