@@ -31,4 +31,22 @@ class AreaRepository implements AreaInterface
     {
         return Area::where(["city_id" => $city_id, "active_status" => 1])->get();
     }
+
+    public function updateOrInsertAreaIfAttributeExist($attribute, $value, $data)
+    {
+        // Make sure that attribute exist  
+        return Area::updateOrInsert(
+            [$attribute => $value],
+            $data
+        );
+    }
+    public function searchArea($searchTerm)
+    {
+        return Area::where('name', 'like', "%{$searchTerm}%")->get();
+    }
+
+    public function searchAreaFirst($searchTerm)
+    {
+        return Area::where('name', 'like', "%{$searchTerm}%")->first();
+    }
 }

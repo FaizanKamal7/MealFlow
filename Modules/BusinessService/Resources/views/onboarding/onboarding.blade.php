@@ -1,24 +1,29 @@
 @extends('layouts.others_master')
 @section('title', 'Business Onboarding')
 
+
 @section('main_content')
 
 <!--begin::Root-->
-<div class="d-flex flex-column flex-root">
+<div class="d-flex flex-column flex-root first-div bg-on">
     <!--begin::Authentication - Multi-steps-->
-    <div class="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column"
+    <div class="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column division-div"
         id="kt_create_account_stepper">
         <!--begin::Aside-->
-        <div class="d-flex flex-column flex-lg-row-auto w-xl-400px bg-lighten shadow-sm">
+        <div class="d-flex flex-column flex-lg-row-auto w-xl-400px bg-lighten shadow-sm aside">
             <!--begin::Wrapper-->
-            <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-400px scroll-y">
+            <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-400px scroll-y ">
+                {{-- position-xl-fixed top-0 bottom-0 w-xl-400px scroll-y --}}
                 <!--begin::Header-->
                 <div class="d-flex flex-row-fluid flex-column flex-center p-10 pt-lg-20">
                     <!--begin::Logo-->
                     <a href="#" class="mb-10 mb-lg-20">
-                        <img alt="Logo" src="{{ asset('static/media\logos\logo_dark_horizontal.png')}}"
+                        <img alt="Logo" src="{{ asset('static/media\logos\logo_dark_horizontal.png') }}"
                             class="h-75px logo" />
                     </a>
+                    <h2 class="mb-10 mb-lg-10" style="font-size: 25px; color: #00538A;">
+                        Business Account Steps
+                    </h2>
                     <!--end::Logo-->
                     <!--begin::Nav-->
                     <div class="stepper-nav">
@@ -39,6 +44,7 @@
                                 <div class="stepper-desc fw-bold">Setup Your Account Details</div>
                             </div>
                             <!--end::Label-->
+
                         </div>
                         <!--end::Step 1-->
                         <!--begin::Step 2-->
@@ -60,7 +66,7 @@
                             <!--end::Label-->
                         </div>
                         <!--end::Step 2-->
-                        {{--
+
                         <!--begin::Step 3-->
                         <div class="stepper-item" data-kt-stepper-element="nav">
                             <!--begin::Line-->
@@ -81,7 +87,7 @@
                         </div>
                         <!--end::Step 3-->
                         <!--begin::Step 4-->
-                        <div class="stepper-item" data-kt-stepper-element="nav">
+                        {{-- <div class="stepper-item" data-kt-stepper-element="nav">
                             <!--begin::Line-->
                             <div class="stepper-line w-40px"></div>
                             <!--end::Line-->
@@ -107,13 +113,13 @@
                             <!--begin::Icon-->
                             <div class="stepper-icon w-40px h-40px">
                                 <i class="stepper-check fas fa-check"></i>
-                                <span class="stepper-number">5</span>
+                                <span class="stepper-number">4</span>
                             </div>
                             <!--end::Icon-->
                             <!--begin::Label-->
                             <div class="stepper-label">
                                 <h3 class="stepper-title">Completed</h3>
-                                <div class="stepper-desc fw-bold">Woah, we are here</div>
+                                {{-- <div class="stepper-desc fw-bold">Woah, we are here</div> --}}
                             </div>
                             <!--end::Label-->
                         </div>
@@ -128,7 +134,7 @@
         </div>
         <!--begin::Aside-->
         <!--begin::Body-->
-        <div class="d-flex flex-column flex-lg-row-fluid ">
+        <div class="d-flex flex-column flex-lg-row-fluid main2">
             <!--begin::Content-->
             <div class="d-flex flex-center flex-column flex-column-fluid">
                 <!--begin::Wrapper-->
@@ -138,7 +144,6 @@
                         action="{{ route('business_onboarding_add') }}" enctype="multipart/form-data">
                         <!--begin::Step 1-->
                         <div class="current" data-kt-stepper-element="content">
-                            {{-- @csrf --}}
                             {{ csrf_field() }}
 
                             <!--begin::Wrapper-->
@@ -146,7 +151,8 @@
                                 <!--begin::Heading-->
                                 <div class="mb-10 text-center">
                                     <!--begin::Title-->
-                                    <h1 class="text-dark mb-3">Create a business account</h1>
+                                    <h1 style="color:#00426E; font-size:30px" class="mb-3">Create a business account
+                                    </h1>
                                     <!--end::Title-->
                                     <!--begin::Link-->
                                     <div class="text-gray-400 fw-bold fs-4">Already have an account?
@@ -163,17 +169,18 @@
                                     <div class="border-bottom border-gray-300 mw-50 w-100"></div>
                                 </div>
                                 <!--end::Separator-->
+
                                 <!--begin::Input group-->
-                                <div class="row fv-row mb-7">
+                                <div class="row fv-row">
                                     <!--begin::Col-->
-                                    <div class="col-xl-6 fv-row">
+                                    <div class="col-md-6 fv-row mb-5">
                                         <label class="form-label fw-bolder text-dark fs-6 required">First Name</label>
                                         <input class="form-control form-control-lg form-control-solid" type="text"
                                             placeholder="" name="first_name" autocomplete="off" />
                                     </div>
                                     <!--end::Col-->
                                     <!--begin::Col-->
-                                    <div class="col-xl-6 fv-row">
+                                    <div class="col-md-6 fv-row mb-5">
                                         <label class="form-label fw-bolder text-dark fs-6 required">Last Name</label>
                                         <input class="form-control form-control-lg form-control-solid" type="text"
                                             placeholder="" name="last_name" autocomplete="off" />
@@ -182,80 +189,83 @@
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
-                                <div class="fv-row mb-7">
-                                    <label class="form-label fw-bolder text-dark fs-6 required">Business Name</label>
-                                    <input class="form-control form-control-lg form-control-solid" placeholder=""
-                                        name="buisness_name" autocomplete="off" />
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-7">
-                                    <label class="form-label fw-bolder text-dark fs-6 required">Email Adress</label>
-                                    <input class="form-control form-control-lg form-control-solid" placeholder=""
-                                        name="email" autocomplete="off" />
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="mb-10 fv-row" data-kt-password-meter="true">
-                                    <!--begin::Wrapper-->
-                                    <div class="mb-1">
-                                        <!--begin::Label-->
-                                        <label class="form-label fw-bolder text-dark fs-6 required">Password</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input wrapper-->
-                                        <div class="position-relative mb-3">
-                                            <input class="form-control form-control-lg form-control-solid"
-                                                type="password" placeholder="" name="password" autocomplete="off" />
-                                            <span
-                                                class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
-                                                data-kt-password-meter-control="visibility">
-                                                <i class="bi bi-eye-slash fs-2"></i>
-                                                <i class="bi bi-eye fs-2 d-none"></i>
-                                            </span>
-                                        </div>
-                                        <!--end::Input wrapper-->
-                                        <!--begin::Meter-->
-                                        <div class="d-flex align-items-center mb-3"
-                                            data-kt-password-meter-control="highlight">
-                                            <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
-                                            </div>
-                                            <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
-                                            </div>
-                                            <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
-                                            </div>
-                                            <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px">
-                                            </div>
-                                        </div>
-                                        <!--end::Meter-->
+                                <div class="row fv-row">
+
+                                    <div class="col-md-6 mb-5">
+                                        <label class="form-label fw-bolder text-dark fs-6 required">Business
+                                            Name</label>
+                                        <input class="form-control form-control-lg form-control-solid" placeholder=""
+                                            name="buisness_name" autocomplete="off" />
+                                        @error('buisness_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <!--end::Wrapper-->
-                                    <!--begin::Hint-->
-                                    <div class="text-muted">Use 8 or more characters with a mix of letters,
-                                        numbers &amp; symbols.</div>
-                                    <!--end::Hint-->
-                                </div>
-                                <!--end::Input group=-->
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-5">
-                                    <label class="form-label fw-bolder text-dark fs-6 required">Confirm Password</label>
-                                    <input class="form-control form-control-lg form-control-solid" type="password"
-                                        placeholder="" name="confirm_password" autocomplete="off" />
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-10">
-                                    <label class="form-check form-check-custom form-check-solid form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="toc" value="1" />
-                                        <span class="form-check-label fw-bold text-gray-700 fs-6">I Agree
-                                            <a href="#" class="ms-1 link-primary">Terms and
-                                                conditions</a>.</span>
-                                    </label>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="col-md-6 mb-5">
+                                        <label class="form-label fw-bolder text-dark fs-6 required">Email
+                                            Address</label>
+                                        <input class="form-control form-control-lg form-control-solid" placeholder=""
+                                            name="email" autocomplete="off" />
+                                        @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                                 <!--end::Input group-->
-                                <!--begin::Actions-->
-                                <!--end::Actions-->
-
-
+                                <!--begin::Input group-->
+                                <div class="row">
+                                    <div class="col-md-6 mb-5 fv-row" data-kt-password-meter="true">
+                                        <!--begin::Wrapper-->
+                                        <div class="mb-1">
+                                            <!--begin::Label-->
+                                            <label class="form-label fw-bolder text-dark fs-6 required">Password</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input wrapper-->
+                                            <div class="position-relative mb-5">
+                                                <input class="form-control form-control-lg form-control-solid"
+                                                    type="password" placeholder="" name="password" autocomplete="off" />
+                                                <span
+                                                    class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                                    data-kt-password-meter-control="visibility">
+                                                    <i class="bi bi-eye-slash fs-2"></i>
+                                                    <i class="bi bi-eye fs-2 d-none"></i>
+                                                </span>
+                                            </div>
+                                            <!--end::Input wrapper-->
+                                            <!--begin::Meter-->
+                                            <div class="d-flex align-items-center mb-3"
+                                                data-kt-password-meter-control="highlight">
+                                                <div
+                                                    class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                                </div>
+                                                <div
+                                                    class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                                </div>
+                                                <div
+                                                    class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                                </div>
+                                                <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px">
+                                                </div>
+                                            </div>
+                                            <!--end::Meter-->
+                                        </div>
+                                        <!--end::Wrapper-->
+                                        <!--begin::Hint-->
+                                        <div class="text-muted">Use 8 or more characters with a mix of letters,
+                                            numbers &amp; symbols.</div>
+                                        <!--end::Hint-->
+                                    </div>
+                                    <!--end::Input group=-->
+                                    <!--begin::Input group-->
+                                    <div class="col-md-6 fv-row mb-5">
+                                        <label class="form-label fw-bolder text-dark fs-6 required">Confirm
+                                            Password</label>
+                                        <input class="form-control form-control-lg form-control-solid" type="password"
+                                            placeholder="" name="confirm_password" autocomplete="off" />
+                                    </div>
+                                </div>
+                                <!--end::Input group-->
                             </div>
                             <!--end::Wrapper-->
                         </div>
@@ -266,6 +276,8 @@
                             <!--begin::Wrapper-->
                             <div class="w-100">
                                 <!--begin::Heading-->
+
+
                                 <div class="pb-10 pb-lg-12">
                                     <!--begin::Title-->
                                     <h2 class="fw-bolder text-dark">Buisness Info</h2>
@@ -277,15 +289,36 @@
                                     <!--end::Notice-->
                                 </div>
                                 <!--begin::Input group-->
-                                <div class="fv-row mb-10">
+                                {{-- <div class="fv-row mb-10">
                                     <!--begin::Label-->
                                     <label class="form-label required">Buisness Logo</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input name="logo" class="form-control form-control-lg form-control"
                                         value="Keenthemes Inc." type="file" />
+                                    --}}
+
+                                    <!--begin::Dropzone-->
+                                    {{-- <div class="dropzone" id="kt_dropzonejs_example_1">
+                                        <!--begin::Message-->
+                                        <div class="dz-message needsclick">
+                                            <i class="ki-duotone ki-file-up fs-3x text-primary"><span
+                                                    class="path1"></span><span class="path2"></span></i>
+
+                                            <!--begin::Info-->
+                                            <div class="ms-4">
+                                                <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or
+                                                    click to upload.</h3>
+                                                <span class="fs-7 fw-semibold text-gray-400">Upload up to 10
+                                                    files</span>
+                                            </div>
+                                            <!--end::Info-->
+                                        </div>
+                                    </div>
+                                    <!--end::Dropzone-->
+
                                     <!--end::Input-->
-                                </div>
+                                </div> --}}
                                 <!--end::Input group-->
                                 <div class="fv-row mb-10">
                                     <!--begin::Label-->
@@ -298,7 +331,8 @@
 
                                         @if ($business_categories->count())
                                         @foreach ($business_categories as $business_category)
-                                        <option value={{$business_category['id']}}>{{$business_category['name']}}
+                                        <option value={{ $business_category['id'] }}>
+                                            {{ $business_category['name'] }}
                                         </option>
                                         @endforeach
                                         @else
@@ -320,91 +354,9 @@
                                 </div>
                                 <!--end::Input group-->
 
-                                <!--begin::Input group-->
-                                <div class="row fv-row mb-7">
-                                    <!--begin::Col-->
-                                    <div class="col-lg-4">
-                                        <label class="form-label required">Country</label>
-
-                                        <!--begin::Input group-->
-                                        <select id="country" class="form-select form-select-solid" name="country"
-                                            data-control="select2" data-placeholder="Select an option"
-                                            data-allow-clear="true" onchange="fetchStates()">
-
-                                            <option value="">Select country</option>
-                                            @if ($countries->count())
-                                            @foreach ($countries as $country)
-                                            <option value={{$country['id']}}>{{$country['name']}}</option>
-                                            @endforeach
-                                            @else
-                                            <option value="">Countries not available</option>
-                                            @endif
-                                        </select>
-                                        <!--end::Input group-->
-
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--end::Col-->
-                                    <div class="col-xl-4">
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">State</label>
-                                            <!--end::Label-->
-                                            <select id="state" name="state" class="form-select form-select-solid"
-                                                data-control="select2" data-placeholder="Choose" data-allow-clear="true"
-                                                onchange="fetchCities()">
-                                                <option value="">Select State</option>
-
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!--begin::Col-->
-                                    <div class="col-xl-4">
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">City</label>
-                                            <!--end::Label-->
-                                            <select id="city" class="form-select form-select-solid"
-                                                data-control="select2" data-placeholder="Choose city" name="city"
-                                                data-allow-clear="true" onchange="fetchAreas()">
-                                                <option value="">Select City</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!--end::Col-->
-                                    <!--begin::Col-->
-                                    <div class="col-xl-12">
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">Area</label>
-                                            <!--end::Label-->
-                                            <select id="area" class="form-select form-select-solid"
-                                                data-control="select2" data-placeholder="Choose area" name="area"
-                                                data-allow-clear="true">
-                                                <option value="">Select Area</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!--end::Col-->
-                                </div>
-                                <!--end::Input group-->
 
                                 <!--begin::Input group-->
-                                <div class=" fv-row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label required">Address</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input name="address" class="form-control form-control-lg form-control-solid" />
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-10">
+                                {{-- <div class="fv-row mb-10">
                                     <!--begin::Label-->
                                     <label class="form-label required">Contact Email</label>
                                     <!--end::Label-->
@@ -412,6 +364,143 @@
                                     <input name="contact_email"
                                         class="form-control form-control-lg form-control-solid" />
                                     <!--end::Input-->
+                                </div> --}}
+
+                                <div class="fv-row mb-10">
+                                    <label class="form-label required">Address (Business Main Branch Address)</label>
+                                    <br>
+                                    <div class="form-group row" id="google_map_address_selection">
+                                        <input class="form-control form-control-lg form-control-solid"
+                                            id="search-location" type="text" placeholder="Enter you address here">
+                                        <br><br>
+                                        <!--begin::HINTS-->
+                                        <div class="alert alert-primary d-flex align-items-center p-5">
+                                            <!--begin::Icon-->
+                                            <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span
+                                                    class="path1"></span><span class="path2"></span></i>
+                                            <!--end::Icon-->
+
+
+                                            <!--begin::Wrapper-->
+                                            <div class="d-flex flex-column">
+                                                <!--begin::Title-->
+                                                <h4 class="mb-1 text-dark">Hints</h4>
+                                                <!--end::Title-->
+
+                                                <!--begin::Content-->
+                                                <li class="d-flex align-items-center py-2">
+                                                    <span class="bullet bullet-dot bg-primary me-5"></span><i> &nbsp
+                                                        You
+                                                        can your exact location don't
+                                                        show
+                                                        up in the search suggestions, search nearest location and drap
+                                                        and drop
+                                                        pic
+                                                        to your exact location.</i>
+
+                                                </li>
+                                                <li class="d-flex align-items-center py-2">
+                                                    <span class="bullet bullet-dot bg-primary me-5"></span> </span><i>
+                                                        &nbsp Use
+                                                        <code>CTRL + scroll</code>
+                                                        to zoom the map </i>
+                                                </li>
+                                                <!--end::Content-->
+                                            </div>
+                                            <!--end::Wrapper-->
+                                        </div>
+                                        <!--end::HINTS -->
+                                        <div id="address_map" style="height: 400px; width: 100%;"></div>
+                                        <input id="latitude" type="hidden" name="latitude">
+                                        <input id="longitude" type="hidden" name="longitude">
+
+                                    </div>
+
+                                    <br>
+                                    <div class="form-group row" id="dropdown_address_selection" style="display: none;">
+                                        <!--begin::Col-->
+                                        <div class="col-xl-4">
+                                            <label class="form-label">Country</label>
+
+                                            <!--begin::Input group-->
+                                            <select id="address_country"
+                                                class="form-select form-select-solid address-country"
+                                                name="address_country" data-control="select2"
+                                                data-placeholder="Select an option" data-allow-clear="true"
+                                                onchange="fetchAddressStates()">
+
+                                                <option value="">Select country</option>
+                                                @if ($countries->count())
+                                                @foreach ($countries as $country)
+                                                <option value={{ $country['id'] }}>{{ $country['name'] }}
+                                                </option>
+                                                @endforeach
+                                                @else
+                                                <option value="">Countries not available</option>
+                                                @endif
+                                            </select>
+                                            <!--end::Input group-->
+
+                                        </div>
+                                        <!--end::Col-->
+                                        <div class="col-xl-4">
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="form-label">State</label>
+                                                <!--end::Label-->
+                                                <select id="address_state" name="address_state"
+                                                    class="form-select form-select-solid" data-control="select2"
+                                                    data-placeholder="Choose" data-allow-clear="true"
+                                                    onchange="fetchAddressCities()">
+                                                    <option value="">Select State</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--begin::Col-->
+                                        <div class="col-xl-4">
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="form-label">City</label>
+                                                <!--end::Label-->
+                                                <select id="address_city" class="form-select form-select-solid"
+                                                    data-control="select2" data-placeholder="Choose city"
+                                                    name="address_city" data-allow-clear="true"
+                                                    onchange="fetchAddressAreas()">
+                                                    <option value="">Select City</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--end::Col-->
+
+                                        <!--begin::Col-->
+                                        <div class="col-xl-5">
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="form-label">Areas</label>
+                                                <!--end::Label-->
+                                                <select id="address_area"
+                                                    class="form-select form-select-lg form-select-solid"
+                                                    data-control="select2" data-placeholder="Choose Areas"
+                                                    name="address_area" data-allow-clear="true">
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-xl-7">
+                                            <div class="fv-row mb-10">
+                                                <label class="form-label">Street Address</label>
+                                                <input name="address"
+                                                    class="form-control form-control-lg form-control-solid" />
+                                            </div>
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <p>You can also enter address manually<b>(Not recommended)</b>. If you want to enter
+                                        location manually <a onclick="toggleLocationDiv()"><code>Click here</code></a>
+                                    </p>
+
                                 </div>
                                 <!--end::Input group-->
                             </div>
@@ -419,171 +508,171 @@
                         </div>
                         <!--end::Step 2-->
                         <!--------------------------------------------------------------------------------->
-                        {{--
+
                         <!--begin::Step 3-->
                         <div class="" data-kt-stepper-element="content">
                             <!--begin::Wrapper-->
                             <div class="w-100">
                                 <div class="pb-10 pb-lg-15">
                                     <!--begin::Title-->
-                                    <h2 class="fw-bolder text-dark">Extra Detail</h2>
+                                    <h2 class="fw-bolder text-dark">Business coverage</h2>
                                     <!--end::Title-->
                                     <!--begin::Notice-->
-                                    <div class="text-muted fw-bold fs-6">If you need more info, please check out
+                                    <div class="text-muted fw-bold fs-6">Please add information for your main business
+                                        branch. Select branch coverage areas
                                         <a href="#" class="link-primary fw-bolder">Help Page</a>.
                                     </div>
                                     <!--end::Notice-->
                                 </div>
 
+                                <!--begin::Repeater-->
+                                <div class="row fv-row mb-7">
 
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label required">Category</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <select name="category" class="form-select form-select-lg form-select-solid"
-                                        data-control="select2" data-placeholder="Select..." data-allow-clear="true"
-                                        data-hide-search="true">
-                                        <option></option>
-                                        <option value="1">Food delivery</option>
-                                        <option value="1">Grocery delivery</option>
-                                        <option value="2">Pharmacy and medical supply delivery</option>
-                                        <option value="3">Package and parcel delivery</option>
-                                        <option value="4">Alcohol and beverage delivery</option>
-                                        <option value="5">Flower and gift delivery</option>
-                                        <option value="6">Pet supply and pet food delivery</option>
-                                        <option value="7">Beauty and personal care delivery</option>
+                                    <div id="kt_docs_repeater_advanced">
+                                        <!--begin::Form group-->
+                                        <div class="form-group">
+                                            <div data-repeater-list="area_coverage_list">
+                                                <div data-repeater-item>
+                                                    <div class="form-group row mb-5">
+                                                        <div class="col-xl-4">
+                                                            <!--begin::Input group-->
+                                                            <label class="form-label required">Country</label>
+                                                            <select
+                                                                class="form-select form-select-solid country-dropdown"
+                                                                {{-- name="country" --}} data-control="select2"
+                                                                data-placeholder="Select an option"
+                                                                data-kt-repeater="select2" data-allow-clear="true"
+                                                                onchange="fetechingStateDataLocal(this)">
+
+                                                                <option value="">Select country</option>
+                                                                @if ($countries->count())
+                                                                @foreach ($countries as $country)
+                                                                <option value={{ $country['id'] }}>
+                                                                    {{ $country['name'] }}
+                                                                </option>
+                                                                @endforeach
+                                                                @else
+                                                                <option value="">Countries not available
+                                                                </option>
+                                                                @endif
+                                                            </select>
+                                                            <!--end::Input group-->
+                                                        </div>
+                                                        <div class="col-xl-4">
+                                                            <div class="fv-row mb-10">
+                                                                <!--begin::Label-->
+                                                                <label class="form-label required">State</label>
+                                                                <!--end::Label-->
+                                                                <select
+                                                                    class="form-select-state form-select form-select-solid state-dropdown"
+                                                                    data-control="select2" data-placeholder="Choose"
+                                                                    data-allow-clear="true"
+                                                                    onchange="fetchingCityByState(this)">
+
+                                                                    <option value="">Select State</option>
 
 
-                                    </select>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="mb-10 fv-row">
-                                    <!--begin::Label-->
-                                    <label class="d-flex align-items-center form-label mb-3">Number of Branches
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                            title="Provide your team size to help us setup your billing"></i></label>
-                                    <!--end::Label-->
-                                    <!--begin::Row-->
-                                    <div class="row mb-2" data-kt-buttons="true">
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="num_of_branches"
-                                                    value="1-1" />
-                                                <span class="fw-bolder fs-3">1-1</span>
-                                            </label>
-                                            <!--end::Option-->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Col-->
+                                                        <!--begin::Col-->
+                                                        <div class="col-xl-4">
+                                                            <div class="fv-row mb-10">
+                                                                <!--begin::Label-->
+                                                                <label class="form-label required">City</label>
+                                                                <!--end::Label-->
+
+                                                                {{-- <select id="city"
+                                                                    class="form-select form-select-lg form-select-solid city-dropdown"
+                                                                    data-control="select2"
+                                                                    data-placeholder="Choose City" name="city"
+                                                                    data-allow-clear="true">
+                                                                </select> --}}
+                                                                <select id="city"
+                                                                    class="form-select form-select-lg form-select-solid city-dropdown"
+                                                                    data-control="select2"
+                                                                    data-placeholder="Choose City" name="city"
+                                                                    data-allow-clear="true" multiple="multiple">
+                                                                </select>
+                                                                <!--hidden text field-->
+                                                                <input type="hidden" id="cities" name="cities" />
+                                                            </div>
+                                                        </div>
+                                                        {{-- end col --}}
+
+                                                        <div class="col-md-2">
+                                                            <a href="javascript:;" data-repeater-delete
+                                                                class="btn btn-flex btn-sm btn-light-danger">
+                                                                <i class="ki-duotone ki-trash fs-3"><span
+                                                                        class="path1"></span><span
+                                                                        class="path2"></span><span
+                                                                        class="path3"></span><span
+                                                                        class="path4"></span><span
+                                                                        class="path5"></span></i>
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="separator mb-6"></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4 active">
-                                                <input type="radio" class="btn-check" name="num_of_branches"
-                                                    checked="checked" value="2-10" />
-                                                <span class="fw-bolder fs-3">2-10</span>
-                                            </label>
-                                            <!--end::Option-->
+                                        <!--end::Form group-->
+
+                                        <!--begin::Form group-->
+                                        <div class="form-group mt-5">
+                                            <a href="javascript:;" data-repeater-create
+                                                class="btn btn-flex btn-light-primary">
+                                                <i class="ki-duotone ki-plus fs-3"></i>
+                                                Add
+                                            </a>
                                         </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="num_of_branches"
-                                                    value="10-50" />
-                                                <span class="fw-bolder fs-3">10-50</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="num_of_branches"
-                                                    value="50+" />
-                                                <span class="fw-bolder fs-3">50+</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
+                                        <!--end::Form group-->
                                     </div>
-                                    <!--end::Row-->
-
                                 </div>
-                                <!--end::Input group-->
-                                <div class="mb-10 fv-row">
-                                    <!--begin::Label-->
-                                    <label class="d-flex align-items-center form-label mb-3">No of Deliveries
-                                        Per
-                                        Day
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                            title="Provide your team size to help us setup your billing"></i></label>
-                                    <!--end::Label-->
-                                    <!--begin::Row-->
-                                    <div class="row mb-2" data-kt-buttons="true">
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="account_team_size"
-                                                    value="1-50" />
-                                                <span class="fw-bolder fs-3">1-50</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4 active">
-                                                <input type="radio" class="btn-check" name="account_team_size"
-                                                    checked="checked" value="50-100" />
-                                                <span class="fw-bolder fs-3">50-100</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="account_team_size"
-                                                    value="100-150" />
-                                                <span class="fw-bolder fs-3">100-150</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <!--begin::Option-->
-                                            <label
-                                                class="btn btn-outline btn-outline-dashed btn-outline-default w-100 p-4">
-                                                <input type="radio" class="btn-check" name="account_team_size"
-                                                    value="500+" />
-                                                <span class="fw-bolder fs-3">500+</span>
-                                            </label>
-                                            <!--end::Option-->
-                                        </div>
-                                        <!--end::Col-->
+                                <!--end::Repeater-->
+
+
+                                <!--begin::Col-->
+                                {{-- <div class="col-xl-8">
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label required">Areas</label>
+                                        <!--end::Label-->
+
+                                        <select id="area" class="form-select form-select-lg form-select-solid"
+                                            data-control="select2" data-placeholder="Choose Areas" name="area"
+                                            data-allow-clear="true" multiple="multiple">
+                                        </select>
+                                        <!--hidden text field-->
+                                        <input type="hidden" id="areas" name="areas" />
                                     </div>
-                                    <!--end::Row-->
+                                </div> --}}
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                {{-- <div class="col-xl-8">
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label required">Delivery
+                                            Slots</label>
+                                        <!--end::Label-->
 
-                                </div>
+                                        <select id="delivery_slots" class="form-select form-select-lg form-select-solid"
+                                            data-control="select2" data-placeholder="Choose Delivery slots"
+                                            name="delivery_slots" data-allow-clear="true" multiple="multiple">
+                                        </select>
+                                        <!--hidden text field-->
+                                        <input type="hidden" id="selected_delivery_slots"
+                                            name="selected_delivery_slots" />
+                                    </div>
+                                </div> --}}
+                                <!--end::Col-->
+
+                                <!--end::Repeater-->
+
+
+
                                 <div
                                     class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
                                     <!--begin::Icon-->
@@ -605,27 +694,14 @@
                                     <div class="d-flex flex-stack flex-grow-1">
                                         <!--begin::Content-->
                                         <div class="fw-bold">
-                                            <h4 class="text-gray-900 fw-bolder">No of deliveries will determine
-                                                cost
-                                                per
-                                                delivery</h4>
-                                            <div class="fs-6 text-gray-700">Below is the pricing for all the
-                                                areas
-                                                of
-                                                your selected cities <b>Per Day</b> you can check pricing
-                                                details
-                                                <a href="#" class="fw-bolder">here</a>
+                                            <h4 class="text-gray-900 fw-bolder">You will get notified about all the
+                                                pricing details </h4>
+                                            <div class="fs-6 text-gray-700">Your branch area coverage and timeslots
+                                                will
+                                                determine pricing for each service. For more details
+                                                <a href="#" class="fw-bolder">click here</a>
                                             </div>
-                                            <ul>
 
-                                                <li>First 8 deliveries = USD 5.4/Delivery</li>
-                                                <li>9 - 20 deliveries = USD 5.13/Delivery</li>
-                                                <li>21 - 40 deliveries = USD 4.59/Delivery</li>
-                                                <li>41 - 80 deliveries = USD 4.32/Delivery</li>
-                                                <li>81 - 160 deliveries = USD 4.05/Delivery</li>
-                                                <li>161 - 320 deliveries = USD 3.78/Delivery</li>
-
-                                            </ul>
                                         </div>
                                         <!--end::Conte  nt-->
                                     </div>
@@ -637,7 +713,7 @@
                         <!--end::Step 3-->
                         <!--------------------------------------------------------------------------------->
                         <!--begin::Step 4-->
-                        <div class="" data-kt-stepper-element="content">
+                        {{-- <div class="" data-kt-stepper-element="content">
                             <!--begin::Wrapper-->
                             <div class="w-100">
                                 <!--begin::Heading-->
@@ -834,7 +910,8 @@
                                             <!--begin::Content-->
                                             <div class="fw-bold">
                                                 <h4 class="text-gray-900 fw-bolder">Go on and login to explore</h4>
-                                                <div class="fs-6 text-gray-700">>All the pricing related info and much
+                                                <div class="fs-6 text-gray-700">>All the pricing related info and
+                                                    much
                                                     more will
                                                     be available once you login
 
@@ -854,7 +931,7 @@
                         <!--end::Step 5-->
                         <!--------------------------------------------------------------------------------->
                         <!--begin::Actions-->
-                        <div class="d-flex flex-stack pt-15">
+                        <div class="d-flex flex-stack mt-2">
                             <div class="mr-2">
                                 <button type="button" class="btn btn-lg btn-light-primary me-3"
                                     data-kt-stepper-action="previous">
@@ -917,7 +994,7 @@
             </div>
             <!--end::Content-->
             <!--begin::Footer-->
-            <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
+            {{-- <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
                 <!--begin::Links-->
                 <div class="d-flex flex-center fw-bold fs-6">
                     <a href="#" class="text-muted text-hover-primary px-2" target="_blank">About</a>
@@ -925,7 +1002,7 @@
                     <a href="#" class="text-muted text-hover-primary px-2" target="_blank">Purchase</a>
                 </div>
                 <!--end::Links-->
-            </div>
+            </div> --}}
             <!--end::Footer-->
         </div>
         <!--end::Body-->
@@ -935,30 +1012,175 @@
 <!--end::Root-->
 @endsection
 
-@section('extra_js')
-<script src="{{ asset('static/js/custom/authentication/sign-up/onboarding.js')}}"></script>
+@section('extra_scripts')
+<script src="{{ asset('static/js/custom/authentication/sign-up/onboarding.js') }}"></script>
+<script src="{{ asset('static/js/custom/core/locations.js') }}"></script>
+<script src="{{ asset('static/plugins/custom/utilities/multiselect-dropdown.js') }}"></script>
 <script>
-    const countriesSelect = document.getElementById("countries");
+    $('#kt_docs_repeater_advanced').repeater({
+            initEmpty: false,
 
-        fetch("https://restcountries.com/v3.1/all")
-            .then((response) => response.json())
-            .then((data) => {
-                const countries = data.map((country) => ({
-                    name: country.name.common,
-                    code: country.cca2,
-                }));
+            defaultValues: {
+                'text-input': 'foo'
+            },
 
-                countries.forEach((country) => {
-                    const option = document.createElement("option");
-                    option.value = country.code;
-                    option.text = country.name;
-                    if (country.name === "United Arab Emirates") {
-                        // Set the default selected option to Dubai
-                        option.selected = true;
-                    }
-                    countriesSelect.appendChild(option);
+            show: function() {
+                $(this).slideDown();
+
+                // Re-init select2
+                $(this).find('[data-kt-repeater="select2"]').select2();
+            },
+
+            hide: function(deleteElement) {
+                $(this).slideUp(deleteElement);
+            },
+
+            ready: function() {
+                // Init select2
+                $('[data-kt-repeater="select2"]').select2();
+
+
+            }
+        });
+
+        $(document).ready(function() {
+            $('#location_delivery_slots_repeater').repeater({
+                initEmpty: false,
+
+                defaultValues: {
+                    'text-input': 'foo'
+                },
+
+                show: function() {
+                    $(this).slideDown();
+
+                },
+
+                hide: function(deleteElement) {
+                    $(this).slideUp(deleteElement);
+                }
+            });
+        });
+
+        function fetchingCityByState(selectElement) {
+            var stateID = selectElement.value;
+            var cityDropdown = $(selectElement).closest('.form-group').find('.city-dropdown')[0];
+
+            // Clear current options
+            cityDropdown.innerHTML = '<option value="">Select City</option>';
+
+            // Make AJAX request to fetch cities
+            if (stateID) {
+                var url = "/core/settings/locations/get-cities";
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    dataType: "json",
+                    data: {
+                        state_id: stateID
+                    },
+                    success: function(response) {
+                        // Keep track of the iterations
+                        var iteration = 0;
+                        // Populate city dropdown
+                        // Loop through the response data and create an option element for each item
+                        response.forEach((item) => {
+                            // If it's the first iteration, append the "Select All" option
+                            if (iteration === 0) {
+                                const allOption = document.createElement("option");
+                                allOption.value = "all";
+                                allOption.text = "Select All";
+                                cityDropdown.appendChild(allOption);
+                            }
+                            const option = document.createElement("option");
+                            option.value = item.id; // Set the value attribute
+                            option.text = item.name; // Set the displayed text
+                            cityDropdown.appendChild(option); // Add the option to the dropdown
+                            iteration++; // Increase the counter
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    },
                 });
-            })
-            .catch((error) => console.log(error));
+
+            }
+        }
+
+        function fetechingStateDataLocal(selectElement) {
+            var countryId = "";
+            var stateDropdown = "";
+
+            // Find the parent repeater item to get its index
+            var repeaterItem = $(selectElement).closest('[data-repeater-item]');
+            var index = repeaterItem.index();
+
+            // Find the specific country and state dropdowns within the repeater item
+            var countryDropdown = repeaterItem.find('.form-select-country')[0];
+            var stateDropdown = repeaterItem.find('.form-select-state')[0];
+
+            if (selectElement) {
+                // Get the selected value of the country dropdown
+                countryId = $(selectElement).val();
+            } else {
+                // Fallback: If no selectElement provided, assume it's the initial call
+                countryId = document.getElementById("country").value;
+                stateDropdown = document.getElementById("state");
+            }
+
+            // Clear current options in the state dropdown
+            stateDropdown.innerHTML = '<option value="">Select state</option>';
+
+            // Make AJAX request to fetch states
+            if (countryId) {
+                var url = "/core/settings/locations/get-states";
+
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    dataType: "json",
+                    data: {
+                        country_id: countryId
+                    },
+                    success: function(response) {
+                        var states = response;
+                        // Populate states dropdown
+                        states.forEach((item) => {
+                            const option = document.createElement("option");
+                            option.value = item.id;
+                            option.text = item.name;
+                            stateDropdown.appendChild(option);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    },
+                });
+            }
+        }
+
+
+
+        $('#city').change(function() {
+            var selectedCities = $(this).val();
+            if (!Array.isArray(selectedCities)) {
+                selectedCities = [];
+            }
+
+            if (selectedCities.includes('all')) {
+                selectedCities = [];
+                $(this).find('option').each(function() {
+                    if ($(this).val() != 'all') {
+                        selectedCities.push($(this).val());
+                    }
+                });
+
+                // Select all options in the dropdown, except 'all'
+                $(this).val(selectedCities).trigger('change');
+            }
+
+            // Update hidden field
+            $('#cities').val(selectedCities.join(','));
+        });
 </script>
 @endsection

@@ -66,8 +66,8 @@ class VehicleRepository implements VehicleInterface{
 
  }
  public function updateVehicle($id,$registrationNumber,$engineNumber,$chassisNumber,$vehicleModel,$vehicleYear,$vehicleColor,$vehicle_active_status,$vehicleTypeId,$vehiclePicture = null,$vehicleMileage,$registrationPicture = null,$registrationIssueDate,$registrationExpiryDate,$insurancePicture= null,$insuranceIssueDate,$insuranceExpiryDate,$municipalityPicture= null,$municipalityIssueDate,$municipalityExpiryDate,$apiUnitId,$qrCode){
-      
-  
+
+
       $vehicle =Vehicle::find($id);
 
       $vehicle->api_unit_id = $apiUnitId;
@@ -102,9 +102,12 @@ class VehicleRepository implements VehicleInterface{
     return $vehicle->save();
 
  }
-
  public function getVehicles(){
-   return Vehicle::with('vehicleType', 'vehicleModel','lastIncompleteTimeline.driver.employee')->get();
+    return Vehicle::all();
+ }
+
+ public function getDetailedVehicles(){
+   return Vehicle::with('vehicleType', 'vehicleModel')->get();
  }
  public function getVehicle($id){
   return Vehicle::find($id);

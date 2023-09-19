@@ -184,7 +184,7 @@ class EmployeesRepository implements EmployeesInterface
      */
     public function getEmployees()
     {
-        return Employees::all();
+        return Employees::with('designation')->get();
     }
 
     /**

@@ -42,4 +42,18 @@ class CountryRepository implements CountryInterface
 
         // return Country::all();
     }
+
+    public function getCountryWithItsLocations()
+    {
+        // return Country::with(['states.cities.areas'])->where(["active_status" => 1])->get();
+        return Country::with(['states' => function ($query) {
+            $query->where('active_status', 1)->with(['cities' => function ($query) {
+                $query->where('active_status', 1)->with(['areas' => function ($query) {
+                    $query->where('active_status', 1);
+                }]);
+            }]);
+        }])
+            ->where('active_status', 1) // Filter by active_status in Country table
+            ->get();
+    }
 }

@@ -68,15 +68,25 @@ var KTCreateAccount = (function () {
                             },
                             first_name: {
                                 validators: {
-                                    notvalidatorsEmpty: {
-                                        message: "first name is required",
+                                    notEmpty: {
+                                        message: "First name is required",
+                                    },
+                                    regexp: {
+                                        regexp: /^[^\d]+$/,
+                                        message:
+                                            "First name should not contain digits",
                                     },
                                 },
                             },
                             last_name: {
                                 validators: {
                                     notEmpty: {
-                                        message: "last name is required",
+                                        message: "Last name is required",
+                                    },
+                                    regexp: {
+                                        regexp: /^[^\d]+$/,
+                                        message:
+                                            "First name should not contain digits",
                                     },
                                 },
                             },
@@ -105,7 +115,11 @@ var KTCreateAccount = (function () {
                             email: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Email Adress is required",
+                                        message: "Email Address is required",
+                                    },
+                                    emailAddress: {
+                                        message:
+                                            "The input is not a valid email address",
                                     },
                                 },
                             },
@@ -117,7 +131,19 @@ var KTCreateAccount = (function () {
                                 },
                             },
                             confirm_password: {
-                                validators: { notEmpty: { message: "" } },
+                                validators: {
+                                    notEmpty: {
+                                        message: "Confirm Password is required",
+                                    },
+
+                                    identical: {
+                                        compare: function () {
+                                            return $('[name="password"]').val();
+                                        },
+                                        message:
+                                            "The password and its confirm must be the same",
+                                    },
+                                },
                             },
                         },
                         plugins: {
@@ -134,44 +160,44 @@ var KTCreateAccount = (function () {
                     FormValidation.formValidation(i, {
                         fields: {
                             logo: {
-                                validators: {
-                                    notEmpty: { message: "No File Choosen" },
-                                },
+                                // validators: {
+                                //     notEmpty: { message: "No File Choosen" },
+                                // },
                             },
                             phone_no: {
-                                validators: {
-                                    notEmpty: {
-                                        message: "Phone Number is required",
-                                    },
-                                },
+                                // validators: {
+                                //     notEmpty: {
+                                //         message: "Phone Number is required",
+                                //     },
+                                // },
                             },
                             country: {
-                                validators: {
-                                    notEmpty: {
-                                        message: "Country Not Selected",
-                                    },
-                                },
+                                // validators: {
+                                //     notEmpty: {
+                                //         message: "Country Not Selected",
+                                //     },
+                                // },
                             },
                             city: {
-                                validators: {
-                                    notEmpty: {
-                                        message: "Country Not Selected",
-                                    },
-                                },
+                                // validators: {
+                                //     notEmpty: {
+                                //         message: "City Not Selected",
+                                //     },
+                                // },
                             },
                             state: {
-                                validators: {
-                                    notEmpty: {
-                                        message: "Country Not Selected",
-                                    },
-                                },
+                                // validators: {
+                                //     notEmpty: {
+                                //         message: "State Not Selected",
+                                //     },
+                                // },
                             },
                             contact_email: {
-                                validators: {
-                                    notEmpty: {
-                                        message: "Contact Email is Required",
-                                    },
-                                },
+                                // validators: {
+                                //     notEmpty: {
+                                //         message: "Contact Email is Required",
+                                //     },
+                                // },
                             },
                         },
                         plugins: {
@@ -328,120 +354,6 @@ KTUtil.onDOMContentLoaded(function () {
     KTCreateAccount.init();
 });
 
-// function ajaxCall() {
-//     this.send = function (data, url, method, success, type) {
-//         type = "json";
-//         var successRes = function (data) {
-//             success(data);
-//         };
-//         var errorRes = function (xhr, ajaxOptions, thrownError) {
-//             console.log(
-//                 thrownError +
-//                     "\r\n" +
-//                     xhr.statusText +
-//                     "\r\n" +
-//                     xhr.responseText
-//             );
-//         };
-//         jQuery.ajax({
-//             url: url,
-//             type: method,
-//             data: data,
-//             success: successRes,
-//             error: errorRes,
-//             dataType: type,
-//             timeout: 60000,
-//         });
-//     };
-// }
-
-// function locationInfo() {
-//     var rootUrl = "https://geodata.phplift.net/api/index.php";
-//     var call = new ajaxCall();
-//     this.getCities = function (id) {
-//         jQuery(".cities option:gt(0)").remove();
-//         var url = rootUrl + "?type=getCities&countryId=" + "&stateId=" + id;
-//         var method = "post";
-//         var data = {};
-//         jQuery(".cities").find("option:eq(0)").html("Please wait..");
-//         call.send(data, url, method, function (data) {
-//             jQuery(".cities").find("option:eq(0)").html("Select City");
-//             var listlen = Object.keys(data["result"]).length;
-//             if (listlen > 0) {
-//                 jQuery.each(data["result"], function (key, val) {
-//                     var option = jQuery("");
-//                     option.attr("value", val.name).text(val.name);
-//                     jQuery(".cities").append(option);
-//                 });
-//             }
-//             jQuery(".cities").prop("disabled", false);
-//         });
-//     };
-
-//     this.getStates = function (id) {
-//         jQuery(".states option:gt(0)").remove();
-//         jQuery(".cities option:gt(0)").remove();
-//         var stateClasses = jQuery("#stateId").attr("class");
-
-//         var url = rootUrl + "?type=getStates&countryId=" + id;
-//         var method = "post";
-//         var data = {};
-//         jQuery(".states").find("option:eq(0)").html("Please wait..");
-//         call.send(data, url, method, function (data) {
-//             jQuery(".states").find("option:eq(0)").html("Select State");
-
-//             jQuery.each(data["result"], function (key, val) {
-//                 var option = jQuery("");
-//                 option.attr("value", val.name).text(val.name);
-//                 option.attr("stateid", val.id);
-//                 jQuery(".states").append(option);
-//             });
-//             jQuery(".states").prop("disabled", false);
-//         });
-//     };
-
-//     this.getCountries = function () {
-//         var url = rootUrl + "?type=getCountries";
-//         var method = "post";
-//         var data = {};
-//         jQuery(".countries").find("option:eq(0)").html("Please wait..");
-//         call.send(data, url, method, function (data) {
-//             jQuery(".countries").find("option:eq(0)").html("Select Country");
-
-//             jQuery.each(data["result"], function (key, val) {
-//                 var option = jQuery("");
-
-//                 option.attr("value", val.name).text(val.name);
-//                 option.attr("countryid", val.id);
-
-//                 jQuery(".countries").append(option);
-//             });
-//             // jQuery(".countries").prop("disabled",false);
-//         });
-//     };
-// }
-
-// jQuery(function () {
-//     var loc = new locationInfo();
-//     loc.getCountries();
-//     jQuery(".countries").on("change", function (ev) {
-//         var countryId = jQuery("option:selected", this).attr("countryid");
-//         if (countryId != "") {
-//             loc.getStates(countryId);
-//         } else {
-//             jQuery(".states option:gt(0)").remove();
-//         }
-//     });
-//     jQuery(".states").on("change", function (ev) {
-//         var stateId = jQuery("option:selected", this).attr("stateid");
-//         if (stateId != "") {
-//             loc.getCities(stateId);
-//         } else {
-//             jQuery(".cities option:gt(0)").remove();
-//         }
-//     });
-// });
-
 var _token = $("input[name='_token']").val();
 $("#email_address").keyup(function () {
     var email_address = $("#email_address").val();
@@ -466,94 +378,45 @@ $("#email_address").keyup(function () {
     });
 });
 
-// function ajaxCall() {
-//     this.send = function (data, url, method, success, type) {
-//         type = "json";
-//         var successRes = function (data) {
-//             success(data);
-//         };
-//         var errorRes = function (xhr, ajaxOptions, thrownError) {
-//             console.log(
-//                 thrownError +
-//                     "\r\n" +
-//                     xhr.statusText +
-//                     "\r\n" +
-//                     xhr.responseText
-//             );
-//         };
-//         jQuery.ajax({
-//             url: url,
-//             type: method,
-//             data: data,
-//             success: successRes,
-//             error: errorRes,
-//             dataType: type,
-//             timeout: 60000,
-//         });
-//     };
-// }
+// config.js
 
-function fetchStates() {
-    var countryId = document.getElementById("country").value;
-    var stateDropdown = document.getElementById("state");
+
+function fetchDeliverySlotsOfCity() {
+    fetchAreasWithMultiSelectOption();
+    var cityID = document.getElementById("city").value;
+    var deliverySlotsDropdown = document.getElementById("delivery_slots");
 
     // Clear current options
-    stateDropdown.innerHTML = '<option value="">Select state</option>';
+    deliverySlotsDropdown.innerHTML = '<option value="">Select Slot</option>';
 
-    // Make AJAX request to fetch states
-    if (countryId) {
-        var url = "/core/settings/locations/get-states";
+    // Make AJAX request to fetch area
+    if (cityID) {
+        var url = "/core/settings/delivery-slots/get-delivery-slots-of-city";
 
         $.ajax({
             url: url,
             method: "GET",
             dataType: "json",
-            data: { country_id: countryId },
+            data: { city_id: cityID },
             success: function (response) {
-                var states = response;
-                // Populate states dropdown
-                // Loop through the response data and create an option element for each item
-                states.forEach((item) => {
-                    console.log(item);
-                    const option = document.createElement("option");
-                    option.value = item.id; // Set the value attribute
-                    option.text = item.name; // Set the displayed text
-                    stateDropdown.appendChild(option); // Add the option to the dropdown
-                });
-            },
-            error: function (error) {
-                console.log(error);
-            },
-        });
-    }
-}
+                // Keep track of the iterations
+                var iteration = 0;
 
-function fetchCities() {
-    var stateID = document.getElementById("state").value;
-    var cityDropdown = document.getElementById("city");
-
-    // Clear current options
-    cityDropdown.innerHTML = '<option value="">Select city</option>';
-
-    // Make AJAX request to fetch city
-    if (stateID) {
-        var url = "/core/settings/locations/get-cities";
-
-        $.ajax({
-            url: url,
-            method: "GET",
-            dataType: "json",
-            data: { state_id: stateID },
-            success: function (response) {
-                var city = response;
                 // Populate city dropdown
                 // Loop through the response data and create an option element for each item
-                city.forEach((item) => {
-                    console.log(item);
+                response.forEach((item) => {
+                    // If it's the first iteration, append the "Select All" option
+                    if (iteration === 0) {
+                        const allOption = document.createElement("option");
+                        allOption.value = "all";
+                        allOption.text = "Select All";
+                        deliverySlotsDropdown.appendChild(allOption);
+                    }
                     const option = document.createElement("option");
                     option.value = item.id; // Set the value attribute
-                    option.text = item.name; // Set the displayed text
-                    cityDropdown.appendChild(option); // Add the option to the dropdown
+                    option.text = item.start_time + " - " + item.end_time; // Set the displayed text
+                    deliverySlotsDropdown.appendChild(option); // Add the option to the dropdown
+                    iteration++; // Increase the counter
                 });
             },
             error: function (error) {
@@ -563,13 +426,54 @@ function fetchCities() {
     }
 }
 
-function fetchAreas() {
-    // console.log("Here");
+function fetchAreasWithMultiSelectOption() {
     var cityID = document.getElementById("city").value;
-    // var cityName = document.getElementById("city").text;
-
-    // console.log(cityName);
     var areaDropdown = document.getElementById("area");
+
+    // Clear current options
+    areaDropdown.innerHTML = '<option value="">Select area</option>';
+
+    // Make AJAX request to fetch area
+    if (cityID) {
+        var url = "/core/settings/locations/get-areas";
+
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            data: { city_id: cityID },
+            success: function (response) {
+                // Keep track of the iterations
+                var iteration = 0;
+
+                // Populate city dropdown
+                // Loop through the response data and create an option element for each item
+                response.forEach((item) => {
+                    // If it's the first iteration, append the "Select All" option
+                    if (iteration === 0) {
+                        const allOption = document.createElement("option");
+                        allOption.value = "all";
+                        allOption.text = "Select All";
+                        areaDropdown.appendChild(allOption);
+                    }
+                    const option = document.createElement("option");
+                    option.value = item.id; // Set the value attribute
+                    option.text = item.name; // Set the displayed text
+                    areaDropdown.appendChild(option); // Add the option to the dropdown
+                    iteration++; // Increase the counter
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+}
+
+function fetchAddressAreas() {
+    var cityID = document.getElementById("address_city").value;
+
+    var areaDropdown = document.getElementById("address_area");
 
     // Clear current options
     areaDropdown.innerHTML = '<option value="">Select area</option>';
@@ -602,89 +506,72 @@ function fetchAreas() {
     }
 }
 
-// function locationInfo() {
-//     var rootUrl = "https://geodata.phplift.net/api/index.php";
-//     var call = new ajaxCall();
-//     this.getCities = function (id) {
-//         jQuery(".cities option:gt(0)").remove();
-//         var url = rootUrl + "?type=getCities&countryId=" + "&stateId=" + id;
-//         var method = "post";
-//         var data = {};
-//         jQuery(".cities").find("option:eq(0)").html("Please wait..");
-//         call.send(data, url, method, function (data) {
-//             jQuery(".cities").find("option:eq(0)").html("Select City");
-//             var listlen = Object.keys(data["result"]).length;
-//             if (listlen > 0) {
-//                 jQuery.each(data["result"], function (key, val) {
-//                     var option = jQuery("");
-//                     option.attr("value", val.name).text(val.name);
-//                     jQuery(".cities").append(option);
-//                 });
-//             }
-//             jQuery(".cities").prop("disabled", false);
-//         });
-//     };
+function fetchAddressCities() {
+    var stateID = document.getElementById("address_state").value;
+    var cityDropdown = document.getElementById("address_city");
 
-//     this.getStates = function (id) {
-//         jQuery(".states option:gt(0)").remove();
-//         jQuery(".cities option:gt(0)").remove();
-//         var stateClasses = jQuery("#stateId").attr("class");
+    // Clear current options
+    cityDropdown.innerHTML = '<option value="">Select city</option>';
 
-//         var url = rootUrl + "?type=getStates&countryId=" + id;
-//         var method = "post";
-//         var data = {};
-//         jQuery(".states").find("option:eq(0)").html("Please wait..");
-//         call.send(data, url, method, function (data) {
-//             jQuery(".states").find("option:eq(0)").html("Select State");
+    // Make AJAX request to fetch city
+    if (stateID) {
+        var url = "/core/settings/locations/get-cities";
 
-//             jQuery.each(data["result"], function (key, val) {
-//                 var option = jQuery("");
-//                 option.attr("value", val.name).text(val.name);
-//                 option.attr("stateid", val.id);
-//                 jQuery(".states").append(option);
-//             });
-//             jQuery(".states").prop("disabled", false);
-//         });
-//     };
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            data: { state_id: stateID },
+            success: function (response) {
+                var city = response;
+                // Populate city dropdown
+                // Loop through the response data and create an option element for each item
+                city.forEach((item) => {
+                    console.log(item);
+                    const option = document.createElement("option");
+                    option.value = item.id; // Set the value attribute
+                    option.text = item.name; // Set the displayed text
+                    cityDropdown.appendChild(option); // Add the option to the dropdown
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+}
 
-//     this.getCountries = function () {
-//         var url = rootUrl + "?type=getCountries";
-//         var method = "post";
-//         var data = {};
-//         jQuery(".countries").find("option:eq(0)").html("Please wait..");
-//         call.send(data, url, method, function (data) {
-//             jQuery(".countries").find("option:eq(0)").html("Select Country");
+function fetchAddressStates() {
+    var countryId = document.getElementById("address_country").value;
+    var stateDropdown = document.getElementById("address_state");
 
-//             jQuery.each(data["result"], function (key, val) {
-//                 var option = jQuery("");
+    // Clear current options
+    stateDropdown.innerHTML = '<option value="">Select state</option>';
 
-//                 option.attr("value", val.name).text(val.name);
-//                 option.attr("countryid", val.id);
+    // Make AJAX request to fetch states
+    if (countryId) {
+        var url = "/core/settings/locations/get-states";
 
-//                 jQuery(".countries").append(option);
-//             });
-//             // jQuery(".countries").prop("disabled",false);
-//         });
-//     };
-// }
-
-// jQuery(function () {
-//     var loc = new locationInfo();
-//     loc.getCountries();
-//     jQuery(".countries").on("change", function (ev) {
-//         var countryId = jQuery("option:selected", this).attr("countryid");
-//         if (countryId != "") {
-//             loc.getStates(countryId);
-//         } else {
-//             jQuery(".states option:gt(0)").remove();
-//         }
-//     });
-//     jQuery(".states").on("change", function (ev) {
-//         var stateId = jQuery("option:selected", this).attr("stateid");
-//         if (stateId != "") {
-//             loc.getCities(stateId);
-//         } else {
-//             jQuery(".cities option:gt(0)").remove();
-//         }
-//     });
-// });
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "json",
+            data: { country_id: countryId },
+            success: function (response) {
+                var states = response;
+                // Populate states dropdown
+                // Loop through the response data and create an option element for each item
+                states.forEach((item) => {
+                    console.log(item);
+                    const option = document.createElement("option");
+                    option.value = item.id; // Set the value attribute
+                    option.text = item.name; // Set the displayed text
+                    stateDropdown.appendChild(option); // Add the option to the dropdown
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+}

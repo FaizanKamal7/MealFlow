@@ -2,25 +2,27 @@
 
 namespace Modules\BusinessService\Http\Controllers\Onboarding;
 
+use App\Http\Helper\Helper;
+use App\Interfaces\AreaInterface;
+use App\Interfaces\CityInterface;
 use App\Interfaces\CountryInterface;
+use App\Interfaces\StateInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
-use App\Models\Country;
-// use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Response;
 use Modules\BusinessService\Interfaces\BranchCoverageInterface;
 use Modules\BusinessService\Interfaces\BranchInterface;
 use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\BusinessUserInterface;
 use Modules\BusinessService\Interfaces\OnboardingInterface;
+use Modules\BusinessService\Interfaces\BranchCoverageDeliverySlotsInterface;
 use Illuminate\Support\Facades\Session;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Modules\BusinessService\Http\Requests\BusinessRequest;
 
 class BusinessOnboardingController extends Controller
 {
@@ -34,11 +36,15 @@ class BusinessOnboardingController extends Controller
     private BranchCoverageInterface $branchCoverageRepository;
     private UserRoleInterface $userRoleRepository;
     private CountryInterface $countryRepository;
+    private StateInterface $stateRepository;
+    private CityInterface $cityRepository;
+    private AreaInterface $areaRepository;
+    private BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository;
+    private Helper $helper;
 
 
-    /**
-     * @param OnboardingInterface $designationRepository
-     */
+
+
     public function __construct(
         OnboardingInterface $onboardingRepository,
         BranchInterface $branchRepository,
@@ -49,6 +55,12 @@ class BusinessOnboardingController extends Controller
         BranchCoverageInterface $branchCoverageRepository,
         UserRoleInterface $userRoleRepository,
         CountryInterface $countryRepository,
+        StateInterface $stateRepository,
+        CityInterface $cityRepository,
+        AreaInterface $areaRepository,
+        BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository,
+        Helper $helper
+
 
     ) {
         $this->onboardingRepository = $onboardingRepository;
@@ -60,6 +72,11 @@ class BusinessOnboardingController extends Controller
         $this->branchCoverageRepository = $branchCoverageRepository;
         $this->userRoleRepository = $userRoleRepository;
         $this->countryRepository = $countryRepository;
+        $this->stateRepository = $stateRepository;
+        $this->cityRepository = $cityRepository;
+        $this->areaRepository = $areaRepository;
+        $this->branchCoverageDeliverySlotRepository = $branchCoverageDeliverySlotRepository;
+        $this->helper = $helper;
     }
 
     /**
@@ -74,34 +91,79 @@ class BusinessOnboardingController extends Controller
         return view('businessservice::onboarding.onboarding', ['countries' => $countries, 'business_categories' => $business_categories]);
     }
 
-    public function businessOnboarding(Request $request)
+    public function businessOnboarding(BusinessRequest $request)
     {
         // abort_if(Gate::denies('add_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $request->validated();
+        $first_name = $request->first_name;
+        $last_name = $request->last_name;
+        $email = $request->email;
+        $password = $request->password;
+        $buisness_name = $request->buisness_name;
+        $logo = $request->logo;
+        $card_name = $request->card_name;
+        $card_number = $request->card_number;
+        $card_expiry_month = $request->card_expiry_month;
+        $card_expiry_year = $request->card_expiry_year;
+        $card_cvv = $request->card_cvv;
+        $business_category_id = $request->category;
+        $phone = $request->phone;
+        $address = $request->address;
+        $address_country = $request->address_country;
+        $address_state = $request->address_state;
+        $address_city = $request->address_city;
+        $address_area = $request->address_area;
+        $latitude = $request->latitude;
+        $longitude = $request->longitude;
+        $area_coverage_list = $request->area_coverage_list;
+        $cities = $this->helper->extractCitiesFromCoveragesSelection($area_coverage_list);
+
+
+        // echo "<pre>" . $latitude . "-" . $longitude . "</pre>";
+
+        // --  Selected address from google map locations
+        if ($request->latitude != 0) {
+            $map_location_names = $this->helper->getLocationFromCoordinates($latitude, $longitude);
+            $db_map_location_ids = $this->helper->findDBLocationsWithNames($map_location_names['country'], $map_location_names['state'], $map_location_names['city'], $map_location_names['area']);
+
+            $address_country = $db_map_location_ids['country_id'] != '' ? $db_map_location_ids['country_id'] : null;
+            $address_state = $db_map_location_ids['state_id'] != '' ? $db_map_location_ids['state_id'] : null;
+            $address_city = $db_map_location_ids['city_id'] != '' ? $db_map_location_ids['city_id'] : null;
+            $address_area = $db_map_location_ids['area_id'] != '' ?  $db_map_location_ids['area_id'] : null;
+        }
+        // echo "<pre> address_country: " . print_r($address_country, true) . "</pre>";
+        // echo "<pre> address_state: " . print_r($address_state, true) . "</pre>";
+        // echo "<pre> address_city: " . print_r($address_city, true) . "</pre>";
+        // echo "<pre> address_area: " . print_r($address_area, true) . "</pre>";
+        // echo "<pre>cities" . json_encode($cities) . "-" . $longitude . "</pre>";
+        // dd($area_coverage_list);
+
+
         try {
             // --- Adding data in users table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $user = $this->userRepository->createUser(
-                name: $request->get("first_name") . " " . $request->get("last_name"),
-                email: $request->get("contact_email"),
-                password: Hash::make($request->get("password")),
-                isActive: true
-            );
+            $user = $this->userRepository->createUser([
+                'name' => $first_name . " " . $last_name,
+                'email' =>  $email,
+                'password' => Hash::make($password),
+                'isActive' => true
+            ]);
+
 
             // --- Adding data in business table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $business = $this->businessRepository->createBusiness(
-                name: $request->get("first_name") . " " . $request->get("last_name"),
-                logo: $request->get("logo"),
-                card_name: $request->get("card_name"),
-                card_number: $request->get("card_number"),
-                card_expiry_month: $request->get("card_expiry_month"),
-                card_expiry_year: $request->get("card_expiry_year"),
-                card_cvv: $request->get("card_cvv"),
-                business_category_id: $request->get("category"),
+                name: $buisness_name,
+                logo: $logo,
+                card_name: $card_name,
+                card_number: $card_number,
+                card_expiry_month: $card_expiry_month,
+                card_expiry_year: $card_expiry_year,
+                card_cvv: $card_cvv,
+                business_category_id: $business_category_id,
                 admin: $user->id,
                 status: "NEW_REQUEST",
             );
-            echo " <br />business ID: " . $business->id;
 
             // // Adding ternary relation
             $this->businessUserRepository->createBusinessUser(
@@ -109,31 +171,52 @@ class BusinessOnboardingController extends Controller
                 user_id: $user->id,
             );
 
+
+
             $branch = $this->branchRepository->createBranch(
                 name: "Main Branch",
-                address: $request->get("address"),
-                phone: $request->get("phone"),
+                phone: $phone,
+                address: $address,
+                country_id: $address_country,
+                state_id: $address_state,
+                city_id: $address_city,
+                area_id: $address_area,
                 active_status: true,
                 is_main_branch: 1,
                 business_id: $business->id,
+                latitude: $latitude,
+                longitude: $longitude
             );
 
-            //TODO: get area_id, city_id, state_id, country_id dynamicaly
+            if (!empty($cities)) {
+                foreach ($cities as $city_id) {
+                    $areas = $this->areaRepository->getAreasOfCity($city_id);
+                    $areas = $areas->toArray();
+                    $city = $this->cityRepository->get($city_id);
+                    $state_id = $city->state->id;
+                    $country_id = $city->state->country->id;
+                    $this->helper->print_array("AREAS", $areas);
 
-            $branch_coverage = $this->branchCoverageRepository->createBranchCoverage(
-                active_status: true,
-                area_id: $request->get("area"),
-                city_id: $request->get("city"),
-                state: $request->get("state"),
-                country: $request->get("country"),
-                branch_id: $branch->id,
-            );
+                    foreach ($areas as $area) {
+                        $this->branchCoverageRepository->createBranchCoverage(
+                            active_status: 1,
+                            area_id: $area['id'],
+                            city_id: $city_id,
+                            state: $state_id,
+                            country: $country_id,
+                            branch_id: $branch->id,
+                        );
 
-            $this->signInBusinessAdminUponRegistration($request->get("contact_email"), $request->get("password"), $user->id);
+                        // foreach ($coverage_list_item['delivery_slots'] as $delivery_slot_id) {
+                        //     $this->branchCoverageDeliverySlotRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
+                        // }
+                    }
+                }
+            }
+            //  Sign in the newly onboarded customer
+            $this->signInBusinessAdminUponRegistration($request->get("email"), $request->get("password"), $user->id);
 
-            // echo "business_user ID: " . $business_user->id;
 
-            // $this->onboardingRepository->createBusiness($name);
             return redirect()->route("business_home")->with("success", "Business added successfully");
         } catch (Exception $exception) {
             Log::error($exception);
@@ -168,6 +251,8 @@ class BusinessOnboardingController extends Controller
         $states = $this->onboardingRepository->getCitiesOfState($_GET['country_id']);
         return response()->json($states->toArray());
     }
+
+
 
     // function getDependentCountryStateCity()
     // {
@@ -220,9 +305,8 @@ class BusinessOnboardingController extends Controller
     //     return view('businessservice::edit');
     // }
 
-    public function pricingCalculator(Request $request){
+    public function pricingCalculator(Request $request)
+    {
         return view("businessservice::onboarding.pricing");
-
     }
-
 }

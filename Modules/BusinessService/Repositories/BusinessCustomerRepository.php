@@ -3,6 +3,7 @@
 namespace Modules\BusinessService\Repositories;
 
 use Modules\BusinessService\Entities\BusinessCustomer;
+use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
 
 class BusinessCustomerRepository implements BusinessCustomerInterface
 {
@@ -12,18 +13,13 @@ class BusinessCustomerRepository implements BusinessCustomerInterface
      * @return mixed
      */
 
-    public function createBusinessCustomer($name, $status = "active")
+    public function create($data)
     {
-        $businessCategory = new BusinessCustomer([
-            "name" => $name,
-            "status" => $status,
-        ]);
-        $businessCategory->save();
-        return $businessCategory;
+        return BusinessCustomer::create($data);
     }
 
-    public function getBusinessCustomer()
+    public function getBusinessCustomer($business_id)
     {
-        return BusinessCustomer::all();
+        return BusinessCustomer::with('customers')->where(['business_id' => $business_id])->get();
     }
 }

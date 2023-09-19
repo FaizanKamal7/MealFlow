@@ -2,12 +2,15 @@
 
 namespace Modules\FleetService\Entities;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\FleetService\Database\factories\VehicleTimelinesFactory;
 
 class VehicleTimeline extends Model
 {
     use HasFactory;
+    use HasUuids;
     /**
      * Summary of fillable
      * @var array
@@ -27,9 +30,8 @@ class VehicleTimeline extends Model
      */
     protected static function newFactory()
     {
-        return \Modules\FleetService\Database\factories\VehicleLogFactory::new();
+        return VehicleTimelinesFactory::new();
     }
-
     /**
      * Summary of driver
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -38,6 +40,10 @@ class VehicleTimeline extends Model
     {
         return $this->belongsTo(Driver::class,'driver_id');
     }
+    public function employee(){
+        return $this->hasOneThrough(Driver::class,Employees::class);
+    }
+
     /**
      * Summary of vehicle
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

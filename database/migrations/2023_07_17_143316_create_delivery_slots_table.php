@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('delivery_slotss', function (Blueprint $table) {
+        Schema::create('delivery_slots', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->uuid('city_id');
             $table->string('start_time');
             $table->string('end_time');
-            $table->boolean('active_status');
-            $table->timestamp('deleted_at')->nullable();
+            $table->boolean('active_status')->default(true);
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });

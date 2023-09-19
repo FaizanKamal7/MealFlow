@@ -1,4 +1,4 @@
-@extends('fleetservice::layouts.master')
+@extends('layouts.admin_master')
 @section('title', 'Settings | Fleet Types')
 
 @section('extra_style')
@@ -424,7 +424,7 @@
         $(document).ready(function() {
             // Show the modal when there are validation errors
             $('#nixus_add_vehicle_type').modal('show');
-            
+
         });
     </script>
 @endif

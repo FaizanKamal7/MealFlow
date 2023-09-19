@@ -10,4 +10,6 @@ interface CityInterface
     public function getAllCities();
     public function getCitiesOfState($state_id);
     public function searchCity($search_term);
+    public function getWhere($where);
+    public function searchCityFirst($searchTerm);
 }

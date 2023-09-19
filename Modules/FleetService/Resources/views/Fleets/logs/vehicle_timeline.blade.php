@@ -1,4 +1,4 @@
-@extends('fleetservice::layouts.master')
+@extends('layouts.admin_master')
 @section('title', ' Vehicle Timeline')
 
 @section('extra_style')
