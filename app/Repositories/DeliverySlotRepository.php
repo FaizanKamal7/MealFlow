@@ -32,4 +32,13 @@ class DeliverySlotRepository implements DeliverySlotInterface
             'city_id' => $city_id,
         ]);
     }
+
+    public function getDeliverySlotsByTimeAndCity($start_time, $end_time, $city_id)
+    {
+        return DeliverySlot::where('start_time', $start_time)
+            ->where('end_time', $end_time)
+            ->where('city_id', $city_id)
+            ->where('active_status', 1)
+            ->first();
+    }
 }
