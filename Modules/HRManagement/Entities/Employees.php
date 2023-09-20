@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Request;
 use Modules\CRM\Entities\Leads;
+use Modules\FleetService\Entities\Driver;
+use Modules\HRManagement\Database\factories\EmployeesFactory;
 
 class Employees extends Model
 {
@@ -98,9 +100,14 @@ class Employees extends Model
     public function assignedLeads(){
         return $this->hasMany(Leads::class, "staff_id");
     }
+
+    public function drivers(){
+        return $this->hasMany(Driver::class);
+
+    }
     protected static function newFactory()
     {
-        return \Modules\HRManagement\Database\factories\EmployeesFactory::new();
+        return EmployeesFactory::new();
     }
 
     public static function boot()

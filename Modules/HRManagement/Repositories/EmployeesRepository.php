@@ -7,8 +7,7 @@ use Modules\HRManagement\Entities\Employees;
 use Modules\HRManagement\Entities\EmployeeSalary;
 use Modules\HRManagement\Interfaces\EmployeesInterface;
 
-class
-EmployeesRepository implements EmployeesInterface
+class EmployeesRepository implements EmployeesInterface
 {
 
     /**
@@ -187,7 +186,7 @@ EmployeesRepository implements EmployeesInterface
      */
     public function getEmployees()
     {
-        return Employees::all();
+        return Employees::with('designation')->get();
     }
 
     /**
