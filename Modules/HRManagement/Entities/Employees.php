@@ -32,6 +32,8 @@ class Employees extends Model
         "employee_type",
         "contract_start_date",
         "contract_end_date",
+        "duty_start_time",
+        "duty_end_time",
 
         "user_id",
         "designation_id",

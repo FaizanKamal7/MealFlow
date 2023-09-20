@@ -353,6 +353,36 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row mb-7">
+                                            <div class="col-lg-4 mb-3">
+                                                <div class="fv-row">
+                                                    <!--begin::Label-->
+                                                    <label class="fs-6 fw-bold form-label">
+                                                        <span class="required">Duty Start Time</span>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="time" class="form-control form-control-solid"
+                                                           name="duty_start_time" id="duty_start_time"
+                                                           value="" required/>
+                                                    <!--end::Input-->
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 mb-3">
+                                                <div class="fv-row">
+                                                    <!--begin::Label-->
+                                                    <label class="fs-6 fw-bold form-label">
+                                                        <span class="required">Duty End Time</span>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="time" class="form-control form-control-solid"
+                                                           name="duty_end_time" id="duty_end_time"
+                                                           value="" required/>
+                                                    <!--end::Input-->
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <!--begin::Input group-->
                                         <div class="row mb-7 d-none" id="contract_div">

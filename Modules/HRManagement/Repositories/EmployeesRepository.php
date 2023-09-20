@@ -31,7 +31,7 @@ EmployeesRepository implements EmployeesInterface
      */
     public function createEmployee($firstName, $lastName, $personalEmailAddress, $personalPhoneNumber, $companyEmailAddress = null, $companyPhoneNumber = null,
                                    $picture = null, $city = null, $country = null, $maritalStatus = null, $hireDate = null,
-                                   $probationStartDate = null, $probationEndDate = null, $designationId = null, $leavePolicyId = null, $employeeType = null, $contractStartDate = null, $contractEndDate = null, $userId = null)
+                                   $probationStartDate = null, $probationEndDate = null, $designationId = null, $leavePolicyId = null, $employeeType = null, $contractStartDate = null, $contractEndDate = null, $duty_start_time=null,$duty_end_time=null,  $userId = null)
     {
         $employee = new Employees([
             "first_name" => $firstName,
@@ -52,6 +52,8 @@ EmployeesRepository implements EmployeesInterface
             "employee_type" => $employeeType,
             "contract_start_date" => $contractStartDate,
             "contract_end_date" => $contractEndDate,
+            "duty_start_time" =>$duty_start_time,
+            "duty_end_time"=>$duty_end_time,
             "user_id" => $userId
         ]);
 
