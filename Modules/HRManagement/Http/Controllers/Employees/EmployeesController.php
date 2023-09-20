@@ -76,6 +76,7 @@ class EmployeesController extends Controller
      */
     public function viewEmployees()
     {
+        
         abort_if(Gate::denies('view_employee'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $employees = $this->employeesRepository->getEmployees();
         $departments = $this->departmentRepository->getDepartments();
