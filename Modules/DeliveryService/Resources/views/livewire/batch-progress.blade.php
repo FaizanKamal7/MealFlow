@@ -1,20 +1,21 @@
 <div>
-    @if (isset($batch) )
-    Deliveries Upload Progress
-    <br>
-    {{ $batch->processedJobs() }} completed out of {{ $batch->totalJobs() }} <br>
-    ({{ $batch->progress() }}%)
 
+    @if (!is_null($batch))
+    <div class="mt-4">
+        Uploading Deliveries Progress
+        <br>
+        {{$batch->processedJobs()}} completed out of {{ $batch->totalJobs()}}
+        ({{$batch->progress()}} %)
+    </div>
     @endif
 </div>
 
 @push('scripts')
 <script>
-    window.setInterval(refresh, 2000);
-
-    function refresh()
-    {
-        window.location.reload();
-    }
+    if (!is_null($batch) && $batch->progress()<100) {
+            window.setInterval(() => {
+               window.location.reload(); 
+            }, 2000);
+        }
 </script>
 @endpush

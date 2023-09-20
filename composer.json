@@ -16,7 +16,7 @@
         "laravolt/avatar": "^5.0",
         "livewire/livewire": "^2.12",
         "maatwebsite/excel": "^3.1",
-        "mhmiton/laravel-modules-livewire": "*",
+        "mhmiton/laravel-modules-livewire": "1.6.0",
         "nwidart/laravel-modules": "^9.0",
         "saade/blade-iconsax": "^1.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
@@ -28,10 +28,7 @@
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.4",
-
-
-        
+        "mockery/mockery": "^1.4.4",        
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
