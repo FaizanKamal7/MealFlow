@@ -4,7 +4,7 @@ namespace Modules\HRManagement\Interfaces;
 
 interface EmployeesInterface
 {
-public function createEmployee($firstName,$lastName,$personalEmailAddress,$personalPhoneNumber,$companyEmailAddress=null,$companyPhoneNumber=null,$picture=null,$city=null,$country=null,$maritalStatus=null,$hireDate=null,$probationStartDate=null,$probationEndDate=null,$designationId=null,$leavePolicyId=null, $employeeType=null, $contractStartDate=null, $contractEndDate=null, $userId=null);
+public function createEmployee($firstName,$lastName,$personalEmailAddress,$personalPhoneNumber,$companyEmailAddress=null,$companyPhoneNumber=null,$picture=null,$city=null,$country=null,$maritalStatus=null,$hireDate=null,$probationStartDate=null,$probationEndDate=null,$designationId=null,$leavePolicyId=null, $employeeType=null, $contractStartDate=null, $contractEndDate=null,$duty_start_time=null,$duty_end_time=null, $userId=null);
 public function updateEmployee($id,$firstName,$lastName,$personalEmailAddress,$personalPhoneNumber,$companyEmailAddress,$companyPhoneNumber,$picture,$city,$country,$maritalStatus,$hireDate,$probationStartDate,$probationEndDate,$designationId,$leavePolicyId,  $employeeType, $contractStartDate, $contractEndDate, $userId);
 public function getEmployees();
 public function getEmployee($id);
