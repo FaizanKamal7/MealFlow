@@ -48,11 +48,9 @@
                             @endforeach
                         </select>
                         <!--begin::Form-->
-                        {{-- @if (isset($batch)) --}}
-                        @livewire('deliveryservice::batch-progress')
-                        @livewire('batch-progress', ['batch' => $batch])
-
-                        {{-- @endif --}}
+                        @if (isset($batch))
+                        {{-- @livewire('deliveryservice::batch-progress', ['batch' => $batch]) --}}
+                        @endif
                         <br><br>
                         <form id="re_add_bulk_form" name="re_add_bulk_form" method="post" class="form"
                             action="{{ route('upload_deliveries_by_form')}}" enctype="multipart/form-data">
@@ -225,11 +223,6 @@
 --}}
 {{-- <script src="{{ asset('static/js/custom/documentation/general/datatables/subtable.js')}}"></script> --}}
 <script>
-    document.addEventListener('livewire:load', function () {
-        Livewire.on('refreshed', function () {
-            Livewire.emit('refresh');
-        });
-    });
 
     $(document).ready(function () {
         function reInitializeDataValidation(){
