@@ -11,6 +11,8 @@
 |
 */
 
+
+
 Route::prefix('hrmanagement')->group(function() {
     Route::get('/', 'HRManagementController@index');
 });
