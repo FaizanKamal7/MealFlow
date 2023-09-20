@@ -171,8 +171,8 @@ class DeliveryController extends Controller
                 if ($this->headersMatch($header, $expected_headers)) {
                     foreach ($chunk as $chunk_item_id => $row) {
                         $row = array_combine($header, $row);
-                        $chunks[$key][$chunk_item_id] = $row;
-                        $chunk[$chunk_item_id] = $row;
+                        // $chunks[$key][$chunk_item_id] = $row;
+                        // $chunk[$chunk_item_id] = $row;
 
 
                         $sheet_area_with_city = $row['area_with_city_select_option'];

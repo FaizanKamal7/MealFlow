@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('areas', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->boolean('active_status');
+            $table->boolean('active_status')->default(0);
             $table->string('name');
             $table->uuid('city_id');
             $table->bigInteger('geoname_id')->nullable();
