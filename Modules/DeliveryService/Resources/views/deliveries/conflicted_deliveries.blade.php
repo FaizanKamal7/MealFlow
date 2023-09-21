@@ -20,11 +20,31 @@
                             <!--begin::Title-->
                             <h2>Conflicted Deliveries</h2>
                             <!--end::Title-->
-                            <p>All the valid deliveries are uploaded successfuly. please review the conflicted
-                                deliveries and update accorrdingly </p>
+
                         </div>
 
                     </div>
+                    <!--begin::Alert-->
+                    <div class="alert alert-primary d-flex align-items-center p-5">
+                        <!--begin::Icon-->
+                        <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span class="path1"></span><span
+                                class="path2"></span></i>
+                        <!--end::Icon-->
+
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column">
+                            <!--begin::Title-->
+                            <h4 class="mb-1 text-dark">Valid Delivery Records Added</h4>
+                            <!--end::Title-->
+
+                            <!--begin::Content-->
+                            <span>But there are some conflicted deliveries. Please review the conflicted
+                                deliveries and update accorrdingly</span>
+                            <!--end::Content-->
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+                    <!--end::Alert-->
                     <!--end::Card header-->
 
                     <!--begin::Card body-->
@@ -61,62 +81,73 @@
                         ])
 
                         @endforeach --}}
-                        <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
-                            <thead>
-                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                    <th>Delivery Record</th>
-                                    <th class="min-w-125px">Conflict</th>
-                                    <th>Conflicted Record</th>
-                                    <th>Existing Record</th>
-                                    <th>Action</th>
+                        <form method="post" class="form" action="{{ route('upload_conflicted_deliveries')}}"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                                <thead>
+                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                        <th>Delivery Record</th>
+                                        <th class="min-w-125px">Conflict</th>
+                                        <th>Conflicted Record</th>
+                                        <th>Existing Record</th>
+                                        <th>Action</th>
 
-                                </tr>
-                            </thead>
-                            <tbody class="fw-bold text-gray-600">
-                                @foreach($conflicted_deliveries as $key => $conflicted_delivery)
-                                <form method="post" class="form" action="{{ route('upload_deliveries_by_form')}}"
-                                    enctype="multipart/form-data">
-                                    @csrf
+                                    </tr>
+                                </thead>
+                                <tbody class="fw-bold text-gray-600">
+                                    @foreach($conflicted_deliveries as $key => $conflicted_delivery)
+                                    <input type="hidden" name="delivery_data_{{$key}}"
+                                        value= {{json_encode($conflicted_delivery['passed_delivery_data'])}}>
                                     <tr>
                                         <td>
                                             Name: <b> {{ $conflicted_delivery['db_customer']->user->name }} </b><br>
-                                            Phone: <b>{{ $conflicted_delivery['db_customer']->user->phone }}</b> <br>
+                                            Phone: <b>{{ $conflicted_delivery['db_customer']->user->phone }}</b>
+                                            <br>
                                         </td>
                                         <td>
                                             {{ $conflicted_delivery['conflict'] }}
                                         </td>
                                         <td>
-                                            <a href="" class="update" data-name="name" data-type="text"
+                                            <a href="" class="update" data-name="passed_address" data-type="text"
                                                 data-pk="{{ $conflicted_delivery['customer_db_address']->id }}"
                                                 data-title="Enter name">{{$conflicted_delivery['passed_address'] }}</a>
                                             <div class="form-check form-check-custom form-check-solid">
                                                 <input class="form-check-input" name="address_{{$key}}" type="radio"
-                                                    value="" id="flexRadioChecked" checked="checked" />
+                                                    value={{$conflicted_delivery['passed_address'] }}
+                                                    id="flexRadioChecked" checked="checked" />
                                             </div>
                                         </td>
                                         <td>
-                                            <p data-name="email" data-type="text"
-                                                data-pk="{{ $conflicted_delivery['customer_db_address']->id }}"
-                                                data-title="Enter email">{{
-                                                $conflicted_delivery['customer_db_address']->address
-                                                }}</p>
+                                            <p>{{ $conflicted_delivery['customer_db_address']->address }}</p>
                                             <div class="form-check form-check-custom form-check-solid">
                                                 <input class="form-check-input" name="address_{{$key}}" type="radio"
-                                                    value="" id="flexRadioDefault" />
+                                                    value={{ $conflicted_delivery['customer_db_address']}}
+                                                    id="flexRadioDefault" />
                                             </div>
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-danger">
+                                            <a href="#" class="btn btn-danger  delete-row">
                                                 <i class="bi bi-trash3-fill fs-4 me-2">Delete</i>
                                             </a>
+                                            {{-- <button type="button" class="btn btn-danger delete-row">
+                                                <i class="bi bi-trash3-fill fs-4 me-2">Delete</i>
+                                            </button> --}}
+
+
                                         </td>
                                     </tr>
-                                </form>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <p>{{$conflicted_delivery['customer_db_address']->address}}</p>
-                        <!--begin::Actions-->
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <!--begin::Actions-->
+                            <a href="#">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-file-earmark-arrow-up fs-4 me-2"></i>
+                                    Upload Deliveries
+                                </button>
+                            </a>
+                        </form>
 
                     </div>
                     <!--end::Card body-->
@@ -134,21 +165,10 @@
 @endsection
 
 @section('extra_scripts')
-{{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.1.2/dist/alpine.js" defer></script> --}}
-{{--
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
---}}
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-{{--
-<link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css"
-    rel="stylesheet" /> --}}
-
 <script>
     $.fn.poshytip={defaults:null}
 </script>
-
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js">
 </script>
@@ -169,6 +189,46 @@
            name: 'name',
            title: 'Enter name'
     });
+
+
+    
+    $(document).ready(function () {
+        $(".delete-row").on("click", function (e) {
+            e.preventDefault();
+
+            // Get the row element
+            var row = $(this).closest("tr");
+
+            Swal.fire({
+                html: "Are you sure you want to delete this row?",
+                icon: "warning",
+                buttonsStyling: false,
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel",
+                customClass: {
+                    confirmButton: "btn btn-danger",
+                    cancelButton: "btn btn-secondary",
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Get the index of the row
+                    var index = row.index();
+
+                    // Remove the row from the HTML table
+                    row.remove();
+
+                    // Remove the item from the $conflicted_deliveries array
+                    if (index !== -1) {
+                        $conflicted_deliveries.splice(index, 1);
+                    }
+
+             
+                }
+            });
+        });
+    });
+
 
 
 
