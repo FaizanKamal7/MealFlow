@@ -109,7 +109,6 @@
                                             <a href="#" class="btn btn-danger">
                                                 <i class="bi bi-trash3-fill fs-4 me-2">Delete</i>
                                             </a>
-
                                         </td>
                                     </tr>
                                 </form>
