@@ -49,7 +49,12 @@ class DriverRepository implements DriverInterface
     public function getDriverByEmployeeId($employee_id){
         return Driver::where(["employee_id"=>$employee_id])->first();
     }
-
+    public function getDriversbyAreaID($area_id){
+        return Driver::select('drivers.*')
+        ->join('driver_areas', 'drivers.id', '=', 'driver_areas.driver_id')
+        ->where('driver_areas.area_id', $area_id)
+        ->get();
+    }
     public function delete_driver($id){
         return Driver::find($id)->delete();
     }

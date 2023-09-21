@@ -21,7 +21,8 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::post('/upload/save', 'DeliveryServiceController@uploadFile')->name("upload_file");
     Route::get('/', 'DeliveryServiceController@index');
 
-
+    
+    
     //    Route::group(['prefix'=> 'deliveries'], function (){
 
     Route::get('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveries"])->name("upload_deliveries");
@@ -30,7 +31,7 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::post('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
     //TODO:: This route will be moved to Customers Module
     Route::get('get-delivery-addresses', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "getAddresses"])->name("get_customer_address");
-
+    Route::get('/suggested',  [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "get_suggested_driver"] );
     //    });
 
     Route::group(['prefix' => 'bag/'], function () {
