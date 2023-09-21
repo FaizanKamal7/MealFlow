@@ -20,13 +20,8 @@ return new class extends Migration
             $table->string('TRN')->nullable();
             $table->string('logo')->nullable();
             $table->string('status');
-<<<<<<< Updated upstream
             $table->boolean('active_status')->nullable();
-                        $table->uuid('admin_id');
-=======
-            $table->boolean('active_status')->default(1);
             $table->uuid('admin_id');
->>>>>>> Stashed changes
             $table->uuid('business_category_id');
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('business_category_id')->references('id')->on('business_categories')->onDelete('cascade');
