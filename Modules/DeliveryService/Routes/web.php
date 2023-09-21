@@ -32,6 +32,8 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
     Route::get('/batch', [DeliveryController::class, "batch"])->name("batch");
     Route::get('/update', [DeliveryController::class, "update"])->name("users.update");
+    Route::post('/upload-conflicted-deliveries', [DeliveryController::class, "uploadConflictedDeliveries"])->name("upload_conflicted_deliveries");
+
 
     //TODO:: This route will be moved to Customers Module
     Route::get('get-delivery-addresses', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "getAddresses"])->name("get_customer_address");

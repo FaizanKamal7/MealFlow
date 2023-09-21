@@ -340,9 +340,10 @@ class DeliveryController extends Controller
         }
     }
 
-    public function addSingleDeliveryFromConflicted($data)
+    public function uploadConflictedDeliveries(Request $request)
     {
-
+        // $data = json_decode();
+        dd($request->all());
     }
 
     public function batch()
