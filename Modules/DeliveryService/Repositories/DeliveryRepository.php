@@ -11,4 +11,7 @@ class DeliveryRepository implements DeliveryInterface
     {
         return Delivery::create($data);
     }
+    public function get(){
+        return Delivery::with('deliverySlot','customerAddress')->get();
+    }
 }

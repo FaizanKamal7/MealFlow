@@ -33,6 +33,9 @@ use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\DeliveryService\Jobs\UploadDeliveriesCSV;
 use Modules\DeliveryService\Jobs\UploadDeliveriesCSVJob;
+use Modules\FleetService\Entities\Driver;
+use Modules\FleetService\Interfaces\DriverAreaInterface;
+use Modules\FleetService\Interfaces\DriverInterface;
 
 class DeliveryController extends Controller
 {
@@ -49,6 +52,9 @@ class DeliveryController extends Controller
     private $deliveryTypeRepository;
     private $deliveryRepository;
     private $helper;
+    private  $driverAreaRepository;
+    private  $driverRepository;
+     
 
     public function __construct(
         CustomerInterface $customerRepository,
@@ -63,6 +69,9 @@ class DeliveryController extends Controller
         BusinessCustomerInterface $businessCustomerRepository,
         DeliveryTypeInterface $deliveryTypeRepository,
         DeliveryInterface $deliveryRepository,
+        DriverAreaInterface $driverAreaRepository,
+        DriverInterface $driverRepository,
+
         Helper $helper,
     ) {
         $this->customerRepository = $customerRepository;
@@ -77,7 +86,11 @@ class DeliveryController extends Controller
         $this->businessCustomerRepository = $businessCustomerRepository;
         $this->deliveryTypeRepository = $deliveryTypeRepository;
         $this->deliveryRepository = $deliveryRepository;
+        $this->driverAreaRepository = $driverAreaRepository;
+        $this->driverRepository = $driverRepository;
         $this->helper = $helper;
+
+
     }
     /**
      * Display a listing of the resource.
@@ -438,4 +451,44 @@ class DeliveryController extends Controller
         // dd();
         return $actual_headers === $expected_headers;
     }
+
+    // ------------------------------------- SUGGESTED DRIVER-----------------------
+function get_suggested_driver(){
+    $deliveries = $this->deliveryRepository->get();
+    
+    foreach ($deliveries as $delivery) {
+        $customerAddress =  $this->customerAddressRepository->getCustomerAddressesbyID($delivery->customer_address_id);
+        echo($customerAddress);
+        // dd($customerAddress);
+        $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id);
+        echo($delivery->deliverySlot);
+        dd($drivers);
+        // Step 1: Find a driver that matches the delivery area
+        $driver = Driver::whereHas('areas', function ($query) use ($customerAddress) {
+            $query->where('area_id', $customerAddress->area_id);
+        })->where('is_available', true)
+          ->first();
+    
+        if ($driver) {
+            // Step 2: Check the last delivery for the customer
+            $lastDelivery = Delivery::where('customer_id', $delivery->customer_id)
+                ->where('id', '<', $delivery->id)
+                ->orderBy('id', 'desc')
+                ->first();
+    
+            if ($lastDelivery) {
+                // If a previous delivery exists, suggest the driver from that delivery
+                $lastDriver = Driver::find($lastDelivery->driver_id);
+                $suggestedDriver = $lastDriver;
+            } else {
+                // If no previous delivery exists, suggest the driver found in step 1
+                $suggestedDriver = $driver;
+            }
+    
+            // Assign the suggested driver to the delivery
+            $delivery->suggested_driver_id = $suggestedDriver->id;
+            $delivery->save();
+        }
+    }
+}
 }
