@@ -20,7 +20,6 @@ class AuthGates
             foreach ($user_roles as $user_role) {
                 foreach ($user_role->role->rolePermissions as $permissions) {
                     $permissionsArray[$permissions->permission->codename][] = $user_role->role->id;
-
                 }
             }
             foreach ($permissionsArray as $title => $roles) {

@@ -103,9 +103,9 @@ class Helper
         $city_name = $parameters[2] ?? null;
         $area_name = $parameters[3] ?? null;
 
-        echo "<pre> country: " . print_r($country_name, true) . "</pre>";
-        echo "<pre> state: " . print_r($state_name, true) . "</pre>";
-        echo "<pre> city: " . print_r($city_name, true) . "</pre>";
+        // echo "<pre> country: " . print_r($country_name, true) . "</pre>";
+        // echo "<pre> state: " . print_r($state_name, true) . "</pre>";
+        // echo "<pre> city: " . print_r($city_name, true) . "</pre>";
 
         $db_map_location_ids = [];
         if ($country_name) {

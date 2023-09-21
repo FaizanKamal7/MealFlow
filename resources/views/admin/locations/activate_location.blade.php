@@ -116,7 +116,10 @@
 
                             </tbody>
                         </table>
-                        {{ $cities->links() }}
+<<<<<<< Updated upstream
+                        {{-- {{ $cities->links() }} --}}
+=======
+>>>>>>> Stashed changes
 
                     </div>
                     <!--end::Card body-->

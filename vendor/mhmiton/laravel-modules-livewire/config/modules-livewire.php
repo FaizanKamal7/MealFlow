@@ -9,7 +9,7 @@ return [
     |
     */
 
-    'namespace' => 'Livewire',
+    'namespace' => 'Http\\Livewire',
 
     /*
     |--------------------------------------------------------------------------
@@ -31,7 +31,7 @@ return [
     //     'Chat' => [
     //         'path' => base_path('libraries/Chat'),
     //         'module_namespace' => 'Libraries\\Chat',
-    //         // 'namespace' => 'Livewire',
+    //         // 'namespace' => 'Http\\Livewire',
     //         // 'view' => 'Resources/views/livewire',
     //         // 'name_lower' => 'chat',
     //     ],

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('TRN')->nullable();
             $table->string('logo')->nullable();
             $table->string('status');
+            $table->boolean('active_status')->nullable();
             $table->uuid('admin_id');
             $table->uuid('business_category_id');
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
