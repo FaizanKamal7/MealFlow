@@ -77,6 +77,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Business::class, 'admin_id');
     }
+
     public function is_admin()
     {
         return $this->business()->exists();
