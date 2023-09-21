@@ -55,11 +55,14 @@
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody class="fw-bold text-gray-600">
+
                                 </tbody>
                                 <!--end::Table body-->
                             </table>
                             <!--end::Table-->
-
+                            @foreach ($conflicted_deliveries as $conflicted_delivery)
+                            <p>{{$conflicted_delivery['conflict']}}</p>
+                            @endforeach
                             <!--begin::Actions-->
                             <button id="re_add_bulk_submit" type="submit" class="btn btn-primary float-end">
                                 <span class="indicator-label">

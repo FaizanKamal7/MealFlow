@@ -88,7 +88,6 @@ class AreaController extends Controller
     {
         $selected_areas = $request->input('areas');
         $city_id = $request->input('city_id');
-        $areas_to_upload = [];
 
         $city = $this->cityRepository->get($city_id);
 
@@ -124,7 +123,7 @@ class AreaController extends Controller
                     'coordinates' =>  $coordinates,
                 ];
 
-            $result =  $this->areaRepository->updateOrInsertAreaIfAttributeExist("name", $city->name, $single_area);
+            $this->areaRepository->updateOrInsertAreaIfAttributeExist("name", $city->name, $single_area);
         }
         $this->cityRepository->update($city_id, ['active_status' => true]);
         $this->stateRepository->update($city->state_id, ['active_status' => true]);

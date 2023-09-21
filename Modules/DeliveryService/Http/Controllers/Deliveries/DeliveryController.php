@@ -276,14 +276,12 @@ class DeliveryController extends Controller
                         } elseif ($address_matching['status']  == 'MATCHED') {
                             $finalized_address = $address_matching['customer_db_address'];
                         }
-
                         $delivery_data['customer_address_id'] =   $finalized_address->id ?? null;
                         // echo ('<pre> ENTERING.... Record no: ' . var_dump($key . ' ' . $chunk_item_id) . '<pre>');
                         // echo ('<pre>' . print_r($delivery_data) . '<pre>');
 
 
                         $this->deliveryRepository->create($delivery_data);
-
                         // TODO: upload deliveries in chunks
                         // $chunks[$key][$chunk_item_id] = $delivery_data;
                         // $chunk[$chunk_item_id] = $delivery_data;
@@ -316,8 +314,8 @@ class DeliveryController extends Controller
                 return 'Data upload failed: ' . $e->getMessage();
             }
         }
-        // dd($conflicted_deliveries);
-        if (isEmpty($conflicted_deliveries)) {
+
+        if (count($conflicted_deliveries) == 0) {
             return redirect()->back()->with('success', 'Valid deliveries uploaded successfully.');
         } else {
             return view('deliveryservice::deliveries.conflicted_deliveries', ['conflicted_deliveries' =>  $conflicted_deliveries]);
@@ -376,9 +374,10 @@ class DeliveryController extends Controller
         }
 
 
-        $highest_matching_address = !empty($highest_matching_address) ? $db_address_percent[0] : [];
+        $highest_matching_address = !empty($db_address_percent) ? $db_address_percent[0] : [];
+
         $result = [];
-        if (empty($highest_matching_address) || $highest_matching_address['percent'] < 60) {
+        if (empty($highest_matching_address) || $highest_matching_address['percent'] < 51) {
             // ---- 4.1. Check if highest matching address is exctly the same 
             $result['status'] = "MISSING";
             $result['passed_address'] = $passed_address;
@@ -392,7 +391,6 @@ class DeliveryController extends Controller
                 $result['passed_address'] = $passed_address;
             }
         }
-
         return $result;
     }
 
