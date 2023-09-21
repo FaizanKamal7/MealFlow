@@ -270,6 +270,7 @@ class DeliveryController extends Controller
                                 'db_customer' => $customer,
                                 'customer_db_address' => $address_matching['customer_db_address'],
                                 'passed_address' => $address_matching['passed_address'],
+                                'passed_delivery_data' => $delivery_data,
                             ];
                             array_push($conflicted_deliveries, $conflicted_delivery);
                             continue;
@@ -330,7 +331,19 @@ class DeliveryController extends Controller
         // ]);
     }
 
+    public function update(Request $request)
+    {
+        dd("inside update() of DeliveryController" . $request);
+        if ($request->ajax()) {
+            User::find($request->pk)->update([$request->name => $request->value]);
+            return response()->json(['success' => true]);
+        }
+    }
 
+    public function addSingleDeliveryFromConflicted($data)
+    {
+
+    }
 
     public function batch()
     {
