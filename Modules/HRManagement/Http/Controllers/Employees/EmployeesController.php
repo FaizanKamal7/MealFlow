@@ -80,7 +80,6 @@ class EmployeesController extends Controller
         $this->employeeMediaRepository = $employeeMediaRepository;
         $this->leavePolicy = $leavePolicy;
         $this->taxesRepository = $taxesRepository;
-        $this->driverAreaRepository = $driverAreaRepository;
 
     }
 
@@ -221,7 +220,7 @@ class EmployeesController extends Controller
             return redirect()->route("hr_employees")->with("success", "Employee added successfully");
         } catch (Exception $exception) {
             Log::error($exception);
-            error_log("error ".$exception);
+            error_log("error " . $exception);
             return redirect()->route("hr_employees")->with("error", "Something went wrong! Contact support");
         }
     }
@@ -240,10 +239,9 @@ class EmployeesController extends Controller
         $teams = $this->teamsRepository->getTeams();
         $leavePolicy = $this->leavePolicy->getLeavePolicies();
         $taxes = $this->taxesRepository->getTaxes();
-        $employeeMedia = $this->employeeMediaRepository->getEmployeeMediaWithType(employeeId: $id,type: "Agreement File");
+        $employeeMedia = $this->employeeMediaRepository->getEmployeeMediaWithType(employeeId: $id, type: "Agreement File");
 
-        return view('hrmanagement::employees.edit_employees', ["employee" => $employee, "departments" => $departments, "designations" => $designations, "teams" => $teams, "leavePolicy" => $leavePolicy, "taxes" => $taxes, "employeeMedia"=>$employeeMedia]);
-
+        return view('hrmanagement::employees.edit_employees', ["employee" => $employee, "departments" => $departments, "designations" => $designations, "teams" => $teams, "leavePolicy" => $leavePolicy, "taxes" => $taxes, "employeeMedia" => $employeeMedia]);
     }
     /**
      * Update the specified resource in storage.
@@ -289,11 +287,10 @@ class EmployeesController extends Controller
             if ($file = $request->file("agreement_file")) {
                 $helper = new Helper();
                 $agreement_file = $helper->storeFile($file, "employees");
-                $employee_media = $this->employeeMediaRepository->getEmployeeMediaWithType(employeeId: $request->get('employee_id'),type: "Agreement File");
-                if($employee_media){
+                $employee_media = $this->employeeMediaRepository->getEmployeeMediaWithType(employeeId: $request->get('employee_id'), type: "Agreement File");
+                if ($employee_media) {
                     $this->employeeMediaRepository->updateEmployeeMedia(id: $employee_media->id, path: $agreement_file, employeeId: $request->get('employee_id'), type: "Agreement File");
-                }
-                else{
+                } else {
                     $this->employeeMediaRepository->createEmployeeMedia($agreement_file, $request->get('employee_id'), "Agreement File");
                 }
             }
@@ -329,11 +326,10 @@ class EmployeesController extends Controller
             $basic_salary = $request->get('basic_salary');
             $cycle = $request->get('cycle');
             $taxable = $request->get('taxable');
-            if($taxable){
+            if ($taxable) {
                 error_log(" taxable true");
                 $tax_id = $request->get('tax_id');
-            }
-            else{
+            } else {
 
                 error_log(" taxable false");
                 $taxable = false;
@@ -344,7 +340,7 @@ class EmployeesController extends Controller
             $this->employeesRepository->updateSalary(id: $request->get('employee_id'), basicSalary: $basic_salary, salaryCycle: $cycle, taxable: $taxable, taxClass: $tax_id);
             return redirect()->route('hr_employees')->with('success', "Employee Salary Updated Successfully");
         } catch (Exception $exception) {
-            error_log("error :".$exception);
+            error_log("error :" . $exception);
             log::error($exception);
             return redirect()->route('hr_employees')->with('error', 'Something went wrong! Please Contact Support');
         }
@@ -388,5 +384,4 @@ class EmployeesController extends Controller
             return redirect()->route("hr_employees")->with("error", "Something went wrong! Contact support");
         }
     }
-
 }
