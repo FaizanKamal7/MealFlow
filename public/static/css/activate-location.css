@@ -10,6 +10,7 @@ th {
 }
 .activate-service h1 {
     color: rgba(0, 66, 110, 1);
+    font-size: 24px !important;
 }
 
 .location-card {
