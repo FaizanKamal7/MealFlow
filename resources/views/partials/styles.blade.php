@@ -16,6 +16,8 @@
 <link href="{{ asset('static/css/admin-dashboard.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('static/css/admin-sidebar.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('static/css/activate-location.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('static/css/activated-locations.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('static/css/delivery_slot_wise_base_pricing.css') }}" rel="stylesheet" type="text/css" />
 
 
 <!--end::Global Stylesheets Bundle-->
