@@ -1,0 +1,359 @@
+.dashboard_heading {
+    color: rgba(0, 66, 110, 1);
+    font: 16px;
+}
+
+.header {
+    background: linear-gradient(
+        176.59deg,
+        rgba(255, 255, 255, 0.59) 0.22%,
+        rgba(255, 255, 255, 0.2) 99.71%
+    ) !important;
+    background-blend-mode: luminosity !important;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.7) 0%,
+        rgba(255, 255, 255, 0.3) 100%
+    ) !important;
+    border: 0.5px solid !important;
+
+    border-image-source: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.7) 0%,
+        rgba(255, 255, 255, 0.3) 100%
+    ) !important;
+
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06) !important;
+    margin-left: 25px;
+    border-radius: 12px;
+}
+.heading_type {
+    /* font-family: Syne; */
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 0em;
+    color: rgba(255, 255, 255, 1);
+    margin: 10px 20px 0;
+}
+
+.head_general {
+    border-radius: 18px 18px 0px 0px;
+    background: linear-gradient(135deg, #00538a 0%, rgba(0, 83, 138, 0.6) 100%);
+    border: 0.5px solid;
+    border-image-source: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+}
+.bottom_div {
+    padding: 26px 26px 20px;
+}
+
+.general_statistic {
+    background-blend-mode: luminosity;
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        108.67deg,
+        rgba(255, 255, 255, 0.9) 0.67%,
+        rgba(255, 255, 255, 0.65) 99.61%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-radius: 18px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.delivery {
+    background: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    box-shadow: 0px 9px 14px 0px rgba(0, 83, 138, 0.17);
+    border-radius: 12px !important;
+    height: max-content !important;
+}
+
+.badge-success {
+    color: rgba(0, 146, 93, 1) !important;
+    background-color: inherit;
+    font-size: 20px !important;
+    margin-left: 14px;
+}
+.icon-div {
+    box-shadow: 0px 4.374999523162842px 8.749999046325684px 0px
+        rgba(0, 0, 0, 0.12);
+    background: linear-gradient(135deg, #00538a 0%, rgba(0, 83, 138, 0.6) 100%);
+    border-radius: 7px;
+    color: white !important;
+    padding: 6px;
+}
+.box-div_btm {
+    align-items: center;
+    margin-bottom: 5px;
+}
+.onePoint {
+    color: rgba(0, 66, 110, 1);
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+}
+.card_body {
+    padding: 15px !important;
+    align-items: center;
+}
+.svg-icon {
+    line-height: 1;
+    color: white !important;
+}
+.white-icon .svg-icon.svg-icon-2hx svg {
+    width: 25px !important;
+    height: 25px !important;
+}
+.badge-danger {
+    color: rgba(254, 42, 42, 1) !important;
+    background-color: inherit;
+    font-size: 20px !important;
+    margin-left: 14px;
+}
+.weather-card {
+    /* box-shadow: 0px 9px 14px 0px rgba(0, 83, 138, 0.17); */
+    /* padding-right: 0; */
+    /* padding-left: 0; */
+    border-radius: 20px;
+    border-image-slice: 1 !important; /* Ensure the entire border is covered by the gradient */
+    border-image-repeat: round !important;
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        93.26deg,
+        rgba(255, 255, 255, 0.68) 1.37%,
+        rgba(216, 237, 250, 0.33) 98.59%
+    );
+    background: linear-gradient(
+            120.29deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0.15) 98.79%
+        ),
+        linear-gradient(
+            93.26deg,
+            rgba(255, 255, 255, 0.68) 1.37%,
+            rgba(216, 237, 250, 0.33) 98.59%
+        );
+}
+
+.dubai {
+    position: absolute;
+    right: 10%;
+    top: 15%;
+}
+.dubai span {
+    color: rgba(0, 66, 110, 1);
+}
+.delivery-card {
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        108.67deg,
+        rgba(255, 255, 255, 0.85) 0.67%,
+        rgba(255, 255, 255, 0.65) 99.61%
+    );
+    border-radius: 18px !important;
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        171.41deg,
+        rgba(255, 255, 255, 0.7) 1.12%,
+        rgba(255, 255, 255, 0.45) 98.88%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06) !important;
+}
+.delivery-header {
+    align-items: center !important;
+    padding: 15px 30px !important;
+    background: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    border: 0.5px solid;
+    border-image-source: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    border-radius: 18px 18px 0px 0px !important;
+    background: linear-gradient(
+        120.29deg,
+        rgba(179, 225, 255, 0.2) 0%,
+        rgba(161, 211, 243, 0.2) 54.03%,
+        rgba(143, 197, 232, 0.2) 98.79%
+    );
+}
+.card-label {
+    color: rgba(0, 66, 110, 1) !important;
+}
+.time {
+    color: rgba(52, 71, 103, 1) !important;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+span.complete-dash {
+    color: rgba(0, 66, 110, 1) !important;
+    font-size: 14px !important;
+    font-weight: bold;
+}
+
+span.complete {
+    color: rgba(17, 16, 16, 1);
+}
+
+span.number {
+    color: rgba(0, 66, 110, 1);
+    margin-left: 15px;
+}
+
+span.dash {
+    font-weight: bold;
+}
+
+span.pending {
+    /* color: rgba(122, 121, 121, 1); */
+}
+.time-div {
+    margin-top: -12px;
+}
+.span-adjust {
+    display: inline-block;
+    width: 70px;
+}
+.delivery-body {
+    padding: 2rem 10px !important;
+}
+.view {
+    font-size: 14px !important;
+    cursor: pointer;
+}
+.separator {
+    margin: 16px 0 !important;
+}
+.card-length {
+    box-shadow: 0px 9px 14px 0px rgba(0, 83, 138, 0.17);
+    /* border: 1px solid; */
+    background: rgba(255, 255, 255, 0.39);
+    height: 474px;
+    border-radius: 16px;
+    border: 1px solid;
+
+    border-image-source: linear-gradient(
+        120.29deg,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.5) 98.79%
+    );
+}
+
+.earning-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h3.earning {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    margin: 20% 0 14% 0;
+    opacity: 0.8;
+}
+
+p.last-week {
+    padding: 5px 18px;
+    background: rgba(0, 66, 110, 1);
+    border-radius: 4px;
+    color: white;
+    line-height: 16px;
+    font-size: 11px;
+    margin: 0 0 14% 0;
+}
+
+h2.dollar {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 56px;
+    letter-spacing: 0em;
+    color: rgba(0, 66, 110, 1);
+    margin-bottom: 8%;
+}
+
+a.btn.btn-primary.text-white.view-more {
+    background: rgba(0, 66, 110, 1);
+    border-radius: 6px;
+    width: 150px;
+    font-size: 12px;
+}
+
+.card.outer-card {
+    border-radius: 16px;
+    height: 307px;
+    padding: 0px 15px;
+    box-shadow: 0px 16px 16px 0px rgba(0, 83, 138, 0.06);
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        108.67deg,
+        rgba(255, 255, 255, 0.9) 0.67%,
+        rgba(255, 255, 255, 0.65) 99.61%
+    );
+    background-blend-mode: luminosity;
+    background: rgba(255, 255, 255, 0.25);
+}
+.card.outer-card h2 {
+    color: rgba(0, 66, 110, 1);
+    font-size: 24px;
+    line-height: 30px;
+    margin: 24px 0 15px;
+}
+
+.header-font {
+    font-size: 18px !important;
+}
+
+/* 
+<style>
+        body {}
+
+        #earth {
+            width: 300px;
+            height: 300px;
+            background: url('https://cdn.vectorstock.com/i/1000x1000/69/38/3d-abstract-dotted-globe-vector-21936938.webp');
+            border-radius: 50%;
+            background-size: 610px;
+            box-shadow: inset 8px 36px 80px 36px rgb(0, 0, 0), inset -6px 0 12px 4px rgba(255, 255, 255, 0.3);
+            animation-name: rotate;
+            animation-duration: 12s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            -webkit-animation-name: rotate;
+            -webkit-animation-duration: 12s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-timing-function: linear;
+        }
+
+        @keyframes rotate {
+            from {
+                background-position: 100% 0;
+            }
+
+            to {
+                background-position: 0 0;
+            }
+        }
+
+        canvas {
+            width: 98vmin;
+            height: 98vmin;
+        }
+    </style> */
