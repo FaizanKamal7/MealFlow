@@ -8,15 +8,12 @@ use App\Interfaces\CityInterface;
 use App\Interfaces\DeliverySlotInterface;
 use App\Interfaces\UserInterface;
 use Exception;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
-use Modules\BusinessService\Entities\BusinessCustomer;
-use Modules\BusinessService\Entities\Customer;
 use Modules\BusinessService\Entities\CustomerAddress;
 use Modules\BusinessService\Interfaces\BranchInterface;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
@@ -24,16 +21,10 @@ use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\CustomerAddressInterface;
 use Modules\BusinessService\Interfaces\CustomerInterface;
 use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
-use Modules\BusinessService\Repositories\BranchRepository;
-use Modules\BusinessService\Repositories\BusinessRepository;
-use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
-use Modules\DeliveryService\Http\Exports\ExcelImportClass;
+use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
-use Modules\DeliveryService\Jobs\UploadDeliveriesCSV;
-use Modules\DeliveryService\Jobs\UploadDeliveriesCSVJob;
-use Modules\FleetService\Entities\Driver;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 
@@ -54,9 +45,9 @@ class DeliveryController extends Controller
     private $deliveryTypeRepository;
     private $deliveryRepository;
     private $helper;
-    private  $driverAreaRepository;
-    private  $driverRepository;
-     
+    private $driverAreaRepository;
+    private $driverRepository;
+    private $deliveryBatchRepository;
 
     public function __construct(
         CustomerInterface $customerRepository,
@@ -73,6 +64,7 @@ class DeliveryController extends Controller
         DeliveryInterface $deliveryRepository,
         DriverAreaInterface $driverAreaRepository,
         DriverInterface $driverRepository,
+        DeliveryBatchInterface $deliveryBatchRepository,
 
         Helper $helper,
     ) {
@@ -90,6 +82,8 @@ class DeliveryController extends Controller
         $this->deliveryRepository = $deliveryRepository;
         $this->driverAreaRepository = $driverAreaRepository;
         $this->driverRepository = $driverRepository;
+        $this->deliveryBatchRepository = $deliveryBatchRepository;
+
         $this->helper = $helper;
 
 
@@ -108,7 +102,7 @@ class DeliveryController extends Controller
     public function uploadDeliveries()
     {
         $businesses = $this->businessRepository->getActiveBusinesses();
-        return view('deliveryservice::deliveries.upload_delivery', ['businesses' =>  $businesses]);
+        return view('deliveryservice::deliveries.upload_delivery', ['businesses' => $businesses]);
     }
 
     public function uploadDeliveriesByForm(Request $request)
@@ -121,7 +115,7 @@ class DeliveryController extends Controller
         $notes = $request->get("notes");
         $codAmounts = $request->get("cod_amount");
 
-        $totalRecords =  count($customers);
+        $totalRecords = count($customers);
         for ($i = 0; $i < $totalRecords; $i++) {
             $customer = $customers[$i];
             $address = $addresses[$i];
@@ -173,9 +167,9 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
-        $batch  = Bus::batch([])->dispatch();
+        $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
         foreach ($chunks as $key => $chunk) {
             try {
@@ -207,7 +201,7 @@ class DeliveryController extends Controller
                         // ---- 3. Get all the addresses ($customer_address) of the db customer of selected city
                         $sheet_address = $row['address'];
                         $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($row['phone']);
-                        $customer = $customer ??  $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
+                        $customer = $customer ?? $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
                         $customer_addresses = '';
                         $address_matching = null;
 
@@ -254,7 +248,7 @@ class DeliveryController extends Controller
                             'is_notification_enabled' => $row['notification_select_option'] == 'Yes' ? 1 : 0,
                             'note' => $row['notes'],
                             'branch_id' => $branch->id ?? null,
-                            'delivery_slot_id' =>  $db_delivery_slot->id ?? null,
+                            'delivery_slot_id' => $db_delivery_slot->id ?? null,
                             'delivery_type_id' => null,
                             'customer_id' => $customer->id,
                         ];
@@ -265,19 +259,19 @@ class DeliveryController extends Controller
                             $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($sheet_address);
 
                             $address_data = [
-                                'address' =>  $sheet_address,
-                                'address_type' =>  "OTHER",
-                                'latitude' =>  $new_address_coordinates ? $new_address_coordinates->latitude : null,
-                                'longitude' =>  $new_address_coordinates ? $new_address_coordinates->longitude : null,
-                                'customer_id' =>  $customer->id,
+                                'address' => $sheet_address,
+                                'address_type' => "OTHER",
+                                'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
+                                'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
+                                'customer_id' => $customer->id,
                                 'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
-                                'area_id' =>  $area->id,
-                                'city_id' =>  $city->id,
-                                'state_id' =>  $city->state->id,
-                                'country_id' =>  $city->state->country->id,
+                                'area_id' => $area->id,
+                                'city_id' => $city->id,
+                                'state_id' => $city->state->id,
+                                'country_id' => $city->state->country->id,
                             ];
-                            $finalized_address =  $this->customerAddressRepository->create($address_data);
-                        } elseif ($address_matching['status']  == 'CONFLICT') {
+                            $finalized_address = $this->customerAddressRepository->create($address_data);
+                        } elseif ($address_matching['status'] == 'CONFLICT') {
                             $conflicted_delivery = [
                                 'conflict' => 'Similar address for customer already exists',
                                 'db_customer' => $customer,
@@ -287,10 +281,10 @@ class DeliveryController extends Controller
                             ];
                             array_push($conflicted_deliveries, $conflicted_delivery);
                             continue;
-                        } elseif ($address_matching['status']  == 'MATCHED') {
+                        } elseif ($address_matching['status'] == 'MATCHED') {
                             $finalized_address = $address_matching['customer_db_address'];
                         }
-                        $delivery_data['customer_address_id'] =   $finalized_address->id ?? null;
+                        $delivery_data['customer_address_id'] = $finalized_address->id ?? null;
                         // echo ('<pre> ENTERING.... Record no: ' . var_dump($key . ' ' . $chunk_item_id) . '<pre>');
                         // echo ('<pre>' . print_r($delivery_data) . '<pre>');
 
@@ -332,7 +326,7 @@ class DeliveryController extends Controller
         if (count($conflicted_deliveries) == 0) {
             return redirect()->back()->with('success', 'Valid deliveries uploaded successfully.');
         } else {
-            return view('deliveryservice::deliveries.conflicted_deliveries', ['conflicted_deliveries' =>  $conflicted_deliveries]);
+            return view('deliveryservice::deliveries.conflicted_deliveries', ['conflicted_deliveries' => $conflicted_deliveries]);
         }
         // return redirect()->back()->with('success', 'Valid deliveries uploaded successfully.');
         // return redirect()->route('deliveryservice::deliveries.upload_delivery')->with(['businesses' => $businesses]);
@@ -379,7 +373,7 @@ class DeliveryController extends Controller
     {
 
         $passed_address = $parameters[0] ?? null;
-        $passed_db_addresses = $parameters[1] ?? null;  // List of customer address can be passed from which passed address can be analyzed
+        $passed_db_addresses = $parameters[1] ?? null; // List of customer address can be passed from which passed address can be analyzed
 
         $customer_addresses = $passed_db_addresses;
         $db_address_percent = [];
@@ -438,8 +432,8 @@ class DeliveryController extends Controller
         // - Making all words lower case
         // - replace spaces with underscore "_"
         // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+        $actual_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
 
         // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
         // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
@@ -457,42 +451,80 @@ class DeliveryController extends Controller
     }
 
     // ------------------------------------- SUGGESTED DRIVER-----------------------
-function get_suggested_driver(){
-    $deliveries = $this->deliveryRepository->get();
-    
-    foreach ($deliveries as $delivery) {
-        $customerAddress =  $this->customerAddressRepository->getCustomerAddressesbyID($delivery->customer_address_id);
-        echo($customerAddress);
-        // dd($customerAddress);
-        $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id);
-        echo($delivery->deliverySlot);
-        dd($drivers);
-        // Step 1: Find a driver that matches the delivery area
-        $driver = Driver::whereHas('areas', function ($query) use ($customerAddress) {
-            $query->where('area_id', $customerAddress->area_id);
-        })->where('is_available', true)
-          ->first();
-    
-        if ($driver) {
-            // Step 2: Check the last delivery for the customer
-            $lastDelivery = Delivery::where('customer_id', $delivery->customer_id)
-                ->where('id', '<', $delivery->id)
-                ->orderBy('id', 'desc')
-                ->first();
-    
-            if ($lastDelivery) {
-                // If a previous delivery exists, suggest the driver from that delivery
-                $lastDriver = Driver::find($lastDelivery->driver_id);
-                $suggestedDriver = $lastDriver;
-            } else {
-                // If no previous delivery exists, suggest the driver found in step 1
-                $suggestedDriver = $driver;
-            }
-    
-            // Assign the suggested driver to the delivery
-            $delivery->suggested_driver_id = $suggestedDriver->id;
-            $delivery->save();
+    function unassigned_deliveries()
+    {
+        $deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
+
+        foreach ($deliveries as $delivery) {
+            $customerAddress = $this->customerAddressRepository->getCustomerAddressesbyID($delivery->customer_address_id);
+
+            // Step 1: Find a driver that matches the delivery area and has deuty timing eligilable for that slot
+            $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
+            $delivery->setAttribute('suggested_drivers', $drivers);
+
+
+
+
+            // if ($driver) {
+            //     // Step 2: Check the last delivery for the customer
+            //     $lastDelivery = Delivery::where('customer_id', $delivery->customer_id)
+            //         ->where('id', '<', $delivery->id)
+            //         ->orderBy('id', 'desc')
+            //         ->first();
+
+            //     if ($lastDelivery) {
+            //         // If a previous delivery exists, suggest the driver from that delivery
+            //         $lastDriver = Driver::find($lastDelivery->driver_id);
+            //         $suggestedDriver = $lastDriver;
+            //     } else {
+            //         // If no previous delivery exists, suggest the driver found in step 1
+            //         $suggestedDriver = $driver;
+            //     }
+
+            //     // Assign the suggested driver to the delivery
+            //     $delivery->suggested_driver_id = $suggestedDriver->id;
+            //     $delivery->save();
+            // }
+
         }
+        // foreach ($deliveries as $delivery) {
+        //     echo ('Delivery : ' . $delivery->deliverySlot->start_time . '-' . $delivery->deliverySlot->end_time . 'area : ' . $delivery->customerAddress->area->name);
+        //     echo "<br><br>";
+        //     foreach ($delivery->suggested_drivers as $driver) {
+        //         echo ('Driver : ' . $driver->employee->first_name . ' - ' . $driver->employee->duty_start_time . '-' . $driver->employee->duty_end_time . ' - ' . $driver->areas->pluck('name'));
+        //     }
+
+        //     echo "<br>next delivery<br>";
+        // }
+        $drivers = $this->driverRepository->getDetailDrivers();
+        $data=['deliveries'=>$deliveries,'drivers'=>$drivers];
+        return view('deliveryservice::deliveries.unassigned_deliveries',$data);
+
+
     }
-}
+    public function assigned_delivery_to_driver(Request $request)
+    {
+        try {
+            // --------------- GETTING DELIVERIES AND DRIVER TO ASSIGN-------------
+            $driver_id = $request->get("driver_id");
+            $deliveries = explode(',',$request->get("selected_delivery_ids"));
+
+            
+            // -------------------- CREATING NEW BATCH FOR DELIVERY BASED ON DRIVER id-----------
+            $batch = $this->deliveryBatchRepository->getActiveDeliveryBatchByDriver($driver_id); 
+            
+            // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
+            $this->deliveryRepository->AssignDeliveryBtach($batch->id,$deliveries);
+
+            echo($driver_id);
+            dd($batch);
+            dd($deliveries);
+        }catch(Exception $exception)
+        {
+            dd($exception);
+
+        }
+       
+        
+    }
 }
