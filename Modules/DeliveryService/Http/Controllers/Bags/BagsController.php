@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\DeliveryService\Interfaces\BagsInterface;
 use Modules\DeliveryService\Interfaces\BagStatusInterface;
+use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -18,18 +19,24 @@ class BagsController extends Controller
 
     private BagsInterface $bagsRepository;
     private BusinessInterface $businessRepository;
-
     private BagStatusInterface $bagStatusRepository;
+    private DeliveryInterface $deliveryRepository;
+
 
 
     /**
      * @param BagsInterface $bagsRepository
      */
-    public function __construct(BagsInterface $bagsRepository, BusinessInterface $businessRepository,BagStatusInterface $bagStatusRepository)
-    {
+    public function __construct(
+        BagsInterface $bagsRepository,
+        BusinessInterface $businessRepository,
+        BagStatusInterface $bagStatusRepository,
+        DeliveryInterface $deliveryRepository
+    ) {
         $this->businessRepository = $businessRepository;
         $this->bagsRepository = $bagsRepository;
         $this->bagStatusRepository = $bagStatusRepository;
+        $this->deliveryRepository = $deliveryRepository;
     }
 
     /**
@@ -105,7 +112,6 @@ class BagsController extends Controller
         $bag = $this->bagsRepository->getBag($id);
         $context = ["bag" => $bag];
         return view('deliveryservice::bags.bag_timeline', $context);
-
     }
     /**
      * Show the form for editing the specified resource.
@@ -122,12 +128,16 @@ class BagsController extends Controller
      * @param int $id
      */
     public function updateBagStatus(Request $request, $id)
-    {   
-    
+    {
+
         $status_id = $this->bagStatusRepository->getStatus("at partner location")->id;
-        $this->bagsRepository->updateStatus(id:$id,status_id:$status_id);
+        $this->bagsRepository->updateStatus(id: $id, status_id: $status_id);
     }
 
+    public function unassignedBagsPickup()
+    {
+        $deliveries = $this->deliveryRepository->get();
+    }
     /**
      * Remove the specified resource from storage.
      * @param int $id

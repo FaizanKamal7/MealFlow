@@ -244,6 +244,11 @@ class DeliveryController extends Controller
                             'delivery_slot_id' =>  $db_delivery_slot->id ?? null,
                             'delivery_type_id' => null,
                             'customer_id' => $customer->id,
+                            'area_id' =>  $area->id,
+                            'city_id' =>  $city->id,
+                            'state_id' =>  $city->state->id,
+                            'country_id' =>  $city->state->country->id,
+
                         ];
 
                         if ($address_matching == null || ($address_matching && $address_matching['status'] == 'MISSING')) {
@@ -265,6 +270,13 @@ class DeliveryController extends Controller
                             ];
                             $finalized_address =  $this->customerAddressRepository->create($address_data);
                         } elseif ($address_matching['status']  == 'CONFLICT') {
+                            $location_info = [
+                                'area_id' =>  $area->id,
+                                'city_id' =>  $city->id,
+                                'state_id' =>  $city->state->id,
+                                'country_id' =>  $city->state->country->id,
+                            ];
+                            $delivery_data = array_merge($delivery_data, $location_info);
                             $conflicted_delivery = [
                                 'conflict' => 'Similar address for customer already exists',
                                 'db_customer' => $customer,
@@ -342,8 +354,40 @@ class DeliveryController extends Controller
 
     public function uploadConflictedDeliveries(Request $request)
     {
-        // $data = json_decode();
-        dd($request->all());
+        $request_data = $request->all(); // Replace with how you access your request data
+
+        foreach ($request_data['conflicted_delivery'] as $key => $delivery) {
+            $delivery_data = $delivery['delivery_data'];
+            $decoded_delivery_data = json_decode($delivery_data);
+            $address = json_decode($delivery['address']);
+
+            if ($address !== null && is_object($address)) {
+                $decoded_delivery_data->address_id = $address->id;
+            } else {
+                $address = $delivery['address'];
+
+                // add new and get customer id
+                $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($address);
+                $address_data = [
+                    'address' =>  $address,
+                    'address_type' =>  "OTHER",
+                    'latitude' =>  $new_address_coordinates ? $new_address_coordinates->latitude : null,
+                    'longitude' =>  $new_address_coordinates ? $new_address_coordinates->longitude : null,
+                    'customer_id' =>  $decoded_delivery_data->customer_id,
+                    'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
+                    'area_id' => $decoded_delivery_data->area_id,
+                    'city_id' => $decoded_delivery_data->city_id,
+                    'state_id' => $decoded_delivery_data->state_id,
+                    'country_id' => $decoded_delivery_data->country_id,
+                ];
+                $uploaded_address =  $this->customerAddressRepository->create($address_data);
+                $decoded_delivery_data->address_id = $uploaded_address->id;
+            }
+            $data  = (array) $decoded_delivery_data;
+
+            $this->deliveryRepository->create($data);
+        }
+        return redirect()->back()->with('success', 'Conflicted deliveries uploaded successfully.');
     }
 
     public function batch()
