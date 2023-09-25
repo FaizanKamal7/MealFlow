@@ -36,7 +36,6 @@ class RangePricingRepository implements RangePricingInterface
 
     public function getAllRangeBasePricesOfCities($cities)
     {
-
         return RangePricing::whereIn('city_id', $cities)
             ->where('active_status', 1)
             ->get();
@@ -59,12 +58,8 @@ class RangePricingRepository implements RangePricingInterface
             ->get();
     }
 
-
-    // public function getAllRangeBasePricesOfCity($city)
-    // {
-    //     return RangePricing::with('city_id', 'min_range', 'max_range', 'range_price', 'active_status', 'same_loc_range_price', 'pricing_type_id')
-    //         ->where('city_id', $city)
-    //         ->where('active_status', 1)
-    //         ->get();
-    // }
+    public function getBusinessPricing($business_id)
+    {
+        return RangePricing::where(['business_id' => $business_id])->get();
+    }
 }

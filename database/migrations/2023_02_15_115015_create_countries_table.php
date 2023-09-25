@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->string('name');
+            $table->boolean('flag')->nullable();
             $table->string('iso3');
             $table->string('iso2');
             $table->string('phonecode');
@@ -34,7 +35,7 @@ return new class extends Migration
             $table->text('emojiU');
             $table->text('wikiDataId')->nullable();
             $table->boolean('active_status')->default(true);
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

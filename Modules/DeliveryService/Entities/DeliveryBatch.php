@@ -5,6 +5,8 @@ namespace Modules\DeliveryService\Entities;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\FleetService\Entities\Driver;
+use Modules\FleetService\Entities\Vehicle;
 
 class DeliveryBatch extends Model
 {
@@ -12,19 +14,24 @@ class DeliveryBatch extends Model
     use HasUuids;
 
     protected $fillable = [
-        "departure_time",
-        "departure_coordinates",
-        "arrival_time",
-        "arrival_coordinates",
+        "batch_start_time",
+        "batch_end_time",
+        "batch_arrival_map_coordinates",
+        "batch_end_map_coordinates",
         "status",
-        "logs",
-        "total_deliveries_assigned",
-        "scheduled_datetime",
-
-        "created_by",
         "vehicle_id",
         "driver_id",
     ];
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id');
+    }
+
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class, 'driver_id');
+    }
 
     protected static function newFactory()
     {

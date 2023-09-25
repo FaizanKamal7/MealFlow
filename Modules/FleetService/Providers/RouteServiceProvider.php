@@ -24,6 +24,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
+       
     }
 
     /**
@@ -62,6 +63,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
+            ->prefix('api/v1')
             ->middleware('api')
             ->namespace($this->moduleNamespace)
             ->group(module_path('FleetService', '/Routes/api.php'));

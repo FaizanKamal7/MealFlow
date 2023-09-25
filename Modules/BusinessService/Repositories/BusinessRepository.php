@@ -60,4 +60,9 @@ class BusinessRepository implements BusinessInterface
     {
         return Business::find($id);
     }
+
+    public function update($id, $data)
+    {
+        return Business::where('id', $id)->update($data);
+    }
 }
