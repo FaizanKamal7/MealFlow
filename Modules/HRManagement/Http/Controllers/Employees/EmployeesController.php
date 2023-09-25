@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\HRManagement\Http\Helper\Helper;
 use Modules\HRManagement\Interfaces\BanksInterface;
 use Modules\HRManagement\Interfaces\DepartmentInterface;
@@ -40,6 +41,7 @@ class EmployeesController extends Controller
     private EmployeeMediaInterface $employeeMediaRepository;
     private LeavePolicyInterface $leavePolicy;
     private TaxesInterface $taxesRepository;
+    private DriverAreaInterface $driverAreaRepository;
 
     /**
      * @param EmployeesInterface $employeesRepository
@@ -54,7 +56,18 @@ class EmployeesController extends Controller
      * @param LeavePolicyInterface $leavePolicy
      * @param TaxesInterface $taxesRepository
      */
-    public function __construct(EmployeesInterface $employeesRepository, DepartmentInterface $departmentRepository, DesignationInterface $designationRepository, TeamsInterface $teamsRepository, EmployeeDepartmentInterface $employeeDepartmentRepository, BanksInterface $banksRepository, TeamMembersInterface $teamMembersRepository, EmployeeSalaryInterface $salaryRepository, EmployeeMediaInterface $employeeMediaRepository, LeavePolicyInterface $leavePolicy, TaxesInterface $taxesRepository)
+    public function __construct(EmployeesInterface $employeesRepository, 
+    DepartmentInterface $departmentRepository, 
+    DesignationInterface $designationRepository, 
+    TeamsInterface $teamsRepository, 
+    EmployeeDepartmentInterface $employeeDepartmentRepository, 
+    BanksInterface $banksRepository, 
+    TeamMembersInterface $teamMembersRepository, 
+    EmployeeSalaryInterface $salaryRepository, 
+    EmployeeMediaInterface $employeeMediaRepository, 
+    LeavePolicyInterface $leavePolicy, 
+    TaxesInterface $taxesRepository,
+    )
     {
         $this->employeesRepository = $employeesRepository;
         $this->departmentRepository = $departmentRepository;
@@ -67,6 +80,7 @@ class EmployeesController extends Controller
         $this->employeeMediaRepository = $employeeMediaRepository;
         $this->leavePolicy = $leavePolicy;
         $this->taxesRepository = $taxesRepository;
+
     }
 
     // View
@@ -129,7 +143,12 @@ class EmployeesController extends Controller
             $employee_type = $request->get("employee_type");
             $contract_start_date = $request->get("contract_start_date");
             $contract_end_date = $request->get("contract_end_date");
+            $duty_start_time = $request->get("duty_start_time");
+            $duty_end_time = $request->get("duty_end_time");
+            // dd($duty_end_time);
             $agreement_file = null;
+           
+
             // Bank Details
             $bank_name = $request->get("bank_name");
             $account_title = $request->get("account_title");
@@ -173,7 +192,7 @@ class EmployeesController extends Controller
                 $helper = new Helper();
                 $picture = $helper->storeFile($file, "employees");
             }
-            $employee = $this->employeesRepository->createEmployee(firstName: $first_name, lastName: $last_name, personalEmailAddress: $personal_email_address, personalPhoneNumber: $personal_phone_number, companyEmailAddress: $company_email_address, companyPhoneNumber: $company_phone_number, picture: $picture, city: $city, country: $country, maritalStatus: $marital_status, hireDate: $hire_date, probationStartDate: $probation_period_start, probationEndDate: $probation_period_end, designationId: $designation, leavePolicyId: $leave_policy, employeeType: $employee_type, contractStartDate: $contract_start_date, contractEndDate: $contract_end_date, userId: $user_id);
+            $employee = $this->employeesRepository->createEmployee(firstName: $first_name, lastName: $last_name, personalEmailAddress: $personal_email_address, personalPhoneNumber: $personal_phone_number, companyEmailAddress: $company_email_address, companyPhoneNumber: $company_phone_number, picture: $picture, city: $city, country: $country, maritalStatus: $marital_status, hireDate: $hire_date, probationStartDate: $probation_period_start, probationEndDate: $probation_period_end, designationId: $designation, leavePolicyId: $leave_policy, employeeType: $employee_type, contractStartDate: $contract_start_date, contractEndDate: $contract_end_date, duty_start_time:$duty_start_time, duty_end_time:$duty_end_time, userId: $user_id);
 
             // create employee media
             if ($file = $request->file("agreement_file")) {

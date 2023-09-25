@@ -145,21 +145,36 @@ class DriverController extends Controller
      * @param int $id
      * 
      */
-    public function updateDriver(DriverRequest $request, $id)
+    public function updateDriver(Request $request, $id)
     {
-        $request->validated();
+        
+        $validated = $request->validate([
+            'license_number' => ['required', 'string', 'max:255'],
+            'license_Document' => ['required', 'file', 'max:2048'], 
+            'license_issue_Date' => ['required', 'date'],
+            'license_expiry_Date' => ['required', 'date', 'after:license_issue_Date'],
+            'driver_areas' => ['required', 'array'], 
+        ]);
+        if (!$validated)
+        {
+            return redirect()->back()->with('error', 'Something went wrong! Contact support');
+        }
         try {
 
-            $license_number = trim($request->get("Driver_License_number"));
-            $license_issue_date = $request->get("Driver_license_issue_Date");
-            $license_expiry_date = $request->get("Driver_license_expiry_Date");
+            $license_number = trim($request->get("license_number"));
+            $license_issue_date = $request->get("license_issue_Date");
+            $license_expiry_date = $request->get("license_expiry_Date");
             $license_document = null; // $request->get("Driver_License_Document");
             $is_available = $request->get("is_available") ? 1 : 0;
-
+            $driver_areas = $request->input('driver_areas', []);
+            // dd($driver_areas);
             // echo $license_number;
             // return;
             $driver = $this->driverRepository->updateDriver($id, $license_number, $is_available, $license_document, $license_issue_date, $license_expiry_date);
-
+            $this->driverAreaRepository->removeAreasByDriverID($id);
+            foreach ($driver_areas as $area) {
+                $this->driverAreaRepository->createDriverArea($id, $area);
+            }
             if (!$driver) {
                 return redirect()->route("fleet_view_driver_detail", ['driver_id' => $id])->with("error", "Something went wrong! Contact support");
             }
