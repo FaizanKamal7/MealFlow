@@ -27,12 +27,22 @@ class CityRepository implements CityInterface
 
     public function getAllCities()
     {
+        // return City::paginate(10);
         // return City::all();
-        // return City::paginate(50);
         return City::whereIn('state_id', ['3390', '3391', '3392', '3393', '3394', '3395', '3396'])->get();
 
         // $cities = City::get('id', 'active', 'name', 'state_id', 'country_id');
         // return DataTables::of($cities)->make(true);
+    }
+
+    //method to get cities matching the keyword of city name from location table
+    public function getSearchCities($query)
+    {
+        $searchResults = City::where('name', 'like', '%' . $query . '%')->paginate(10);
+        // $cities = City::where('name', 'like', '%' . $query . '%')->paginate(10);
+
+        // $searchResults = City::where('name', 'like', '%' . $query . '%')->get();
+        return $searchResults;
     }
 
     public function getCitiesOfState($state_id)
@@ -44,6 +54,7 @@ class CityRepository implements CityInterface
     {
         return City::where('name', 'like', "%{$searchTerm}%")->get();
     }
+
 
     public function searchCityFirst($searchTerm)
     {
