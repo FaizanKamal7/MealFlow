@@ -97,10 +97,13 @@
                                 </thead>
                                 <tbody class="fw-bold text-gray-600">
                                     @foreach($conflicted_deliveries as $key => $conflicted_delivery)
-                                    <input type="hidden" name="delivery_data_{{$key}}"
-                                        value= {{json_encode($conflicted_delivery['passed_delivery_data'])}}>
+                                    {{-- <input type="hidden" name="conflicted_delivery[{{$key}}][delivery_data]"
+                                        value={{@json($conflicted_delivery['passed_delivery_data'])}}> --}}
                                     <tr>
                                         <td>
+                                            <input type="hidden" name="conflicted_delivery[{{$key}}][delivery_data]"
+                                                value='@json($conflicted_delivery["passed_delivery_data"])'>
+
                                             Name: <b> {{ $conflicted_delivery['db_customer']->user->name }} </b><br>
                                             Phone: <b>{{ $conflicted_delivery['db_customer']->user->phone }}</b>
                                             <br>
@@ -109,21 +112,24 @@
                                             {{ $conflicted_delivery['conflict'] }}
                                         </td>
                                         <td>
-                                            <a href="" class="update" data-name="passed_address" data-type="text"
-                                                data-pk="{{ $conflicted_delivery['customer_db_address']->id }}"
-                                                data-title="Enter name">{{$conflicted_delivery['passed_address'] }}</a>
+                                            <a href="#" class="update" data-name="passed_address" data-type="text"
+                                                data-pk="{{ $conflicted_delivery['customer_db_address']->id }}">
+                                                {{$conflicted_delivery['passed_address'] }}
+                                            </a>
                                             <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input" name="address_{{$key}}" type="radio"
-                                                    value={{$conflicted_delivery['passed_address'] }}
-                                                    id="flexRadioChecked" checked="checked" />
+                                                <input class="form-check-input"
+                                                    name="conflicted_delivery[{{$key}}][address]" type="radio"
+                                                    value="{{$conflicted_delivery['passed_address'] }}"
+                                                    id="flexRadioChecked{{$key}}" checked="checked" />
                                             </div>
                                         </td>
                                         <td>
                                             <p>{{ $conflicted_delivery['customer_db_address']->address }}</p>
                                             <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input" name="address_{{$key}}" type="radio"
-                                                    value={{ $conflicted_delivery['customer_db_address']}}
-                                                    id="flexRadioDefault" />
+                                                <input class="form-check-input"
+                                                    name="conflicted_delivery[{{$key}}][address]" type="radio"
+                                                    value="{{$conflicted_delivery['customer_db_address']}}"
+                                                    id="flexRadioDefault{{$key}}" />
                                             </div>
                                         </td>
                                         <td>
@@ -141,12 +147,25 @@
                                 </tbody>
                             </table>
                             <!--begin::Actions-->
-                            <a href="#">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-file-earmark-arrow-up fs-4 me-2"></i>
-                                    Upload Deliveries
-                                </button>
-                            </a>
+                            <div class="row">
+                                <div class="col flex">
+                                    <a href="#">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-file-earmark-arrow-up fs-4 me-2"></i>
+                                            Upload Deliveries
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="col flex">
+                                    <a href="#">
+                                        <button onclick="#" class="btn btn-secondary">
+                                            <i class="fas fa-file-earmark-arrow-up fs-4 me-2"></i>
+                                            Skip all
+                                        </button>
+                                    </a>
+                                </div>
+
+                            </div>
                         </form>
 
                     </div>

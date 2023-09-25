@@ -11,6 +11,7 @@
 |
 */
 
+use Modules\DeliveryService\Http\Controllers\Bags\BagsController;
 use Modules\DeliveryService\Http\Controllers\Customers\CustomersController;
 use Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController;
 
@@ -49,5 +50,6 @@ Route::prefix('admin/deliveries')->group(function () {
         Route::post('/add', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "storeBag"])->name("store_new_bag");
 
         Route::get('/update{bag_id}', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "updateBagStatus"])->name("update_bag_status");
+        Route::get('/unassigned-bags-pickup', [BagsController::class, "unassignedBagsPickup"])->name("unassigned_bags_pickup");
     });
 });
