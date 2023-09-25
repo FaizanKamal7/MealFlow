@@ -27,7 +27,6 @@ class Business extends Model
         'status',
         'admin_id',
         'business_category_id',
-        'is_deleted',
         'deleted_at',
         'created_at',
         'updated_at',

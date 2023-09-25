@@ -11,7 +11,9 @@
 |
 */
 
+use Modules\DeliveryService\Http\Controllers\Bags\BagsController;
 use Modules\DeliveryService\Http\Controllers\Customers\CustomersController;
+use Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController;
 
 Route::prefix('admin/deliveries')->group(function () {
     Route::get('download-excel', 'DeliveryServiceController@downloadExcel');
@@ -28,6 +30,12 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::post('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByForm"])->name("upload_deliveries_by_form");
     Route::get('generate-template', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "generateAndDownloadDeliveryTemplate"])->name("generate_delivery_template");
     Route::post('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
+    Route::get('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
+    Route::get('/batch', [DeliveryController::class, "batch"])->name("batch");
+    Route::get('/update', [DeliveryController::class, "update"])->name("users.update");
+    Route::post('/upload-conflicted-deliveries', [DeliveryController::class, "uploadConflictedDeliveries"])->name("upload_conflicted_deliveries");
+
+
     //TODO:: This route will be moved to Customers Module
     Route::get('get-delivery-addresses', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "getAddresses"])->name("get_customer_address");
 
@@ -42,5 +50,6 @@ Route::prefix('admin/deliveries')->group(function () {
         Route::post('/add', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "storeBag"])->name("store_new_bag");
 
         Route::get('/update{bag_id}', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "updateBagStatus"])->name("update_bag_status");
+        Route::get('/unassigned-bags-pickup', [BagsController::class, "unassignedBagsPickup"])->name("unassigned_bags_pickup");
     });
 });
