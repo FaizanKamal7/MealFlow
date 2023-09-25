@@ -48,8 +48,10 @@ use Modules\BusinessService\Repositories\DeliverySlotPricingRepository;
 use Modules\BusinessService\Repositories\PricingRepository;
 use Modules\BusinessService\Repositories\PricingTypeRepository;
 use Modules\BusinessService\Repositories\RangePricingRepository;
+use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Repositories\DeliveryBatchRepository;
 use Modules\DeliveryService\Repositories\DeliveryRepository;
 use Modules\DeliveryService\Repositories\DeliveryTypeRepository;
 
@@ -84,6 +86,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CustomerSecondaryNumberInterface::class, CustomerSecondaryNumberRepository::class);
         $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
         $this->app->bind(DeliveryTypeInterface::class, DeliveryTypeRepository::class);
+        $this->app->bind(DeliveryBatchInterface::class, DeliveryBatchRepository::class);
+  
     }
 
     /**
