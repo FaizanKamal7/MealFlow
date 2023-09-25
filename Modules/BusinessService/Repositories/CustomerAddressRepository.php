@@ -36,4 +36,10 @@ class CustomerAddressRepository implements CustomerAddressInterface
         return CustomerAddress::where('customer_id', $customer_id)
             ->get();
     }
+    public function getCustomerAddressesbyID($address_id)
+    {
+        return CustomerAddress::where('id', $address_id)
+            ->first();
+    }
 }
+
