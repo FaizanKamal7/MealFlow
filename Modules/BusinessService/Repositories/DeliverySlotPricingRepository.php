@@ -2,9 +2,7 @@
 
 namespace Modules\BusinessService\Repositories;
 
-use Modules\BusinessService\Entities\BusinessUser;
 use Modules\BusinessService\Entities\DeliverySlotPricing;
-use Modules\BusinessService\Interfaces\BusinessUserInterface;
 use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
 
 class DeliverySlotPricingRepository implements DeliverySlotPricingInterface
@@ -22,6 +20,16 @@ class DeliverySlotPricingRepository implements DeliverySlotPricingInterface
 
     public function create($data)
     {
-        return DeliverySlotPricing::createOrUpdate($data);
+        $attributes = [
+            'city_id' => $data['city_id'],
+            'delivery_slot_id' => $data['delivery_slot_id'],
+            'business_id' => $data['business_id']
+        ];
+        DeliverySlotPricing::updateOrCreate($attributes, $data);
+    }
+
+    public function getBusinessPricing($business_id)
+    {
+        return DeliverySlotPricing::where(['business_id' => $business_id])->get();
     }
 }

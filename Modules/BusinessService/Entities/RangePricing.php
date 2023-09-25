@@ -51,6 +51,16 @@ class RangePricing extends Model
         return $this->belongsTo(PricingType::class, 'pricing_type_id');
     }
 
+    public function scopeBusinessNull($query)
+    {
+        return $query->where('business_id', null);
+    }
+
+    public function scopeBusinessExist($query, $businessId)
+    {
+        return $query->where('business_id', $businessId);
+    }
+
 
     protected static function newFactory()
     {

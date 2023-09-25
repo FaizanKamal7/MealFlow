@@ -27,7 +27,7 @@ return new class extends Migration
             $table->boolean('flag')->default(false);
             $table->string('wikiDataId')->nullable();
 
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');

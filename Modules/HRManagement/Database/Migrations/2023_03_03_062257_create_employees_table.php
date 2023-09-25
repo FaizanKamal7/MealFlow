@@ -35,6 +35,10 @@ return new class extends Migration
 
             $table->date("contract_start_date")->nullable();
             $table->date("contract_end_date")->nullable();
+            $table->time("duty_start_time")->nullable();
+            $table->time("duty_end_time")->nullable();
+
+
             $table->string("employee_type")->nullable();
 
             $table->uuid("user_id")->nullable();
