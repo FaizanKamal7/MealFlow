@@ -136,8 +136,13 @@ class BagsController extends Controller
 
     public function unassignedBagsPickup()
     {
-        $deliveries = $this->deliveryRepository->get();
+
+        $start_date = '2023-09-24';
+        $end_date = '2023-09-25';
+        $deliveries = $this->deliveryRepository->get($start_date, $end_date);
+        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups.blade', ['deliveries' => $deliveries]);
     }
+
     /**
      * Remove the specified resource from storage.
      * @param int $id

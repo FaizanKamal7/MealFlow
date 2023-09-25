@@ -11,4 +11,36 @@ class DeliveryRepository implements DeliveryInterface
     {
         return Delivery::create($data);
     }
+
+    public function get()
+    {
+        return Delivery::with('deliverySlot', 'customerAddress')->get();
+    }
+
+    public function getWithFilters(...$parameters)
+    {
+        $start_date = $parameters[0] ?? null;
+        $end_date = $parameters[1] ?? null;
+        $partner_id = $parameters[2] ?? null;
+        $city_id = $parameters[3] ?? null;
+        $delivery_slot_id = $parameters[4] ?? null;
+
+        if ($start_date == null || $end_date == null) {
+            return Delivery::get();
+        } else {
+            return Delivery::where('delivery_date', [$start_date, $end_date]);
+        }
+    }
+
+    public function getDeliveriesByStatus($status)
+    {
+        return Delivery::where('status', $status)->with('deliverySlot', 'customerAddress')->get();
+    }
+    public function AssignDeliveryBtach($batch_id, $deliveries)
+    {
+        Delivery::whereIn('id', $deliveries)->update([
+            'delivery_batch_id' => $batch_id,
+            'status' => 'ASSIGNED',
+        ]);
+    }
 }

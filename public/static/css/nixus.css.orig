@@ -51,13 +51,8 @@ body {
 }
 
 .form-control.form-control-solid {
-<<<<<<< HEAD
     background-color: #f1f5f9;
     border-color: #d8d8d8;
-=======
-    background-color: #ffffff;
-    border-color: #efeeee;
->>>>>>> 87b191db1ecf27f3902d0098c6cb697a5b8f114a
 }
 
 .form-control.form-control-solid:focus {
