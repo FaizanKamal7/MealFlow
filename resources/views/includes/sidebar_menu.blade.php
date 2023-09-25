@@ -280,7 +280,7 @@
                 </div>
 
             </div>
-          
+
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class=" menu-link">
@@ -651,16 +651,6 @@
                 </div>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
 
-<<<<<<< Updated upstream
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('view_all_customers') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Customers</span>
-                        </a>
-                    </div>
-=======
                 </div>
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
@@ -682,7 +672,6 @@
                                 </span>
                             </a>
                         </div>
->>>>>>> Stashed changes
 
 
                 </div>
