@@ -2,6 +2,7 @@
 namespace Modules\FleetService\Repositories;
 
 use Modules\FleetService\Entities\Driver;
+use Modules\FleetService\Entities\DriverArea;
 use Modules\FleetService\Interfaces\DriverInterface;
 
 class DriverRepository implements DriverInterface
@@ -36,6 +37,13 @@ class DriverRepository implements DriverInterface
 
         return $driver->save();
     }
+    public function updateDriverAreas($id,$areas){
+        // $driver = Driver::findOrFail($id);
+        // $driver->areas()->sync($areas);
+        // TODO USING SYNC
+        DriverArea::where('driver_id', $id)->delete();
+        
+     }
     public function getDrivers(){
         return Driver::all();
     }
@@ -49,10 +57,13 @@ class DriverRepository implements DriverInterface
     public function getDriverByEmployeeId($employee_id){
         return Driver::where(["employee_id"=>$employee_id])->first();
     }
-    public function getDriversbyAreaID($area_id){
+    public function getDriversbyAreaID($area_id,$slot_start,$slot_end){
         return Driver::select('drivers.*')
         ->join('driver_areas', 'drivers.id', '=', 'driver_areas.driver_id')
+        ->join('employees', 'drivers.employee_id', '=', 'employees.id')
         ->where('driver_areas.area_id', $area_id)
+        ->whereTime('employees.duty_start_time', '<=', $slot_start)
+        ->whereTime('employees.duty_end_time', '>=', $slot_end)
         ->get();
     }
     public function delete_driver($id){

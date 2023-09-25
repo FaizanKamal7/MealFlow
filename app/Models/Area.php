@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\FleetService\Entities\Driver;
 
 class Area extends Model
 {
@@ -24,5 +25,8 @@ class Area extends Model
     {
         return $this->belongsTo(City::class);
     }
-
+    public function drivers()
+{
+    return $this->belongsToMany(Driver::class, 'driver_areas', 'area_id', 'driver_id');
+}
 }
