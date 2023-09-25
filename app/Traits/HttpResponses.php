@@ -4,16 +4,16 @@ namespace App\Traits;
 
 Trait HttpResponses {
 
-    public function success($data,$message= null,$code=200){
+    public function success($data,$message= 'Request was successfull',$code=200){
         return response()->json(  [
-            'status'=>'Request was successfull',
+            'status'=> true,
             'message'=> $message,
             'data'=>$data
         ],$code);
     }
-    public function error($data,$message=null,$code){
+    public function error($data,$message='Error has Occured.....',$code=500){
         return response()->json(  [
-            'status'=>'Error has Occured.....',
+            'status'=>false,
             'message'=> $message,
             'data'=>$data
         ],$code);

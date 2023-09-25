@@ -8,4 +8,6 @@ interface CustomerAddressInterface
     public function create($data);
     public function getCustomerAddresses($customer_id);
     public function getCustomerCityAddresses($customer_id, $city_id);
+    public function getCustomerAddressesbyID($address_id);
+
 }

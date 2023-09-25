@@ -22,7 +22,8 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::post('/upload/save', 'DeliveryServiceController@uploadFile')->name("upload_file");
     Route::get('/', 'DeliveryServiceController@index');
 
-
+    
+    
     //    Route::group(['prefix'=> 'deliveries'], function (){
 
     Route::get('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveries"])->name("upload_deliveries");
@@ -33,11 +34,15 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('/batch', [DeliveryController::class, "batch"])->name("batch");
     Route::get('/update', [DeliveryController::class, "update"])->name("users.update");
     Route::post('/upload-conflicted-deliveries', [DeliveryController::class, "uploadConflictedDeliveries"])->name("upload_conflicted_deliveries");
+   
+    // thhese routes are for suggested driver and assigning of delivery    
+    Route::get('/Unassigned-deliveries',  [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "unassigned_deliveries"] );
+    Route::Post('/assigning_process',  [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "assigned_delivery_to_driver"] )->name('assigned_delivery_to_driver');
+
 
 
     //TODO:: This route will be moved to Customers Module
     Route::get('get-delivery-addresses', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "getAddresses"])->name("get_customer_address");
-
     //    });
 
     Route::group(['prefix' => 'bag/'], function () {
