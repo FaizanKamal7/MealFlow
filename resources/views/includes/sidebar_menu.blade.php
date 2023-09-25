@@ -251,39 +251,36 @@
                         </div>
                     </div>
                 </span>
-
             </div>
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
-                    <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
-                    <span class="svg-icon svg-icon-muted svg-icon-2x"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none">
-                            <path opacity="0.3"
-                                d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
-                                fill="currentColor" />
-                            <path
-                                d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
-                                fill="currentColor" />
-                        </svg></span>
+                <span class=" menu-link">
+                    <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
+                        <x-iconsax-bol-box />
+                    </span>
                     <!--end::Svg Icon-->
-                    <span class="menu-title mx-2">Bag Pickup</span>
+                    <span class="menu-title mx-5">Bag Pickup</span>
                     <span class="menu-arrow"></span>
-
-                    <div class="menu-sub menu-sub-accordion menu-active-bg">
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{route('unassigned_bags_pickup')}}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Unassigned Pickup Bags</span>
-                            </a>
-                        </div>
-                    </div>
                 </span>
 
-            </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
 
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Unassigned Bag Pickups</span>
+                        </a>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+          
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class=" menu-link">
@@ -654,6 +651,7 @@
                 </div>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
 
+<<<<<<< Updated upstream
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('view_all_customers') }}">
                             <span class="menu-bullet">
@@ -662,6 +660,29 @@
                             <span class="menu-title">Customers</span>
                         </a>
                     </div>
+=======
+                </div>
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <span class="menu-link">
+                        <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
+                        <span class="svg-icon side-icon svg-icon-muted svg-icon-2"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <path
+                                    d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
+                                    fill="currentColor" />
+                                <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
+                            </svg></span>
+                        <!--end::Svg Icon-->
+                        <span class="menu-title mx-5">Customers</span>
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('view_all_customers') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                            </a>
+                        </div>
+>>>>>>> Stashed changes
 
 
                 </div>

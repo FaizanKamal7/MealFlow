@@ -21,6 +21,7 @@ class Delivery extends Model
         "is_sign_required",
         "is_notification_enabled",
         "note",
+        "delivery_date",
         "branch_id",
         "delivery_slot_id",
         "delivery_type_id",
