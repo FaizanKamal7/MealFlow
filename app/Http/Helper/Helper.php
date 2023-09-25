@@ -109,14 +109,18 @@ class Helper
 
         $db_map_location_ids = [];
         if ($country_name) {
+
             $country_record = Country::where('name', 'LIKE', '%' . $country_name . '%')->first();
+
             $db_map_location_ids['country_id'] = $country_record ? $country_record->id : "";
         } else {
             $db_map_location_ids['country_id'] = "";
         }
 
         if ($state_name) {
+
             $state_record = State::where('name', 'LIKE', '%' . $state_name . '%')->first();
+
             $db_map_location_ids['state_id'] = $state_record ? $state_record->id : "";
         } else {
             $db_map_location_ids['state_id'] = "";
@@ -124,7 +128,9 @@ class Helper
 
 
         if ($city_name) {
+
             $city_record = City::where('name', 'LIKE', '%' . $city_name . '%')->first();
+
             $db_map_location_ids['city_id'] = $city_record ? $city_record->id : "";
         } else {
             $db_map_location_ids['city_id'] = "";
@@ -132,11 +138,14 @@ class Helper
 
 
         if ($area_name) {
+
             $area_record = Area::where('name', 'LIKE', '%' . $area_name . '%')->first();
+
             $db_map_location_ids['area_id'] = $area_record ? $area_record->id : "";
         } else {
             $db_map_location_ids['area_id'] = "";
         }
+
 
         // $this->print_array("db_map_location_ids", $db_map_location_ids);
         return $db_map_location_ids;
@@ -292,6 +301,7 @@ class Helper
         $data = array_values($data);
         return $data;
     }
+
     function print_array($title, $array)
     {
 
@@ -308,4 +318,9 @@ class Helper
             echo $title . " is not an array.";
         }
     }
+
 }
+
+
+
+
