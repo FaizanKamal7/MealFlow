@@ -187,29 +187,34 @@ class BusinessOnboardingController extends Controller
                 latitude: $latitude,
                 longitude: $longitude
             );
+            $this->helper->print_array("area_coverage_list", $area_coverage_list);
+            // echo "<pre>  ================================= </pre>";
 
-            if (!empty($cities)) {
-                foreach ($cities as $city_id) {
-                    $areas = $this->areaRepository->getAreasOfCity($city_id);
-                    $areas = $areas->toArray();
-                    $city = $this->cityRepository->get($city_id);
-                    $state_id = $city->state->id;
-                    $country_id = $city->state->country->id;
-                    $this->helper->print_array("AREAS", $areas);
+            if ($area_coverage_list) {
+                foreach ($area_coverage_list as $coverage_list_item) {
+                    $cities = $coverage_list_item["city"];
+                    // $cities = json_decode($cities);
+                    foreach ($cities as $city) {
+                        $areas = $this->areaRepository->getAreasOfCity($city);
+                        $areas = $areas->toArray();
+                        echo "<pre> city: " . print_r($city, true) . "</pre>";
 
-                    foreach ($areas as $area) {
-                        $this->branchCoverageRepository->createBranchCoverage(
-                            active_status: 1,
-                            area_id: $area['id'],
-                            city_id: $city_id,
-                            state: $state_id,
-                            country: $country_id,
-                            branch_id: $branch->id,
-                        );
+                        $this->helper->print_array("AREAS", $areas);
 
-                        // foreach ($coverage_list_item['delivery_slots'] as $delivery_slot_id) {
-                        //     $this->branchCoverageDeliverySlotRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
-                        // }
+                        foreach ($areas as $area) {
+                            $this->branchCoverageRepository->createBranchCoverage(
+                                active_status: 1,
+                                area_id: $area['id'],
+                                city_id: $city,
+                                state: $coverage_list_item["state"],
+                                country: $coverage_list_item["country"],
+                                branch_id: $branch->id,
+                            );
+
+                            // foreach ($coverage_list_item['delivery_slots'] as $delivery_slot_id) {
+                            //     $this->branchCoverageDeliverySlotRepository->createBranchCoverageDeliverySlot($branch_coverage->id, $delivery_slot_id);
+                            // }
+                        }
                     }
                 }
             }
