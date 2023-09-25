@@ -48,6 +48,9 @@
                             @endforeach
                         </select>
                         <!--begin::Form-->
+                        @if (isset($batch))
+                        {{-- @livewire('deliveryservice::batch-progress', ['batch' => $batch]) --}}
+                        @endif
                         <br><br>
                         <form id="re_add_bulk_form" name="re_add_bulk_form" method="post" class="form"
                             action="{{ route('upload_deliveries_by_form')}}" enctype="multipart/form-data">
@@ -220,6 +223,7 @@
 --}}
 {{-- <script src="{{ asset('static/js/custom/documentation/general/datatables/subtable.js')}}"></script> --}}
 <script>
+
     $(document).ready(function () {
         function reInitializeDataValidation(){
             $(".fv-plugins-message-container.invalid-feedback").remove();

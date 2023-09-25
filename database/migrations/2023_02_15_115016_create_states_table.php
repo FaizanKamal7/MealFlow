@@ -28,7 +28,8 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
-        });
+            $table->timestamps();;
+                });
     }
 
     /**

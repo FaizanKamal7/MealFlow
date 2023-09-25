@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('areas', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->boolean('active_status');
+            $table->boolean('active_status')->default(0);
             $table->string('name');
             $table->uuid('city_id');
-            $table->bigInteger('geoname_id');
-            $table->string('coordinates');
+            $table->bigInteger('geoname_id')->nullable();
+            $table->string('coordinates')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
