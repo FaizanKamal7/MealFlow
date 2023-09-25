@@ -82,8 +82,13 @@ Route::group(['prefix' => 'core/'], function () {
             Route::get("/search-city", [CityController::class, "search"])->name("search_city");
             Route::get("/activate-api-areas", [AreaController::class, "activateCityAreas"])->name("activate_city_areas");
             Route::get("/activate-locations-view", [LocationController::class, "index"])->name("activate_locations_view");
-            Route::get("/city-search", [LocationController::class, "search"])->name("city_search");
             Route::get("/activated-locations", [LocationController::class, "activatedLocations"])->name("activated_locations_view");
+            //table data for showing cities-locations file
+            Route::get("/table-data", [LocationController::class, "table_data"])->name("table-data");
+            //filling table data of activate location by search query result- route
+            Route::get("/city-search", [LocationController::class, "search"])->name("city_search");
+
+
         });
 
         Route::group(['prefix' => 'delivery-slots/'], function () {

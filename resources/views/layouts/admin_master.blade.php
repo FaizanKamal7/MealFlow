@@ -18,14 +18,14 @@
     <link rel="shortcut icon" href="{{ asset('static/media/logos/favicon.ico') }}">
     @livewireStyles
     @include('partials.styles')
-    @yield("extra_style")
+    @yield('extra_style')
 
 </head>
 <!--end::Head-->
 <!--begin::Body-->
 
 <body id="kt_body"
-    class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed"
+    class="bg header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed"
     style="--kt-toolbar-height:2px;--kt-toolbar-height-tablet-and-mobile:55px">
     <!--begin::Main-->
     <!--begin::Root-->
@@ -33,17 +33,17 @@
         <!--begin::Page-->
         <div class="page d-flex flex-row flex-column-fluid">
             <!--begin::Aside-->
-            <div id="kt_aside" class="aside aside-light aside-hoverable" data-kt-drawer="true"
+            <div id="kt_aside" class="aside aside-light aside-hoverable whole-sidebar" data-kt-drawer="true"
                 data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}"
                 data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}"
                 data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
 
                 @include('includes.brand')
                 @section('sidebar_menu')
-                @include('includes.sidebar_menu')
+                    @include('includes.sidebar_menu')
                 @show
                 @section('sidebar_footer')
-                @include('includes.sidebar_menu')
+                    @include('includes.sidebar_menu')
                 @show
             </div>
             <!--end::Aside-->
@@ -57,7 +57,7 @@
                 <!--end::Content-->
 
                 @section('footer')
-                @include('includes.footer')
+                    @include('includes.footer')
                 @show
 
             </div>

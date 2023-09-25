@@ -2,47 +2,61 @@
 @section('title', 'Settings')
 
 @section('extra_style')
-<link href="{{'static/plugins/custom/datatables/datatables.bundle.css'}}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ 'static/plugins/custom/datatables/datatables.bundle.css' }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('main_content')
-<!--begin::Post-->
-<div class="post d-flex flex-column-fluid" id="kt_post">
-    <!--begin::Container-->
-    <div id="kt_content_container" class="container-fluid">
-        <h1 class="fs-lg-2x  pb-7 px-2">Activate Your Service Locations </h1>
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-fluid">
 
-        <div class="d-flex flex-column flex-lg-row">
-            <!--begin::Content-->
-            <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
+            <div class="d-flex flex-column flex-lg-row">
+                <!--begin::Content-->
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-5 ">
 
-                <!--begin::Card-->
-                <div class="card card-flush">
-                    <!--begin::Card header-->
-                    <div class="card-header mt-6">
-                        <!--begin::Card title-->
-                        <div class="card-title">
-                            <!--begin::Search-->
-                            <div class="d-flex align-items-center position-relative my-1 me-5">
-                                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                                <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none">
-                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
-                                            transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                        <path
-                                            d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                            fill="currentColor" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->
-                                <input type="text" id="myInput" data-kt-permissions-table-filter="search"
-                                    onkeyup="myFunction()" class="form-control form-control-solid w-250px ps-15"
-                                    placeholder="Search city name..." />
-
-
+                    <!--begin::Card-->
+                    <div class="card card-flush location-card">
+                        <!--begin::Card header-->
+                        <div class="card-header mt-6 align-items-center location-header">
+                            <div class="activate-service">
+                                <h1 class="fs-lg-2x ">Activate Your Service Locations </h1>
                             </div>
+<<<<<<< HEAD
+                            <!--begin::Card title-->
+                            <div class="card-title">
+                                <!--begin::Search-->
+                                <div class="d-flex align-items-center position-relative me-5">
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-6 location-icon" id="searchIcon">
+                                        <x-iconsax-lin-search-normal-1 />
+                                    </span>
+                                    <form action="{{ route('city_search') }}" method="GET" id="searchForm">
+                                        <input type="text" name="query" id="myInput"
+                                            data-kt-permissions-table-filter="search"
+                                            class="form-control form-control-solid w-200px ps-15 location-dropdown"
+                                            placeholder="Search city name..." value="{{ request()->query('query') }}" />
+                                    </form>
+                                </div>
+                                <!--end::Search-->
+                                <div class="me-5">
+                                    <select class="form-select location-dropdown" data-control="select2"
+                                        data-placeholder="All">
+                                        <option></option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <select class="form-select location-dropdown" data-control="select2"
+                                        data-placeholder="Export">
+                                        <option></option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--end::Card title-->
+
                             <!--end::Search-->
                         </div>
                         <!--end::Card title-->
@@ -120,87 +134,242 @@
                         {{-- {{ $cities->links() }} --}}
 =======
 >>>>>>> Stashed changes
+>>>>>>> development
 
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0 table-responsive location-card-body">
+                            <div id="page-loader" style="display: none;">
+                                <span class="spinner-border text-primary" role="status">
+                                </span>
+                                <div class="text-primary">Loading...</div>
+                            </div>
+                            @include('includes.location_table')
+                        </div>
+                        <!--end::Card body-->
                     </div>
-                    <!--end::Card body-->
+                    <!--end::Card-->
                 </div>
-                <!--end::Card-->
-
-
-
+                <!--end::Content-->
             </div>
-            <!--end::Content-->
         </div>
-
+        <!--end::Container-->
     </div>
-    <!--end::Container-->
-</div>
-<!--end::Post-->
-
-
-</div>
-<!--end::Container-->
-</div>
-<!--end::Alert-->
+    <!--end::Post-->
 
 @endsection
 
-
-
 @section('extra_scripts')
-<script src="{{ asset('static/js/custom/settings/settings_home.js') }}"></script>
-<script src="{{ asset('static/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<script>
-    function myFunction() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("city-table");
-        tr = table.getElementsByTagName("tr");
+    <script src="{{ asset('static/js/custom/settings/settings_home.js') }}"></script>
+    <script src="{{ asset('static/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            const searchForm = document.getElementById('searchForm');
+            const myInput = document.getElementById('myInput');
 
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1]; // get second column (name column)
-            if (td) {
-            a = td.getElementsByTagName("a")[0]; // get anchor within td
-            txtValue = a.textContent || a.innerText; // get text within anchor
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
+            // Create a debounced function that submits the form
+            const submitFormDebounced = debounce(function() {
+                searchForm.submit();
+            }, 1000); // Change 1000 to the desired delay in milliseconds (1 second in this example)
+
+            // Listen for input events and trigger form submission after a delay
+            myInput.addEventListener('input', function() {
+                submitFormDebounced();
+            });
+
+            function debounce(func, delay) {
+                let timeout;
+                return function() {
+                    const context = this;
+                    const args = arguments;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        func.apply(context, args);
+                    }, delay);
+                };
             }
-            }       
-        }
-    }
 
-    var status = {
-				1: {"title": "Pending", "state": "primary"},
-				2: {"title": "Delivered", "state": "danger"},
-				3: {"title": "Canceled", "state": "primary"},
-				4: {"title": "Success", "state": "success"},
-				5: {"title": "Info", "state": "info"},
-				6: {"title": "Danger", "state": "danger"},
-				7: {"title": "Warning", "state": "warning"},
-			};
 
-			$("#city-table").DataTable({
-				"fixedHeader": {
-					"header":true,
-					"headerOffset": 5
-				},
-				"columnDefs": [
-					{
-						// The `data` parameter refers to the data for the cell (defined by the
-						// `data` option, which defaults to the column being worked with, in
-						// this case `data: 0`.
-						"render": function ( data, type, row ) {
-							var index = KTUtil.getRandomInt(1, 7);
+        });
 
-							return data + '<span class="ms-2 badge badge-light-' + status[index]['state'] + ' fw-bold">' + status[index]['title'] + '</span>';
-						},
-						"targets": 1
-					}
-				]
-			});
-</script>
+        // function fetch_data(page) {
+        //     $.ajax({
+        //         url: "{{ route('table-data', ['page' => '']) }}" + page,
+        //         // url: "/core/settings/locations/table-data/" + page, // Include the page number
+        //         // url: "/table-data/" + page, // Use the correct URL
+        //         success: function(data) {
+        //             console.log(data)
+        //             $('#location_table').html(data);
+        //             hideLoading();
+        //             updatePaginationLinks(page);
+        //         },
+        //         error: function(xhr, status, error) {
+        //             // Handle errors if needed
+        //             console.log(error, status, xhr);
+        //             hideLoading();
+        //             alert(error)
+        //         }
+        //     })
+        // }
+        // function updatePaginationLinks(activePage) {
+        //     // Remove the active class from all pagination links
+        //     $('.page-link').parent('li').removeClass('active');
+        //     // Add the active class to the current page link
+        //     $('.page-link[href*="page=' + activePage + '"]').parent('li').addClass('active');
+        // }
+
+        // function showPaginator() {
+        //     // Show the paginator container
+        //     $('.paginator-div').show();
+        // }
+
+        // function hidePaginator() {
+        //     // Hide the paginator container
+        //     $('.paginator-div').hide();
+        // }
+
+
+        // function showLoading() {
+        //     $('#page-loader').show();
+        //     // Get the div element by its ID
+        //     var myDiv = document.getElementById("page-loader");
+        //     // Change the display property to "flex"
+        //     myDiv.style.display = "flex";
+
+        // }
+
+        // function hideLoading() {
+        //     $('#page-loader').hide();
+        // }
+
+        // var typingTimer; // Timer identifier
+        // var doneTypingInterval = 1000; // Time in milliseconds (1 second)
+
+        // function delayedFilterTable() {
+        //     clearTimeout(typingTimer); // Clear the previous timer
+
+        //     typingTimer = setTimeout(function() {
+        //         var input = document.getElementById("myInput");
+        //         var filter = input.value.trim(); // Trim to remove leading/trailing spaces
+
+        //         if (filter == '') {
+        //             // showPaginator();
+        //             // var pageItems = $('.pagination li');
+
+        //             // // Add the "active" class to the first <li> element
+        //             // pageItems.eq(1).addClass('active');
+
+        //             // // Remove the "active" class from all other <li> elements
+        //             // pageItems.slice(2).removeClass('active');
+        //             // updatePaginationLinks(2)
+
+        //         } else {
+        //             // If there is a search term, hide the paginator
+        //             // hidePaginator();
+        //         }
+        //         filterTable(); // Execute the filterTable function after the delay
+        //     }, doneTypingInterval);
+        // }
+
+
+        //function for searching in backend data using ajax and showing it in data table 
+        // function filterTable() {
+        //     showLoading();
+        //     var input, filter;
+        //     input = document.getElementById("myInput"); // Replace with the actual ID of your search input
+        //     filter = input.value;
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "{{ route('city_search') }}", // Use the named route for searching
+        //         data: {
+        //             query: filter
+        //         },
+        //         success: function(response) {
+        //             // Update the table with the received paginated search results
+        //             $("#location_table").html(response);
+        //             hideLoading();
+
+        //             // hidePaginator();
+        //         },
+        //         error: function() {
+        //             hideLoading();
+        //             alert("An error occurred while searching.");
+        //         }
+        //     });
+        // }
+
+        // function myFunction() {
+        //     var input, filter, table, tr, td, i, txtValue;
+        //     input = document.getElementById("myInput");
+        //     filter = input.value.toUpperCase();
+        //     table = document.getElementById("location_table");
+        //     tr = table.getElementsByTagName("tr");
+
+        //     for (i = 0; i < tr.length; i++) {
+        //         td = tr[i].getElementsByTagName("td")[0]; // get first column (Cities column)
+        //         if (td) {
+        //             txtValue = td.textContent || td.innerText; // get text within the first column
+        //             if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        //                 tr[i].style.display = "";
+        //             } else {
+        //                 tr[i].style.display = "none";
+        //             }
+        //         }
+        //     }
+        // }
+
+
+
+        // var status = {
+        //     1: {
+        //         "title": "Pending",
+        //         "state": "primary"
+        //     },
+        //     2: {
+        //         "title": "Delivered",
+        //         "state": "danger"
+        //     },
+        //     3: {
+        //         "title": "Canceled",
+        //         "state": "primary"
+        //     },
+        //     4: {
+        //         "title": "Success",
+        //         "state": "success"
+        //     },
+        //     5: {
+        //         "title": "Info",
+        //         "state": "info"
+        //     },
+        //     6: {
+        //         "title": "Danger",
+        //         "state": "danger"
+        //     },
+        //     7: {
+        //         "title": "Warning",
+        //         "state": "warning"
+        //     },
+        // };
+
+        // $("#city-table").DataTable({
+        //     "fixedHeader": {
+        //         "header": true,
+        //         "headerOffset": 5
+        //     },
+        //     "columnDefs": [{
+        //         // The `data` parameter refers to the data for the cell (defined by the
+        //         // `data` option, which defaults to the column being worked with, in
+        //         // this case `data: 0`.
+        //         "render": function(data, type, row) {
+        //             var index = KTUtil.getRandomInt(1, 7);
+
+        //             return data + '<span class="ms-2 badge badge-light-' + status[index]['state'] +
+        //                 ' fw-bold">' + status[index]['title'] + '</span>';
+        //         },
+        //         "targets": 1
+        //     }]
+        // });
+    </script>
 @endsection
 <!--end::Category-->
