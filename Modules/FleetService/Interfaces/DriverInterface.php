@@ -11,5 +11,6 @@ interface DriverInterface {
     public function getDriversbyAreaID($area_id,$slot_start,$slot_end);
     public function getDriverByEmployeeId($employee_id);
     public function delete_driver($id);
+    public function getDriverWithDeliveries($driver_id);
 
 }
