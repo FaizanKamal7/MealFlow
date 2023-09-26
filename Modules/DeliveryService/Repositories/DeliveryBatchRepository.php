@@ -22,6 +22,10 @@ class DeliveryBatchRepository implements DeliveryBatchInterface {
 
     }
 
+    public function updateDeliveryBatch($batch_id,$data){
+      $batch =  DeliveryBatch::findOrFail($batch_id);
+      return $batch->update($data);
+    }
     public function getActiveDeliveryBatchByDriver($driver_id){
         $batch = DeliveryBatch::where('driver_id',$driver_id)->where('batch_end_time',null)->first();
         if(!$batch)
@@ -30,4 +34,12 @@ class DeliveryBatchRepository implements DeliveryBatchInterface {
         }
         return $batch;
     }
+    public function getDriverActiveBatchWithDeliveries($driver_id){
+      $batch = DeliveryBatch::with('deliveries')->where('driver_id',$driver_id)->where('batch_end_time',null)->first();
+      if(!$batch)
+      {
+        $batch =  $this->createDeliveryBatch($driver_id);
+      }
+      return $batch;
+  }
 }   
