@@ -3,6 +3,7 @@
 namespace Modules\DeliveryService\Entities;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\FleetService\Entities\Vehicle;
@@ -10,7 +11,8 @@ use Modules\FleetService\Entities\Vehicle;
 class DeliveryTimeline extends Model
 {
     use HasFactory;
-
+    use HasUuids;
+    
     protected $fillable = [
         "delivery_id",
         "status_id",
