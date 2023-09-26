@@ -10,6 +10,7 @@ use App\Models\State;
 use Illuminate\Support\Facades\Config;
 use Modules\CRM\Entities\Task;
 use Modules\DeliveryService\Entities\BagTimeline;
+use Modules\DeliveryService\Entities\DeliveryTimeline;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
@@ -47,7 +48,16 @@ class Helper
             'description' => $description,
         ]);
     }
-
+    public function deliveryTimeline($delivery_id, $status_id, $action_by, $vehicle_id, $description)
+    {
+        DeliveryTimeline::create([
+            'delivery_id' => $delivery_id,
+            'status_id' => $status_id,
+            'action_by' => $action_by,
+            'vehicle_id' => $vehicle_id,
+            'description' => $description,
+        ]);
+    }
     public function createWallet($business_id)
     {
         BusinessWallet::create([
