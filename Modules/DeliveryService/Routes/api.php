@@ -22,7 +22,8 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'deliveryservice/'], f
     
     });
     Route::prefix('deliverybatch/')->group(function () {
-        Route::get('start-batch', [DeliveryBatchController::class, "startDeliveryBatch"]);
+        Route::post('start-batch', [DeliveryBatchController::class, "startDeliveryBatch"]);
+        Route::post('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
     
     });
  
