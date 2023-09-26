@@ -197,6 +197,9 @@
 
             <div class="mb-20">
                 <h1 class="fs-lg-2x px-2">Current Location</h1>
+                <img src="{{asset($vehicle->qr_code)}}" class="" alt="qr code" />
+                {{-- <p class="fs-lg-2x px-2">{{$vehicle->qr_code}} </p> --}}
+
             </div>
 
 

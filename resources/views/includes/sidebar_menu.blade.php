@@ -557,10 +557,8 @@
             <div class="separator"></div>
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
-                    <<<<<<< HEAD <span class="menu-section text-dark text-uppercase fs-8 ls-1">ACCOUNTS</span>
-                        =======
-                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Partners</span>
-                        >>>>>>> development
+                 <span class="menu-section text-dark text-uppercase fs-8 ls-1">ACCOUNTS</span>
+                  
                 </div>
             </div>
 
