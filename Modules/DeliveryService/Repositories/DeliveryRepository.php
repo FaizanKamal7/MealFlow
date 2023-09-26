@@ -31,7 +31,9 @@ class DeliveryRepository implements DeliveryInterface
             return Delivery::where('delivery_date', [$start_date, $end_date]);
         }
     }
-
+    // public function getDriverDeliveries($driver_id,$start_date,$end_date){
+    //     return Delivery::where('d')
+    // }
     public function getDeliveriesByStatus($status)
     {
         return Delivery::where('status', $status)->with('deliverySlot', 'customerAddress')->get();
@@ -43,4 +45,7 @@ class DeliveryRepository implements DeliveryInterface
             'status' => 'ASSIGNED',
         ]);
     }
+
+ 
+
 }

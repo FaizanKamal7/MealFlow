@@ -32,6 +32,9 @@ class DeliveryBatch extends Model
     {
         return $this->belongsTo(Driver::class, 'driver_id');
     }
+    public function deliveries(){
+        return $this->hasMany(Delivery::class);
+    }
 
     protected static function newFactory()
     {

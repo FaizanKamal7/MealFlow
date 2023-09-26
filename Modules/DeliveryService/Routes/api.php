@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\DeliveryService\Http\Controllers\APIControllers\V1\Deliveries\DeliveryController;
+use Modules\DeliveryService\Http\Controllers\APIControllers\V1\DeliveryBatch\DeliveryBatchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/deliveryservice', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'deliveryservice/'], function () {
+
+    Route::prefix('driver/')->group(function () {
+        Route::get('deliveries', [DeliveryController::class, "getDriverDeliveries"]);
+    
+    });
+    Route::prefix('deliverybatch/')->group(function () {
+        Route::get('start-batch', [DeliveryBatchController::class, "startDeliveryBatch"]);
+    
+    });
+ 
 });

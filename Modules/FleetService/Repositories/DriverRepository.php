@@ -53,6 +53,9 @@ class DriverRepository implements DriverInterface
     public function getDriver($id){
         return Driver::find($id);
     }
+    public function getDriverWithDeliveries($driver_id){
+        return Driver::with('deliveries')->where('id',$driver_id)->get();
+    }
 
     public function getDriverByEmployeeId($employee_id){
         return Driver::where(["employee_id"=>$employee_id])->first();
