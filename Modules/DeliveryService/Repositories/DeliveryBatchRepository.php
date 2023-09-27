@@ -37,12 +37,29 @@ class DeliveryBatchRepository implements DeliveryBatchInterface
     return $batch;
   }
 
+
+
+
   public function getDriverActiveBatchWithDeliveries($driver_id)
   {
-    $batch = DeliveryBatch::with('deliveries')->where('driver_id', $driver_id)->where('batch_end_time', null)->first();
-    if (!$batch) {
-      $batch =  $this->createDeliveryBatch($driver_id);
-    }
+    $batch = DeliveryBatch::with([
+      'deliveries',
+      'deliveries.customerAddress' => function ($query) {
+        $query->select('id', 'address', 'latitude', 'longitude');
+      },
+      'deliveries.customer' => function ($query) {
+        $query->select('id', 'user_id');
+      },
+      'deliveries.customer.user' => function ($query) {
+        $query->select('id', 'name', 'phone');
+      },
+      'deliveries.deliverySlot' => function ($query) {
+        $query->select('id', 'start_time', 'end_time');
+      },
+
+
+    ])->where('driver_id', $driver_id)->where('batch_end_time', null)->first();
+
     return $batch;
   }
 }

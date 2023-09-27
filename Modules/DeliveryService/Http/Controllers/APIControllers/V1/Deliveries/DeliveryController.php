@@ -14,6 +14,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\BusinessService\Entities\CustomerAddress;
 use Modules\BusinessService\Interfaces\BranchInterface;
@@ -88,25 +89,7 @@ class DeliveryController extends Controller
 
         $this->helper = $helper;
     }
-    /**
-     * Display a listing of the resource.
-     */
-    public function getDriverDeliveries(Request $request)
-    {
-        try {
-            $driver_id = $request->get('driver_id');
-            $delivery_batch = $this->deliveryBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
-            
-
-            $data = ['delivery_batch' => $delivery_batch];
-            return $this->success($data, "delivery batch");
-
-        }catch(Exception $e){
-            return $this->error($e, 'Something went wrong contact support');
-
-        }
-        // $deliveries = $this->deliveryRepository->getde   
-    }
+  
 
     /**
      * Show the form for creating a new resource.
@@ -576,5 +559,56 @@ class DeliveryController extends Controller
         } catch (Exception $exception) {
             dd($exception);
         }
+    }
+
+
+
+    // ---------------------------------------------------DRIVER APP ----------------------------------------------
+    // -------------------------------------------------------------------------------------------------------------
+
+    public function getDriverDeliveries(Request $request)
+    {
+        try {
+            $driver_id = $request->get('driver_id');
+            $delivery_batch = $this->deliveryBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
+            
+
+            $data = ['delivery_batch' => $delivery_batch];
+            return $this->success($data, "delivery batch");
+
+        }catch(Exception $e){
+            return $this->error($e, 'Something went wrong contact support');
+
+        }
+        // $deliveries = $this->deliveryRepository->getde   
+    }
+
+    public function completeDelivery(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'openbag_img' => ['required'],
+            'closebag_img' => ['required'],
+            'vehicle_id' => ['required'],
+            'map_coordinates' => ['required'],
+        ]);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            return $this->error($validator->errors(), "validation failed", 422);
+        }
+
+        $helper = new Helper();
+        $openbag_img = $request->file('openbag_img');
+        $closebag_img = $request->file('closebag_img'); 
+
+        $url = $helper->storeFile($openbag_img,"DeliveryServce","Deliveries");
+        return $url;
+        try{
+
+        }catch(Exception $exception){
+
+        }
+
+        // $helper->storeFile();
     }
 }

@@ -36,6 +36,14 @@ class Helper
             'method' => $method,
         ]);
     }
+    public function storeFile($file, $module, $directory)
+    {
+        $file_url = $file->getClientOriginalName();
+        $file_url = time() . '-' . date('YmdHi') . '-' . $file_url;
+        $file_url = $module."/" . $directory . "/" . $file_url;
+        $file->move($module."/" . $directory . "/", $file_url);
+        return $file_url;
+    }
 
     public function bagTimeline($bag_id, $delivery_id, $status_id, $action_by, $vehicle_id, $description)
     {
