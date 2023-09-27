@@ -14,7 +14,7 @@ class BagTimeline extends Model
     protected $fillable = [
         "bag_id",
         "delivery_id",
-        "status_id",
+        "status",
         "action_by",
         "vehicle_id",
         // "previous_status",
