@@ -159,6 +159,8 @@ class DeliveryController extends Controller
 
         ];
         $file = $request->file('excel_file');
+        $delivery_date = $request->delivery_date;
+
         $data = $this->helper->getExcelSheetData($file);
 
         // Create chunks of data with 10 rows each
@@ -248,6 +250,7 @@ class DeliveryController extends Controller
                             'branch_id' => $branch->id ?? null,
                             'delivery_slot_id' => $db_delivery_slot->id ?? null,
                             'delivery_type_id' => null,
+                            'delivery_date' => $delivery_date,
                             'customer_id' => $customer->id,
                             'area_id' =>  $area->id,
                             'city_id' =>  $city->id,
@@ -493,13 +496,12 @@ class DeliveryController extends Controller
     }
 
     // ------------------------------------- SUGGESTED DRIVER-----------------------
-    function unassigned_deliveries()
+    function unassignedDeliveries()
     {
         $deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
 
         foreach ($deliveries as $delivery) {
             $customerAddress = $delivery->customerAddress;
-
             // Step 1: Find a driver that matches the delivery area and has deuty timing eligilable for that slot
             $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
             $delivery->setAttribute('suggested_drivers', $drivers);
@@ -544,6 +546,8 @@ class DeliveryController extends Controller
     }
     public function assigned_delivery_to_driver(Request $request)
     {
+
+
         try {
             // --------------- GETTING DELIVERIES AND DRIVER TO ASSIGN-------------
             $driver_id = $request->get("driver_id");
@@ -556,9 +560,11 @@ class DeliveryController extends Controller
             // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
             $this->deliveryRepository->AssignDeliveryBtach($batch->id, $deliveries);
 
-            echo ($driver_id);
-            dd($batch);
-            dd($deliveries);
+
+            $drivers = $this->driverRepository->getDetailDrivers();
+            $db_deliveries = $this->deliveryRepository->getDeliveriesByStatus('ASSIGNED');
+            $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
+            return view('deliveryservice::deliveries.assigned_deliveries', $data);
         } catch (Exception $exception) {
             dd($exception);
         }

@@ -20,4 +20,5 @@
 <link href="{{ asset('static/css/delivery_slot_wise_base_pricing.css') }}" rel="stylesheet" type="text/css" />
 
 
+
 <!--end::Global Stylesheets Bundle-->

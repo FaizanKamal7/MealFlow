@@ -170,7 +170,7 @@
 
 
                     <div class="menu-item">
-                        <a class="menu-link" href="">
+                        <a class="menu-link" href="{{ route('unassigned_deliveries') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -557,8 +557,7 @@
             <div class="separator"></div>
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
-                 <span class="menu-section text-dark text-uppercase fs-8 ls-1">ACCOUNTS</span>
-                  
+                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Partners</span>
                 </div>
             </div>
 
@@ -611,9 +610,9 @@
                                     d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
                                     fill="currentColor" />
                                 <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
-                            </svg></span>
+                            </svg>
+                        </span>
                         <!--end::Svg Icon-->
-                        <span class="menu-title mx-5">Customers</span>
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('view_all_customers') }}">
                                 <span class="menu-bullet">
@@ -636,7 +635,7 @@
                     </span>
                     <!--end::Svg Icon-->
                     <span class="menu-title mx-5">Cancelled</span>
-                    >
+
                 </span>
 
             </div>

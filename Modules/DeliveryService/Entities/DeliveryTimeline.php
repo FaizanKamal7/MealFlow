@@ -10,6 +10,7 @@ use Modules\FleetService\Entities\Vehicle;
 
 class DeliveryTimeline extends Model
 {
+    use HasUuids;
     use HasFactory;
     use HasUuids;
     
