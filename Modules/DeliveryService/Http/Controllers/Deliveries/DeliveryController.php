@@ -27,6 +27,11 @@ class DeliveryController extends Controller
         return view('deliveryservice::deliveries.upload_delivery');
     }
 
+    public function viewUnassignedDeliveries()
+    {
+        return view('deliveryservice::deliveries.unassigned_delivery');
+    }
+
     public function uploadDeliveriesByForm(Request $request)
     {
         $customers = $request->get("customer");

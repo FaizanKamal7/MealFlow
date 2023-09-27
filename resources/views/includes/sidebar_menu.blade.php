@@ -169,11 +169,20 @@
 
 
                     <div class="menu-item">
-                        <a class="menu-link" href="">
+                        <a class="menu-link"href="{{ route('view_unassign') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Unassigned Deliveries</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link"href="{{ route('view_unassign') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Assigned Deliveries</span>
                         </a>
                     </div>
 
@@ -184,7 +193,42 @@
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Completed Deliveries</span>
-                            <span class="menu-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Completed Deliveries (CS)</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">API Paused Deliveries</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Cancelled Deliveries</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Rescheduled Deliveries</span>
                         </a>
                     </div>
 
@@ -194,6 +238,26 @@
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Delayed Deliveries</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Deleted Deliveries</span>
+                        </a>
+                    </div>
+
+
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Delivery Insights</span>
                         </a>
                     </div>
 
