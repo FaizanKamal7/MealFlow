@@ -90,9 +90,9 @@ class DeliveryBatchController extends Controller
         try {
             // Validate the request data
             $validator = Validator::make($request->all(), [
-                'batch_id' => ['required'],
+                'batch_id' => ['required','exists:delivery_batches,id'],
                 'start_time' => ['required', 'date'],
-                'vehicle_id' => ['required'],
+                'vehicle_id' => ['required','exists:vehicles,id'],
                 'map_coordinates' => ['required'],
             ]);
 
@@ -104,8 +104,9 @@ class DeliveryBatchController extends Controller
             $batch_id = $request->post('batch_id');
             $start_time = $request->post('start_time');
             $vehicle_id = $request->post('vehicle_id');
-            $start_coordinates = $request->post('map_coordinates');
 
+            $start_coordinates = $request->post('map_coordinates');
+            
             $data = ['batch_start_time' => $start_time, 'vehicle_id' => $vehicle_id,'status'=>'Pending', 'batch_arrival_map_coordinates' => $start_coordinates];
             $update = $this->deliveryBatchRepository->updateDeliveryBatch($batch_id, $data);
 

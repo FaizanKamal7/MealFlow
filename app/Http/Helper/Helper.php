@@ -18,6 +18,14 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Helper
 {
+    public function storeFile($file, $module, $directory)
+    {
+        $file_url = $file->getClientOriginalName();
+        $file_url = time() . '-' . date('YmdHi') . '-' . $file_url;
+        $file_url = $module."/" . $directory . "/" . $file_url;
+        $file->move($module."/" . $directory . "/", $file_url);
+        return $file_url;
+    }
     public function logActivity($userId, $moduleName, $action, $subject, $url, $description, $ipAddress, $userAgent, $oldValues, $newValues, $recordId, $recordType, $method)
     {
         ActivityLogs::create([
@@ -36,14 +44,6 @@ class Helper
             'method' => $method,
         ]);
     }
-    public function storeFile($file, $module, $directory)
-    {
-        $file_url = $file->getClientOriginalName();
-        $file_url = time() . '-' . date('YmdHi') . '-' . $file_url;
-        $file_url = $module."/" . $directory . "/" . $file_url;
-        $file->move($module."/" . $directory . "/", $file_url);
-        return $file_url;
-    }
 
     public function bagTimeline($bag_id, $delivery_id, $status_id, $action_by, $vehicle_id, $description)
     {
@@ -56,11 +56,11 @@ class Helper
             'description' => $description,
         ]);
     }
-    public function deliveryTimeline($delivery_id, $status_id, $action_by, $vehicle_id, $description)
+    public function deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description)
     {
         DeliveryTimeline::create([
             'delivery_id' => $delivery_id,
-            'status_id' => $status_id,
+            'status' => $status,
             'action_by' => $action_by,
             'vehicle_id' => $vehicle_id,
             'description' => $description,
