@@ -67,8 +67,8 @@ class DeliverySlotController extends Controller
 
         foreach ($cities_arr as $key => $city) {
             foreach ($delivery_slots_list as $key => $delivery_slot) {
-                $start_time = $delivery_slot['start_time'];
-                $end_time = $delivery_slot['end_time'];
+                $start_time = date("H:i", strtotime($delivery_slot['start_time']));
+                $end_time = date("H:i", strtotime($delivery_slot['end_time']));
                 $this->deliverySlotRepository->addDeliverySlots($start_time, $end_time, $city);
             }
         }

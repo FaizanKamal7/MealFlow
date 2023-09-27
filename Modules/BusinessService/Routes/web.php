@@ -14,6 +14,7 @@
 use Modules\BusinessService\Http\Controllers\BusinessInfo\BusinessInfoController;
 use Modules\BusinessService\Http\Controllers\BusinessPricing\BusinessPricingController;
 use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsController;
+use Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController;
 use Modules\FinanceService\Http\Controllers\WalletController;
 use Modules\FinanceService\Http\Controllers\WalletCreditController;
 use Modules\BusinessService\Http\Middleware\BusinessCheck;
@@ -37,10 +38,14 @@ Route::middleware(['businessCheck'])->group(function () {
             Route::get("pricing", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "pricingCalculator"])->name("pricing_calculator");
         });
 
+        Route::group(['prefix' => 'business_info/'], function () {
+            Route::get("overview/{business_id}", [BusinessInfoController::class, "index"])->name("business_overview");
+            Route::get("overview/send-contract-file/{business_id}", [BusinessInfoController::class, "sendContractFile"])->name("send_contract_file");
+        });
+
         Route::group(['prefix' => 'new_requests/'], function () {
             Route::get("", [NewRequestsController::class, "getNewBusinessRequests"])->name("business_new_requests");
             Route::get("all-business", [NewRequestsController::class, "getAllBusinesses"])->name("get_all_businesses");
-
             Route::get("answer-new-request", [NewRequestsController::class, "answerNewRequest"])->name("answer_new_request");
             Route::post("send-docusign/", [NewRequestsController::class, "signDocument"])->name("docusign.sign");
             Route::get('connect-docusign/{id}', [NewRequestsController::class, 'connectDocusign'])->name('connect.docusign');
@@ -62,15 +67,25 @@ Route::middleware(['businessCheck'])->group(function () {
 
         Route::group(['prefix' => 'wallet/'], function () {
             Route::get("", [WalletController::class, "viewWallet"])->name("viewWallet");
-
-
             Route::group(['prefix' => 'credit/'], function () {
-
                 Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
                 Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
             });
+
+            Route::group(['prefix' => 'credit/'], function () {
+                Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
+                Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
+            });
+
+            Route::group(['prefix' => 'business-settings/'], function () {
+            });
         });
-        Route::group(['prefix' => 'business-settings/'], function () {
+
+
+        Route::group(['prefix' => 'customers/'], function () {
+            Route::get('/', [CustomersController::class, "viewAllCustomers"])->name("view_all_customers");
+            Route::get('add/', [CustomersController::class, "viewAddCustomer"])->name("add_new_customer_view");
+            Route::post('store/', [CustomersController::class, "storeNewCustomer"])->name("store_new_customer");
         });
     });
 });

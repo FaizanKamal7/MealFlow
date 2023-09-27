@@ -2,42 +2,68 @@
 
 namespace Modules\DeliveryService\Entities;
 
+use App\Models\DeliverySlot;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\BusinessService\Entities\Branch;
+use Modules\BusinessService\Entities\Customer;
+use Modules\BusinessService\Entities\CustomerAddress;
 
 class Delivery extends Model
 {
     use HasFactory;
-use HasUuids;
+    use HasUuids;
     protected $fillable = [
-        "delivery_address",
-        "notes",
-        "enable_sms_notifications",
-        "enable_email_notifications",
-        "cod_amount",
-        "special_instructions",
         "status",
-        "delivery_date",
-        "delivered_datetime",
-        "item_type",
-        "delivery_type",
-        "delivery_cost",
-        "google_map_link",
-        "assignment_type", //auto, manual
-        "assigned_at",
-
-
-        "customer_id",
-        "delivery_slot_id", //inherited from partner delivery slots
-        "pickup_batch_id",
-        "delivery_batch_id",
+        "is_recurring",
+        "payment_status",
+        "is_sign_required",
+        "is_notification_enabled",
+        "note",
         "branch_id",
-        "bag_id",
-        "assigned_by_id",
-        "uploaded_by",
-
+        "delivery_slot_id",
+        "delivery_type_id",
+        "customer_id",
+        "customer_address_id",
+        "pick_up_batch_id",
+        "delivery_batch_id",
     ];
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
+    public function deliverySlot()
+    {
+        return $this->belongsTo(DeliverySlot::class, 'delivery_slot_id');
+    }
+
+    public function deliveryType()
+    {
+        return $this->belongsTo(DeliveryType::class, 'delivery_type_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    public function customerAddress()
+    {
+        return $this->belongsTo(CustomerAddress::class, 'customer_address_id');
+    }
+
+    public function pickupBatch()
+    {
+        return $this->belongsTo(PickupBatch::class, 'pick_up_batch_id');
+    }
+
+    public function deliveryBatch()
+    {
+        return $this->belongsTo(DeliveryBatch::class, 'delivery_batch_id');
+    }
 
     protected static function newFactory()
     {

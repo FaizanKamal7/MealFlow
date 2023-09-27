@@ -9,27 +9,18 @@ use Illuminate\Support\Facades\Hash;
 class UserRepository implements UserInterface
 {
 
-    public function createUser($name, $email, $password, $isActive = true, $isSuperUser = false)
+    public function createUser($data)
     {
-        $user = new User([
-            "name" => $name,
-            "email" =>$email,
-            "password" => $password,
-            "is_active"=>$isActive,
-            "is_superuser"=>$isSuperUser
-        ]);
-
-        $user->save();
-        return $user;
+        return User::create($data);
     }
 
     public function editUser($id, $name, $email, $password = null, $isActive = true, $isSuperUser = false)
     {
-       return User::where(["id"=>$id])->update([
+        return User::where(["id" => $id])->update([
             "name" => $name,
-            "email" =>$email,
-            "is_active"=>$isActive,
-            "is_superuser"=>$isSuperUser
+            "email" => $email,
+            "is_active" => $isActive,
+            "is_superuser" => $isSuperUser
         ]);
     }
 
@@ -40,11 +31,16 @@ class UserRepository implements UserInterface
 
     public function getUser($id)
     {
-        return User::where(["id"=>$id])->first();
+        return User::where(["id" => $id])->first();
+    }
+
+    public function getUserWhere($where)
+    {
+        return User::where($where)->get();
     }
 
     public function deleteUser($id)
     {
-        return User::where(["id"=>$id])->delete();
+        return User::where(["id" => $id])->delete();
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Modules\BusinessService\Entities;
 
+use App\Models\City;
+use App\Models\Country;
+use App\Models\State;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,28 +17,52 @@ class CustomerAddress extends Model
     protected $fillable = [
         'id',
         'address',
-        'area_name',
-        'city_name',
-        'state_name',
-        'country_name',
         'address_type',
-        'google_coordinates',
+        'address_status',
+        'latitude',
+        'longitude',
         'area_id',
         'city_id',
         'state_id',
         'country_id',
-        'branch_id',
+        'customer_id',
         'is_deleted',
     ];
 
-    protected static function newFactory()
-    {
-        return \Modules\BusinessService\Database\factories\CustomerAddressFactory::new();
-    }
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
 
     public function businessCustomers()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
+
+    protected static function newFactory()
+    {
+        return \Modules\BusinessService\Database\factories\CustomerAddressFactory::new();
     }
 }

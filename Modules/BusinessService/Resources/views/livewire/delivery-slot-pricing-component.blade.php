@@ -11,6 +11,7 @@
         value="true" />
     <input type="hidden" name="cities_delivery_slot[{{$index}}][delivery_slot_id]"
         value="{{$cities_delivery_slot[0]}}" />
+    <input type="hidden" name="cities_delivery_slot[{{$index}}][city]" value="{{ $cities_delivery_slot[2]['id'] }}" />
 
     {{-- S A M E - P R I C E S - F O R - A L L - S E R V I C E S --}}
     <div id="same_pricing_id_{{$index}}" class="same-pricing-div">
