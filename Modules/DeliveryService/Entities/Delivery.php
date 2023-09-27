@@ -22,6 +22,7 @@ class Delivery extends Model
         "payment_status",
         "is_sign_required",
         "is_notification_enabled",
+        "bag_type",
         "note",
         "delivery_date",
         "branch_id",
@@ -83,12 +84,12 @@ class Delivery extends Model
             $action_by = auth()->id();
             $bag_id = $attributes['id'];
             $delivery_id = null;
-            $status_id = null;
+            $status = "UNASSIGNED";
             $vehicle_id = null;
             $description = "New Delivery added";
 
 
-            $helper->deliveryTimeline($delivery_id, $status_id, $action_by, $vehicle_id, $description);
+            $helper->deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description);
 
 
 
@@ -126,8 +127,9 @@ class Delivery extends Model
                 $status_id = $attributes['status_id'];
                 $vehicle_id = $model->getOriginal('vehicle_id');;
                 $description = "status updated";
-    
-    
+                
+                $helper->deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description);
+                
                 $helper->deliveryTimeline( $delivery_id, $status_id, $action_by, $vehicle_id, $description);
             }
         });
