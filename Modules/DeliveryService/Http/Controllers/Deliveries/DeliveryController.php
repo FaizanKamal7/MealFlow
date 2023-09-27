@@ -498,7 +498,7 @@ class DeliveryController extends Controller
         $deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
 
         foreach ($deliveries as $delivery) {
-            $customerAddress = $this->customerAddressRepository->getCustomerAddressesbyID($delivery->customer_address_id);
+            $customerAddress = $delivery->customerAddress;
 
             // Step 1: Find a driver that matches the delivery area and has deuty timing eligilable for that slot
             $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);

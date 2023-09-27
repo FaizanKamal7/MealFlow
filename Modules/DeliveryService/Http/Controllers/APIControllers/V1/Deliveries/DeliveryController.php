@@ -88,25 +88,7 @@ class DeliveryController extends Controller
 
         $this->helper = $helper;
     }
-    /**
-     * Display a listing of the resource.
-     */
-    public function getDriverDeliveries(Request $request)
-    {
-        try {
-            $driver_id = $request->get('driver_id');
-            $delivery_batch = $this->deliveryBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
-            
-
-            $data = ['delivery_batch' => $delivery_batch];
-            return $this->success($data, "delivery batch");
-
-        }catch(Exception $e){
-            return $this->error($e, 'Something went wrong contact support');
-
-        }
-        // $deliveries = $this->deliveryRepository->getde   
-    }
+  
 
     /**
      * Show the form for creating a new resource.
@@ -576,5 +558,41 @@ class DeliveryController extends Controller
         } catch (Exception $exception) {
             dd($exception);
         }
+    }
+
+
+
+    // ---------------------------------------------------DRIVER APP ----------------------------------------------
+    // -------------------------------------------------------------------------------------------------------------
+
+    public function getDriverDeliveries(Request $request)
+    {
+        try {
+            $driver_id = $request->get('driver_id');
+            $delivery_batch = $this->deliveryBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
+            
+
+            $data = ['delivery_batch' => $delivery_batch];
+            return $this->success($data, "delivery batch");
+
+        }catch(Exception $e){
+            return $this->error($e, 'Something went wrong contact support');
+
+        }
+        // $deliveries = $this->deliveryRepository->getde   
+    }
+
+    public function completeDelivery(Request $request){
+        $helper = new Helper();
+        $openbag_img = $request->file('openbag_img'); 
+        $url = $helper->storeFile($openbag_img,"DeliveryServce","Deliveries");
+        return $url;
+        try{
+
+        }catch(Exception $exception){
+
+        }
+
+        // $helper->storeFile();
     }
 }

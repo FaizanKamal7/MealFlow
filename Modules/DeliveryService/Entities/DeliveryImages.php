@@ -13,7 +13,8 @@ use HasUuids;
     protected $fillable = [
         "delivery_id",
         "image_url",
-        "notes"
+        "image_type",
+        "note"
     ];
 
     protected static function newFactory()
