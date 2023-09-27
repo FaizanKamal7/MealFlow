@@ -336,9 +336,4 @@ class Helper
             echo $title . " is not an array.";
         }
     }
-
 }
-
-
-
-

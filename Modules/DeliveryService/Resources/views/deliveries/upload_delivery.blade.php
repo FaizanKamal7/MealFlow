@@ -1,9 +1,7 @@
-@extends('businessservice::layouts.master')
+@extends('layouts.admin_master')
 @section('title', 'Upload Deliveries')
 
 @section('extra_style')
-{{--
-<link href="{{ asset('static/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css/">--}}
 @endsection
 @section('main_content')
 <!--begin::Post-->
@@ -182,7 +180,11 @@
                             <option value={{$business->id}}> {{$business->name}}</option>
                             @endforeach
                         </select>
-
+                        <div class="mb-2">
+                            <label for="" class="form-label">Select date </label>
+                            <input name="delivery_date" class="form-control form-control-solid" placeholder="Pick date"
+                                id="kt_datepicker_3" />
+                        </div>
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <label class="required fs-6 fw-bold mb-2">Excel File</label>
@@ -219,11 +221,8 @@
 @endsection
 
 @section('extra_scripts')
-{{--<script src="{{ asset('static/plugins/custom/documentation/general/datatables/datatables.bundle.js')}}"></script>
---}}
-{{-- <script src="{{ asset('static/js/custom/documentation/general/datatables/subtable.js')}}"></script> --}}
-<script>
 
+<script>
     $(document).ready(function () {
         function reInitializeDataValidation(){
             $(".fv-plugins-message-container.invalid-feedback").remove();
@@ -398,6 +397,12 @@
             $(this).closest("tr").remove();
             reInitializeDataValidation();
         });
+      
+        
+        $("#kt_datepicker_3").flatpickr({
+            enableTime: false,
+            dateFormat: "Y-m-d",
+        });
     });
 
 
@@ -427,5 +432,6 @@
             }
         });
     });
+
 </script>
 @endsection
