@@ -101,10 +101,10 @@ class DeliveryBatchController extends Controller
                 return $this->error($validator->errors(), "validation failed", 422);
             }
 
-            $batch_id = $request->get('batch_id');
-            $start_time = $request->get('start_time');
-            $vehicle_id = $request->get('vehicle_id');
-            $start_coordinates = $request->get('map_coordinates');
+            $batch_id = $request->post('batch_id');
+            $start_time = $request->post('start_time');
+            $vehicle_id = $request->post('vehicle_id');
+            $start_coordinates = $request->post('map_coordinates');
 
             $data = ['batch_start_time' => $start_time, 'vehicle_id' => $vehicle_id,'status'=>'Pending', 'batch_arrival_map_coordinates' => $start_coordinates];
             $update = $this->deliveryBatchRepository->updateDeliveryBatch($batch_id, $data);
