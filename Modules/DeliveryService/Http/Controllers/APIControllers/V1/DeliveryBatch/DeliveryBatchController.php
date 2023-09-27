@@ -106,7 +106,7 @@ class DeliveryBatchController extends Controller
             $vehicle_id = $request->get('vehicle_id');
             $start_coordinates = $request->get('map_coordinates');
 
-            $data = ['batch_start_time' => $start_time, 'vehicle_id' => $vehicle_id,,'status'=>'Pending', 'batch_arrival_map_coordinates' => $start_coordinates];
+            $data = ['batch_start_time' => $start_time, 'vehicle_id' => $vehicle_id,'status'=>'Pending', 'batch_arrival_map_coordinates' => $start_coordinates];
             $update = $this->deliveryBatchRepository->updateDeliveryBatch($batch_id, $data);
 
             if (!$update) {

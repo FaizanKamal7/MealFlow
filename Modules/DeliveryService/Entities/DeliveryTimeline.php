@@ -12,7 +12,8 @@ class DeliveryTimeline extends Model
 {
     use HasUuids;
     use HasFactory;
-
+    use HasUuids;
+    
     protected $fillable = [
         "delivery_id",
         "status_id",

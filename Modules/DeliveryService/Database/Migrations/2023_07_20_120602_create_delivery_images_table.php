@@ -14,8 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('delivery_images', function (Blueprint $table) {
-            $table->id();
-
+            $table->uuid('id')->primary();
+            $table->uuid('delivery_id');
+            $table->string('image_url');
+            $table->string('image_type');
+            $table->string('note')->nullable();
+            $table->foreign('delivery_id')->on('deliveries')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

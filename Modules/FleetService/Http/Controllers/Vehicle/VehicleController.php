@@ -58,7 +58,7 @@ class VehicleController extends Controller
         $vehicleTypes = $this->vehicleTypeRepository->getActiveVehicletypes();
         $vehicleMakes = $this->vehicleModelRepository->getActiveVehicleMakes();
         $data = ["vehicles" => $vehicles, "vehicleTypes" => $vehicleTypes, 'vehicleMakes' => $vehicleMakes];
-        return view('fleetservice::fleets.all_fleets', $data);
+        return view('fleetservice::Fleets.all_fleets', $data);
 
     }
     /**
