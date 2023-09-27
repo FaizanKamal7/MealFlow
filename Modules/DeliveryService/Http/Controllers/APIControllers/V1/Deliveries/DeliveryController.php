@@ -14,6 +14,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\BusinessService\Entities\CustomerAddress;
 use Modules\BusinessService\Interfaces\BranchInterface;
@@ -583,8 +584,23 @@ class DeliveryController extends Controller
     }
 
     public function completeDelivery(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'openbag_img' => ['required'],
+            'closebag_img' => ['required'],
+            'vehicle_id' => ['required'],
+            'map_coordinates' => ['required'],
+        ]);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            return $this->error($validator->errors(), "validation failed", 422);
+        }
+
         $helper = new Helper();
-        $openbag_img = $request->file('openbag_img'); 
+        $openbag_img = $request->file('openbag_img');
+        $closebag_img = $request->file('closebag_img'); 
+
         $url = $helper->storeFile($openbag_img,"DeliveryServce","Deliveries");
         return $url;
         try{
