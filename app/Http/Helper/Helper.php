@@ -10,6 +10,7 @@ use App\Models\State;
 use Illuminate\Support\Facades\Config;
 use Modules\CRM\Entities\Task;
 use Modules\DeliveryService\Entities\BagTimeline;
+use Modules\DeliveryService\Entities\DeliveryTimeline;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
@@ -35,6 +36,14 @@ class Helper
             'method' => $method,
         ]);
     }
+    public function storeFile($file, $module, $directory)
+    {
+        $file_url = $file->getClientOriginalName();
+        $file_url = time() . '-' . date('YmdHi') . '-' . $file_url;
+        $file_url = $module."/" . $directory . "/" . $file_url;
+        $file->move($module."/" . $directory . "/", $file_url);
+        return $file_url;
+    }
 
     public function bagTimeline($bag_id, $delivery_id, $status_id, $action_by, $vehicle_id, $description)
     {
@@ -47,7 +56,16 @@ class Helper
             'description' => $description,
         ]);
     }
-
+    public function deliveryTimeline($delivery_id, $status_id, $action_by, $vehicle_id, $description)
+    {
+        DeliveryTimeline::create([
+            'delivery_id' => $delivery_id,
+            'status_id' => $status_id,
+            'action_by' => $action_by,
+            'vehicle_id' => $vehicle_id,
+            'description' => $description,
+        ]);
+    }
     public function createWallet($business_id)
     {
         BusinessWallet::create([
@@ -318,5 +336,4 @@ class Helper
             echo $title . " is not an array.";
         }
     }
-
 }
