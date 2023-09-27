@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Modules\BusinessService\Interfaces\BusinessInterface;
+use Modules\DeliveryService\Entities\PickupBatch;
 use Modules\DeliveryService\Interfaces\BagsInterface;
 use Modules\DeliveryService\Interfaces\BagStatusInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
+use Modules\DeliveryService\Interfaces\PickupBatchInterface;
+use Modules\FleetService\Repositories\DriverRepository;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -21,7 +24,9 @@ class BagsController extends Controller
     private BusinessInterface $businessRepository;
     private BagStatusInterface $bagStatusRepository;
     private DeliveryInterface $deliveryRepository;
-
+    private DriverRepository $driverRepository;
+    private PickupBatchInterface $pickupBatchRepository;
+    private PickupBatchInterface $pickupBatchBranchRepository;
 
 
     /**
@@ -31,12 +36,16 @@ class BagsController extends Controller
         BagsInterface $bagsRepository,
         BusinessInterface $businessRepository,
         BagStatusInterface $bagStatusRepository,
-        DeliveryInterface $deliveryRepository
+        DeliveryInterface $deliveryRepository,
+        DriverRepository $driverRepository,
+        PickupBatchInterface $pickupBatchRepository
     ) {
         $this->businessRepository = $businessRepository;
         $this->bagsRepository = $bagsRepository;
         $this->bagStatusRepository = $bagStatusRepository;
         $this->deliveryRepository = $deliveryRepository;
+        $this->driverRepository = $driverRepository;
+        $this->pickupBatchRepository = $pickupBatchRepository;
     }
 
     /**
@@ -140,7 +149,41 @@ class BagsController extends Controller
         $start_date = '2023-09-24';
         $end_date = '2023-09-25';
         $deliveries = $this->deliveryRepository->get($start_date, $end_date);
-        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups.blade', ['deliveries' => $deliveries]);
+        $drivers = $this->driverRepository->getDetailDrivers();
+
+        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', ['deliveries' => $deliveries, 'drivers' => $drivers]);
+    }
+
+    public function assignBagsPickup(Request $request)
+    {
+        $start_date = '2023-09-24';
+        $end_date = '2023-09-25';
+
+        try {
+            // --------------- GETTING DELIVERIES AND DRIVER TO ASSIGN-------------
+            $driver_id = $request->get("driver_id");
+            $deliveries = explode(',', $request->get("selected_delivery_ids"));
+
+
+            // -------------------- CREATING NEW BATCH FOR DELIVERY BASED ON DRIVER id-----------
+            $batch = $this->pickupBatchRepository->getActivePickupBatchByDriver($driver_id);
+
+            // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
+            $this->deliveryRepository->assignPickupBatch($batch->id, $deliveries);
+
+
+            $drivers = $this->driverRepository->getDetailDrivers();
+            $db_deliveries = $this->deliveryRepository->getPickupAssignedDeliveries($start_date, $end_date);
+            $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
+            return view('deliveryservice::bags.bags_pickup.assigned_bags_pickup', $data);
+        } catch (Exception $exception) {
+            dd($exception);
+        }
+
+        $deliveries = $this->deliveryRepository->get($start_date, $end_date);
+        $drivers = $this->driverRepository->getDetailDrivers();
+
+        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', ['deliveries' => $deliveries, 'drivers' => $drivers]);
     }
 
     /**

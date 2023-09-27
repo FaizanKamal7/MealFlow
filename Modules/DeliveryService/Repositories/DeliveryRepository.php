@@ -38,6 +38,7 @@ class DeliveryRepository implements DeliveryInterface
     {
         return Delivery::where('status', $status)->with('deliverySlot', 'customerAddress')->get();
     }
+
     public function AssignDeliveryBtach($batch_id, $deliveries)
     {
         Delivery::whereIn('id', $deliveries)->update([
@@ -46,6 +47,16 @@ class DeliveryRepository implements DeliveryInterface
         ]);
     }
 
- 
+    public function assignPickupBatch($batch_id, $deliveries)
+    {
+        Delivery::whereIn('id', $deliveries)->update([
+            'pickup_batch_id' => $batch_id,
+        ]);
+    }
 
+
+    public function getPickupAssignedDeliveries($start_date, $end_date)
+    {
+        return Delivery::whereNotNull('pickup_batch_id')->get();
+    }
 }
