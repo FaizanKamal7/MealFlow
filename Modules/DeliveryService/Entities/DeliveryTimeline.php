@@ -15,7 +15,7 @@ class DeliveryTimeline extends Model
     
     protected $fillable = [
         "delivery_id",
-        "status_id",
+        "status",
         "action_by",
         "vehicle_id",
         "description",
@@ -26,10 +26,10 @@ class DeliveryTimeline extends Model
         return $this->belongsTo(Delivery::class, 'delivery_id');
     }
 
-    public function deliveryStatus()
-    {
-        return $this->belongsTo(DeliveryStatus::class, 'status_id');
-    }
+    // public function deliveryStatus()
+    // {
+    //     return $this->belongsTo(DeliveryStatus::class, 'status_id');
+    // }
 
     public function user()
     {
