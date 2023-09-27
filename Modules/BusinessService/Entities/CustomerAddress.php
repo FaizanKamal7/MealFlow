@@ -2,6 +2,7 @@
 
 namespace Modules\BusinessService\Entities;
 
+use App\Models\Area;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
