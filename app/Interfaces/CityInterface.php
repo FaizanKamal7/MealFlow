@@ -14,4 +14,6 @@ interface CityInterface
     //getSearchCities added to implement searchcity method
     public function getSearchCities($query);
 
+    public function getWhere($where);
+    public function searchCityFirst($searchTerm);
 }

@@ -4,7 +4,9 @@ namespace Modules\BusinessService\Http\Controllers\Onboarding;
 
 use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
+use App\Interfaces\CityInterface;
 use App\Interfaces\CountryInterface;
+use App\Interfaces\StateInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
 use Illuminate\Contracts\Support\Renderable;
@@ -34,6 +36,8 @@ class BusinessOnboardingController extends Controller
     private BranchCoverageInterface $branchCoverageRepository;
     private UserRoleInterface $userRoleRepository;
     private CountryInterface $countryRepository;
+    private StateInterface $stateRepository;
+    private CityInterface $cityRepository;
     private AreaInterface $areaRepository;
     private BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository;
     private Helper $helper;
@@ -51,6 +55,8 @@ class BusinessOnboardingController extends Controller
         BranchCoverageInterface $branchCoverageRepository,
         UserRoleInterface $userRoleRepository,
         CountryInterface $countryRepository,
+        StateInterface $stateRepository,
+        CityInterface $cityRepository,
         AreaInterface $areaRepository,
         BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository,
         Helper $helper
@@ -66,6 +72,8 @@ class BusinessOnboardingController extends Controller
         $this->branchCoverageRepository = $branchCoverageRepository;
         $this->userRoleRepository = $userRoleRepository;
         $this->countryRepository = $countryRepository;
+        $this->stateRepository = $stateRepository;
+        $this->cityRepository = $cityRepository;
         $this->areaRepository = $areaRepository;
         $this->branchCoverageDeliverySlotRepository = $branchCoverageDeliverySlotRepository;
         $this->helper = $helper;
@@ -108,11 +116,10 @@ class BusinessOnboardingController extends Controller
         $latitude = $request->latitude;
         $longitude = $request->longitude;
         $area_coverage_list = $request->area_coverage_list;
-        $cities = $request->cities;
+        $cities = $this->helper->extractCitiesFromCoveragesSelection($area_coverage_list);
 
 
-
-        echo "<pre>" . $latitude . "-" . $longitude . "</pre>";
+        // echo "<pre>" . $latitude . "-" . $longitude . "</pre>";
 
         // --  Selected address from google map locations
         if ($request->latitude != 0) {
@@ -124,16 +131,24 @@ class BusinessOnboardingController extends Controller
             $address_city = $db_map_location_ids['city_id'] != '' ? $db_map_location_ids['city_id'] : null;
             $address_area = $db_map_location_ids['area_id'] != '' ?  $db_map_location_ids['area_id'] : null;
         }
+        // echo "<pre> address_country: " . print_r($address_country, true) . "</pre>";
+        // echo "<pre> address_state: " . print_r($address_state, true) . "</pre>";
+        // echo "<pre> address_city: " . print_r($address_city, true) . "</pre>";
+        // echo "<pre> address_area: " . print_r($address_area, true) . "</pre>";
+        // echo "<pre>cities" . json_encode($cities) . "-" . $longitude . "</pre>";
+        // dd($area_coverage_list);
+
 
         try {
             // --- Adding data in users table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $user = $this->userRepository->createUser(
-                name: $first_name . " " . $last_name,
-                email: $email,
-                password: Hash::make($password),
-                isActive: true
-            );
+            $user = $this->userRepository->createUser([
+                'name' => $first_name . " " . $last_name,
+                'email' =>  $email,
+                'password' => Hash::make($password),
+                'isActive' => true
+            ]);
+
 
             // --- Adding data in business table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -156,10 +171,7 @@ class BusinessOnboardingController extends Controller
                 user_id: $user->id,
             );
 
-            // echo "<pre> address_country: " . print_r($address_country, true) . "</pre>";
-            // echo "<pre> address_state: " . print_r($address_state, true) . "</pre>";
-            // echo "<pre> address_city: " . print_r($address_city, true) . "</pre>";
-            // echo "<pre> address_area: " . print_r($address_area, true) . "</pre>";
+
 
             $branch = $this->branchRepository->createBranch(
                 name: "Main Branch",
@@ -172,6 +184,8 @@ class BusinessOnboardingController extends Controller
                 active_status: true,
                 is_main_branch: 1,
                 business_id: $business->id,
+                latitude: $latitude,
+                longitude: $longitude
             );
             $this->helper->print_array("area_coverage_list", $area_coverage_list);
             // echo "<pre>  ================================= </pre>";
@@ -242,6 +256,8 @@ class BusinessOnboardingController extends Controller
         $states = $this->onboardingRepository->getCitiesOfState($_GET['country_id']);
         return response()->json($states->toArray());
     }
+
+
 
     // function getDependentCountryStateCity()
     // {

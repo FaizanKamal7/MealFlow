@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('delivery_slots', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->uuid('city_id');
-            $table->string('start_time');
-            $table->string('end_time');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->boolean('active_status')->default(true);
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });

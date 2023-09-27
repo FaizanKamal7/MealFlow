@@ -15,8 +15,10 @@ interface BranchInterface
         $area_id,
         $active_status,
         $is_main_branch,
-        $business_id
+        $business_id,
+        $latitude,
+        $longitude
     );
-
-    public function getBusinessCities($business_id);
+    public function getBusinessBranches($business_id);
+    public function getBusinessBranch($where);
 }

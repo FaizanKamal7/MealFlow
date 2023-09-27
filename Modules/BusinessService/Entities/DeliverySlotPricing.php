@@ -29,7 +29,6 @@ class DeliverySlotPricing extends Model
         'deleted_at',
     ];
 
-
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id');
@@ -45,7 +44,15 @@ class DeliverySlotPricing extends Model
         return $this->belongsTo(Business::class, 'business_id');
     }
 
+    public function scopeBusinessNull($query)
+    {
+        return $query->where('business_id', null);
+    }
 
+    public function scopeBusinessExist($query, $businessId)
+    {
+        return $query->where('business_id', $businessId);
+    }
 
     protected static function newFactory()
     {

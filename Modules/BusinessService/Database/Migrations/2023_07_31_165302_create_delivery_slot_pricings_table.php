@@ -27,7 +27,7 @@ return new class extends Migration
             $table->uuid('city_id');
             $table->uuid('delivery_slot_id');
             $table->uuid('business_id');
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('delivery_slot_id')->references('id')->on('delivery_slots')->onDelete('cascade');
