@@ -5,10 +5,16 @@ namespace Modules\DeliveryService\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\DeliveryService\Interfaces\EmptyBagCollectionBatchInterface;
+use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
 use Modules\DeliveryService\Interfaces\BagsInterface;
 use Modules\DeliveryService\Interfaces\BagStatusInterface;
+use Modules\DeliveryService\Interfaces\PickupBatchInterface;
+use Modules\DeliveryService\Repositories\EmptyBagCollectionBatchRepository;
+use Modules\DeliveryService\Repositories\EmptyBagCollectionRepository;
 use Modules\DeliveryService\Repositories\BagsRepository;
 use Modules\DeliveryService\Repositories\BagStatusRepository;
+use Modules\PickupService\Repositories\PickupBatchRepository;
 
 
 class DeliveryServiceServiceProvider extends ServiceProvider
@@ -46,6 +52,10 @@ class DeliveryServiceServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
         $this->app->bind(BagsInterface::class,BagsRepository::class);
         $this->app->bind(BagStatusInterface::class,BagStatusRepository::class);
+        $this->app->bind(EmptyBagCollectionInterface::class,EmptyBagCollectionRepository::class);
+        $this->app->bind(EmptyBagCollectionBatchInterface::class,EmptyBagCollectionBatchRepository::class);
+        $this->app->bind(PickupBatchInterface::class,PickupBatchRepository::class);
+       
 
     }
 

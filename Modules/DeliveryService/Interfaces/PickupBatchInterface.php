@@ -4,8 +4,11 @@ namespace Modules\DeliveryService\Interfaces;
 
 interface PickupBatchInterface
 {
-    public function create($data);
-    public function get();
-    public function getDeliveriesByStatus($status);
-    public function AssignDeliveryBtach($batch_id, $deliveries);
+    public function createPickupBatch($driver_id);
+
+    public function updatePickupBatch($batch_id, $data);
+
+    public function getActivePickupBatchByDriver($driver_id);
+
+    public function getDriverActiveBatchWithDeliveries($driver_id);
 }

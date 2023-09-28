@@ -3,10 +3,10 @@
 namespace Modules\PickupService\Repositories;
 
 use Modules\DeliveryService\Entities\PickupBatch;
-use Modules\PickupService\Interfaces\PickupBatchInterface;
+use Modules\DeliveryService\Interfaces\PickupBatchInterface;
 
 
-class PickupBatchRepository implements PickupBatchRepository
+class PickupBatchRepository implements PickupBatchInterface
 {
 
     public function createPickupBatch($driver_id)
@@ -45,4 +45,5 @@ class PickupBatchRepository implements PickupBatchRepository
         }
         return $batch;
     }
+   
 }
