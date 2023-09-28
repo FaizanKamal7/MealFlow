@@ -20,7 +20,7 @@ class Bag extends Model
         "bag_size",
         //small,medium,large or capacity (5 ltr, 10 ltr)
         "bag_type",
-        // courier bag, backpack, tote bag
+        // Cooler bag, paperbag,
         "status",
         //in transit, delivered, in wearhouse
         "weight",
@@ -49,12 +49,12 @@ class Bag extends Model
             $action_by = auth()->id();
             $bag_id = $attributes['id'];
             $delivery_id = null;
-            $status_id = null;
+            $status = null;
             $vehicle_id = null;
             $description = "New bag added";
 
 
-            $helper->bagTimeline($bag_id, $delivery_id, $status_id, $action_by, $vehicle_id, $description);
+            $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
 
 
 
@@ -83,18 +83,18 @@ class Bag extends Model
         static::updating(function ($model) {
             // $changes = $model->getDirty();
 
-            if ($model->isDirty('status_id')) {
+            if ($model->isDirty('status')) {
                 $attributes = $model->getAttributes();
                 $helper = new Helper();
                 $action_by = auth()->id();
                 $bag_id = $attributes['id'];
                 $delivery_id = $model->getOriginal('delivery_id');
-                $status_id = $attributes['status_id'];
+                $status = $attributes['status'];
                 $vehicle_id = $model->getOriginal('vehicle_id');;
                 $description = "status updated";
     
     
-                $helper->bagTimeline($bag_id, $delivery_id, $status_id, $action_by, $vehicle_id, $description);
+                $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
             }
         });
 
@@ -124,12 +124,16 @@ class Bag extends Model
 
     }
 
-    public function bagLogs()
+    public function bagTimeline()
     {
         return $this->hasMany(BagTimeline::class, "bag_id");
     }
     public function business()
     {
         return $this->belongsTo(Business::class);
+    }
+    public function delivery()
+    {
+        return $this->belongsTo(Delivery::class);
     }
 }
