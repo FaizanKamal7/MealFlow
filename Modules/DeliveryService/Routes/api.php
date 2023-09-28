@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\DeliveryService\Http\Controllers\APIControllers\V1\BagCollection\BagCollectionController;
 use Modules\DeliveryService\Http\Controllers\APIControllers\V1\Deliveries\DeliveryController;
 use Modules\DeliveryService\Http\Controllers\APIControllers\V1\DeliveryBatch\DeliveryBatchController;
 
@@ -30,6 +31,13 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'deliveryservice/'], f
         Route::post('complete-delivery', [DeliveryController::class, "completeDelivery"]);
         Route::post('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
     
+    });
+    Route::group(['prefix' => 'Bag/'], function () {
+
+        Route::group(['prefix' => 'Collection/'], function () {
+            Route::post('create', [BagCollectionController::class, "createBagCollection"]);
+
+        });
     });
  
 });
