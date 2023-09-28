@@ -51,9 +51,13 @@ use Modules\BusinessService\Repositories\RangePricingRepository;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Interfaces\PickupBatchBranchInterface;
+use Modules\DeliveryService\Interfaces\PickupBatchInterface;
 use Modules\DeliveryService\Repositories\DeliveryBatchRepository;
 use Modules\DeliveryService\Repositories\DeliveryRepository;
 use Modules\DeliveryService\Repositories\DeliveryTypeRepository;
+use Modules\DeliveryService\Repositories\PickupBatchRepository;
+use Modules\DeliveryService\Repositories\PickupBatchBranchRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -87,7 +91,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
         $this->app->bind(DeliveryTypeInterface::class, DeliveryTypeRepository::class);
         $this->app->bind(DeliveryBatchInterface::class, DeliveryBatchRepository::class);
-  
+        $this->app->bind(PickupBatchInterface::class, PickupBatchRepository::class);
+        $this->app->bind(PickupBatchBranchInterface::class, PickupBatchBranchRepository::class);
     }
 
     /**
