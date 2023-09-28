@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\PickupService\Repositories;
+namespace Modules\DeliveryService\Repositories;
 
 use Modules\DeliveryService\Interfaces\PickupBatchBranchInterface;
 

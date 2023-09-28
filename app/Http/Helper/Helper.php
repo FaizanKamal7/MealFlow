@@ -45,12 +45,12 @@ class Helper
         ]);
     }
 
-    public function bagTimeline($bag_id, $delivery_id, $status_id, $action_by, $vehicle_id, $description)
+    public function bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description)
     {
         BagTimeline::create([
             'bag_id' => $bag_id,
             'delivery_id' => $delivery_id,
-            'status_id' => $status_id,
+            'status' => $status,
             'action_by' => $action_by,
             'vehicle_id' => $vehicle_id,
             'description' => $description,

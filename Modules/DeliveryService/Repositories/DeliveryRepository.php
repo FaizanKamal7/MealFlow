@@ -59,4 +59,10 @@ class DeliveryRepository implements DeliveryInterface
     {
         return Delivery::whereNotNull('pickup_batch_id')->get();
     }
+
+
+    public function getPickupUnassignedDeliveries($start_date, $end_date)
+    {
+        return Delivery::whereNull('pickup_batch_id')->get();
+    }
 }

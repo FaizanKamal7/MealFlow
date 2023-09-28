@@ -124,13 +124,12 @@ class Delivery extends Model
                 $action_by = auth()->id();
                 $bag_id = $attributes['id'];
                 $delivery_id = $model->getOriginal('delivery_id');
-                $status_id = $attributes['status_id'];
+                $status = $attributes['status'];
                 $vehicle_id = $model->getOriginal('vehicle_id');;
                 $description = "status updated";
                 
-                $helper->deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description);
                 
-                $helper->deliveryTimeline( $delivery_id, $status_id, $action_by, $vehicle_id, $description);
+                $helper->deliveryTimeline( $delivery_id, $status, $action_by, $vehicle_id, $description);
             }
         });
 
