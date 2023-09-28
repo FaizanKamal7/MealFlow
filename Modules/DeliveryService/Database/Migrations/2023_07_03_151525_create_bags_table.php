@@ -22,16 +22,15 @@ return new class extends Migration
             $table->string("bag_type")->nullable();
             // $table->string("status")->nullable();
 
-            $table->uuid("status_id")->nullable();
+            $table->string("status")->nullable();
             $table->uuid("business_id")->nullable();
 
             $table->string("weight")->nullable();
             $table->string("dimensions")->nullable();
 
-            $table->foreign("status_id")->references("id")->on("bag_statuses")->onDelete("set null");
-            $table->foreign("business_id")->references("id")->on("businesses")->onDelete("set null");
+             $table->foreign("business_id")->references("id")->on("businesses")->onDelete("set null");
 
-            //Partner ID
+         
             $table->timestamps();
         });
     }

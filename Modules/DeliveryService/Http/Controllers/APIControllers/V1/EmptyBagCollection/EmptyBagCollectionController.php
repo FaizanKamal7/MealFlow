@@ -56,7 +56,7 @@ class EmptyBagCollectionController extends Controller
             // Validate the request data
             $validator = Validator::make($request->all(), [
                 'bag_id' => ['required', 'exists:bags,id'],
-                'empty_bag_collection_delivery_id' => ['required', 'date'],
+                'empty_bag_collection_delivery_id' => ['required', 'exists:deliveries,id'],
             ]);
 
             // Check if validation fails

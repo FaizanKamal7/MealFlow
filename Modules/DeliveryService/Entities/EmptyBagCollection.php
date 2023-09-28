@@ -63,7 +63,7 @@ class EmptyBagCollection extends Model
             $action_by = auth()->id();
             $bag_id = $attributes['bag_id'];
             $delivery_id = $attributes['delivery_id']? $attributes['delivery_id']: null;
-            $status = $attributes['empty_bag_collection_delivery_id']? 'Collected from customer' :'Unassigned for collection ';
+            $status = $attributes['empty_bag_collection_delivery_id']? 'Collected from customer' : 'Unassigned for collection ';
             $vehicle_id = null;
             $description = "New bag collection added";
 
