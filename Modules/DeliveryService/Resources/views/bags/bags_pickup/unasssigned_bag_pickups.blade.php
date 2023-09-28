@@ -1,5 +1,5 @@
 @extends('layouts.admin_master')
-@section('title', 'Upload Deliveries')
+@section('title', 'Unassigned Pickups')
 
 @section('extra_style')
 @endsection
