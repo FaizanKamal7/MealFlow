@@ -68,8 +68,6 @@ class DeliveryController extends Controller
         DriverAreaInterface $driverAreaRepository,
         DriverInterface $driverRepository,
         DeliveryBatchInterface $deliveryBatchRepository,
-
-        Helper $helper,
     ) {
         $this->customerRepository = $customerRepository;
         $this->cityRepository = $cityRepository;
@@ -87,9 +85,9 @@ class DeliveryController extends Controller
         $this->driverRepository = $driverRepository;
         $this->deliveryBatchRepository = $deliveryBatchRepository;
 
-        $this->helper = $helper;
+        $this->helper = new Helper();
     }
-  
+
 
     /**
      * Show the form for creating a new resource.
@@ -162,7 +160,7 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
@@ -246,10 +244,10 @@ class DeliveryController extends Controller
                             'delivery_slot_id' => $db_delivery_slot->id ?? null,
                             'delivery_type_id' => null,
                             'customer_id' => $customer->id,
-                            'area_id' =>  $area->id,
-                            'city_id' =>  $city->id,
-                            'state_id' =>  $city->state->id,
-                            'country_id' =>  $city->state->country->id,
+                            'area_id' => $area->id,
+                            'city_id' => $city->id,
+                            'state_id' => $city->state->id,
+                            'country_id' => $city->state->country->id,
 
                         ];
 
@@ -270,13 +268,13 @@ class DeliveryController extends Controller
                                 'state_id' => $city->state->id,
                                 'country_id' => $city->state->country->id,
                             ];
-                            $finalized_address =  $this->customerAddressRepository->create($address_data);
-                        } elseif ($address_matching['status']  == 'CONFLICT') {
+                            $finalized_address = $this->customerAddressRepository->create($address_data);
+                        } elseif ($address_matching['status'] == 'CONFLICT') {
                             $location_info = [
-                                'area_id' =>  $area->id,
-                                'city_id' =>  $city->id,
-                                'state_id' =>  $city->state->id,
-                                'country_id' =>  $city->state->country->id,
+                                'area_id' => $area->id,
+                                'city_id' => $city->id,
+                                'state_id' => $city->state->id,
+                                'country_id' => $city->state->country->id,
                             ];
                             $delivery_data = array_merge($delivery_data, $location_info);
                             $conflicted_delivery = [
@@ -371,21 +369,21 @@ class DeliveryController extends Controller
                 // add new and get customer id
                 $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($address);
                 $address_data = [
-                    'address' =>  $address,
-                    'address_type' =>  "OTHER",
-                    'latitude' =>  $new_address_coordinates ? $new_address_coordinates->latitude : null,
-                    'longitude' =>  $new_address_coordinates ? $new_address_coordinates->longitude : null,
-                    'customer_id' =>  $decoded_delivery_data->customer_id,
+                    'address' => $address,
+                    'address_type' => "OTHER",
+                    'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
+                    'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
+                    'customer_id' => $decoded_delivery_data->customer_id,
                     'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
                     'area_id' => $decoded_delivery_data->area_id,
                     'city_id' => $decoded_delivery_data->city_id,
                     'state_id' => $decoded_delivery_data->state_id,
                     'country_id' => $decoded_delivery_data->country_id,
                 ];
-                $uploaded_address =  $this->customerAddressRepository->create($address_data);
+                $uploaded_address = $this->customerAddressRepository->create($address_data);
                 $decoded_delivery_data->address_id = $uploaded_address->id;
             }
-            $data  = (array) $decoded_delivery_data;
+            $data = (array) $decoded_delivery_data;
 
             $this->deliveryRepository->create($data);
         }
@@ -471,8 +469,8 @@ class DeliveryController extends Controller
         // - Making all words lower case
         // - replace spaces with underscore "_"
         // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+        $actual_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
 
         // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
         // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
@@ -571,41 +569,65 @@ class DeliveryController extends Controller
         try {
             $driver_id = $request->get('driver_id');
             $delivery_batch = $this->deliveryBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
-            
+
 
             $data = ['delivery_batch' => $delivery_batch];
             return $this->success($data, "delivery batch");
 
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return $this->error($e, 'Something went wrong contact support');
 
         }
         // $deliveries = $this->deliveryRepository->getde   
     }
 
-    public function completeDelivery(Request $request){
 
-        $validator = Validator::make($request->all(), [
-            'openbag_img' => ['required'],
-            'closebag_img' => ['required'],
-            'vehicle_id' => ['required'],
-            'map_coordinates' => ['required'],
-        ]);
+    
+    public function completeDelivery(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'delivery_id'=>['required','exists:deliveries,id'],
+                'open_bag_img' => ['required', 'image'],
+                'close_bag_img' => ['required', 'image'],
+                'delivered_bag_img' => ['required', 'image'],
+                'empty_bag_img' => ['image'],
+                'empty_bag_count' => [],
+            ]);
+            
+            // BAG cOLLECTION
 
-        // Check if validation fails
-        if ($validator->fails()) {
-            return $this->error($validator->errors(), "validation failed", 422);
-        }
+            // Check if validation fails
+            if ($validator->fails()) {
+                return $this->error($validator->errors(), "validation failed", 422);
+            }
 
-        $helper = new Helper();
-        $openbag_img = $request->file('openbag_img');
-        $closebag_img = $request->file('closebag_img'); 
+            $open_bag_img = $request->file('open_bag_img');
+            $close_bag_img = $request->file('close_bag_img');
+            $delivered_bag_img = $request->file('delivered_bag_img');
+            $empty_bag_img = $request->file('empty_bag_img');
 
-        $url = $helper->storeFile($openbag_img,"DeliveryServce","Deliveries");
-        return $url;
-        try{
 
-        }catch(Exception $exception){
+            if($open_bag_img)
+            {
+            $open_bag_img_url = $this->helper->storeFile($open_bag_img, "DeliveryServce", "Deliveries");
+            }
+            if($close_bag_img)
+            {
+            $close_bag_img_url = $this->helper->storeFile($close_bag_img, "DeliveryServce", "Deliveries");
+            }
+            if($delivered_bag_img)
+            {
+            $delivered_bag_img_url = $this->helper->storeFile($delivered_bag_img, "DeliveryServce", "Deliveries");
+            }
+            if($empty_bag_img)
+            {
+            $empty_bag_img_url = $this->helper->storeFile($empty_bag_img, "DeliveryServce", "Bags");
+            }
+
+
+
+        } catch (Exception $exception) {
 
         }
 
