@@ -12,63 +12,42 @@ use Modules\BusinessService\Entities\CustomerAddress;
 use Illuminate\Support\Facades\Request;
 use App\Http\Helper\Helper;
 
-class Delivery extends Model
+class EmptyBagCollection extends Model
 {
     use HasFactory;
     use HasUuids;
     protected $fillable = [
-        "status",
-        "is_recurring",
-        "payment_status",
-        "is_sign_required",
-        "is_notification_enabled",
-        "bag_type",
-        "note",
-        "delivery_date",
-        "branch_id",
-        "delivery_slot_id",
-        "delivery_type_id",
         "customer_id",
-        "customer_address_id",
-        "pick_up_batch_id",
-        "delivery_batch_id",
+        "bag_id",
+        "delivery_id",
+        "empty_bag_collection_batch_id",
+        "empty_bag_collection_delivery_id",
+        
     ];
-
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class, 'branch_id');
-    }
-
-    public function deliverySlot()
-    {
-        return $this->belongsTo(DeliverySlot::class, 'delivery_slot_id');
-    }
-
-    public function deliveryType()
-    {
-        return $this->belongsTo(DeliveryType::class, 'delivery_type_id');
-    }
 
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
 
-    public function customerAddress()
+    public function bag()
     {
-        return $this->belongsTo(CustomerAddress::class, 'customer_address_id');
+        return $this->belongsTo(Bag::class, 'bag_id');
     }
 
-    public function pickupBatch()
+    public function delivery()
     {
-        return $this->belongsTo(PickupBatch::class, 'pick_up_batch_id');
+        return $this->belongsTo(Delivery::class, 'delivery_id');
+    }
+    public function collectionDelivery()
+    {
+        return $this->belongsTo(Delivery::class, 'empty_bag_collection_delivery_id');
     }
 
-    public function deliveryBatch()
+    public function collectionBatch()
     {
-        return $this->belongsTo(DeliveryBatch::class, 'delivery_batch_id');
+        return $this->belongsTo(EmptyBagCollectionBatch::class, 'empty_bag_collection_delivery_id');
     }
-
     protected static function newFactory()
     {
         return \Modules\DeliveryService\Database\factories\DeliveryFactory::new();
@@ -82,14 +61,14 @@ class Delivery extends Model
             $attributes = $model->getAttributes();
             $helper = new Helper();
             $action_by = auth()->id();
-            $bag_id = $attributes['id'];
-            $delivery_id = null;
-            $status = "UNASSIGNED";
+            $bag_id = $attributes['bag_id'];
+            $delivery_id = $attributes['delivery_id']? $attributes['delivery_id']: null;
+            $status = $attributes['empty_bag_collection_delivery_id']? 'Collected from customer' :'Unassigned for collection ';
             $vehicle_id = null;
-            $description = "New Delivery added";
+            $description = "New bag collection added";
 
 
-            $helper->deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description);
+            $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
 
 
 
@@ -107,6 +86,8 @@ class Delivery extends Model
             $record_type = get_class($model);
             $method = Request::method();
 
+            
+
             $helper->logActivity(
                 userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
                 url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
@@ -116,20 +97,20 @@ class Delivery extends Model
         });
 
         static::updating(function ($model) {
-            // $changes = $model->getDirty();
+            $changes = $model->getDirty();
 
-            if ($model->isDirty('status_id')) {
+            if ($changes) {
                 $attributes = $model->getAttributes();
                 $helper = new Helper();
                 $action_by = auth()->id();
                 $bag_id = $attributes['id'];
-                $delivery_id = $model->getOriginal('delivery_id');
-                $status = $attributes['status'];
-                $vehicle_id = $model->getOriginal('vehicle_id');;
+                $delivery_id = $attributes['delivery_id']? $attributes['delivery_id']: null;
+                $status = $attributes['empty_bag_collection_delivery_id']? 'Collected from customer' :'Unassigned for collection ';
+                $vehicle_id = $model->getOriginal('vehicle_id');
                 $description = "status updated";
+                // TODO STATUS THING
+                $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
                 
-                
-                $helper->deliveryTimeline( $delivery_id, $status, $action_by, $vehicle_id, $description);
             }
         });
 
