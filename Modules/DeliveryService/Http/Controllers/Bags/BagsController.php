@@ -53,14 +53,14 @@ class BagsController extends Controller
      */
     public function viewAllBags()
     {
-        $businesses = $this->businessRepository->getBusinesses();
+        $businesses = $this->businessRepository->get();
         $bags = $this->bagsRepository->getBags();
         $context = ["businesses" => $businesses, "bags" => $bags];
         return view('deliveryservice::bags.view_bags', $context);
     }
     public function addBag()
     {
-        $businesses = $this->businessRepository->getBusinesses();
+        $businesses = $this->businessRepository->get();
         $context = ["businesses" => $businesses];
         return view('deliveryservice::bags.add_bag', $context);
     }
@@ -101,7 +101,7 @@ class BagsController extends Controller
     {
         $business_id = $request->get("business_id");
 
-        $businesses = $this->businessRepository->getBusinesses();
+        $businesses = $this->businessRepository->get();
         $bags = $this->businessRepository->getBusiness($business_id)->bags;
 
         $context = ["businesses" => $businesses, "bags" => $bags];
@@ -145,7 +145,6 @@ class BagsController extends Controller
 
     public function unassignedBagsPickup()
     {
-
         $start_date = '2023-09-24';
         $end_date = '2023-09-25';
         $deliveries = $this->deliveryRepository->get($start_date, $end_date);
@@ -179,8 +178,33 @@ class BagsController extends Controller
             dd($exception);
         }
 
-        $deliveries = $this->deliveryRepository->get($start_date, $end_date);
-        $drivers = $this->driverRepository->getDetailDrivers();
+        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', ['deliveries' => $deliveries, 'drivers' => $drivers]);
+    }
+
+    public function driverBagsPickup(Request $request)
+    {
+        $start_date = date("Y/m/d");
+        $end_date = date("Y-m-d", strtotime($start_date . " +1 day"));;
+
+        try {
+            // --------------- GETTING DELIVERIES AND DRIVER TO ASSIGN-------------
+            $driver_id = $request->get("driver_id");
+            $deliveries = explode(',', $request->get("selected_delivery_ids"));
+
+
+            // -------------------- CREATING NEW BATCH FOR DELIVERY BASED ON DRIVER id-----------
+            $batch = $this->pickupBatchRepository->getActivePickupBatchByDriver($driver_id);
+            // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
+            $this->deliveryRepository->assignPickupBatch($batch->id, $deliveries);
+
+            // Pickup batch branches will be populated from driver app data 
+            $drivers = $this->driverRepository->getDetailDrivers();
+            $db_deliveries = $this->deliveryRepository->getPickupUnassignedDeliveries($start_date, $end_date);
+            $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
+            return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', $data);
+        } catch (Exception $exception) {
+            dd($exception);
+        }
 
         return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', ['deliveries' => $deliveries, 'drivers' => $drivers]);
     }
