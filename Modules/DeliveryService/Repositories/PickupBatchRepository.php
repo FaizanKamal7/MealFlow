@@ -23,7 +23,7 @@ class PickupBatchRepository implements PickupBatchInterface
 
     public function updatePickupBatch($batch_id, $data)
     {
-        $batch =  PickupBatch::findOrFail($batch_id);
+        $batch = PickupBatch::findOrFail($batch_id);
         return $batch->update($data);
     }
 
@@ -31,7 +31,7 @@ class PickupBatchRepository implements PickupBatchInterface
     {
         $batch = PickupBatch::where('driver_id', $driver_id)->where('batch_end_time', null)->first();
         if (!$batch) {
-            $batch =  $this->createPickupBatch($driver_id);
+            $batch = $this->createPickupBatch($driver_id);
         }
         return $batch;
     }
@@ -40,7 +40,7 @@ class PickupBatchRepository implements PickupBatchInterface
     {
         $batch = PickupBatch::with('deliveries')->where('driver_id', $driver_id)->where('batch_end_time', null)->first();
         if (!$batch) {
-            $batch =  $this->createPickupBatch($driver_id);
+            $batch = $this->createPickupBatch($driver_id);
         }
         return $batch;
     }

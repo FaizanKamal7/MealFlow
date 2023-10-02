@@ -14,15 +14,15 @@
     <input type="hidden" name="cities_delivery_slot[{{$index}}][city]" value="{{ $cities_delivery_slot[2]['id'] }}" />
 
     {{-- S A M E - P R I C E S - F O R - A L L - S E R V I C E S --}}
-    <div id="same_pricing_id_{{$index}}">
+    <div id="same_pricing_id_{{$index}}" class="same-pricing-div">
         <div class="form-group row">
-            <div class="col-xl-3">
+            <div class="col-xl-4 me-8">
                 <label for="cities_delivery_slot[{{$index}}][price]">Delivery Slot Price</label>
                 <input type="text" name="cities_delivery_slot[{{$index}}][price]" class="form-control"
                     placeholder="Price">
             </div>
 
-            <div class="col-xl-3">
+            <div class="col-xl-4">
                 <label for="cities_delivery_slot[{{$index}}][same_location_price]">Delivery Slot Price (Same
                     Location)</label>
                 <input type="text" name="cities_delivery_slot[{{$index}}][same_loc_price]" class="form-control"

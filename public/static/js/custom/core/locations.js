@@ -188,10 +188,9 @@ function fetchCitiesWithMultiSelectOption() {
 }
 
 function fetchAreas() {
-    var cityID = document.getElementById("city").value;
-
-    var areaDropdown = document.getElementById("area");
-
+    console.log('here in location')
+    var cityID = document.getElementById("address_city").value;
+    var areaDropdown = document.getElementById("address_area");
     // Clear current options
     areaDropdown.innerHTML = '<option value="">Select area</option>';
 
@@ -206,6 +205,7 @@ function fetchAreas() {
             data: { city_id: cityID },
             success: function (response) {
                 var area = response;
+                console.log('area', response)
                 // Populate city dropdown
                 // Loop through the response data and create an option element for each item
                 area.forEach((item) => {
