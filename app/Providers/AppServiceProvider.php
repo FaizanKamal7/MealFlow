@@ -102,23 +102,23 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
         $user = Auth::user();
 
-        $rolesArray = [];
-        $user_roles = UserRole::all();
-        $permissionsArray = [];
-        foreach ($user_roles as $user_role) {
-            foreach ($user_role->role->rolePermissions as $permissions) {
+        // $rolesArray = [];
+        // $user_roles = UserRole::all();
+        // $permissionsArray = [];
+        // foreach ($user_roles as $user_role) {
+        //     foreach ($user_role->role->rolePermissions as $permissions) {
 
-                $permissionsArray[$permissions->permission->codename][] = $user_role->role->id;
-            }
-        }
+        //         $permissionsArray[$permissions->permission->codename][] = $user_role->role->id;
+        //     }
+        // }
 
-        foreach ($permissionsArray as $title => $roles) {
-            Gate::define($title, function ($user) use ($roles) {
-                foreach ($user->userRoles as $user_r) {
-                    $rolesArray[] = $user_r->role->id;
-                }
-                return count(array_intersect($rolesArray, $roles)) > 0;
-            });
-        }
+        // foreach ($permissionsArray as $title => $roles) {
+        //     Gate::define($title, function ($user) use ($roles) {
+        //         foreach ($user->userRoles as $user_r) {
+        //             $rolesArray[] = $user_r->role->id;
+        //         }
+        //         return count(array_intersect($rolesArray, $roles)) > 0;
+        //     });
+        // }
     }
 }
