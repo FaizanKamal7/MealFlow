@@ -65,4 +65,11 @@ class DeliveryRepository implements DeliveryInterface
     {
         return Delivery::whereNull('pickup_batch_id')->get();
     }
+
+
+    public function getBatchDeliveries($batch_id, $start_date, $end_date)
+    {
+        return Delivery::with('deliverySlot', 'customer.user', 'branch', 'customerAddress', 'pickupBatch')->where('pickup_batch_id', $batch_id)
+            ->whereBetween('delivery_date', [$start_date, $end_date])->get();
+    }
 }

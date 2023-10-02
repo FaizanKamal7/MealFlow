@@ -160,7 +160,7 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
@@ -469,8 +469,8 @@ class DeliveryController extends Controller
         // - Making all words lower case
         // - replace spaces with underscore "_"
         // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
 
         // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
         // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
@@ -573,31 +573,29 @@ class DeliveryController extends Controller
 
             $data = ['delivery_batch' => $delivery_batch];
             return $this->success($data, "delivery batch");
-
         } catch (Exception $e) {
             return $this->error($e, 'Something went wrong contact support');
-
         }
         // $deliveries = $this->deliveryRepository->getde   
     }
 
 
-    
+
     public function completeDelivery(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'delivery_id'=>['required','exists:deliveries,id'],
+           
+            // BAG cOLLECTION
+
+            // Check if $validator = Validator::make($request->all(), [
+                'delivery_id' => ['required', 'exists:deliveries,id'],
                 'open_bag_img' => ['required', 'image'],
                 'close_bag_img' => ['required', 'image'],
                 'delivered_bag_img' => ['required', 'image'],
                 'empty_bag_img' => ['image'],
                 'empty_bag_count' => [],
             ]);
-            
-            // BAG cOLLECTION
-
-            // Check if validation fails
+ validation fails
             if ($validator->fails()) {
                 return $this->error($validator->errors(), "validation failed", 422);
             }
@@ -608,27 +606,19 @@ class DeliveryController extends Controller
             $empty_bag_img = $request->file('empty_bag_img');
 
 
-            if($open_bag_img)
-            {
-            $open_bag_img_url = $this->helper->storeFile($open_bag_img, "DeliveryServce", "Deliveries");
+            if ($open_bag_img) {
+                $open_bag_img_url = $this->helper->storeFile($open_bag_img, "DeliveryServce", "Deliveries");
             }
-            if($close_bag_img)
-            {
-            $close_bag_img_url = $this->helper->storeFile($close_bag_img, "DeliveryServce", "Deliveries");
+            if ($close_bag_img) {
+                $close_bag_img_url = $this->helper->storeFile($close_bag_img, "DeliveryServce", "Deliveries");
             }
-            if($delivered_bag_img)
-            {
-            $delivered_bag_img_url = $this->helper->storeFile($delivered_bag_img, "DeliveryServce", "Deliveries");
+            if ($delivered_bag_img) {
+                $delivered_bag_img_url = $this->helper->storeFile($delivered_bag_img, "DeliveryServce", "Deliveries");
             }
-            if($empty_bag_img)
-            {
-            $empty_bag_img_url = $this->helper->storeFile($empty_bag_img, "DeliveryServce", "Bags");
+            if ($empty_bag_img) {
+                $empty_bag_img_url = $this->helper->storeFile($empty_bag_img, "DeliveryServce", "Bags");
             }
-
-
-
         } catch (Exception $exception) {
-
         }
 
         // $helper->storeFile();
