@@ -108,6 +108,11 @@ class DeliveryController extends Controller
         return view('deliveryservice::deliveries.unassigned_delivery');
     }
 
+    public function viewAssignedDeliveries()
+    {
+        return view('deliveryservice::deliveries.assigned_delivery');
+    }
+
     public function uploadDeliveriesByForm(Request $request)
     {
         $customers = $request->get("customer");
@@ -547,7 +552,9 @@ class DeliveryController extends Controller
         // }
         $drivers = $this->driverRepository->getDetailDrivers();
         $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
-        return view('deliveryservice::deliveries.unassigned_deliveries', $data);
+        // return view('deliveryservice::deliveries.unassigned_deliveries', $data);
+        return view('deliveryservice::deliveries.unassigned_delivery', $data);
+
     }
     public function assigned_delivery_to_driver(Request $request)
     {
