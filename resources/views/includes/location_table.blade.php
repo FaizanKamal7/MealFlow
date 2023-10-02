@@ -36,5 +36,7 @@
     </tbody>
 </table>
 <div class="paginator-div">
+    {{-- {{ $cities->links() }} --}}
+
     {{ $cities->appends($_GET)->links() }}
 </div>

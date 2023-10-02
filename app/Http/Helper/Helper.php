@@ -10,6 +10,7 @@ use App\Models\State;
 use Illuminate\Support\Facades\Config;
 use Modules\CRM\Entities\Task;
 use Modules\DeliveryService\Entities\BagTimeline;
+use Modules\DeliveryService\Entities\DeliveryTimeline;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
@@ -17,6 +18,14 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Helper
 {
+    public function storeFile($file, $module, $directory)
+    {
+        $file_url = $file->getClientOriginalName();
+        $file_url = time() . '-' . date('YmdHi') . '-' . $file_url;
+        $file_url = $module."/" . $directory . "/" . $file_url;
+        $file->move($module."/" . $directory . "/", $file_url);
+        return $file_url;
+    }
     public function logActivity($userId, $moduleName, $action, $subject, $url, $description, $ipAddress, $userAgent, $oldValues, $newValues, $recordId, $recordType, $method)
     {
         ActivityLogs::create([
@@ -36,18 +45,27 @@ class Helper
         ]);
     }
 
-    public function bagTimeline($bag_id, $delivery_id, $status_id, $action_by, $vehicle_id, $description)
+    public function bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description)
     {
         BagTimeline::create([
             'bag_id' => $bag_id,
             'delivery_id' => $delivery_id,
-            'status_id' => $status_id,
+            'status' => $status,
             'action_by' => $action_by,
             'vehicle_id' => $vehicle_id,
             'description' => $description,
         ]);
     }
-
+    public function deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description)
+    {
+        DeliveryTimeline::create([
+            'delivery_id' => $delivery_id,
+            'status' => $status,
+            'action_by' => $action_by,
+            'vehicle_id' => $vehicle_id,
+            'description' => $description,
+        ]);
+    }
     public function createWallet($business_id)
     {
         BusinessWallet::create([
@@ -318,5 +336,4 @@ class Helper
             echo $title . " is not an array.";
         }
     }
-
 }

@@ -16,11 +16,15 @@ return new class extends Migration
         Schema::create('deliveries', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->string("status");
+            $table->string("qr_code")->nullable();
             $table->boolean("is_recurring");
             $table->boolean("is_notification_enabled")->nullable();
             $table->string("payment_status");
             $table->boolean("is_sign_required")->nullable();
+            $table->integer('empty_bag_count')->nullable();
+
             $table->string("note")->nullable();
+            $table->date("delivery_date");
             $table->uuid("branch_id")->nullable();
             $table->uuid("delivery_slot_id")->nullable();
             $table->uuid("delivery_type_id")->nullable();

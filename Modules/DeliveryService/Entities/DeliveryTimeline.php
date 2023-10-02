@@ -3,17 +3,20 @@
 namespace Modules\DeliveryService\Entities;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\FleetService\Entities\Vehicle;
 
 class DeliveryTimeline extends Model
 {
+    use HasUuids;
     use HasFactory;
-
+    use HasUuids;
+    
     protected $fillable = [
         "delivery_id",
-        "status_id",
+        "status",
         "action_by",
         "vehicle_id",
         "description",
@@ -24,10 +27,10 @@ class DeliveryTimeline extends Model
         return $this->belongsTo(Delivery::class, 'delivery_id');
     }
 
-    public function deliveryStatus()
-    {
-        return $this->belongsTo(DeliveryStatus::class, 'status_id');
-    }
+    // public function deliveryStatus()
+    // {
+    //     return $this->belongsTo(DeliveryStatus::class, 'status_id');
+    // }
 
     public function user()
     {

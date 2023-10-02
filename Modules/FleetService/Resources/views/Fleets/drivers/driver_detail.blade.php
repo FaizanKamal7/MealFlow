@@ -330,7 +330,7 @@
                                     <td>
                                         @foreach ($driver->areas as $area)
                                             <span class="badge badge-primary">
-                                                {{ $area->area->name }}</span>
+                                                {{ $area->name }}</span>
                                         @endforeach
                                     </td>
                                     <td>
@@ -596,7 +596,7 @@
                 <!--begin::Modal body-->
                 <div class="modal-body  pt-0 ">
                     <!--begin:Form-->
-                    <form class="form" action="{{ route('fleet_update_driver_detail', ['driver_id' => $driver->id]) }}"
+                    <form class="form" action="{{ route('fleet_update_driver_detail', ['driver_id' => $driver]) }}"
                         id="KTModalDriver_form" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!--begin::Modal header-->
@@ -721,7 +721,7 @@
                                         @endphp
                                         <option></option>
                                         @foreach ($areas as $area)
-                                            <option value="{{ $area->id }}" selected>{{ $area->name }} -
+                                            <option value="{{ $area->id }}" >{{ $area->name }} -
                                                 {{-- {{ $area->city->name }} --}}
                                             </option>
                                         @endforeach

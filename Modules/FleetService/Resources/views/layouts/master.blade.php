@@ -586,7 +586,7 @@
                                             <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
                                         </svg></span>
                                     <!--end::Svg Icon-->
-                                    <span class="menu-title mx-2">Patners</span>
+                                    <span class="menu-title mx-2">Partners</span>
 
                                 </span>
 

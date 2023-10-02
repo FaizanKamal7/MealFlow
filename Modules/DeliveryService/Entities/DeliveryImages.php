@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class DeliveryImages extends Model
 {
     use HasFactory;
-use HasUuids;
+    use HasUuids;
     protected $fillable = [
         "delivery_id",
         "image_url",
-        "notes"
+        "image_type",
+        "note"
     ];
 
     protected static function newFactory()

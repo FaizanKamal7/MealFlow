@@ -14,7 +14,6 @@ use App\Interfaces\StateInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserPermissionInterface;
 use App\Interfaces\UserRoleInterface;
-use App\Models\UserRole;
 use App\Repositories\ApplicationModelRepository;
 use App\Repositories\AreaRepository;
 use App\Repositories\CityRepository;
@@ -29,7 +28,6 @@ use App\Repositories\UserRepository;
 use App\Repositories\UserRoleRepository;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
 use Modules\BusinessService\Interfaces\BusinessPricingInterface;
@@ -45,13 +43,10 @@ use Modules\BusinessService\Repositories\CustomerAddressRepository;
 use Modules\BusinessService\Repositories\CustomerRepository;
 use Modules\BusinessService\Repositories\CustomerSecondaryNumberRepository;
 use Modules\BusinessService\Repositories\DeliverySlotPricingRepository;
-use Modules\BusinessService\Repositories\PricingRepository;
 use Modules\BusinessService\Repositories\PricingTypeRepository;
 use Modules\BusinessService\Repositories\RangePricingRepository;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
-use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\DeliveryService\Repositories\DeliveryRepository;
-use Modules\DeliveryService\Repositories\DeliveryTypeRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -83,7 +78,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CustomerAddressInterface::class, CustomerAddressRepository::class);
         $this->app->bind(CustomerSecondaryNumberInterface::class, CustomerSecondaryNumberRepository::class);
         $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
-        $this->app->bind(DeliveryTypeInterface::class, DeliveryTypeRepository::class);
     }
 
     /**
@@ -97,23 +91,23 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
         $user = Auth::user();
 
-        $rolesArray = [];
-        $user_roles = UserRole::all();
-        $permissionsArray = [];
-        foreach ($user_roles as $user_role) {
-            foreach ($user_role->role->rolePermissions as $permissions) {
+        // $rolesArray = [];
+        // $user_roles = UserRole::all();
+        // $permissionsArray = [];
+        // foreach ($user_roles as $user_role) {
+        //     foreach ($user_role->role->rolePermissions as $permissions) {
 
-                $permissionsArray[$permissions->permission->codename][] = $user_role->role->id;
-            }
-        }
+        //         $permissionsArray[$permissions->permission->codename][] = $user_role->role->id;
+        //     }
+        // }
 
-        foreach ($permissionsArray as $title => $roles) {
-            Gate::define($title, function ($user) use ($roles) {
-                foreach ($user->userRoles as $user_r) {
-                    $rolesArray[] = $user_r->role->id;
-                }
-                return count(array_intersect($rolesArray, $roles)) > 0;
-            });
-        }
+        // foreach ($permissionsArray as $title => $roles) {
+        //     Gate::define($title, function ($user) use ($roles) {
+        //         foreach ($user->userRoles as $user_r) {
+        //             $rolesArray[] = $user_r->role->id;
+        //         }
+        //         return count(array_intersect($rolesArray, $roles)) > 0;
+        //     });
+        // }
     }
 }

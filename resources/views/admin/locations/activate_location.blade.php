@@ -22,7 +22,6 @@
                         <div class="activate-service">
                             <h1 class="fs-lg-2x ">Activate Your Service Locations </h1>
                         </div>
-
                         <!--begin::Card title-->
                         <div class="card-title">
                             <!--begin::Search-->
@@ -59,6 +58,7 @@
 
                         <!--end::Search-->
                     </div>
+<<<<<<< HEAD
                     <!--end::Card title-->
 
                 </div>
@@ -151,6 +151,26 @@
     </div>
 </div>
 <!--end::Container-->
+=======
+                    <!--end::Card header-->
+                    <!--begin::Card body-->
+                    <div class="card-body pt-0 table-responsive location-card-body">
+                        <div id="page-loader" style="display: none;">
+                            <span class="spinner-border text-primary" role="status">
+                            </span>
+                            <div class="text-primary">Loading...</div>
+                        </div>
+                        @include('includes.location_table')
+                    </div>
+                    <!--end::Card body-->
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Content-->
+        </div>
+    </div>
+    <!--end::Container-->
+>>>>>>> origin/delivery-service
 </div>
 <!--end::Post-->
 

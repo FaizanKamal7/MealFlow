@@ -2,10 +2,13 @@
 
 namespace Modules\FleetService\Entities;
 
+use App\Models\Area;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\DeliveryService\Entities\Delivery;
+use Modules\DeliveryService\Entities\DeliveryBatch;
 use Modules\HRManagement\Entities\Employees;
 
 class Driver extends Model
@@ -28,11 +31,13 @@ class Driver extends Model
     {
         return \Modules\FleetService\Database\factories\DriverFactory::new();
     }
-    public function employee(){
-        return $this->belongsTo(Employees::class,'employee_id');
+    public function employee()
+    {
+        return $this->belongsTo(Employees::class, 'employee_id');
     }
 
-    public function timelines(){
+    public function timelines()
+    {
         return $this->hasMany(VehicleTimeline::class);
     }
     public function lastIncompleteTimeline()
@@ -48,8 +53,16 @@ class Driver extends Model
             ->orderBy('created_at', 'desc')
             ->whereNull('check_out_time');
     }
-    public function areas(){
-        return $this->hasMany(DriverArea::class);
+
+    public function areas()
+    {
+        return $this->belongsToMany(Area::class, 'driver_areas', 'driver_id', 'area_id');
     }
-    
+
+
+    public function deliveries()
+    {
+        return $this->hasManyThrough(Delivery::class, DeliveryBatch::class);
     }
+
+}

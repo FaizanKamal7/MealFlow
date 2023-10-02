@@ -1,11 +1,11 @@
-@extends('businessservice::layouts.master')
+@extends('layouts.admin_master')
 @section('title', 'Upload Deliveries')
 
 @section('extra_style')
-{{--
-<link href="{{ asset('static/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css/">--}}
 @endsection
 @section('main_content')
+
+
 <!--begin::Post-->
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <!--begin::Container-->
@@ -26,7 +26,8 @@
                         <!--end::Card title-->
                         <div class="">
                             <a href="#uploadByExcel" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                data-bs-target="#nixus_modal_upload_excel"><i class="fa fa-file-excel"></i> Upload By
+                                data-bs-target="#nixus_modal_upload_excel"><i class="fa fa-file-excel"></i> Upload
+                                By
                                 Excel</a>
                             <button class="btn btn-sm btn-primary mx-1" data-toggle="tooltip" title="Add Row"
                                 id="add_row">+
@@ -141,7 +142,8 @@
                         <h1 class="mb-3">Upload By Excel</h1>
                         <!--end::Title-->
                         <!--begin::Description-->
-                        <div class="text-muted fw-bold fs-5">Please first download prefilled template by providing no.
+                        <div class="text-muted fw-bold fs-5">Please first download prefilled template by providing
+                            no.
                             of deliveries you want to upload.
                         </div>
                         <!--end::Description-->
@@ -182,7 +184,11 @@
                             <option value={{$business->id}}> {{$business->name}}</option>
                             @endforeach
                         </select>
-
+                        <div class="mb-2">
+                            <label for="" class="form-label">Select date </label>
+                            <input name="delivery_date" class="form-control form-control-solid" placeholder="Pick date"
+                                id="kt_datepicker_3" />
+                        </div>
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <label class="required fs-6 fw-bold mb-2">Excel File</label>
@@ -219,11 +225,8 @@
 @endsection
 
 @section('extra_scripts')
-{{--<script src="{{ asset('static/plugins/custom/documentation/general/datatables/datatables.bundle.js')}}"></script>
---}}
-{{-- <script src="{{ asset('static/js/custom/documentation/general/datatables/subtable.js')}}"></script> --}}
-<script>
 
+<script>
     $(document).ready(function () {
         function reInitializeDataValidation(){
             $(".fv-plugins-message-container.invalid-feedback").remove();
@@ -398,6 +401,12 @@
             $(this).closest("tr").remove();
             reInitializeDataValidation();
         });
+      
+        
+        $("#kt_datepicker_3").flatpickr({
+            enableTime: false,
+            dateFormat: "Y-m-d",
+        });
     });
 
 
@@ -427,5 +436,6 @@
             }
         });
     });
+
 </script>
 @endsection

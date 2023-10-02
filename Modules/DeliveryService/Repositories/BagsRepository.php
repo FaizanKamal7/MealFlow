@@ -8,51 +8,51 @@ use Modules\DeliveryService\Interfaces\BagsInterface;
 class BagsRepository implements BagsInterface
 {
 
-    public function addNewBag($business_id,$qrCode, $bagNumber, $bagSize, $bagType, $weight, $dimensions, $status_id = null)
+    public function addNewBag($business_id, $qrCode, $bagNumber, $bagSize, $bagType, $weight, $dimensions, $status = null)
     {
-        $bag = new Bag([
-            "business_id"=>$business_id,
+        $bag = Bag::create([
+            "business_id" => $business_id,
             "qr_code" => $qrCode,
             "bag_number" => $bagNumber,
             "bag_size" => $bagSize,
             "bag_type" => $bagType,
-            "status_id" => $status_id,
+            "status" => $status,
             "weight" => $weight,
             "dimensions" => $dimensions,
         ]);
 
-        $bag->save();
         return $bag;
     }
 
-    public function updateBag($id, $business_id,$qrCode, $bagNumber, $bagSize, $bagType, $status_id, $weight, $dimensions)
+    public function updateBag($id, $business_id, $qrCode, $bagNumber, $bagSize, $bagType, $status, $weight, $dimensions)
     {
         return Bag::where(["id" => $id])->update([
-            "business_id"=>$business_id,
+            "business_id" => $business_id,
             "qr_code" => $qrCode,
             "bag_number" => $bagNumber,
             "bag_size" => $bagSize,
             "bag_type" => $bagType,
-            "status_id" => $status_id,
+            "status" => $status,
             "weight" => $weight,
             "dimensions" => $dimensions,
         ]);
     }
 
-    public function updateStatus($id,$status_id){
+    public function updateStatus($id, $status)
+    {
         $bag = Bag::find($id);
-        $bag->status_id = $status_id;
+        $bag->status = $status;
         $bag->save();
     }
 
     public function getBag($id)
     {
-        return Bag::where(["id"=>$id])->first();
+        return Bag::where(["id" => $id])->first();
     }
 
     public function deleteBag($id)
     {
-        return Bag::where(["id"=>$id])->delete();
+        return Bag::where(["id" => $id])->delete();
     }
 
     public function getBags()
@@ -62,6 +62,6 @@ class BagsRepository implements BagsInterface
 
     public function filterBags($status)
     {
-        return Bag::where(["status"=>$status])->get();
+        return Bag::where(["status" => $status])->get();
     }
 }
