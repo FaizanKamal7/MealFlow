@@ -554,7 +554,7 @@ class DeliveryController extends Controller
             $batch = $this->deliveryBatchRepository->getActiveDeliveryBatchByDriver($driver_id);
 
             // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
-            $this->deliveryRepository->AssignDeliveryBtach($batch->id, $deliveries);
+            $this->deliveryRepository->assignDeliveryBatch($batch->id, $deliveries);
 
             echo ($driver_id);
             dd($batch);

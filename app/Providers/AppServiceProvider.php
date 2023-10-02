@@ -14,7 +14,6 @@ use App\Interfaces\StateInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserPermissionInterface;
 use App\Interfaces\UserRoleInterface;
-use App\Models\UserRole;
 use App\Repositories\ApplicationModelRepository;
 use App\Repositories\AreaRepository;
 use App\Repositories\CityRepository;
@@ -29,7 +28,6 @@ use App\Repositories\UserRepository;
 use App\Repositories\UserRoleRepository;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
 use Modules\BusinessService\Interfaces\BusinessPricingInterface;
@@ -45,19 +43,10 @@ use Modules\BusinessService\Repositories\CustomerAddressRepository;
 use Modules\BusinessService\Repositories\CustomerRepository;
 use Modules\BusinessService\Repositories\CustomerSecondaryNumberRepository;
 use Modules\BusinessService\Repositories\DeliverySlotPricingRepository;
-use Modules\BusinessService\Repositories\PricingRepository;
 use Modules\BusinessService\Repositories\PricingTypeRepository;
 use Modules\BusinessService\Repositories\RangePricingRepository;
-use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
-use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
-use Modules\DeliveryService\Interfaces\PickupBatchBranchInterface;
-use Modules\DeliveryService\Interfaces\PickupBatchInterface;
-use Modules\DeliveryService\Repositories\DeliveryBatchRepository;
 use Modules\DeliveryService\Repositories\DeliveryRepository;
-use Modules\DeliveryService\Repositories\DeliveryTypeRepository;
-use Modules\DeliveryService\Repositories\PickupBatchRepository;
-use Modules\DeliveryService\Repositories\PickupBatchBranchRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
