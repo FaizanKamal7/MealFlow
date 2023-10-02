@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("batch_arrival_map_coordinates")->nullable();
             $table->string("batch_end_map_coordinates")->nullable();
             $table->string("status")->nullable();
-            $table->uuid("driver_id");
+            $table->uuid("driver_id")->nullable();
             $table->uuid("vehicle_id")->nullable();
             $table->foreign("vehicle_id")->references("id")->on("vehicles")->onDelete("set null");
             $table->foreign("driver_id")->references("id")->on("drivers")->onDelete("set null");

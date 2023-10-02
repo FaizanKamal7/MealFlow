@@ -471,6 +471,7 @@ function fetchAreasWithMultiSelectOption() {
 }
 
 function fetchAddressAreas() {
+
     var cityID = document.getElementById("address_city").value;
 
     var areaDropdown = document.getElementById("address_area");

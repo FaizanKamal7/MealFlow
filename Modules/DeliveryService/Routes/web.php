@@ -49,6 +49,7 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('generate-template', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "generateAndDownloadDeliveryTemplate"])->name("generate_delivery_template");
     Route::post('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
     Route::get('unassign', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewUnassignedDeliveries"])->name("view_unassign");
+    Route::get('assigned_deliveries', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewAssignedDeliveries"])->name("view_assign");
 
 
     //    });
