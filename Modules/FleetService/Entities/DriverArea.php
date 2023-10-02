@@ -13,6 +13,7 @@ class DriverArea extends Model
     use HasUuids;
 
     protected $fillable = [
+        'id',
         'driver_id',
         'area_id',
     ];

@@ -3,198 +3,341 @@
 
 
 @section('main_content')
-<div class="post d-flex flex-column-fluid" id="kt_post">
-    <!--begin::Container-->
-    <div id="kt_content_container" class="container-xxl">
-        <div class="container">
-            <div class="">
-            </div>
-
-
-
-
-
-
-
-
-
-
-            <div class="card card-flush">
-                <!--begin::Card header-->
-                <div class="card-header mt-6">
-
-                    <!--end::Card header-->
-                    <!--begin::Card body-->
-                    <div class="card-body pt-0">
-                        <h3 class="modal-title">Add Base Pricing (Delivery slot wise)</h3>
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <div class="container">
+                <div class="delivery-slot-form">
+                    <div class="delivery-slot-header">
+                        <h3 class="modal-title base-header">Add Base Pricing (Delivery slot wise)</h3>
 
                         <!--begin::Close-->
-                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                        {{-- <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
                             aria-label="Close">
-                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
-                                    class="path2"></span></i>
-                        </div>
+                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                        </div> --}}
                         <!--end::Close-->
 
-                        <hr>
-
-                        <!--begin::Card body-->
-                        <div class="card-body pt-5">
-                            <!--begin::Form-->
-                            <form id="location_form" class="form" method="post">
-                                @csrf
-
-                                <!--begin::Input group-->
-                                <div class="row fv-row mb-7">
-                                    <!--begin::Col-->
-                                    <div class="col-lg-4">
-                                        <label class="form-label required">Country</label>
-
-                                        <!--begin::Input group-->
-                                        <select id="country" class="form-select form-select-solid" name="country"
-                                            data-control="select2" data-placeholder="Select an option"
-                                            data-allow-clear="true" onchange="fetchStates()">
-
-                                            <option value="">Select country</option>
-                                            @if ($countries->count())
-                                            @foreach ($countries as $country)
-                                            <option value={{$country['id']}}>{{$country['name']}}</option>
-                                            @endforeach
-                                            @else
-                                            <option value="">Countries not available</option>
-                                            @endif
-                                        </select>
-                                        <!--end::Input group-->
-
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--end::Col-->
-                                    <div class="col-xl-4">
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">State</label>
-                                            <!--end::Label-->
-                                            <select id="state" name="state" class="form-select form-select-solid"
-                                                data-control="select2" data-placeholder="Choose" data-allow-clear="true"
-                                                onchange="fetchCitiesWithMultiSelectOption()">
-                                                <option value="">Select State</option>
-
-
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!--begin::Col-->
-                                    <div class="col-xl-4">
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">City</label>
-                                            <!--end::Label-->
-
-                                            <select id="city" class="form-select form-select-lg form-select-solid"
-                                                data-control="select2" onchange="getDeliverySlots()"
-                                                data-placeholder="Choose City" name="city" data-allow-clear="true"
-                                                multiple="multiple">
-                                            </select>
-                                            <!--hidden text field-->
-                                            <input type="hidden" id="cities" name="cities" />
-                                        </div>
-                                    </div>
-                                    <!--end::Col-->
-
-                                </div>
-
-                            </form>
-                            <!--end::Form-->
-                            <!--begin::Separator-->
-                            <div class="separator mb-2"></div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="radiogroup" type="radio" value="base" id="r1"
-                                        checked />
-                                    <label for="r1" class="form-check-label">
-                                        Set BASE pricing (Applicable for all new businesses)
-                                    </label>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="col-xl-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="radiogroup" type="radio" value="non_base"
-                                        id="r2" />
-                                    <label for="r2" class="form-check-label">
-                                        Set for specific business
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="m-2" id="inputField" style="display:none;">
-                            <label class="form-label required">Businesses</label>
+                        {{-- <hr> --}}
+                    </div>
+                    <div class="delivery-form">
+                        <form id="location_form" class="form" method="post">
+                            @csrf
 
                             <!--begin::Input group-->
-                            <select id="business" class="form-select form-select-solid" data-control="select2"
-                                data-placeholder="Select an option" data-allow-clear="true"
-                                onchange="getDeliverySlots()">
+                            <div class="row fv-row mb-7">
+                                <!--begin::Col-->
+                                <div class="col-lg-4">
+                                    <label class="form-label required">Country</label>
 
-                                <option value="">Select business</option>
-                                @if ($businesses->count())
-                                @foreach ($businesses as $business)
-                                <option value="{{$business['id']}}">{{$business['name']}}</option>
-                                @endforeach
-                                @else
-                                <option value="">Businesses not available</option>
-                                @endif
-                            </select>
-                            <!--end::Input group-->
-                        </div>
+                                    <!--begin::Input group-->
+                                    <select id="country" class="form-select form-select-solid" name="country"
+                                        data-control="select2" data-placeholder="Select an option" data-allow-clear="true"
+                                        onchange="fetchStates()">
 
-                        <!--end::Card body-->
-                        <div id="delivery-slot-pricing-component-id" style="display: none">
-                            @livewire('businessservice::delivery-slot-pricing-component' )
-                        </div>
+                                        <option value="">Select country</option>
+                                        @if ($countries->count())
+                                            @foreach ($countries as $country)
+                                                <option value={{ $country['id'] }}>{{ $country['name'] }}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="">Countries not available</option>
+                                        @endif
+                                    </select>
+                                    <!--end::Input group-->
 
-                        <div id="no-delivery-slot" class="text-center" style="display: none">
-                            <br><br>
-                            <p><i>No Delivery Slot Available for selected region. Please <a
-                                        href="{{route('add_new_delivery_slots')}}">add delivery slots</a> for this
-                                    region before adding price</i></p>
-                        </div>
+                                </div>
+                                <!--end::Input group-->
+                                <!--end::Col-->
+                                <div class="col-xl-4">
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label required">State</label>
+                                        <!--end::Label-->
+                                        <select id="state" name="state" class="form-select form-select-solid"
+                                            data-control="select2" data-placeholder="Choose" data-allow-clear="true"
+                                            onchange="fetchCitiesWithMultiSelectOption()">
+                                            <option value="">Select State</option>
 
 
+                                        </select>
+                                    </div>
+                                </div>
 
+                                <!--begin::Col-->
+                                <div class="col-xl-4">
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="form-label required">City</label>
+                                        <!--end::Label-->
+
+                                        <select id="city" class="form-select form-select-lg form-select-solid"
+                                            data-control="select2" onchange="getDeliverySlots()"
+                                            data-placeholder="Choose City" name="city" data-allow-clear="true"
+                                            multiple="multiple">
+                                        </select>
+                                        <!--hidden text field-->
+                                        <input type="hidden" id="cities" name="cities" />
+                                    </div>
+                                </div>
+                                <!--end::Col-->
+
+                            </div>
+
+                        </form>
 
                     </div>
                 </div>
+                {{-- end delivery slot form --}}
+
+                {{-- start of tab view --}}
+                <div class="base-price-div">
+                    <div class="col-xl-6 first-price-div">
+                        <div class="form-check price-form-check">
+                            <input class="form-check-input price-form-input" name="radiogroup" type="radio" value="base"
+                                id="r1" checked />
+                            <label for="r1" class="form-check-label price-form-label">
+                                Set BASE pricing (Applicable for all new businesses)
+                            </label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-xl-6 second-price-div">
+                        <div class="form-check price-form-check">
+                            <input class="form-check-input price-form-input" name="radiogroup" type="radio"
+                                value="non_base" id="r2" />
+                            <label for="r2" class="form-check-label price-form-label">
+                                Set for specific business
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                {{-- end of tab, radio group div --}}
+
+                <div class="delivery-slot-div">
+                    <div class="" id="inputField" style="display:none;">
+                        {{-- <label class="form-label required">Businesses</label> --}}
+                        <div class="delivery-slot-header">
+                            <h5 class="modal-title base-header ms-5">Select Businesses</h5>
+                        </div>
+                        <!--begin::Input group-->
+                        <div class="select-div-business">
+                            <select id="business" class="form-select form-select-solid" data-control="select2"
+                                data-placeholder="Select business" data-allow-clear="true" onchange="getDeliverySlots()">
+
+                                <option value="">Select business</option>
+                                @if ($businesses->count())
+                                    @foreach ($businesses as $business)
+                                        <option value="{{ $business['id'] }}">{{ $business['name'] }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">Businesses not available</option>
+                                @endif
+                            </select>
+                        </div>
+                        <!--end::Input group-->
+                    </div>
+                    <div id="delivery-slot-pricing-component-id" style="display: none">
+                        @livewire('businessservice::delivery-slot-pricing-component')
+                    </div>
+
+                    <div id="no-delivery-slot" class="text-center" style="display: none">
+                        <br><br>
+                        <p><i>No Delivery Slot Available for selected region. Please <a
+                                    href="{{ route('add_new_delivery_slots') }}">add delivery slots</a> for this
+                                region before adding price</i></p>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+                {{-- <div class="card card-flush">
+                    <!--begin::Card header-->
+                    <div class="card-header mt-6">
+
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <h3 class="modal-title">Add Base Pricing (Delivery slot wise)</h3>
+
+                            <!--begin::Close-->
+                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                                aria-label="Close">
+                                <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
+                                        class="path2"></span></i>
+                            </div>
+                            <!--end::Close-->
+
+                            <hr>
+
+                            <!--begin::Card body-->
+                            <div class="card-body pt-5">
+                                <!--begin::Form-->
+                                <form id="location_form" class="form" method="post">
+                                    @csrf
+
+                                    <!--begin::Input group-->
+                                    <div class="row fv-row mb-7">
+                                        <!--begin::Col-->
+                                        <div class="col-lg-4">
+                                            <label class="form-label required">Country</label>
+
+                                            <!--begin::Input group-->
+                                            <select id="country" class="form-select form-select-solid" name="country"
+                                                data-control="select2" data-placeholder="Select an option"
+                                                data-allow-clear="true" onchange="fetchStates()">
+
+                                                <option value="">Select country</option>
+                                                @if ($countries->count())
+                                                    @foreach ($countries as $country)
+                                                        <option value={{ $country['id'] }}>{{ $country['name'] }}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="">Countries not available</option>
+                                                @endif
+                                            </select>
+                                            <!--end::Input group-->
+
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--end::Col-->
+                                        <div class="col-xl-4">
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="form-label required">State</label>
+                                                <!--end::Label-->
+                                                <select id="state" name="state" class="form-select form-select-solid"
+                                                    data-control="select2" data-placeholder="Choose" data-allow-clear="true"
+                                                    onchange="fetchCitiesWithMultiSelectOption()">
+                                                    <option value="">Select State</option>
+
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!--begin::Col-->
+                                        <div class="col-xl-4">
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="form-label required">City</label>
+                                                <!--end::Label-->
+
+                                                <select id="city" class="form-select form-select-lg form-select-solid"
+                                                    data-control="select2" onchange="getDeliverySlots()"
+                                                    data-placeholder="Choose City" name="city" data-allow-clear="true"
+                                                    multiple="multiple">
+                                                </select>
+                                                <!--hidden text field-->
+                                                <input type="hidden" id="cities" name="cities" />
+                                            </div>
+                                        </div>
+                                        <!--end::Col-->
+
+                                    </div>
+
+                                </form>
+                                <!--end::Form-->
+                                <!--begin::Separator-->
+                                <div class="separator mb-2"></div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="radiogroup" type="radio" value="base"
+                                            id="r1" checked />
+                                        <label for="r1" class="form-check-label">
+                                            Set BASE pricing (Applicable for all new businesses)
+                                        </label>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-xl-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="radiogroup" type="radio"
+                                            value="non_base" id="r2" />
+                                        <label for="r2" class="form-check-label">
+                                            Set for specific business
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-2" id="inputField" style="display:none;">
+                                <label class="form-label required">Businesses</label>
+
+                                <!--begin::Input group-->
+                                <select id="business" class="form-select form-select-solid" data-control="select2"
+                                    data-placeholder="Select an option" data-allow-clear="true"
+                                    onchange="getDeliverySlots()">
+
+                                    <option value="">Select business</option>
+                                    @if ($businesses->count())
+                                        @foreach ($businesses as $business)
+                                            <option value="{{ $business['id'] }}">{{ $business['name'] }}</option>
+                                        @endforeach
+                                    @else
+                                        <option value="">Businesses not available</option>
+                                    @endif
+                                </select>
+                                <!--end::Input group-->
+                            </div>
+
+                            <!--end::Card body-->
+                            <div id="delivery-slot-pricing-component-id" style="display: none">
+                                @livewire('businessservice::delivery-slot-pricing-component')
+                            </div>
+
+                            <div id="no-delivery-slot" class="text-center" style="display: none">
+                                <br><br>
+                                <p><i>No Delivery Slot Available for selected region. Please <a
+                                            href="{{ route('add_new_delivery_slots') }}">add delivery slots</a> for this
+                                        region before adding price</i></p>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div> --}}
             </div>
         </div>
     </div>
-</div>
 
 @endsection
 
 @section('extra_scripts')
-<script src="{{ asset('static/js/custom/settings/delivery-slots/delivery_slots.js')}}"></script>
-<script src="{{ asset('static/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
-<script src="{{ asset('static/plugins/custom/utilities/multiselect-dropdown.js')}}"></script>
-<script src="{{ asset('static/js/custom/core/locations.js')}}"></script>
+    <script src="{{ asset('static/js/custom/settings/delivery-slots/delivery_slots.js') }}"></script>
+    <script src="{{ asset('static/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
+    <script src="{{ asset('static/plugins/custom/utilities/multiselect-dropdown.js') }}"></script>
+    <script src="{{ asset('static/js/custom/core/locations.js') }}"></script>
 
-<script>
-    function getDeliverySlots() {
-        console.log("inside getDeliverySlots");
-        var cities = document.getElementById("cities").value;
-        var business_id = document.getElementById("business").value;
-        var delivery_slot_pricing_component = document.getElementById("delivery-slot-pricing-component-id");
-        var no_delivery_slot = document.getElementById("no-delivery-slot");
-       
-        var url = "/businessservice/pricing/get-delivery-slots-of-city-in-base-price";
-            
+    <script>
+        function getDeliverySlots() {
+            console.log("inside getDeliverySlots");
+            var cities = document.getElementById("cities").value;
+            var business_id = document.getElementById("business").value;
+            var delivery_slot_pricing_component = document.getElementById("delivery-slot-pricing-component-id");
+            var no_delivery_slot = document.getElementById("no-delivery-slot");
+
+            var url = "/businessservice/pricing/get-delivery-slots-of-city-in-base-price";
+
             $.ajax({
                 url: url,
                 dataType: "json",
-                data: { cities: cities },
+                data: {
+                    cities: cities
+                },
                 success: function(cities_delivery_slots) {
                   
                     city_pricings_arr = Object.values(cities_delivery_slots);
@@ -203,13 +346,14 @@
                     } else {
                         delivery_slot_pricing_component.style.display = "block";
                     }
-                    var componentId = document.querySelector('#delivery-slot-pricing-component-id [wire\\:id]').getAttribute('wire:id');
+                    var componentId = document.querySelector('#delivery-slot-pricing-component-id [wire\\:id]')
+                        .getAttribute('wire:id');
                     var component = Livewire.find(componentId);
-                    component.set('cities_delivery_slots',cities_delivery_slots);
-                    component.set('cities', cities.split(',')); 
-                    component.set('business_id', business_id); 
-                    
-                    
+                    component.set('cities_delivery_slots', cities_delivery_slots);
+                    component.set('cities', cities.split(','));
+                    component.set('business_id', business_id);
+
+
                     // divForm.style.display = "block";
 
                     //  // assuming response is an array
@@ -221,11 +365,11 @@
                     // input.setAttribute("value", cities);  
                     // dynamicForm.appendChild(input);
                     // var delivery_slots = '';
-                   
+
                     // // for each item in the response array, create an input field
                     // // for (let i = 0; i < response.length; i++) {
                     // response.forEach(function(item, i) {
-                       
+
                     //     let row = document.createElement('div');
                     //     row.classList.add("row");
                     //     row.classList.add("align-items-center");
@@ -280,47 +424,45 @@
                     // inputSlots.setAttribute("name", "delivery_slots");
                     // inputSlots.setAttribute("value", delivery_slots);
                     // dynamicForm.appendChild(inputSlots);
-                    
+
                 },
                 error: function(xhr) {
                     // Handle any errors that occur during the AJAX request
                 }
             });
-    }
+        }
 
-    $(document).ready(function(){
-        $('#city').change(function(){
-            var selectedCities = $(this).val();
+        $(document).ready(function() {
+            $('#city').change(function() {
+                var selectedCities = $(this).val();
 
-            if (selectedCities.includes('all')) {
-                selectedCities = [];
-                $(this).find('option').each(function() {
-                    if ($(this).val() != 'all') {
-                        selectedCities.push($(this).val());
-                    }
-                });
+                if (selectedCities.includes('all')) {
+                    selectedCities = [];
+                    $(this).find('option').each(function() {
+                        if ($(this).val() != 'all') {
+                            selectedCities.push($(this).val());
+                        }
+                    });
 
-                // Select all options in the dropdown, except 'all'
-                $(this).val(selectedCities).trigger('change');
-            }
+                    // Select all options in the dropdown, except 'all'
+                    $(this).val(selectedCities).trigger('change');
+                }
 
-            // Update hidden field
-            $('#cities').val(selectedCities.join(','));
+                // Update hidden field
+                $('#cities').val(selectedCities.join(','));
+            });
         });
-    });
 
-    
-    document.getElementsByName('radiogroup').forEach((elem) => {
-        elem.addEventListener('change', (e) => {
-            if (e.target.value === 'non_base') {
-                document.getElementById('inputField').style.display = 'block';
-            } else {
-                document.getElementById('inputField').style.display = 'none';
-            }
+
+        document.getElementsByName('radiogroup').forEach((elem) => {
+            elem.addEventListener('change', (e) => {
+                if (e.target.value === 'non_base') {
+                    document.getElementById('inputField').style.display = 'block';
+                } else {
+                    document.getElementById('inputField').style.display = 'none';
+                }
+            });
         });
-    });
-
-
-</script>
+    </script>
 
 @endsection

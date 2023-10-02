@@ -206,8 +206,8 @@ class BusinessOnboardingController extends Controller
                                 active_status: 1,
                                 area_id: $area['id'],
                                 city_id: $city,
-                                state: $coverage_list_item["state"],
-                                country: $coverage_list_item["country"],
+                                state: $city->state->id,
+                                country: $city->state->country->id,
                                 branch_id: $branch->id,
                             );
 
