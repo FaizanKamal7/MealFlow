@@ -3,10 +3,10 @@
 namespace Modules\PickupService\Repositories;
 
 use Modules\DeliveryService\Entities\PickupBatch;
-use Modules\PickupService\Interfaces\PickupBatchInterface;
+use Modules\DeliveryService\Interfaces\PickupBatchInterface;
 
 
-class PickupBatchRepository implements PickupBatchRepository
+class PickupBatchRepository implements PickupBatchInterface
 {
 
     public function createPickupBatch($driver_id)
@@ -24,7 +24,7 @@ class PickupBatchRepository implements PickupBatchRepository
 
     public function updatePickupBatch($batch_id, $data)
     {
-        $batch =  PickupBatch::findOrFail($batch_id);
+        $batch = PickupBatch::findOrFail($batch_id);
         return $batch->update($data);
     }
 
@@ -32,7 +32,7 @@ class PickupBatchRepository implements PickupBatchRepository
     {
         $batch = PickupBatch::where('driver_id', $driver_id)->where('batch_end_time', null)->first();
         if (!$batch) {
-            $batch =  $this->createPickupBatch($driver_id);
+            $batch = $this->createPickupBatch($driver_id);
         }
         return $batch;
     }
@@ -41,7 +41,7 @@ class PickupBatchRepository implements PickupBatchRepository
     {
         $batch = PickupBatch::with('deliveries')->where('driver_id', $driver_id)->where('batch_end_time', null)->first();
         if (!$batch) {
-            $batch =  $this->createPickupBatch($driver_id);
+            $batch = $this->createPickupBatch($driver_id);
         }
         return $batch;
     }

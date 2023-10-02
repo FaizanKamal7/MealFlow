@@ -180,7 +180,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link"href="{{ route('view_unassign') }}">
+                        <a class="menu-link"href="{{ route('view_assign') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -680,9 +680,9 @@
                         <!--end::Svg Icon-->
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('view_all_customers') }}">
-                                <span class="menu-bullet">
+                                {{-- <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
-                                </span>
+                                </span> --}}
                                 <span class="menu-title">Customers</span>
                             </a>
                         </div>
