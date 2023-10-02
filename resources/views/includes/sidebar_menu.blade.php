@@ -236,19 +236,77 @@
                 </span>
 
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Unassigned Bag Pickups</span>
+                            <span class="menu-title">Unassigned Bag Pickups (Delivery Wise)</span>
                         </a>
                     </div>
+                </div>
 
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('assigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Unassigned Bag Pickups (Partner Wise)</span>
+                        </a>
+                    </div>
+                </div>
 
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Assigned Bag Pickups</span>
+                        </a>
+                    </div>
+                </div>
 
-
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Collected Bag Pickups</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Requested Cancel</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Cancelled Bag Pickups</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Report Bag Pickups</span>
+                        </a>
+                    </div>
                 </div>
 
             </div>

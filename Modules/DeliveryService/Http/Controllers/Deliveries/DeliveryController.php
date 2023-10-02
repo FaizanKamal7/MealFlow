@@ -138,7 +138,7 @@ class DeliveryController extends Controller
     public function uploadDeliveriesByExcel(Request $request)
     {
 
-        
+
         $businesses = $this->businessRepository->getActiveBusinesses();
 
         $request->validate([
@@ -545,6 +545,12 @@ class DeliveryController extends Controller
         $drivers = $this->driverRepository->getDetailDrivers();
         $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
         return view('deliveryservice::deliveries.unassigned_deliveries', $data);
+    }
+    public function view_labels()
+    {
+        $path = 'media/bags/qrcodes/' . time() . '.svg';
+
+        // QrCode::size(400)->generate($bag->id, $path);
     }
     public function assigned_delivery_to_driver(Request $request)
     {

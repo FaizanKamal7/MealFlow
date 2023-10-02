@@ -11,17 +11,18 @@ class DeliveryRepository implements DeliveryInterface
     {
         return Delivery::create($data);
     }
-    
-    public function UpdateDelivery($delivery_id, $data)
+
+    public function get()
+    {
+        return Delivery::with('deliverySlot', 'customerAddress')->get();
+    }
+
+    public function updateDelivery($delivery_id, $data)
     {
         $delivery = Delivery::findOrFail($delivery_id);
         // $delivery->fill($data);
         // return $delivery->save();
         return $delivery->update($data);
-    }
-    public function get()
-    {
-        return Delivery::with('deliverySlot', 'customerAddress')->get();
     }
 
     public function getWithFilters(...$parameters)
@@ -46,7 +47,7 @@ class DeliveryRepository implements DeliveryInterface
         return Delivery::where('status', $status)->with('deliverySlot', 'customerAddress')->get();
     }
 
-    public function AssignDeliveryBtach($batch_id, $deliveries)
+    public function assignDeliveryBatch($batch_id, $deliveries)
     {
         Delivery::whereIn('id', $deliveries)->update([
             'delivery_batch_id' => $batch_id,
@@ -71,12 +72,5 @@ class DeliveryRepository implements DeliveryInterface
     public function getPickupUnassignedDeliveries($start_date, $end_date)
     {
         return Delivery::whereNull('pickup_batch_id')->get();
-    }
-
-
-    public function getBatchDeliveries($batch_id, $start_date, $end_date)
-    {
-        return Delivery::with('deliverySlot', 'customer.user', 'branch', 'customerAddress', 'pickupBatch')->where('pickup_batch_id', $batch_id)
-            ->whereBetween('delivery_date', [$start_date, $end_date])->get();
     }
 }
