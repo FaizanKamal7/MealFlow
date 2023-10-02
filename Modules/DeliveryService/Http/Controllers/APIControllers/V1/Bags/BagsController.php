@@ -75,7 +75,7 @@ class BagsController extends Controller
                 $bag = $this->bagsRepository->addNewBag(qrCode: "", business_id: $request->get("business_id"), bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"));
                 QrCode::size(400)
                     ->generate($bag->id, $path);
-                $this->bagsRepository->updateBag(id: $bag->id, business_id: $bag->business_id, qrCode: $path, bagNumber: $bag->bag_number, bagSize: $bag->bag_size, bagType: $bag->bag_type, status_id: $bag->state_id, weight: $bag->weight, dimensions: $bag->dimensions);
+                $this->bagsRepository->updateBag(id: $bag->id, business_id: $bag->business_id, qrCode: $path, bagNumber: $bag->bag_number, bagSize: $bag->bag_size, bagType: $bag->bag_type, status: $bag->state_id, weight: $bag->weight, dimensions: $bag->dimensions);
             }
 
             return redirect()->route("add_new_bag")->with("Success", "Bags added successfully");
@@ -130,7 +130,7 @@ class BagsController extends Controller
     {
 
         $status_id = $this->bagStatusRepository->getStatus("at partner location")->id;
-        $this->bagsRepository->updateStatus(id: $id, status_id: $status_id);
+        $this->bagsRepository->updateStatus(id: $id, status: $status_id);
     }
 
     public function unassignedBagsPickup()

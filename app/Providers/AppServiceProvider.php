@@ -89,10 +89,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CustomerAddressInterface::class, CustomerAddressRepository::class);
         $this->app->bind(CustomerSecondaryNumberInterface::class, CustomerSecondaryNumberRepository::class);
         $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
-        $this->app->bind(DeliveryTypeInterface::class, DeliveryTypeRepository::class);
-        $this->app->bind(DeliveryBatchInterface::class, DeliveryBatchRepository::class);
-        $this->app->bind(PickupBatchInterface::class, PickupBatchRepository::class);
-        $this->app->bind(PickupBatchBranchInterface::class, PickupBatchBranchRepository::class);
     }
 
     /**

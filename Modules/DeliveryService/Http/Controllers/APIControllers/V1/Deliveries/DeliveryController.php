@@ -25,12 +25,12 @@ use Modules\BusinessService\Interfaces\CustomerInterface;
 use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
+use Modules\DeliveryService\Interfaces\DeliveryImagesInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 
-use function PHPUnit\Framework\isEmpty;
 
 class DeliveryController extends Controller
 {
@@ -50,6 +50,7 @@ class DeliveryController extends Controller
     private $driverAreaRepository;
     private $driverRepository;
     private $deliveryBatchRepository;
+    private $deliveryImagesRepository;
     use HttpResponses;
 
     public function __construct(
@@ -68,6 +69,8 @@ class DeliveryController extends Controller
         DriverAreaInterface $driverAreaRepository,
         DriverInterface $driverRepository,
         DeliveryBatchInterface $deliveryBatchRepository,
+        DeliveryImagesInterface $deliveryImagesRepository,
+
     ) {
         $this->customerRepository = $customerRepository;
         $this->cityRepository = $cityRepository;
@@ -84,6 +87,8 @@ class DeliveryController extends Controller
         $this->driverAreaRepository = $driverAreaRepository;
         $this->driverRepository = $driverRepository;
         $this->deliveryBatchRepository = $deliveryBatchRepository;
+        $this->deliveryImagesRepository = $deliveryImagesRepository;
+
 
         $this->helper = new Helper();
     }
@@ -160,7 +165,7 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
@@ -469,8 +474,8 @@ class DeliveryController extends Controller
         // - Making all words lower case
         // - replace spaces with underscore "_"
         // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
 
         // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
         // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
@@ -573,28 +578,31 @@ class DeliveryController extends Controller
 
             $data = ['delivery_batch' => $delivery_batch];
             return $this->success($data, "delivery batch");
-
         } catch (Exception $e) {
             return $this->error($e, 'Something went wrong contact support');
-
         }
         // $deliveries = $this->deliveryRepository->getde   
     }
 
 
-    
+
     public function completeDelivery(Request $request)
     {
+
         try {
+
+            // BAG cOLLECTION
+
+            // Check if $validator = Validator::make($request->all(), [
             $validator = Validator::make($request->all(), [
-                'delivery_id'=>['required','exists:deliveries,id'],
+                'delivery_id' => ['required', 'exists:deliveries,id'],
                 'open_bag_img' => ['required', 'image'],
                 'close_bag_img' => ['required', 'image'],
                 'delivered_bag_img' => ['required', 'image'],
                 'empty_bag_img' => ['image'],
                 'empty_bag_count' => [],
             ]);
-            
+
             // BAG cOLLECTION
 
             // Check if validation fails
@@ -602,33 +610,44 @@ class DeliveryController extends Controller
                 return $this->error($validator->errors(), "validation failed", 422);
             }
 
+            $delivery_id = $request->post('delivery_id');
+            $empty_bag_count = $request->post('empty_bag_count');
             $open_bag_img = $request->file('open_bag_img');
             $close_bag_img = $request->file('close_bag_img');
             $delivered_bag_img = $request->file('delivered_bag_img');
             $empty_bag_img = $request->file('empty_bag_img');
+            DB::beginTransaction();
 
-
-            if($open_bag_img)
-            {
-            $open_bag_img_url = $this->helper->storeFile($open_bag_img, "DeliveryServce", "Deliveries");
+            if ($open_bag_img) {
+                $open_bag_img_url = $this->helper->storeFile($open_bag_img, "DeliveryServce", "Deliveries");
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $open_bag_img_url, 'image_type' => 'open_bag_img']);
             }
-            if($close_bag_img)
-            {
-            $close_bag_img_url = $this->helper->storeFile($close_bag_img, "DeliveryServce", "Deliveries");
+            if ($close_bag_img) {
+                $close_bag_img_url = $this->helper->storeFile($close_bag_img, "DeliveryServce", "Deliveries");
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $close_bag_img_url, 'image_type' => 'close_bag_img']);
             }
-            if($delivered_bag_img)
-            {
-            $delivered_bag_img_url = $this->helper->storeFile($delivered_bag_img, "DeliveryServce", "Deliveries");
+            if ($delivered_bag_img) {
+                $delivered_bag_img_url = $this->helper->storeFile($delivered_bag_img, "DeliveryServce", "Deliveries");
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $delivered_bag_img_url, 'image_type' => 'delivered_bag_img']);
             }
-            if($empty_bag_img)
-            {
-            $empty_bag_img_url = $this->helper->storeFile($empty_bag_img, "DeliveryServce", "Bags");
+            if ($empty_bag_img) {
+                $empty_bag_img_url = $this->helper->storeFile($empty_bag_img, "DeliveryServce", "Bags");
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $empty_bag_img_url, 'image_type' => 'empty_bag_img']);
             }
 
+            $data =  $this->deliveryRepository->UpdateDelivery($delivery_id, [
+                'status' => 'DELIVERED',
+                'empty_bag_count' => $empty_bag_count,
+            ]);
+            if (!$data) {
+                return $this->error($data, "Something went wrong please contact support,Delivery not completed");
+            }
 
-
+            DB::commit();
+            return $this->success($data, "Delivery completed successfully");
         } catch (Exception $exception) {
-
+            DB::rollback();
+            return $this->error($exception, "Something went wrong please contact support");
         }
 
         // $helper->storeFile();
