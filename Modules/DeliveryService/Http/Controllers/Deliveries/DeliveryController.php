@@ -105,7 +105,7 @@ class DeliveryController extends Controller
 
     public function viewUnassignedDeliveries()
     {
-        return view('deliveryservice::deliveries.unassigned_delivery');
+        return view('deliveryservice::deliveries.unassigned_deliveries');
     }
 
     public function viewAssignedDeliveries()
@@ -555,8 +555,7 @@ class DeliveryController extends Controller
         $drivers = $this->driverRepository->getDetailDrivers();
         $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
         // return view('deliveryservice::deliveries.unassigned_deliveries', $data);
-        return view('deliveryservice::deliveries.unassigned_delivery', $data);
-
+        return view('deliveryservice::deliveries.unassigned_deliveries', $data);
     }
     public function view_labels()
     {
@@ -578,7 +577,7 @@ class DeliveryController extends Controller
             $batch = $this->deliveryBatchRepository->getActiveDeliveryBatchByDriver($driver_id);
 
             // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
-            $this->deliveryRepository->AssignDeliveryBtach($batch->id, $deliveries);
+            $this->deliveryRepository->assignDeliveryBatch($batch->id, $deliveries);
 
 
             $drivers = $this->driverRepository->getDetailDrivers();
