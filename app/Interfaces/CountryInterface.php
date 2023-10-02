@@ -8,4 +8,6 @@ interface CountryInterface
     public function getAllCountries();
     public function getAllActiveCountries();
     public function getAllCountryStateCities();
+    public function getCountryWithItsLocations();
+
 }
