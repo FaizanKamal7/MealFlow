@@ -11,6 +11,7 @@ use Modules\BusinessService\Entities\Customer;
 use Modules\BusinessService\Entities\CustomerAddress;
 use Illuminate\Support\Facades\Request;
 use App\Http\Helper\Helper;
+use Modules\FleetService\Entities\Vehicle;
 
 class Delivery extends Model
 {
@@ -32,6 +33,7 @@ class Delivery extends Model
         "customer_address_id",
         "pick_up_batch_id",
         "delivery_batch_id",
+        'empty_bag_count'
     ];
 
     public function branch()
@@ -68,7 +70,10 @@ class Delivery extends Model
     {
         return $this->belongsTo(DeliveryBatch::class, 'delivery_batch_id');
     }
-
+    public function vehicle()
+    {
+        return $this->belongsToThrough(Vehicle::class, DeliveryBatch::class);
+    }
     protected static function newFactory()
     {
         return \Modules\DeliveryService\Database\factories\DeliveryFactory::new();
@@ -108,29 +113,83 @@ class Delivery extends Model
             $method = Request::method();
 
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
         });
 
         static::updating(function ($model) {
-            // $changes = $model->getDirty();
-
-            if ($model->isDirty('status_id')) {
-                $attributes = $model->getAttributes();
+            $changes = $model->getDirty();
+            if ($changes) {
                 $helper = new Helper();
-                $action_by = auth()->id();
-                $bag_id = $attributes['id'];
-                $delivery_id = $model->getOriginal('delivery_id');
-                $status = $attributes['status'];
-                $vehicle_id = $model->getOriginal('vehicle_id');;
-                $description = "status updated";
-                
-                
-                $helper->deliveryTimeline( $delivery_id, $status, $action_by, $vehicle_id, $description);
+                $user_id = auth()->id();
+                $module_name = "DeliveryService";
+                $action = "updated";
+                $subject = "Record updated";
+                $url = Request::fullUrl();
+                $description = "Record has been updated";
+                $ip_address = Request::ip();
+                $user_agent = Request::header('user-agent');
+                $old_values = json_encode($model->getOriginal());
+                $new_values = json_encode($model->getAttributes());
+                $record_id = $model->id;
+                $record_type = get_class($model);
+                $method = Request::method();
+
+                $helper->logActivity(
+                    userId: $user_id,
+                    moduleName: $module_name,
+                    action: $action,
+                    subject: $subject,
+                    url: $url,
+                    description: $description,
+                    ipAddress: $ip_address,
+                    userAgent: $user_agent,
+                    oldValues: $old_values,
+                    newValues: $new_values,
+                    recordId: $record_id,
+                    recordType: $record_type,
+                    method: $method
+                );
+
+                if ($model->isDirty('status')) {
+                    $attributes = $model->getAttributes();
+                    $helper = new Helper();
+                    $action_by = auth()->id();
+                    $bag_id = $attributes['id'];
+                    $delivery_id = $attributes['id'];
+                    $status = $attributes['status'];
+                    $vehicle_id = null;
+                    $description = "status updated";
+
+                    // Access the related vehicle using the vehicle (through) relationship
+                    $vehicle_id = Delivery::find($delivery_id)->deliveryBatch->vehicle->id;
+
+                    $helper->deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description);
+
+                    // TODO ADD BAGID BY USING RELATIONSHIP OF DELIVERY WITH BAG
+
+                    // $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
+
+                }
             }
+
+
+
+
+
+
         });
 
         static::deleting(function ($model) {
@@ -149,9 +208,18 @@ class Delivery extends Model
             $record_type = get_class($model);
             $method = Request::method();
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
 
