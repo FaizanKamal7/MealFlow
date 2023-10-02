@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\DeliveryService\Interfaces\EmptyBagCollectionBatchInterface;
 use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
@@ -56,13 +57,23 @@ class EmptyBagCollectionController extends Controller
             // Validate the request data
             $validator = Validator::make($request->all(), [
                 'bag_id' => ['required', 'exists:bags,id'],
-                'empty_bag_collection_delivery_id' => ['required', 'date'],
+                'empty_bag_collection_delivery_id' => [
+                    'required',
+                    'exists:deliveries,id',
+                    Rule::unique('empty_bag_collections')->where(function ($query) use ($request) {
+                        return $query->where('bag_id', $request->bag_id)
+                                     ->where('empty_bag_collection_delivery_id', $request->empty_bag_collection_delivery_id);
+                    }),
+                ],
+            ], [
+                'empty_bag_collection_delivery_id.unique' => 'Bag already collected please sacn other bag.',
             ]);
 
             // Check if validation fails
             if ($validator->fails()) {
                 return $this->error($validator->errors(), "validation failed", 422);
             }
+
             $bag_id= $request->post('bag_id');
             $bag_collection_delivery_id = $request->post('empty_bag_collection_delivery_id'); // This refers to the delivery id when this bag was being collected
 
@@ -85,6 +96,7 @@ class EmptyBagCollectionController extends Controller
             return $this->success($created, "Bag Collected successfully");
 
         } catch (Exception $exception) {
+            return $this->error($exception, "Error occured  while creating  bag collection Please contact support", 500);
 
         }
     }
