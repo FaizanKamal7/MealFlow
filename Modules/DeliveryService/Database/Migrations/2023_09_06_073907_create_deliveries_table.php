@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('deliveries', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->string("status");
+            $table->string("qr_code")->nullable();
             $table->boolean("is_recurring");
             $table->boolean("is_notification_enabled")->nullable();
             $table->string("payment_status");

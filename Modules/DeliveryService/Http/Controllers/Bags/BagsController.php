@@ -81,12 +81,11 @@ class BagsController extends Controller
         $bag_count = (int) $request->get("no_of_bags");
 
         try {
-          
+
             for ($i = 0; $i < $bag_count; $i++) {
-                
-                $bag = $this->bagsRepository->addNewBag(qrCode: "", business_id: $request->get("business_id"), bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"),status:'Added');
-                QrCode::size(400)
-                    ->generate($bag->id, $path);
+
+                $bag = $this->bagsRepository->addNewBag(qrCode: "", business_id: $request->get("business_id"), bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"), status: 'Added');
+                QrCode::size(400)->generate($bag->id, $path);
                 $this->bagsRepository->updateBag(id: $bag->id, business_id: $bag->business_id, qrCode: $path, bagNumber: $bag->bag_number, bagSize: $bag->bag_size, bagType: $bag->bag_type, status: $bag->status, weight: $bag->weight, dimensions: $bag->dimensions);
             }
 
@@ -149,11 +148,12 @@ class BagsController extends Controller
     {
         $start_date = '2023-09-24';
         $end_date = '2023-09-25';
-        $deliveries = $this->deliveryRepository->get($start_date, $end_date);
+        $deliveries = $this->deliveryRepository->getPickupUnassignedDeliveries($start_date, $end_date);
         $drivers = $this->driverRepository->getDetailDrivers();
-
-        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', ['deliveries' => $deliveries, 'drivers' => $drivers]);
+        $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
+        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', $data);
     }
+
 
     public function assignBagsPickup(Request $request)
     {
@@ -183,6 +183,15 @@ class BagsController extends Controller
         return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', ['deliveries' => $deliveries, 'drivers' => $drivers]);
     }
 
+    public function assignedBagsPickup()
+    {
+        $start_date = '2023-09-24';
+        $end_date = '2023-09-25';
+        $deliveries = $this->deliveryRepository->getPickupAssignedDeliveries($start_date, $end_date);
+        $drivers = $this->driverRepository->getDetailDrivers();
+        $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
+        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', $data);
+    }
     public function driverBagsPickup(Request $request)
     {
         $start_date = date("Y/m/d");
