@@ -17,6 +17,12 @@ class DeliveryRepository implements DeliveryInterface
         return Delivery::with('deliverySlot', 'customerAddress')->get();
     }
 
+    public function getDeliveriesByIds(array $deliveryIds)
+    {
+        // Retrieve the deliveries by their IDs
+        return Delivery::whereIn('id', $deliveryIds)->get();
+    }
+    
     public function updateDelivery($delivery_id, $data)
     {
         $delivery = Delivery::findOrFail($delivery_id);
