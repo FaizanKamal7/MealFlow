@@ -2,7 +2,7 @@
 
 namespace Modules\DeliveryService\Interfaces;
 
-interface BagStatusInterface
+interface DeliveryBagInterface
 {
-    public function getStatus($name);
+    public function create($data);
 }

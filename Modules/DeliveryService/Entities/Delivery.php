@@ -19,6 +19,7 @@ class Delivery extends Model
     use HasUuids;
     protected $fillable = [
         "status",
+        "qr_code",
         "is_recurring",
         "payment_status",
         "is_sign_required",

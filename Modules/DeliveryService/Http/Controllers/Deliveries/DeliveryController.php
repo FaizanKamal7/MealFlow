@@ -573,23 +573,33 @@ class DeliveryController extends Controller
 
     public function printLabel(Request $request)
     {
-        // Handle the printing logic here using the selected checkbox data
-        // $selectedIds = $request->input('selectedIds');
-
-        // // Pass the selected data to a view for rendering
-        // return view('labels.print', ['selectedIds' => $selectedIds]);
-
-        // Get the selected delivery IDs from the query parameter
         $selectedDeliveryIds = explode(',', $request->input('selected_deliveries', ''));
 
         // Fetch the corresponding delivery data based on the IDs
         $selectedDeliveries = $this->deliveryRepository->getDeliveriesByIds($selectedDeliveryIds);
+        foreach ($selectedDeliveries as $key => $delivery) {
+            // --- Create a QR if no QR is ccreated for delivery yet 
+            if ($delivery->qr_code == null) {
+                $directory = 'media/deliveries/qrcodes/';
+                if (!file_exists($directory)) {
+                    // Create the directory if it doesn't exist
+                    mkdir($directory, 0777, true);
+                }
+                echo ('<pre> address :' . var_dump($delivery->id) . ' </pre>');
 
-        // Pass the selected data to the view
+                $qr_data = json_encode([
+                    'delivery_id' => $delivery->id,
+                    'type' => 'delivery',
+                ]);
+                echo ('<pre> address :' . var_dump($qr_data) . ' </pre>');
+
+                $path = $directory . time() . '.svg';
+                QrCode::size(400)->generate($qr_data, $path);
+                $this->deliveryRepository->updateDeliveryQR($delivery->id, ['qr_code' => $path]);
+            }
+        }
+
         return view('deliveryservice::deliveries.print_label', ['selectedDeliveries' => $selectedDeliveries]);
-        // return view('deliveryservice::deliveries.print_label', ['selectedDeliveries' => [1,2,4]]);
-
-
     }
 
     public function assignDeliveriesToDriver(Request $request)
@@ -615,34 +625,5 @@ class DeliveryController extends Controller
         } catch (Exception $exception) {
             dd($exception);
         }
-    }
-
-    public function updateDeliveriesLabel(Request $request)
-    {
-        $directory = 'media/deliveries/qrcodes/';
-        if (!file_exists($directory)) {
-            // Create the directory if it doesn't exist
-            mkdir($directory, 0777, true);
-        }
-
-        $path = $directory . time() . '.svg';
-        $deliveries = $request->input('delivery_ids');
-
-        if (count($deliveries) > 0) {
-            foreach ($deliveries as $key => $delivery) {
-                QrCode::size(400)->generate($delivery, $path);
-                $this->deliveryRepository->updateDeliveryQR($delivery, ['qr_code' => $path]);
-            }
-        }
-        return response()->json(['redirect' => route('view_deliveries_label', ['deliveries' => $deliveries])]);
-    }
-
-    public function viewDeliveriesLabelView(Request $request)
-    {
-        $deliveries = $request->input('deliveries');
-        var_dump($deliveries);
-        dd($deliveries);
-        // Process the $deliveries parameter as needed
-        return view('deliveryservice::deliveries.delivery_labels', ['deliveries' => json_decode($deliveries)]);
     }
 }

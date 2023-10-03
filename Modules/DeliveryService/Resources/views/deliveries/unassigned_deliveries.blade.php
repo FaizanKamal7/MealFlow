@@ -201,7 +201,7 @@
                                     </td>
                                     <td>
                                         <div class="w-150px">
-                                            {{ $delivery->branch->business->name }}
+                                            {{ $delivery->branch->business->name ?? "Null" }}
                                         </div>
                                     </td>
                                     <td>

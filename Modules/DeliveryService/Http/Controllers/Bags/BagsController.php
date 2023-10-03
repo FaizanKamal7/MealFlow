@@ -58,6 +58,7 @@ class BagsController extends Controller
         $context = ["businesses" => $businesses, "bags" => $bags];
         return view('deliveryservice::bags.view_bags', $context);
     }
+
     public function addBag()
     {
         $businesses = $this->businessRepository->getActiveBusinesses();
@@ -85,7 +86,11 @@ class BagsController extends Controller
             for ($i = 0; $i < $bag_count; $i++) {
 
                 $bag = $this->bagsRepository->addNewBag(qrCode: "", business_id: $request->get("business_id"), bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"), status: 'Added');
-                QrCode::size(400)->generate($bag->id, $path);
+                $qr_data = json_encode([
+                    'bag_id' => $bag->id,
+                    'type' => 'bag',
+                ]);
+                QrCode::size(400)->generate($qr_data, $path);
                 $this->bagsRepository->updateBag(id: $bag->id, business_id: $bag->business_id, qrCode: $path, bagNumber: $bag->bag_number, bagSize: $bag->bag_size, bagType: $bag->bag_type, status: $bag->status, weight: $bag->weight, dimensions: $bag->dimensions);
             }
 
@@ -192,6 +197,7 @@ class BagsController extends Controller
         $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
         return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', $data);
     }
+
     public function driverBagsPickup(Request $request)
     {
         $start_date = date("Y/m/d");

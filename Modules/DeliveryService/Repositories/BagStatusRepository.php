@@ -7,9 +7,10 @@ use Modules\DeliveryService\Interfaces\BagStatusInterface;
 
 
 
-class BagStatusRepository implements BagStatusInterface {
-
-    public function getStatus($name){
+class BagStatusRepository implements BagStatusInterface
+{
+    public function getStatus($name)
+    {
         return BagStatus::where("name", 'LIKE', '%' . $name . '%')->first();
     }
 }

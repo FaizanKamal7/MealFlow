@@ -33,9 +33,13 @@ class PickupBatch extends Model
 
     public function pickupBatchBranches()
     {
-        return $this->belongsTo(PickupBatchBranch::class);
+        return $this->hasMany(PickupBatchBranch::class);
     }
 
+    public function deliveries()
+    {
+        return $this->hasMany(Delivery::class);
+    }
     protected static function newFactory()
     {
         return \Modules\DeliveryService\Database\factories\PickupBatchFactory::new();

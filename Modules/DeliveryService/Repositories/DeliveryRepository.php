@@ -74,6 +74,11 @@ class DeliveryRepository implements DeliveryInterface
         return Delivery::whereNotNull('pickup_batch_id')->get();
     }
 
+    public function getDriverPickupAssignedDeliveries($start_date, $end_date, $batch_id)
+    {
+        return Delivery::where('pickup_batch_id', $batch_id)->whereBetween('delivery_date', [$start_date, $end_date])->get();
+    }
+
 
     public function getPickupUnassignedDeliveries($start_date, $end_date)
     {
