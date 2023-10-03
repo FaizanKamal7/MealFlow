@@ -27,6 +27,7 @@ use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -552,6 +553,10 @@ class DeliveryController extends Controller
 
         //     echo "<br>next delivery<br>";
         // }
+        $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
+        $delivery->setAttribute('suggested_drivers', $drivers);
+
+
         $drivers = $this->driverRepository->getDetailDrivers();
         $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
         // return view('deliveryservice::deliveries.unassigned_deliveries', $data);
@@ -563,10 +568,8 @@ class DeliveryController extends Controller
 
         // QrCode::size(400)->generate($bag->id, $path);
     }
-    public function assigned_delivery_to_driver(Request $request)
+    public function assignDeliveriesToDriver(Request $request)
     {
-
-
         try {
             // --------------- GETTING DELIVERIES AND DRIVER TO ASSIGN-------------
             $driver_id = $request->get("driver_id");
@@ -580,12 +583,42 @@ class DeliveryController extends Controller
             $this->deliveryRepository->assignDeliveryBatch($batch->id, $deliveries);
 
 
-            $drivers = $this->driverRepository->getDetailDrivers();
-            $db_deliveries = $this->deliveryRepository->getDeliveriesByStatus('ASSIGNED');
-            $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
-            return view('deliveryservice::deliveries.assigned_deliveries', $data);
+            // $drivers = $this->driverRepository->getDetailDrivers();
+            // $db_deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
+            // $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
+            // return view('deliveryservice::deliveries.unassigned_deliveries', $data);
+            return $this->unassignedDeliveries();
         } catch (Exception $exception) {
             dd($exception);
         }
+    }
+
+    public function updateDeliveriesLabel(Request $request)
+    {
+        $directory = 'media/deliveries/qrcodes/';
+        if (!file_exists($directory)) {
+            // Create the directory if it doesn't exist
+            mkdir($directory, 0777, true);
+        }
+
+        $path = $directory . time() . '.svg';
+        $deliveries = $request->input('delivery_ids');
+
+        if (count($deliveries) > 0) {
+            foreach ($deliveries as $key => $delivery) {
+                QrCode::size(400)->generate($delivery, $path);
+                $this->deliveryRepository->updateDeliveryQR($delivery, ['qr_code' => $path]);
+            }
+        }
+        return response()->json(['redirect' => route('view_deliveries_label', ['deliveries' => $deliveries])]);
+    }
+
+    public function viewDeliveriesLabelView(Request $request)
+    {
+        $deliveries = $request->input('deliveries');
+        var_dump($deliveries);
+        dd($deliveries);
+        // Process the $deliveries parameter as needed
+        return view('deliveryservice::deliveries.delivery_labels', ['deliveries' => json_decode($deliveries)]);
     }
 }
