@@ -29,6 +29,7 @@ use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryImagesInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Repositories\PickupBatchRepository;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 
@@ -53,6 +54,7 @@ class DeliveryController extends Controller
     private $deliveryBatchRepository;
     private $deliveryImagesRepository;
     private $deliveryBagRepository;
+    private $pickupBatchRepository;
     use HttpResponses;
 
     public function __construct(
@@ -73,6 +75,7 @@ class DeliveryController extends Controller
         DeliveryBatchInterface $deliveryBatchRepository,
         DeliveryImagesInterface $deliveryImagesRepository,
         DeliveryBagInterface $deliveryBagRepository,
+        PickupBatchRepository $pickupBatchRepository,
 
     ) {
         $this->customerRepository = $customerRepository;
@@ -92,6 +95,7 @@ class DeliveryController extends Controller
         $this->deliveryBatchRepository = $deliveryBatchRepository;
         $this->deliveryImagesRepository = $deliveryImagesRepository;
         $this->deliveryBagRepository = $deliveryBagRepository;
+        $this->pickupBatchRepository = $pickupBatchRepository;
         $this->helper = new Helper();
     }
 
@@ -544,6 +548,8 @@ class DeliveryController extends Controller
         $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
         return view('deliveryservice::deliveries.unassigned_deliveries', $data);
     }
+
+
     public function assignDeliveriesToDriver(Request $request)
     {
         try {
@@ -567,7 +573,7 @@ class DeliveryController extends Controller
     }
 
 
-
+    // -------------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------DRIVER APP ----------------------------------------------
     // -------------------------------------------------------------------------------------------------------------
 
@@ -652,6 +658,31 @@ class DeliveryController extends Controller
         // $helper->storeFile();
     }
 
+    // --------------------------------------------------- P I C K   U P  ----------------------------------------------
+
+
+    public function driverAssignedPickup(Request $request)
+    {
+        // $start_date = date("Y/m/d");
+        // $end_date = date("Y-m-d", strtotime($start_date . " +1 day"));
+        $start_date = '2023-09-24';
+        $end_date = '2023-10-10';
+
+        try {
+            $driver_id = $request->get("driver_id");
+            $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
+            $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
+
+            if (!$db_deliveries) {
+                return $this->error($db_deliveries, "Something went wrong please contact support. No bag pickups for driver");
+            }
+
+            return $this->success($db_deliveries, "Drivers assigned pickup bags recieved successfully");
+        } catch (Exception $exception) {
+            dd($exception);
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
 
     public function linkBagWithDelivery(Request $request)
     {
@@ -659,7 +690,7 @@ class DeliveryController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'delivery_id' => ['required', 'exists:deliveries,id'],
-                'bag_id' => ['required', 'exists:deliveries,id'],
+                'bag_id' => ['required', 'exists:bags,id'],
             ]);
 
             DB::beginTransaction();
@@ -669,19 +700,20 @@ class DeliveryController extends Controller
                 return $this->error($validator->errors(), "Validation Failed", 422);
             }
 
-            $delivery_id = $request->post('delivery_id');
-            $bag_id = $request->post('bag_id');
+            $delivery_id = $request->get('delivery_id');
+            $bag_id = $request->get('bag_id');
             $data = [
                 "delivery_id" => $delivery_id,
                 "bag_id" => $bag_id
             ];
-
-
+            // --- Link bag with delivery
             $result =  $this->deliveryBagRepository->create($data);
 
             if (!$result) {
-                return $this->error($result, "Something went wrong please contact support. Bag not completed");
+                return $this->error($result, "Something went wrong. Bag did not link");
             }
+
+
 
             DB::commit();
             return $this->success($result, "Bag linked successfully");
