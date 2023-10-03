@@ -2,7 +2,8 @@
 @section('title', 'Unassigned Deliveries')
 
 @section('extra_style')
-<link href="{{ asset('static/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css/">
+<link href="{{ asset('static/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css/">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
 @endsection
 @section('main_content')
@@ -20,17 +21,14 @@
                     <!--begin::Card title-->
                     <div class="card-title d-flex align-items-center">
                         <!--begin::Search-->
-                        <div class="d-flex align-items-center position-relative me-3">
+                        {{-- <div class="d-flex align-items-center position-relative me-3">
                             <span class="svg-icon svg-icon-1 position-absolute ms-6 location-icon" id="searchIcon">
                                 <x-iconsax-lin-search-normal-1 />
                             </span>
-                            {{-- <form action="{{ route('city_search') }}" method="GET" id="searchForm"> --}}
-                                <input type="text" name="query" id="myInput" data-kt-permissions-table-filter="search"
-                                    class="form-control form-control-solid w-200px ps-20 location-dropdown"
-                                    placeholder="Search" value="{{ request()->query('query') }}" />
-                                {{--
-                            </form> --}}
-                        </div>
+                            <input type="text" name="query" id="myInput" data-kt-permissions-table-filter="search"
+                                class="form-control form-control-solid w-200px ps-20 location-dropdown"
+                                placeholder="Search" value="{{ request()->query('query') }}" />
+                        </div> --}}
                         <!--end::Search-->
                         <div class="d-flex align-items-center position-relative me-3">
                             <input class="form-control w-250px" placeholder="Select a date range"
@@ -44,23 +42,24 @@
                     <!--end::Card title-->
 
                 </div>
+                <div class="mt-2 d-flex align-items-center print-div unassigned-second-div">
+                    <div class="me-3">
+                        <a class="btn csv-btn">CSV</a>
+                    </div>
+                    <div class="me-3">
+                        <a class="btn csv-btn">Print</a>
+                    </div>
+                    <div class="column-select">
+                        <select class="form-select" id="columnVisibility" data-control="select2"
+                            data-placeholder="Column Visisbility" multiple>
+                        </select>
+                    </div>
+
+                </div>
                 <form method="POST" action="{{ route('assigned_delivery_to_driver') }}">
                     @csrf
                     <div class="d-flex mt-2 align-items-center justify-content-between unassigned-second-div">
-                        <div class="d-flex align-items-center print-div">
-                            <div class="me-3">
-                                <a class="btn csv-btn">CSV</a>
-                            </div>
-                            <div class="me-3">
-                                <a class="btn csv-btn">Print</a>
-                            </div>
-                            <div class="column-select">
-                                <select class="form-select" id="columnVisibility" data-control="select2"
-                                    data-placeholder="Column Visisbility" multiple>
-                                </select>
-                            </div>
 
-                        </div>
                         <div class="d-flex align-items-center detail-div">
                             <div class="me-3">
                                 <select class="form-select" data-control="select2" data-placeholder="Select Partner">
@@ -120,18 +119,18 @@
                                 <a class="btn csv-btn">Delete</a>
                             </div>
                             <div class="">
-                                <a class="btn csv-btn primary" onclick="printDeliveryLabels()">Print Label with Logo</a>
-
+                                <a class="btn csv-btn" href="#" onclick="printSelectedLabels()">Print Label with
+                                    Logo</a>
                             </div>
 
                         </div>
                     </div>
-
                     <div class="mt-3 table-responsive location-card">
                         <table id="unassigned_table" class="table table-striped table-row-bordered gy-5 gs-7">
                             <thead>
                                 <tr class="fw-bold fs-6 text-gray-800">
-                                    <th class=""><input class="form-check-input" type="checkbox" value=""></th>
+                                    <th class=""><input class="form-check-input" type="checkbox" value="">
+                                    </th>
                                     <th class="w-150px">Order ID</th>
                                     <th class="w-150px">Suggested Driver</th>
                                     <th class="w-100px">Plan ID</th>
@@ -146,8 +145,8 @@
                                     <th class="w-100px">Product Type</th>
                                     <th>Notification</th>
                                     <th>Payment</th>
-                                    <th>Company Delivery Id</th>
-                                    <th>Google Link</th>
+                                    {{-- <th>Company Delivery Id</th> --}}
+                                    <th class="w-100px">Google Link</th>
                                     <th class="min-w-1px">Action</th>
                                 </tr>
                             </thead>
@@ -162,20 +161,20 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="w-100px">
+                                        <div class="w-150px">
                                             <b>{{ $delivery->id }}</b>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w-150px">
-                                            @foreach($delivery->suggested_drivers as $driver)
+                                            @foreach ($delivery->suggested_drivers as $driver)
                                             {{ $driver->employee->first_name }}<br>
                                             @endforeach
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w-100px">
-                                            {{ $delivery->id}}
+                                            {{ $delivery->id }}
                                         </div>
                                     </td>
                                     <td>
@@ -189,61 +188,60 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="w-100px">
-                                            {{ $delivery->status }}
+                                        <div class="w-200px">
+                                            {{ $delivery->note }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w-150px">
-                                            {{ $delivery->deliverySlot->city->name }} {{
-                                            $delivery->deliverySlot->start_time
-                                            }}-{{ $delivery->deliverySlot->end_time }}
+                                            {{ $delivery->deliverySlot->city->name }}
+                                            {{ $delivery->deliverySlot->start_time }}-{{
+                                            $delivery->deliverySlot->end_time }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w-150px">
-                                            {{ $delivery->id }}
+                                            {{ $delivery->branch->business->name }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w-150px">
-                                            {{ $delivery->id}}
+                                            {{ $delivery->created_at }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w-150px">
-                                            {{ $delivery->id }}
+                                            Uploaded By
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w-150px">
-                                            {{ $delivery->id }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-100px">
-                                            {{ $delivery->id}}
+                                            {{ $delivery->branch->address }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w-100px">
-                                            {{ $delivery->id }}
+                                            Food
                                         </div>
                                     </td>
                                     <td>
                                         <div class="w-100px">
-                                            {{ $delivery->id }}
+                                            {{ $delivery->is_notification_enabled ? 'Yes' : 'No' }}
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="w-150px">
-                                            {{ $delivery->id }}
+                                        <div class="w-100px">
+                                            {{ $delivery->payment_status ? 'Yes' : 'No' }}
                                         </div>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <div class="w-150px">
                                             {{ $delivery->id }}
                                         </div>
+                                    </td> --}}
+                                    <td>
+                                        <div class="w-150px">
+                                            https://www.google.co.uk/ </div>
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center justify-content-between">
@@ -258,21 +256,7 @@
                         </table>
                     </div>
                     {{-- end table div --}}
-                    <div class="mt-6">
-                        <ul class="pagination ">
-                            <li class="page-item previous disabled"><a href="#" class="page-link"><i
-                                        class="previous"></i></a>
-                            </li>
-                            <li class="page-item "><a href="#" class="page-link">1</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item "><a href="#" class="page-link">3</a></li>
-                            <li class="page-item "><a href="#" class="page-link">4</a></li>
-                            <li class="page-item "><a href="#" class="page-link">5</a></li>
-                            <li class="page-item "><a href="#" class="page-link">6</a></li>
-                            <li class="page-item next"><a href="#" class="page-link"><i class="next"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+
                 </form>
 
 
@@ -286,11 +270,38 @@
 @endsection
 
 @section('extra_scripts')
-<script src="{{ asset('static/plugins/custom/documentation/general/datatables/datatables.bundle.js')}}"></script>
-<script src="{{ asset('static/js/custom/documentation/general/datatables/subtable.js')}}"></script>
+<script src="{{ asset('static/plugins/custom/documentation/general/datatables/datatables.bundle.js') }}"></script>
+<script src="{{ asset('static/js/custom/documentation/general/datatables/subtable.js') }}"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+            $('#unassigned_table').DataTable({
+                "dom": '<"top"f>t<"bottom"lip>',
+                // Other DataTables options...
+            });
+        });
+</script>
 
 <script>
-    // assign button
+    function printSelectedLabels() {
+            // Get all checkboxes
+            const checkboxes = document.querySelectorAll('input.form-check-input[type="checkbox"]');
+            console.log('checkbox', checkboxes)
+            // Initialize an array to store selected values
+            const selectedDeliveryIds = [];
+            // Loop through checkboxes and add the selected values to the array
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    selectedDeliveryIds.push(checkbox.value);
+                }
+            });
+            // Create the URL for the new view with selected_delivery_ids as a query parameter
+            const url = `/admin/deliveries/print-label?selected_deliveries=${selectedDeliveryIds.join(',')}`;
+            // Open the new view in a new window or tab
+            window.open(url, '_blank');
+        }
+
+        // assign button
         document.addEventListener("DOMContentLoaded", function() {
             // Get references to the "Assign" button and the driver selection dropdown
             const assignButton = document.getElementById("assignButton");
@@ -359,7 +370,7 @@
                 const selectedRowData = [];
                 // Iterate through the checked checkboxes
                 checkboxes.forEach(function(checkbox) {
-                    // Get the closest <tr> element (the parent row) for each checked checkbox
+                    // Get the closest tr > element(the parent row) for each checked checkbox
                     const row = checkbox.closest("tr");
                     // Collect the data from the row's cells (td elements)
                     const rowData = Array.from(row.querySelectorAll("td")).map(function(cell) {
@@ -379,25 +390,25 @@
                 // You can use libraries like Axios or the native fetch API for this
                 // Example using fetch:
                 // fetch('/your-backend-endpoint', {
-                //         method: 'POST',
-                //         headers: {
-                //             'Content-Type': 'application/json',
-                //         },
-                //         body: JSON.stringify(dataToSend),
-                //     })
-                //     .then(response => {
-                //         if (response.ok) {
-                //             // Handle success, e.g., show a success message
-                //             alert("Selected checkboxes have been sent to the backend.");
-                //         } else {
-                //             // Handle errors, e.g., display an error message
-                //             alert("An error occurred while sending data to the backend.");
-                //         }
-                //     })
-                //     .catch(error => {
-                //         // Handle network errors
-                //         console.error("Network error:", error);
-                //     });
+                // method: 'POST',
+                // headers: {
+                // 'Content-Type': 'application/json',
+                // },
+                // body: JSON.stringify(dataToSend),
+                // })
+                // .then(response => {
+                // if (response.ok) {
+                // // Handle success, e.g., show a success message
+                // alert("Selected checkboxes have been sent to the backend.");
+                // } else {
+                // // Handle errors, e.g., display an error message
+                // alert("An error occurred while sending data to the backend.");
+                // }
+                // })
+                // .catch(error => {
+                // // Handle network errors
+                // console.error("Network error:", error);
+                // });
             });
         })
 
@@ -467,13 +478,13 @@
             selectOptionDiv.style.display = 'none';
         }
 
-         // Add an event listener for form submission
-        document.querySelector('form').addEventListener('submit', function (e) {
+        // Add an event listener for form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent the default form submission
-            
+
             // Get all checked checkboxes
             const checkboxes = document.querySelectorAll('input[name="delivery_ids[]"]:checked');
-            
+
             // Create an array to store the selected delivery IDs
             const selectedDeliveryIds = Array.from(checkboxes).map(checkbox => checkbox.value);
 
@@ -524,4 +535,5 @@
             }
         }
 </script>
+
 @endsection

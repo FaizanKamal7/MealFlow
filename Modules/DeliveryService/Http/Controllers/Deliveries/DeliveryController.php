@@ -265,10 +265,10 @@ class DeliveryController extends Controller
                             'delivery_type_id' => null,
                             'delivery_date' => $delivery_date,
                             'customer_id' => $customer->id,
-                            'area_id' =>  $area->id,
-                            'city_id' =>  $city->id,
-                            'state_id' =>  $city->state->id,
-                            'country_id' =>  $city->state->country->id,
+                            'area_id' => $area->id,
+                            'city_id' => $city->id,
+                            'state_id' => $city->state->id,
+                            'country_id' => $city->state->country->id,
 
                         ];
 
@@ -289,13 +289,13 @@ class DeliveryController extends Controller
                                 'state_id' => $city->state->id,
                                 'country_id' => $city->state->country->id,
                             ];
-                            $finalized_address =  $this->customerAddressRepository->create($address_data);
-                        } elseif ($address_matching['status']  == 'CONFLICT') {
+                            $finalized_address = $this->customerAddressRepository->create($address_data);
+                        } elseif ($address_matching['status'] == 'CONFLICT') {
                             $location_info = [
-                                'area_id' =>  $area->id,
-                                'city_id' =>  $city->id,
-                                'state_id' =>  $city->state->id,
-                                'country_id' =>  $city->state->country->id,
+                                'area_id' => $area->id,
+                                'city_id' => $city->id,
+                                'state_id' => $city->state->id,
+                                'country_id' => $city->state->country->id,
                             ];
                             $delivery_data = array_merge($delivery_data, $location_info);
                             $conflicted_delivery = [
@@ -343,7 +343,7 @@ class DeliveryController extends Controller
                 // TODO: upload deliveries via JOB
                 // $batch->add(new UploadDeliveriesCSVJob($chunk));
                 DB::commit();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 DB::rollback();
                 return 'Data upload failed: ' . $e->getMessage();
             }
@@ -390,21 +390,21 @@ class DeliveryController extends Controller
                 // add new and get customer id
                 $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($address);
                 $address_data = [
-                    'address' =>  $address,
-                    'address_type' =>  "OTHER",
-                    'latitude' =>  $new_address_coordinates ? $new_address_coordinates->latitude : null,
-                    'longitude' =>  $new_address_coordinates ? $new_address_coordinates->longitude : null,
-                    'customer_id' =>  $decoded_delivery_data->customer_id,
+                    'address' => $address,
+                    'address_type' => "OTHER",
+                    'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
+                    'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
+                    'customer_id' => $decoded_delivery_data->customer_id,
                     'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
                     'area_id' => $decoded_delivery_data->area_id,
                     'city_id' => $decoded_delivery_data->city_id,
                     'state_id' => $decoded_delivery_data->state_id,
                     'country_id' => $decoded_delivery_data->country_id,
                 ];
-                $uploaded_address =  $this->customerAddressRepository->create($address_data);
+                $uploaded_address = $this->customerAddressRepository->create($address_data);
                 $decoded_delivery_data->address_id = $uploaded_address->id;
             }
-            $data  = (array) $decoded_delivery_data;
+            $data = (array) $decoded_delivery_data;
 
             $this->deliveryRepository->create($data);
         }
@@ -511,8 +511,10 @@ class DeliveryController extends Controller
     // ------------------------------------- SUGGESTED DRIVER-----------------------
     function unassignedDeliveries()
     {
+        $businesses = $this->businessRepository->getActiveBusinesses();
         $deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
 
+        // dd($deliveries);
         foreach ($deliveries as $delivery) {
             $customerAddress = $delivery->customerAddress;
             // Step 1: Find a driver that matches the delivery area and has deuty timing eligilable for that slot
@@ -568,6 +570,28 @@ class DeliveryController extends Controller
 
         // QrCode::size(400)->generate($bag->id, $path);
     }
+
+    public function printLabel(Request $request)
+    {
+        // Handle the printing logic here using the selected checkbox data
+        // $selectedIds = $request->input('selectedIds');
+
+        // // Pass the selected data to a view for rendering
+        // return view('labels.print', ['selectedIds' => $selectedIds]);
+
+        // Get the selected delivery IDs from the query parameter
+        $selectedDeliveryIds = explode(',', $request->input('selected_deliveries', ''));
+
+        // Fetch the corresponding delivery data based on the IDs
+        $selectedDeliveries = $this->deliveryRepository->getDeliveriesByIds($selectedDeliveryIds);
+
+        // Pass the selected data to the view
+        return view('deliveryservice::deliveries.print_label', ['selectedDeliveries' => $selectedDeliveries]);
+        // return view('deliveryservice::deliveries.print_label', ['selectedDeliveries' => [1,2,4]]);
+
+
+    }
+
     public function assignDeliveriesToDriver(Request $request)
     {
         try {
