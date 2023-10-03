@@ -40,6 +40,9 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('/unassigned-deliveries',  [DeliveryController::class, "unassignedDeliveries"])->name("unassigned_deliveries");
     Route::POST('/assigning_process',  [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "assignDeliveriesToDriver"])->name('assigned_delivery_to_driver');
 
+    Route::get('/print-label', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "printLabel"])->name('print-label');
+
+
 
 
     //TODO:: This route will be moved to Customers Module
