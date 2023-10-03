@@ -713,8 +713,6 @@ class DeliveryController extends Controller
                 return $this->error($result, "Something went wrong. Bag did not link");
             }
 
-
-
             DB::commit();
             return $this->success($result, "Bag linked successfully");
         } catch (Exception $exception) {
