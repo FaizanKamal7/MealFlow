@@ -73,4 +73,9 @@ class DeliveryRepository implements DeliveryInterface
     {
         return Delivery::whereNull('pickup_batch_id')->get();
     }
+
+    public function updateDeliveryQR($delivery_id, $data)
+    {
+        return  Delivery::where('id', $delivery_id)->whereNull('qr_code')->update($data);
+    }
 }

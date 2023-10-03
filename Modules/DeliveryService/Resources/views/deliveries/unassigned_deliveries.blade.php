@@ -120,7 +120,8 @@
                                 <a class="btn csv-btn">Delete</a>
                             </div>
                             <div class="">
-                                <a class="btn csv-btn">Print Label with Logo</a>
+                                <a class="btn csv-btn primary" onclick="printDeliveryLabels()">Print Label with Logo</a>
+
                             </div>
 
                         </div>
@@ -489,6 +490,38 @@
             this.submit();
         });
 
+      
 
+
+        function printDeliveryLabels($delivery_id){
+            var selectedDeliveries = [];
+
+            // Find all checked checkboxes and extract delivery IDs
+            $('input[type=checkbox]:checked').each(function() {
+                selectedDeliveries.push($(this).val());
+            });
+
+            // Check if any deliveries are selected before making the AJAX call
+            if (selectedDeliveries.length > 0) {
+                var url = "{{ route('update_deliveries_label') }}";
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    data: { delivery_ids: selectedDeliveries },
+                    success: function(response) {
+                        if (response.redirect) {
+                            // Pass the selected deliveries as a parameter when redirecting
+                            window.location.href = response.redirect + '?deliveries=' + selectedDeliveries.join(',');
+                        } 
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                // Handle the case where no deliveries are selected
+                alert("Please select at least one delivery to print labels.");
+            }
+        }
 </script>
 @endsection
