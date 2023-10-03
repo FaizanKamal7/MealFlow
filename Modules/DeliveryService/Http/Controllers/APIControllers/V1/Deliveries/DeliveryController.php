@@ -654,8 +654,6 @@ class DeliveryController extends Controller
             DB::rollback();
             return $this->error($exception, "Something went wrong please contact support");
         }
-
-        // $helper->storeFile();
     }
 
     // --------------------------------------------------- P I C K   U P  ----------------------------------------------
@@ -686,7 +684,6 @@ class DeliveryController extends Controller
 
     public function linkBagWithDelivery(Request $request)
     {
-
         try {
             $validator = Validator::make($request->all(), [
                 'delivery_id' => ['required', 'exists:deliveries,id'],
