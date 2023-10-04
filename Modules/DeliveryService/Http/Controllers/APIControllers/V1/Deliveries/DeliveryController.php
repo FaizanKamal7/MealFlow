@@ -682,6 +682,30 @@ class DeliveryController extends Controller
         }
     }
 
+    public function driverPendingPickups(Request $request)
+    {
+        // $end_date = date("Y-m-d", strtotime($start_date . " +1 day"));
+        $start_date = '2023-09-24';
+        $end_date = '2023-10-10';
+
+        try {
+            $driver_id = $request->get("driver_id");
+
+            $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
+            $db_deliveries = $this->deliveryRepository->getDriverPendingPickups($driver_id, $batch->id);
+            // $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
+
+            if (!$db_deliveries) {
+                return $this->error($db_deliveries, "Something went wrong please contact support. No bag pickups for driver");
+            }
+
+            return $this->success($db_deliveries, "Drivers assigned pickup bags recieved successfully");
+        } catch (Exception $exception) {
+            dd($exception);
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
+
     public function linkBagWithDelivery(Request $request)
     {
         try {

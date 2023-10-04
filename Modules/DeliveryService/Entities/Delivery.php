@@ -71,10 +71,17 @@ class Delivery extends Model
     {
         return $this->belongsTo(DeliveryBatch::class, 'delivery_batch_id');
     }
+
     public function vehicle()
     {
         return $this->belongsToThrough(Vehicle::class, DeliveryBatch::class);
     }
+
+    public function deliveryBags()
+    {
+        return $this->hasMany(DeliveryBag::class);
+    }
+
     protected static function newFactory()
     {
         return \Modules\DeliveryService\Database\factories\DeliveryFactory::new();
@@ -185,12 +192,6 @@ class Delivery extends Model
 
                 }
             }
-
-
-
-
-
-
         });
 
         static::deleting(function ($model) {
@@ -223,8 +224,6 @@ class Delivery extends Model
                 recordType: $record_type,
                 method: $method
             );
-
         });
-
     }
 }
