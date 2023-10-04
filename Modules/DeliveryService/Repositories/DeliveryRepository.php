@@ -109,7 +109,6 @@ class DeliveryRepository implements DeliveryInterface
         //         $query->select('id', 'start_time', 'end_time');
         //     },
 
-
         // ])->where('driver_id', $driver_id)->where('batch_end_time', null)->first();
 
         // $deliveries = Delivery::with([
