@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("arrival_map_coordinates");
             $table->string("start_map_coordinates");
             $table->string("end_map_coordinates");
+            $table->string("status");
             $table->uuid("branch_id")->nullable();
             $table->uuid("pick_up_batch_id")->nullable();
             $table->foreign("branch_id")->references("id")->on("branches")->onDelete("set null");
