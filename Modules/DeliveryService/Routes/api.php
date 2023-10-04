@@ -48,6 +48,7 @@ Route::group(['prefix' => 'deliveryservice/'], function () {
 
         Route::group(['prefix' => 'pickup/'], function () {
             Route::GET('driver-assigned-pickup', [DeliveryController::class, "driverAssignedPickup"]);
+            Route::GET('driver-pending-pickups', [DeliveryController::class, "driverPendingPickups"]);
             Route::POST('link-bag-with-delivery', [DeliveryController::class, "linkBagWithDelivery"]);
         });
     });
