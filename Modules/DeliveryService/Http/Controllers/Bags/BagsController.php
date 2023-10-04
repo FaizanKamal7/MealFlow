@@ -170,7 +170,6 @@ class BagsController extends Controller
             $driver_id = $request->get("driver_id");
             $deliveries = explode(',', $request->get("selected_delivery_ids"));
 
-
             // -------------------- CREATING NEW BATCH FOR DELIVERY BASED ON DRIVER id-----------
             $batch = $this->pickupBatchRepository->getActivePickupBatchByDriver($driver_id);
             // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
