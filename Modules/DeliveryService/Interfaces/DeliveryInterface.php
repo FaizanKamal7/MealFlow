@@ -12,4 +12,5 @@ interface DeliveryInterface
     public function updateDeliveryQR($delivery_id, $data);
     public function getDeliveriesByIds(array $deliveryIds);
     public function getDriverPickupAssignedDeliveries($start_date, $end_date, $batch_id);
+    public function getDriverPendingPickups($driver_id, $batch_id);
 }
