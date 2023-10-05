@@ -11,6 +11,6 @@ class DeliveryBagRepository implements DeliveryBagInterface
 
     public function create($data)
     {
-        return DeliveryBag::create($data);
+        return DeliveryBag::updateOrCreate($data);
     }
 }
