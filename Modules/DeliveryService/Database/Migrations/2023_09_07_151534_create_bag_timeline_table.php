@@ -39,7 +39,8 @@ return new class extends Migration
 
 
 
-     
+
+
     public function down()
     {
         Schema::dropIfExists('bag_timelines');
