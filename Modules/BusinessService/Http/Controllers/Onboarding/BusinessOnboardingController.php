@@ -195,9 +195,11 @@ class BusinessOnboardingController extends Controller
                     $cities = $coverage_list_item["city"];
                     // $cities = json_decode($cities);
                     foreach ($cities as $city_id) {
-                        $areas = $this->areaRepository->getAreasOfCity_id($city_id);
+                        $areas = $this->areaRepository->getAreasOfCity($city_id);
                         $areas = $areas->toArray();
+                        echo "<pre> city: " . print_r($city_id, true) . "</pre>";
                         $city = $this->cityRepository->get($city_id);
+                        $this->helper->print_array("AREAS", $areas);
 
                         foreach ($areas as $area) {
                             $this->branchCoverageRepository->createBranchCoverage(
