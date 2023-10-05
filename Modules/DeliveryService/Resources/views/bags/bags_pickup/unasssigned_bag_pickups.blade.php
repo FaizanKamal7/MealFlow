@@ -80,7 +80,7 @@
                                             <input type="checkbox" name="delivery_ids[]" value="{{ $delivery->id }}">
                                         </td>
                                         <td>{{$delivery->id}}</td>
-                                        <td>{{$delivery->branch->business->name ?? $delivery->branch->name }}</td>
+                                        <td>{{$delivery->branch->name }}</td>
                                         <td> {{$delivery->customerAddress->area->name}}
                                             ({{$delivery->deliverySlot->start_time}} -
                                             {{$delivery->deliverySlot->end_time}})</td>

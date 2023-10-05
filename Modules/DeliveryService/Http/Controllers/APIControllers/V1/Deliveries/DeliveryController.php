@@ -670,12 +670,30 @@ class DeliveryController extends Controller
             $driver_id = $request->get("driver_id");
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
+            $groupedDeliveries = null;
+            // Grouping the deliveries partner wise
+            foreach ($db_deliveries as $delivery) {
+                $branchId = $delivery['branch_id'];
 
-            if (!$db_deliveries) {
-                return $this->error($db_deliveries, "Something went wrong please contact support. No bag pickups for driver");
+                // Check if the branch ID exists in the grouped array
+                if (!isset($groupedDeliveries[$branchId])) {
+                    // If it doesn't exist, initialize an empty array for that branch
+                    $groupedDeliveries[$branchId] = [];
+                }
+
+                // Add the current delivery to the branch's array
+                $groupedDeliveries[$branchId][] = $delivery;
             }
 
-            return $this->success($db_deliveries, "Drivers assigned pickup bags recieved successfully");
+            // Now $groupedDeliveries contains deliveries grouped by branch ID
+
+            // If you want to convert it to JSON
+            // $groupedDeliveriesJSON = json_encode(['data' => $groupedDeliveries]);
+            if (!$db_deliveries) {
+                return $this->error($groupedDeliveries, "Something went wrong please contact support. No bag pickups for driver");
+            }
+
+            return $this->success($groupedDeliveries, "Drivers assigned pickup bags recieved successfully");
         } catch (Exception $exception) {
             dd($exception);
             return $this->error($exception, "Something went wrong please contact support");
@@ -751,7 +769,7 @@ class DeliveryController extends Controller
                 "delivery_id" => $delivery_id,
                 "bag_id" => $bag_id
             ];
-            
+
             // --- Link bag with delivery
             $result =  $this->deliveryBagRepository->create([
                 "delivery_id" => $delivery_id,
