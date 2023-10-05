@@ -751,8 +751,12 @@ class DeliveryController extends Controller
                 "delivery_id" => $delivery_id,
                 "bag_id" => $bag_id
             ];
+            
             // --- Link bag with delivery
-            $result =  $this->deliveryBagRepository->create($data);
+            $result =  $this->deliveryBagRepository->create([
+                "delivery_id" => $delivery_id,
+                "bag_id" => $bag_id
+            ]);
 
             if (!$result) {
                 return $this->error($result, "Something went wrong. Bag did not link");
