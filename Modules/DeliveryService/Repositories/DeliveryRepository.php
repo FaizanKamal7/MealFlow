@@ -124,6 +124,39 @@ class DeliveryRepository implements DeliveryInterface
             ->get();
     }
 
+    public function getDriverPendingBranchPickups($driver_id, $batch_id, $branch_id)
+    {
+        // $deliveries = Delivery::with([
+        //     'pickupBatch' => function ($query) use ($driver_id, $batch_id) {
+        //         $query->where('driver_id', '=', $driver_id);
+        //         $query->where('id', '=', $batch_id);
+        //     },
+        //     'deliveryBags'
+        // ])
+        //     ->get();
+
+
+        return Delivery::select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id', 'deliveries.pickup_batch_id')->with([
+            'customer' => function ($query) {
+                $query->select('id', 'user_id');
+            },
+            'customer.user' => function ($query) {
+                $query->select('id', 'name');
+            },
+            'branch' => function ($query) {
+                $query->select('id', 'name');
+            },
+
+        ])
+            ->join('pickup_batches', 'deliveries.pickup_batch_id', '=', 'pickup_batches.id')
+            ->leftJoin('delivery_bags', 'deliveries.id', '=', 'delivery_bags.delivery_id')
+            ->where('deliveries.pickup_batch_id', '=', $batch_id)
+            ->where('pickup_batches.driver_id', '=', $driver_id)
+            ->where('deliveries.branch_id', '=', $branch_id)
+            ->whereNull('delivery_bags.delivery_id')
+            ->get();
+    }
+
     public function getDriverCompletedPickups($driver_id, $batch_id)
     {
 
@@ -143,6 +176,30 @@ class DeliveryRepository implements DeliveryInterface
             ->leftJoin('delivery_bags', 'deliveries.id', '=', 'delivery_bags.delivery_id')
             ->where('deliveries.pickup_batch_id', '=', $batch_id)
             ->where('pickup_batches.driver_id', '=', $driver_id)
+            ->whereNotNull('delivery_bags.delivery_id')
+            ->get();
+    }
+
+    public function getDriverCompletedBranchPickups($driver_id, $batch_id, $branch_id)
+    {
+
+        return Delivery::select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id', 'delivery_bags.bag_id')->with([
+            'customer' => function ($query) {
+                $query->select('id', 'user_id');
+            },
+            'customer.user' => function ($query) {
+                $query->select('id', 'name');
+            },
+            'branch' => function ($query) {
+                $query->select('id', 'name');
+            },
+
+        ])
+            ->join('pickup_batches', 'deliveries.pickup_batch_id', '=', 'pickup_batches.id')
+            ->leftJoin('delivery_bags', 'deliveries.id', '=', 'delivery_bags.delivery_id')
+            ->where('deliveries.pickup_batch_id', '=', $batch_id)
+            ->where('pickup_batches.driver_id', '=', $driver_id)
+            ->where('deliveries.branch_id', '=', $branch_id)
             ->whereNotNull('delivery_bags.delivery_id')
             ->get();
     }
