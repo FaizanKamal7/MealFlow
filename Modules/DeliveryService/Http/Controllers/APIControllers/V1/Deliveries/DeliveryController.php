@@ -663,13 +663,14 @@ class DeliveryController extends Controller
     {
         // $start_date = date("Y/m/d");
         // $end_date = date("Y-m-d", strtotime($start_date . " +1 day"));
-        $start_date = '2023-09-24';
-        $end_date = '2023-11-10';
+        $start_date = '2022-09-24';
+        $end_date = '2024-11-10';
 
         try {
             $driver_id = $request->get("driver_id");
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
+            dd($batch->id);
             $groupedDeliveries = null;
             // Grouping the deliveries partner wise
             foreach ($db_deliveries as $delivery) {
