@@ -127,7 +127,7 @@ class DeliveryRepository implements DeliveryInterface
     public function getDriverCompletedPickups($driver_id, $batch_id)
     {
 
-        return Delivery::select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id')->with([
+        return Delivery::select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id', 'delivery_bags.bag_id')->with([
             'customer' => function ($query) {
                 $query->select('id', 'user_id');
             },
