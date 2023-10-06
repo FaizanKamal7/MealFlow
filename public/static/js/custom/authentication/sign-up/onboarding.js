@@ -21,34 +21,34 @@ var KTCreateAccount = (function () {
                 (r = new KTStepper(t)).on("kt.stepper.changed", function (e) {
                     4 === r.getCurrentStepIndex()
                         ? (o.classList.remove("d-none"),
-                          o.classList.add("d-inline-block"),
-                          s.classList.add("d-none"))
+                            o.classList.add("d-inline-block"),
+                            s.classList.add("d-none"))
                         : 5 === r.getCurrentStepIndex()
-                        ? (o.classList.add("d-none"), s.classList.add("d-none"))
-                        : (o.classList.remove("d-inline-block"),
-                          o.classList.remove("d-none"),
-                          s.classList.remove("d-none"));
+                            ? (o.classList.add("d-none"), s.classList.add("d-none"))
+                            : (o.classList.remove("d-inline-block"),
+                                o.classList.remove("d-none"),
+                                s.classList.remove("d-none"));
                 }),
                 r.on("kt.stepper.next", function (e) {
                     console.log("stepper.next");
                     var t = a[e.getCurrentStepIndex() - 1];
                     t
                         ? t.validate().then(function (t) {
-                              console.log("validated!"),
-                                  "Valid" == t
-                                      ? (e.goNext(), KTUtil.scrollTop())
-                                      : Swal.fire({
-                                            text: "Sorry, looks like there are some errors detected, please try again.",
-                                            icon: "error",
-                                            buttonsStyling: !1,
-                                            confirmButtonText: "Ok, got it!",
-                                            customClass: {
-                                                confirmButton: "btn btn-light",
-                                            },
-                                        }).then(function () {
-                                            KTUtil.scrollTop();
-                                        });
-                          })
+                            console.log("validated!"),
+                                "Valid" == t
+                                    ? (e.goNext(), KTUtil.scrollTop())
+                                    : Swal.fire({
+                                        text: "Sorry, looks like there are some errors detected, please try again.",
+                                        icon: "error",
+                                        buttonsStyling: !1,
+                                        confirmButtonText: "Ok, got it!",
+                                        customClass: {
+                                            confirmButton: "btn btn-light",
+                                        },
+                                    }).then(function () {
+                                        KTUtil.scrollTop();
+                                    });
+                        })
                         : (e.goNext(), KTUtil.scrollTop());
                 }),
                 r.on("kt.stepper.previous", function (e) {
@@ -291,42 +291,42 @@ var KTCreateAccount = (function () {
                         console.log("validated!"),
                             "Valid" == t
                                 ? (e.preventDefault(),
-                                  //   (o.disabled = !0),
-                                  //   o.setAttribute("data-kt-indicator", "on"),
-                                  //   setTimeout(function () {
-                                  //         e.submit(),
-                                  //       o.removeAttribute("data-kt-indicator"),
-                                  //           (o.disabled = !1),
-                                  //           r.goNext();
-                                  //   }, 2e3))
+                                    //   (o.disabled = !0),
+                                    //   o.setAttribute("data-kt-indicator", "on"),
+                                    //   setTimeout(function () {
+                                    //         e.submit(),
+                                    //       o.removeAttribute("data-kt-indicator"),
+                                    //           (o.disabled = !1),
+                                    //           r.goNext();
+                                    //   }, 2e3))
 
-                                  // Get the form element by its ID
+                                    // Get the form element by its ID
 
-                                  (o.disabled = true),
-                                  o.setAttribute("data-kt-indicator", "on"),
-                                  setTimeout(function () {
-                                      // Submit the form programmatically
-                                      var form = document.getElementById(
-                                          "kt_create_account_form"
-                                      );
+                                    (o.disabled = true),
+                                    o.setAttribute("data-kt-indicator", "on"),
+                                    setTimeout(function () {
+                                        // Submit the form programmatically
+                                        var form = document.getElementById(
+                                            "kt_create_account_form"
+                                        );
 
-                                      form.submit();
+                                        form.submit();
 
-                                      o.removeAttribute("data-kt-indicator");
-                                      o.disabled = false;
-                                      r.goNext();
-                                  }, 2e3))
+                                        o.removeAttribute("data-kt-indicator");
+                                        o.disabled = false;
+                                        r.goNext();
+                                    }, 2e3))
                                 : Swal.fire({
-                                      text: "Sorry, looks like there are some errors detected, please try again.",
-                                      icon: "error",
-                                      buttonsStyling: !1,
-                                      confirmButtonText: "Ok, got it!",
-                                      customClass: {
-                                          confirmButton: "btn btn-light",
-                                      },
-                                  }).then(function () {
-                                      KTUtil.scrollTop();
-                                  });
+                                    text: "Sorry, looks like there are some errors detected, please try again.",
+                                    icon: "error",
+                                    buttonsStyling: !1,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn btn-light",
+                                    },
+                                }).then(function () {
+                                    KTUtil.scrollTop();
+                                });
                     });
                 }),
                 $(i.querySelector('[name="card_expiry_month"]')).on(
@@ -510,7 +510,6 @@ function fetchAddressAreas() {
 function fetchAddressCities() {
     var stateID = document.getElementById("address_state").value;
     var cityDropdown = document.getElementById("address_city");
-
     // Clear current options
     cityDropdown.innerHTML = '<option value="">Select city</option>';
 
@@ -560,6 +559,8 @@ function fetchAddressStates() {
             data: { country_id: countryId },
             success: function (response) {
                 var states = response;
+                console.log("states");
+                console.log(states);
                 // Populate states dropdown
                 // Loop through the response data and create an option element for each item
                 states.forEach((item) => {
