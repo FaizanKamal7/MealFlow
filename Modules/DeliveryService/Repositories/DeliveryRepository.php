@@ -104,7 +104,7 @@ class DeliveryRepository implements DeliveryInterface
         //     ->get();
 
 
-        return Delivery::select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id')->with([
+        return Delivery::select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id', 'deliveries.pickup_batch_id')->with([
             'customer' => function ($query) {
                 $query->select('id', 'user_id');
             },

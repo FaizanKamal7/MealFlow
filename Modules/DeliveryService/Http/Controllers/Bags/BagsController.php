@@ -152,7 +152,7 @@ class BagsController extends Controller
     public function unassignedBagsPickup()
     {
         $start_date = '2023-09-24';
-        $end_date = '2023-09-25';
+        $end_date = '2023-10-25';
         $deliveries = $this->deliveryRepository->getPickupUnassignedDeliveries($start_date, $end_date);
         $drivers = $this->driverRepository->getDetailDrivers();
         $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
@@ -179,12 +179,10 @@ class BagsController extends Controller
             $drivers = $this->driverRepository->getDetailDrivers();
             $db_deliveries = $this->deliveryRepository->getPickupUnassignedDeliveries($start_date, $end_date);
             $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
-            return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', $data);
+            return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', $data)->with("success", "Pickup assigned successfully");
         } catch (Exception $exception) {
             dd($exception);
         }
-
-        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', ['deliveries' => $deliveries, 'drivers' => $drivers]);
     }
 
     public function assignedBagsPickup()

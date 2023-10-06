@@ -66,7 +66,8 @@
                                                     fill="currentColor" />
                                             </svg>
                                         </span>
-                                        <!--end::Svg Icon-->{{$business->status}}
+                                        <!--end::Svg Icon-->
+                                        {{$business->status}}
                                     </a>
 
                                 </div>

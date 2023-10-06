@@ -119,6 +119,7 @@ class BusinessOnboardingController extends Controller
         $cities = $this->helper->extractCitiesFromCoveragesSelection($area_coverage_list);
 
 
+
         // echo "<pre>" . $latitude . "-" . $longitude . "</pre>";
 
         // --  Selected address from google map locations
@@ -131,13 +132,13 @@ class BusinessOnboardingController extends Controller
             $address_city = $db_map_location_ids['city_id'] != '' ? $db_map_location_ids['city_id'] : null;
             $address_area = $db_map_location_ids['area_id'] != '' ?  $db_map_location_ids['area_id'] : null;
         }
+
         // echo "<pre> address_country: " . print_r($address_country, true) . "</pre>";
         // echo "<pre> address_state: " . print_r($address_state, true) . "</pre>";
         // echo "<pre> address_city: " . print_r($address_city, true) . "</pre>";
         // echo "<pre> address_area: " . print_r($address_area, true) . "</pre>";
         // echo "<pre>cities" . json_encode($cities) . "-" . $longitude . "</pre>";
         // dd($area_coverage_list);
-
 
         try {
             // --- Adding data in users table
@@ -163,6 +164,7 @@ class BusinessOnboardingController extends Controller
                 business_category_id: $business_category_id,
                 admin: $user->id,
                 status: "NEW_REQUEST",
+
             );
 
             // // Adding ternary relation
@@ -187,27 +189,25 @@ class BusinessOnboardingController extends Controller
                 latitude: $latitude,
                 longitude: $longitude
             );
-            $this->helper->print_array("area_coverage_list", $area_coverage_list);
             // echo "<pre>  ================================= </pre>";
 
             if ($area_coverage_list) {
                 foreach ($area_coverage_list as $coverage_list_item) {
                     $cities = $coverage_list_item["city"];
+                    $state_id = $coverage_list_item["state_id"];
+                    $country_id = $coverage_list_item["country_id"];
+
                     // $cities = json_decode($cities);
                     foreach ($cities as $city_id) {
                         $areas = $this->areaRepository->getAreasOfCity($city_id);
                         $areas = $areas->toArray();
-                        echo "<pre> city: " . print_r($city_id, true) . "</pre>";
-                        $city = $this->cityRepository->get($city_id);
-                        $this->helper->print_array("AREAS", $areas);
-
                         foreach ($areas as $area) {
                             $this->branchCoverageRepository->createBranchCoverage(
                                 active_status: 1,
                                 area_id: $area['id'],
                                 city_id: $city_id,
-                                state: $city->state->id,
-                                country: $city->state->country->id,
+                                state: $state_id,
+                                country: $country_id,
                                 branch_id: $branch->id,
                             );
 

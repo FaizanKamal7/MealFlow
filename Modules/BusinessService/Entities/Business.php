@@ -4,6 +4,7 @@ namespace Modules\BusinessService\Entities;
 
 use App\Http\Helper\Helper;
 use App\Models\User;
+use DocuSign\eSign\Model\Brand;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -74,7 +75,7 @@ class Business extends Model
 
     public function mainBranch()
     {
-        return $this->hasOne(Branch::class)->where('name', 'Main Branch');
+        return $this->hasOne(Branch::class)->where('is_main_branch', '1');
     }
 
     protected static function newFactory()
