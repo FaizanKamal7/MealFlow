@@ -34,6 +34,10 @@ class CityRepository implements CityInterface
         // $cities = City::get('id', 'active', 'name', 'state_id', 'country_id');
         // return DataTables::of($cities)->make(true);
     }
+    public function getActiveCities()
+    {
+        return City::where(["active_status" => "1"])->get();
+    }
 
     //method to get cities matching the keyword of city name from location table
     public function getSearchCities($query)
