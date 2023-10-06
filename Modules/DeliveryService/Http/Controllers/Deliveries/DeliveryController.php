@@ -108,13 +108,44 @@ class DeliveryController extends Controller
         return view('deliveryservice::deliveries.unassigned_deliveries');
     }
 
-    public function viewAssignedDeliveries()
+    public function UploadDeliveriesMultiple(Request $request)
     {
-        return view('deliveryservice::deliveries.assigned_delivery');
+        // $validatedData = $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'phone' => 'required|string|max:20',
+        //     'area' => 'required|string|max:255',
+        //     // Add validation rules for each field
+        //     'emirates_with_time' => 'required|string|max:255',
+        //     // Add validation rules for each field
+        //     'datepicker' => 'required|date',
+        //     // Adjust date validation as needed
+        //     'company_delivery_id' => 'required|string|max:255',
+        //     // Add validation rules for each field
+        //     'delivery_amount' => 'required|numeric',
+        //     // Adjust numeric validation as needed
+        //     'signature' => 'required|string|max:255',
+        //     // Add validation rules for each field
+        //     'notification' => 'required|string|max:255',
+        //     // Add validation rules for each field
+        //     'pickup_address' => 'required|string|max:255',
+        //     // Add validation rules for each field
+        //     'delivery_address' => 'required|string|max:255',
+        //     // Add validation rules for each field
+        //     'product_type' => 'required|string|max:255',
+        //     // Add validation rules for each field
+        //     'notes' => 'required|string|max:255',
+        //     // Add validation rules for each field
+        //     'google_link_address' => 'required|string|max:255',
+        //     // Add validation rules for each field
+        // ]);
+
+        // dd($validatedData);
     }
 
     public function uploadDeliveriesByForm(Request $request)
     {
+
+
         $customers = $request->get("customer");
         $addresses = $request->get("delivery_address");
         $deliverySlots = $request->get("delivery_slot");
@@ -507,11 +538,17 @@ class DeliveryController extends Controller
         return $actual_headers === $expected_headers;
     }
 
-    // ------------------------------------- SUGGESTED DRIVER-----------------------
-    function unassignedDeliveries()
+
+    public function viewAssignedDeliveries()
     {
+        $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
         $businesses = $this->businessRepository->getActiveBusinesses();
-        $deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
+        $deliveries = $this->deliveryRepository->getDeliveriesByStatus('ASSIGN');
+        $emirate = $this->cityRepository->getActiveCities();
+        // Sort the time slots based on start_time
+        usort($time_slot, function ($a, $b) {
+            return strcmp($a['start_time'], $b['start_time']);
+        });
 
         // dd($deliveries);
         foreach ($deliveries as $delivery) {
@@ -520,43 +557,78 @@ class DeliveryController extends Controller
             $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
             $delivery->setAttribute('suggested_drivers', $drivers);
 
+        }
+        $drivers = $this->driverRepository->getDetailDrivers();
+        $data = [
+            'deliveries' => $deliveries,
+            'drivers' => $drivers,
+            'partners' => $businesses,
+            'time_slot' => $time_slot,
+            'emirate' => $emirate
+        ];
+        return view('deliveryservice::deliveries.assigned_delivery', $data);
 
+    }
 
+    // ------------------------------------- SUGGESTED DRIVER-----------------------
 
-            // if ($driver) {
-            //     // Step 2: Check the last delivery for the customer
-            //     $lastDelivery = Delivery::where('customer_id', $delivery->customer_id)
-            //         ->where('id', '<', $delivery->id)
-            //         ->orderBy('id', 'desc')
-            //         ->first();
+    // if ($driver) {
+    //     // Step 2: Check the last delivery for the customer
+    //     $lastDelivery = Delivery::where('customer_id', $delivery->customer_id)
+    //         ->where('id', '<', $delivery->id)
+    //         ->orderBy('id', 'desc')
+    //         ->first();
 
-            //     if ($lastDelivery) {
-            //         // If a previous delivery exists, suggest the driver from that delivery
-            //         $lastDriver = Driver::find($lastDelivery->driver_id);
-            //         $suggestedDriver = $lastDriver;
-            //     } else {
-            //         // If no previous delivery exists, suggest the driver found in step 1
-            //         $suggestedDriver = $driver;
-            //     }
+    //     if ($lastDelivery) {
+    //         // If a previous delivery exists, suggest the driver from that delivery
+    //         $lastDriver = Driver::find($lastDelivery->driver_id);
+    //         $suggestedDriver = $lastDriver;
+    //     } else {
+    //         // If no previous delivery exists, suggest the driver found in step 1
+    //         $suggestedDriver = $driver;
+    //     }
 
-            //     // Assign the suggested driver to the delivery
-            //     $delivery->suggested_driver_id = $suggestedDriver->id;
-            //     $delivery->save();
-            // }
+    //     // Assign the suggested driver to the delivery
+    //     $delivery->suggested_driver_id = $suggestedDriver->id;
+    //     $delivery->save();
+    // }
+
+    // foreach ($deliveries as $delivery) {
+    //     echo ('Delivery : ' . $delivery->deliverySlot->start_time . '-' . $delivery->deliverySlot->end_time . 'area : ' . $delivery->customerAddress->area->name);
+    //     echo "<br><br>";
+    //     foreach ($delivery->suggested_drivers as $driver) {
+    //         echo ('Driver : ' . $driver->employee->first_name . ' - ' . $driver->employee->duty_start_time . '-' . $driver->employee->duty_end_time . ' - ' . $driver->areas->pluck('name'));
+    //     }
+
+    //     echo "<br>next delivery<br>";
+    // }
+    function unassignedDeliveries()
+    {
+        $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
+        $businesses = $this->businessRepository->getActiveBusinesses();
+        $deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
+        $emirate = $this->cityRepository->getActiveCities();
+        // Sort the time slots based on start_time
+        usort($time_slot, function ($a, $b) {
+            return strcmp($a['start_time'], $b['start_time']);
+        });
+
+        // dd($deliveries);
+        foreach ($deliveries as $delivery) {
+            $customerAddress = $delivery->customerAddress;
+            // Step 1: Find a driver that matches the delivery area and has deuty timing eligilable for that slot
+            $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
+            $delivery->setAttribute('suggested_drivers', $drivers);
 
         }
-        // foreach ($deliveries as $delivery) {
-        //     echo ('Delivery : ' . $delivery->deliverySlot->start_time . '-' . $delivery->deliverySlot->end_time . 'area : ' . $delivery->customerAddress->area->name);
-        //     echo "<br><br>";
-        //     foreach ($delivery->suggested_drivers as $driver) {
-        //         echo ('Driver : ' . $driver->employee->first_name . ' - ' . $driver->employee->duty_start_time . '-' . $driver->employee->duty_end_time . ' - ' . $driver->areas->pluck('name'));
-        //     }
-
-        //     echo "<br>next delivery<br>";
-        // }
         $drivers = $this->driverRepository->getDetailDrivers();
-        $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
-        // return view('deliveryservice::deliveries.unassigned_deliveries', $data);
+        $data = [
+            'deliveries' => $deliveries,
+            'drivers' => $drivers,
+            'partners' => $businesses,
+            'time_slot' => $time_slot,
+            'emirate' => $emirate
+        ];
         return view('deliveryservice::deliveries.unassigned_deliveries', $data);
     }
     public function view_labels()
@@ -568,23 +640,11 @@ class DeliveryController extends Controller
 
     public function printLabel(Request $request)
     {
-        // Handle the printing logic here using the selected checkbox data
-        // $selectedIds = $request->input('selectedIds');
-
-        // // Pass the selected data to a view for rendering
-        // return view('labels.print', ['selectedIds' => $selectedIds]);
-        
-            // Get the selected delivery IDs from the query parameter
-            $selectedDeliveryIds = explode(',', $request->input('selected_deliveries', ''));
-    
-            // Fetch the corresponding delivery data based on the IDs
-            $selectedDeliveries = $this->deliveryRepository->getDeliveriesByIds($selectedDeliveryIds);
-    
-            // Pass the selected data to the view
-            return view('deliveryservice::deliveries.print_label', ['selectedDeliveries' => $selectedDeliveries]);
-            // return view('deliveryservice::deliveries.print_label', ['selectedDeliveries' => [1,2,4]]);
-
-    
+        $selectedDeliveryIds = explode(',', $request->input('selected_deliveries', ''));
+        // Fetch the corresponding delivery data based on the IDs
+        $selectedDeliveries = $this->deliveryRepository->getDeliveriesByIds($selectedDeliveryIds);
+        // Pass the selected data to the view
+        return view('deliveryservice::deliveries.print_label', ['selectedDeliveries' => $selectedDeliveries]);
     }
 
     public function assigned_delivery_to_driver(Request $request)
