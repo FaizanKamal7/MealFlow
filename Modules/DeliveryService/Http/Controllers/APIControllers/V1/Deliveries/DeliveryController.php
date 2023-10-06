@@ -663,13 +663,14 @@ class DeliveryController extends Controller
     {
         // $start_date = date("Y/m/d");
         // $end_date = date("Y-m-d", strtotime($start_date . " +1 day"));
-        $start_date = '2023-09-24';
-        $end_date = '2023-11-10';
+        $start_date = '2022-09-24';
+        $end_date = '2024-11-10';
 
         try {
             $driver_id = $request->get("driver_id");
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
+           
             $groupedDeliveries = null;
             // Grouping the deliveries partner wise
             foreach ($db_deliveries as $delivery) {
@@ -693,7 +694,7 @@ class DeliveryController extends Controller
                 return $this->error($groupedDeliveries, "Something went wrong please contact support. No bag pickups for driver");
             }
 
-            return $this->success($groupedDeliveries, "Drivers assigned pickup bags recieved successfully");
+            return $this->success($groupedDeliveries, "Drivers partner wise assigned pickup  recieved successfully");
         } catch (Exception $exception) {
             dd($exception);
             return $this->error($exception, "Something went wrong please contact support");
