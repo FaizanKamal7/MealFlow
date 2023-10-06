@@ -670,27 +670,53 @@ class DeliveryController extends Controller
             $driver_id = $request->get("driver_id");
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
-           
-            $groupedDeliveries = null;
-            // Grouping the deliveries partner wise
+            $groupedDeliveries = [];
+
+            // Iterate over the data
             foreach ($db_deliveries as $delivery) {
                 $branchId = $delivery['branch_id'];
 
-                // Check if the branch ID exists in the grouped array
-                if (!isset($groupedDeliveries[$branchId])) {
-                    // If it doesn't exist, initialize an empty array for that branch
-                    $groupedDeliveries[$branchId] = [];
+                // Check if the branch_id already exists in $groupedDeliveries
+                $found = false;
+                foreach ($groupedDeliveries as &$groupedDelivery) {
+                    if ($groupedDelivery['branch_id'] === $branchId) {
+                        // If branch_id exists, increment the assigned_deliveries count
+                        $groupedDelivery['assigned_deliveries']++;
+                        $found = true;
+                        break;
+                    }
                 }
 
-                // Add the current delivery to the branch's array
-                $groupedDeliveries[$branchId][] = $delivery;
+                // If branch_id doesn't exist in $groupedDeliveries, add it as a new entry
+                if (!$found) {
+                    $groupedDeliveries[] = [
+                        'branch_id' => $delivery->branch_id,
+                        'branch_name' => $delivery->branch->name, // You can populate branch name here if available
+                        'assigned_deliveries' => 1, // Initialize with 1 for the first record
+                    ];
+                }
             }
+
+
+
+            // foreach ($db_deliveries as $delivery) {
+            //     $branchId = $delivery['branch_id'];
+
+            //     // Check if the branch ID exists in the grouped array
+            //     if (!isset($groupedDeliveries[$branchId])) {
+            //         // If it doesn't exist, initialize an empty array for that branch
+            //         $groupedDeliveries[$branchId] = [];
+            //     }
+
+            //     // Add the current delivery to the branch's array
+            //     $groupedDeliveries[$branchId][] = $delivery;
+            // }
 
             // Now $groupedDeliveries contains deliveries grouped by branch ID
 
             // If you want to convert it to JSON
             // $groupedDeliveriesJSON = json_encode(['data' => $groupedDeliveries]);
-            if (!$db_deliveries) {
+            if (!$groupedDeliveries) {
                 return $this->error($groupedDeliveries, "Something went wrong please contact support. No bag pickups for driver");
             }
 
@@ -709,9 +735,10 @@ class DeliveryController extends Controller
 
         try {
             $driver_id = $request->get("driver_id");
+            $branch_id = $request->get("branch_id");
 
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
-            $db_deliveries = $this->deliveryRepository->getDriverPendingPickups($driver_id, $batch->id);
+            $db_deliveries = $this->deliveryRepository->getDriverPendingBranchPickups($driver_id, $batch->id, $branch_id);
             // $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
 
             if (!$db_deliveries) {
@@ -733,9 +760,10 @@ class DeliveryController extends Controller
 
         try {
             $driver_id = $request->get("driver_id");
+            $branch_id = $request->get("branch_id");
 
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
-            $db_deliveries = $this->deliveryRepository->getDriverCompletedPickups($driver_id, $batch->id);
+            $db_deliveries = $this->deliveryRepository->getDriverCompletedBranchPickups($driver_id, $batch->id, $branch_id);
             // $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
 
             if (!$db_deliveries) {
