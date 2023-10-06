@@ -664,7 +664,7 @@ class DeliveryController extends Controller
         // $start_date = date("Y/m/d");
         // $end_date = date("Y-m-d", strtotime($start_date . " +1 day"));
         $start_date = '2023-09-24';
-        $end_date = '2023-10-10';
+        $end_date = '2023-11-10';
 
         try {
             $driver_id = $request->get("driver_id");
