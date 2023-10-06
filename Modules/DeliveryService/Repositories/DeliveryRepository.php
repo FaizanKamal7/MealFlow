@@ -92,6 +92,7 @@ class DeliveryRepository implements DeliveryInterface
     }
 
 
+
     public function getDriverPendingPickups($driver_id, $batch_id)
     {
         // $deliveries = Delivery::with([
