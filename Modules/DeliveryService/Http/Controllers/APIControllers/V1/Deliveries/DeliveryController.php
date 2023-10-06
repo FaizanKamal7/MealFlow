@@ -670,7 +670,6 @@ class DeliveryController extends Controller
             $driver_id = $request->get("driver_id");
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
-            dd($batch->id);
             $groupedDeliveries = null;
             // Grouping the deliveries partner wise
             foreach ($db_deliveries as $delivery) {
