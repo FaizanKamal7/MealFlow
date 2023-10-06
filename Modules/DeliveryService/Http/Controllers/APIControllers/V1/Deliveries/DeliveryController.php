@@ -672,14 +672,6 @@ class DeliveryController extends Controller
             $driver_id = $request->get("driver_id");
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
-<<<<<<< Updated upstream
-
-            if (!$db_deliveries) {
-                return $this->error($db_deliveries, "Something went wrong please contact support. No bag pickups for driver");
-            }
-
-            return $this->success($db_deliveries, "Drivers assigned pickup bags recieved successfully");
-=======
             $grouped_deliveries = [];
 
             // Iterate over the data
@@ -737,7 +729,6 @@ class DeliveryController extends Controller
             }
 
             return $this->success($grouped_deliveries, "Drivers partner wise assigned pickup  recieved successfully");
->>>>>>> Stashed changes
         } catch (Exception $exception) {
             dd($exception);
             return $this->error($exception, "Something went wrong please contact support");
