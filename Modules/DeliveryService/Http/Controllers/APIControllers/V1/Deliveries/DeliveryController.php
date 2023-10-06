@@ -23,12 +23,14 @@ use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\CustomerAddressInterface;
 use Modules\BusinessService\Interfaces\CustomerInterface;
 use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
+use Modules\DeliveryService\Entities\DeliveryBag;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
 use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryImagesInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Repositories\DeliveryBagRepository;
 use Modules\DeliveryService\Repositories\PickupBatchRepository;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
@@ -670,12 +672,72 @@ class DeliveryController extends Controller
             $driver_id = $request->get("driver_id");
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
+<<<<<<< Updated upstream
 
             if (!$db_deliveries) {
                 return $this->error($db_deliveries, "Something went wrong please contact support. No bag pickups for driver");
             }
 
             return $this->success($db_deliveries, "Drivers assigned pickup bags recieved successfully");
+=======
+            $grouped_deliveries = [];
+
+            // Iterate over the data
+            foreach ($db_deliveries as $delivery) {
+                $branchId = $delivery['branch_id'];
+
+                // Check if the branch_id already exists in $grouped_deliveries
+                $found = false;
+                foreach ($grouped_deliveries as &$groupedDelivery) {
+                    if ($groupedDelivery['branch_id'] === $branchId) {
+                        $exist = $this->deliveryBagRepository->isDeliveryReccordExist($delivery->id);
+                        // If branch_id exists, increment the assigned_deliveries count
+                        $groupedDelivery['assigned_pickups']++;
+                        if (!$exist) {
+                            $groupedDelivery['pending_pickups']++;
+                        }
+                        $found = true;
+                        break;
+                    }
+                }
+
+                // If branch_id doesn't exist in $grouped_deliveries, add it as a new entry
+                if (!$found) {
+                    $exist = $this->deliveryBagRepository->isDeliveryReccordExist($delivery->id);
+                    $grouped_deliveries[] = [
+                        'branch_id' => $delivery->branch_id,
+                        'branch_name' => $delivery->branch->name, // You can populate branch name here if available
+                        'assigned_pickups' => 1, // Initialize with 1 for the first record
+                        'pending_pickups' => $exist ? 0 : 1,
+                    ];
+                }
+            }
+
+
+
+            // foreach ($db_deliveries as $delivery) {
+            //     $branchId = $delivery['branch_id'];
+
+            //     // Check if the branch ID exists in the grouped array
+            //     if (!isset($grouped_deliveries[$branchId])) {
+            //         // If it doesn't exist, initialize an empty array for that branch
+            //         $grouped_deliveries[$branchId] = [];
+            //     }
+
+            //     // Add the current delivery to the branch's array
+            //     $grouped_deliveries[$branchId][] = $delivery;
+            // }
+
+            // Now $grouped_deliveries contains deliveries grouped by branch ID
+
+            // If you want to convert it to JSON
+            // $grouped_deliveriesJSON = json_encode(['data' => $grouped_deliveries]);
+            if (!$grouped_deliveries) {
+                return $this->error($grouped_deliveries, "Something went wrong please contact support. No bag pickups for driver");
+            }
+
+            return $this->success($grouped_deliveries, "Drivers partner wise assigned pickup  recieved successfully");
+>>>>>>> Stashed changes
         } catch (Exception $exception) {
             dd($exception);
             return $this->error($exception, "Something went wrong please contact support");

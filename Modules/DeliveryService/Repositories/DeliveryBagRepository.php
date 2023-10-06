@@ -13,4 +13,9 @@ class DeliveryBagRepository implements DeliveryBagInterface
     {
         return DeliveryBag::updateOrCreate($data);
     }
+
+    public function isDeliveryReccordExist($delivery_id)
+    {
+        return DeliveryBag::where('delivery_id', $delivery_id)->exists();
+    }
 }
