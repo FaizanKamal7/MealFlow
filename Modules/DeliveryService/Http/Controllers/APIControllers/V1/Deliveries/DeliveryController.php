@@ -599,18 +599,19 @@ class DeliveryController extends Controller
     public function completeDelivery(Request $request)
     {
         try {
-            // BAG cOLLECTION
             // Check if $validator = Validator::make($request->all(), [
             $validator = Validator::make($request->all(), [
                 'delivery_id' => ['required', 'exists:deliveries,id'],
                 'open_bag_img' => ['required', 'image'],
                 'close_bag_img' => ['required', 'image'],
                 'delivered_bag_img' => ['required', 'image'],
-                'empty_bag_img' => ['image'],
+                'delivery_img' => ['image'],
+                'signature_img' => ['image'],
+                'address_img' => ['image'],
                 'empty_bag_count' => [],
+
             ]);
 
-            // BAG cOLLECTION
 
             // Check if validation fails
             if ($validator->fails()) {
@@ -618,11 +619,14 @@ class DeliveryController extends Controller
             }
 
             $delivery_id = $request->post('delivery_id');
-            $empty_bag_count = $request->post('empty_bag_count');
             $open_bag_img = $request->file('open_bag_img');
             $close_bag_img = $request->file('close_bag_img');
             $delivered_bag_img = $request->file('delivered_bag_img');
-            $empty_bag_img = $request->file('empty_bag_img');
+            $delivery_img = $request->file('delivery_img');
+            $signature_img = $request->file('signature_img');
+            $address_img = $request->file('address_img');
+            $empty_bag_count = $request->post('empty_bag_count');
+
             DB::beginTransaction();
 
             if ($open_bag_img) {
@@ -637,12 +641,20 @@ class DeliveryController extends Controller
                 $delivered_bag_img_url = $this->helper->storeFile($delivered_bag_img, "DeliveryServce", "Deliveries");
                 $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $delivered_bag_img_url, 'image_type' => 'delivered_bag_img']);
             }
-            if ($empty_bag_img) {
-                $empty_bag_img_url = $this->helper->storeFile($empty_bag_img, "DeliveryServce", "Bags");
-                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $empty_bag_img_url, 'image_type' => 'empty_bag_img']);
+            if ($delivery_img) {
+                $delivery_img_url = $this->helper->storeFile($delivery_img, "DeliveryServce", "Deliveries");
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $delivery_img_url, 'image_type' => 'delivery_img']);
+            }
+            if ($signature_img) {
+                $signature_img_url = $this->helper->storeFile($signature_img, "DeliveryServce", "Deliveries");
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $signature_img_url, 'image_type' => 'signature_img']);
+            }
+            if ($address_img) {
+                $address_img_url = $this->helper->storeFile($address_img, "DeliveryServce", "Deliveries");
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $address_img_url, 'image_type' => 'address_img']);
             }
 
-            $data =  $this->deliveryRepository->UpdateDelivery($delivery_id, [
+            $data =  $this->deliveryRepository->updateDelivery($delivery_id, [
                 'status' => 'DELIVERED',
                 'empty_bag_count' => $empty_bag_count,
             ]);
@@ -654,6 +666,7 @@ class DeliveryController extends Controller
             return $this->success($data, "Delivery completed successfully");
         } catch (Exception $exception) {
             DB::rollback();
+            dd($exception);
             return $this->error($exception, "Something went wrong please contact support");
         }
     }

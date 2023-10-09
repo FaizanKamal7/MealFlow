@@ -18,7 +18,7 @@ use Modules\DeliveryService\Http\Controllers\APIControllers\V1\EmptyBagCollectio
 |
 */
 
-Route::group(['prefix' => 'deliveryservice/'], function () {
+Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'deliveryservice/'], function () {
 
     Route::prefix('driver/')->group(function () {
         Route::GET('deliveries', [DeliveryController::class, "getDriverDeliveries"]);
@@ -44,6 +44,7 @@ Route::group(['prefix' => 'deliveryservice/'], function () {
 
         Route::group(['prefix' => 'collection/'], function () {
             Route::POST('create', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
+            Route::POST('create-delivery-bag-collection', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
         });
 
         Route::group(['prefix' => 'pickup/'], function () {
