@@ -15,7 +15,7 @@ use Modules\DeliveryService\Http\Controllers\Bags\BagsController;
 use Modules\DeliveryService\Http\Controllers\Customers\CustomersController;
 use Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController;
 
-Route::prefix('admin/deliveries')->group(function () {
+Route::prefix( 'admin/deliveries')->group(function () {
     Route::get('download-excel', 'DeliveryServiceController@downloadExcel');
     //    Route::get('/upload', 'DeliveryServiceController@uploadDeliveryView');
     Route::post('/upload/bulk', 'DeliveryServiceController@addBulk')->name("bulk_delivery_add");
@@ -38,7 +38,9 @@ Route::prefix('admin/deliveries')->group(function () {
 
     // thhese routes are for suggested driver and assigning of delivery    
     Route::get('/unassigned-deliveries',  [DeliveryController::class, "unassignedDeliveries"])->name("unassigned_deliveries");
-    Route::POST('/assigning_process',  [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "assignDeliveriesToDriver"])->name('assigned_delivery_to_driver');
+    Route::POST('/assigning_process',  [DeliveryController::class, "assignDeliveriesToDriver"])->name('assigned_delivery_to_driver');
+    Route::get('/assigned-deliveries', [DeliveryController::class, "viewAssignedDeliveries"])->name("view_assigned_deliveries");
+    Route::get('/completed-deliveries', [DeliveryController::class, "viewCompletedDeliveries"])->name("view_completed_deliveries");
 
     Route::get('/print-label', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "printLabel"])->name('print-label');
 
@@ -52,7 +54,6 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('generate-template', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "generateAndDownloadDeliveryTemplate"])->name("generate_delivery_template");
     Route::post('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
     Route::get('unassign', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewUnassignedDeliveries"])->name("view_unassign");
-    Route::get('assigned-deliveries', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewAssignedDeliveries"])->name("view_assign");
     Route::get('update-deliveries-label', [DeliveryController::class, "updateDeliveriesLabel"])->name("update_deliveries_label");
     Route::get('deliveries-label/{deliveries}', [DeliveryController::class, "viewDeliveriesLabelView"])->name("view_deliveries_label");
 

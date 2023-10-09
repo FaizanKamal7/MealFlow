@@ -56,208 +56,208 @@
                     </div>
 
                 </div>
-                <form method="POST" action="{{ route('assigned_delivery_to_driver') }}">
-                    @csrf
-                    <div class="d-flex mt-2 align-items-center justify-content-between unassigned-second-div">
 
-                        <div class="d-flex align-items-center detail-div">
-                            <div class="me-3">
-                                <select class="form-select" data-control="select2" data-placeholder="Select Partner">
-                                    <option></option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                </select>
-                            </div>
-                            <div class="me-3">
-                                <select class="form-select" data-control="select2" data-placeholder="Select Emirate">
-                                    <option></option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                </select>
-                            </div>
-                            <div class="">
-                                <select class="form-select" data-control="select2" data-placeholder="Select Time Slot">
-                                    <option></option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                </select>
-                            </div>
-                            <div class="">
-                                <a class="btn text-white activate-btn" style="height: 38px !important ">Show Details</a>
-                            </div>
+                <input type="hidden" name="selected_delivery_ids">
 
-                        </div>
+                <div class="d-flex mt-2 align-items-center justify-content-between unassigned-second-div">
 
-                    </div>
-
-                    <div class="align-items-center justify-content-between mt-3 select-option-div unassigned-second-div"
-                        style="display: none;">
-                        <div class="driver-div">
-                            <select id="driverSelect" name="driver_id" class="form-select" data-control="select2"
-                                data-placeholder="Select Driver" data-allow-clear="true"
-                                onchange="handleDriverSelection()">
-                                <option value="">Select Driver</option>
-                                @foreach ($drivers as $driver)
-                                <option value="{{ $driver->id }}">{{ $driver->employee->first_name }}</option>
-                                @endforeach
+                    <div class="d-flex align-items-center detail-div">
+                        <div class="me-3">
+                            <select class="form-select" data-control="select2" data-placeholder="Select Partner">
+                                <option></option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
                             </select>
                         </div>
-                        <div class="d-flex align-items-center assign-div">
-                            <div class="me-3">
-                                <button id="assignButton" type="submit" class="btn csv-btn">Assign Driver</button>
-                            </div>
-                            <div class="me-3">
-                                <a id="autoAssignButton" class="btn csv-btn">Auto-Assign</a>
-                            </div>
-                            <div class="me-3">
-                                <a class="btn csv-btn">Reschedule</a>
-                            </div>
-                            <div class="me-3">
-                                <a class="btn csv-btn cancel" onclick="uncheckAllCheckboxes()">Cancel</a>
-                            </div>
-                            <div class="me-3">
-                                <a class="btn csv-btn">Delete</a>
-                            </div>
-                            <div class="">
-                                <a class="btn csv-btn" href="#" onclick="printSelectedLabels()">Print Label with
-                                    Logo</a>
-                            </div>
-
+                        <div class="me-3">
+                            <select class="form-select" data-control="select2" data-placeholder="Select Emirate">
+                                <option></option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="mt-3 table-responsive location-card">
-                        <table id="unassigned_table" class="table table-striped table-row-bordered gy-5 gs-7">
-                            <thead>
-                                <tr class="fw-bold fs-6 text-gray-800">
-                                    <th class=""><input class="form-check-input" type="checkbox" value="">
-                                    </th>
-                                    <th class="w-150px">Order ID</th>
-                                    <th class="w-150px">Suggested Driver</th>
-                                    <th class="w-100px">Plan ID</th>
-                                    <th class="w-150px">Customers</th>
-                                    <th class="w-150px">Delivery Address</th>
-                                    <th class="w-100px">Notes</th>
-                                    <th class="w-150px">Time Slot</th>
-                                    <th class="w-150px">Partner</th>
-                                    <th class="w-100px">Created At</th>
-                                    <th class="w-150px">Uplaoded By</th>
-                                    <th class="w-100px">Pickup Location</th>
-                                    <th class="w-100px">Product Type</th>
-                                    <th>Notification</th>
-                                    <th>Payment</th>
-                                    {{-- <th>Company Delivery Id</th> --}}
-                                    <th class="w-100px">Google Link</th>
-                                    <th class="min-w-1px">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div class="">
+                            <select class="form-select" data-control="select2" data-placeholder="Select Time Slot">
+                                <option></option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                            </select>
+                        </div>
+                        <div class="">
+                            <a class="btn text-white activate-btn" style="height: 38px !important ">Show Details</a>
+                        </div>
 
-                                @foreach ($deliveries as $delivery)
-                                <tr class="">
-                                    <td>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="{{ $delivery->id }}"
-                                                id="checkbox-{{ $delivery->id }}">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-150px">
-                                            <b>{{ $delivery->id }}</b>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-150px">
-                                            @foreach ($delivery->suggested_drivers as $driver)
-                                            {{ $driver->employee->first_name }}<br>
-                                            @endforeach
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-100px">
-                                            {{ $delivery->id }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-150px">
-                                            {{ $delivery->customer->user->name }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-150px">
-                                            {{ $delivery->customerAddress->address }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-200px">
-                                            {{ $delivery->note }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-150px">
-                                            {{ $delivery->deliverySlot->city->name }}
-                                            {{ $delivery->deliverySlot->start_time }}-{{
-                                            $delivery->deliverySlot->end_time }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-150px">
-                                            {{ $delivery->branch->business->name ?? "Null" }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-150px">
-                                            {{ $delivery->created_at }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-150px">
-                                            Uploaded By
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-150px">
-                                            {{ $delivery->branch->address }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-100px">
-                                            Food
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-100px">
-                                            {{ $delivery->is_notification_enabled ? 'Yes' : 'No' }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="w-100px">
-                                            {{ $delivery->payment_status ? 'Yes' : 'No' }}
-                                        </div>
-                                    </td>
-                                    {{-- <td>
-                                        <div class="w-150px">
-                                            {{ $delivery->id }}
-                                        </div>
-                                    </td> --}}
-                                    <td>
-                                        <div class="w-150px">
-                                            https://www.google.co.uk/ </div>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <span class="table-icon" onclick="">
-                                                <x-iconsax-bul-edit-2 />
-                                            </span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
                     </div>
-                    {{-- end table div --}}
 
-                </form>
+                </div>
+
+                <div class="align-items-center justify-content-between mt-3 select-option-div unassigned-second-div"
+                    style="display: none;">
+                    <div class="driver-div">
+                        <select id="driverSelect" name="driver_id" class="form-select" data-control="select2"
+                            data-placeholder="Select Driver" data-allow-clear="true" onchange="handleDriverSelection()">
+                            <option value="">Select Driver</option>
+                            @foreach ($drivers as $driver)
+                            <option value="{{ $driver->id }}">{{ $driver->employee->first_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center assign-div">
+                        <div class="me-3">
+                            <button id="assignButton" onclick="assignDeliveries()" class="btn csv-btn">Assign
+                                Driver</button>
+                        </div>
+                        <div class="me-3">
+                            <a id="autoAssignButton" class="btn csv-btn">Auto-Assign</a>
+                        </div>
+                        <div class="me-3">
+                            <a class="btn csv-btn">Reschedule</a>
+                        </div>
+                        <div class="me-3">
+                            <a class="btn csv-btn cancel" onclick="uncheckAllCheckboxes()">Cancel</a>
+                        </div>
+                        <div class="me-3">
+                            <a class="btn csv-btn">Delete</a>
+                        </div>
+                        <div class="">
+                            <a class="btn csv-btn" href="#" onclick="printSelectedLabels()">Print Label with
+                                Logo</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mt-3 table-responsive location-card">
+                    <table id="unassigned_table" class="table table-striped table-row-bordered gy-5 gs-7">
+                        <thead>
+                            <tr class="fw-bold fs-6 text-gray-800">
+                                <th class=""><input class="form-check-input" type="checkbox" value="">
+                                </th>
+                                <th class="w-150px">Order ID</th>
+                                <th class="w-150px">Suggested Driver</th>
+                                <th class="w-100px">Plan ID</th>
+                                <th class="w-150px">Customers</th>
+                                <th class="w-150px">Delivery Address</th>
+                                <th class="w-100px">Notes</th>
+                                <th class="w-150px">Time Slot</th>
+                                <th class="w-150px">Partner</th>
+                                <th class="w-100px">Created At</th>
+                                <th class="w-150px">Uplaoded By</th>
+                                <th class="w-100px">Pickup Location</th>
+                                <th class="w-100px">Product Type</th>
+                                <th>Notification</th>
+                                <th>Payment</th>
+                                {{-- <th>Company Delivery Id</th> --}}
+                                <th class="w-100px">Google Link</th>
+                                <th class="min-w-1px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach ($deliveries as $delivery)
+                            <tr class="">
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="{{ $delivery->id }}"
+                                            id="checkbox-{{ $delivery->id }}">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        <b>{{ $delivery->id }}</b>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        @foreach ($delivery->suggested_drivers as $driver)
+                                        {{ $driver->employee->first_name }}<br>
+                                        @endforeach
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-100px">
+                                        {{ $delivery->id }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        {{ $delivery->customer->user->name }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        {{ $delivery->customerAddress->address }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-200px">
+                                        {{ $delivery->note }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        {{ $delivery->deliverySlot->city->name }}
+                                        {{ $delivery->deliverySlot->start_time }}-{{
+                                        $delivery->deliverySlot->end_time }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        {{ $delivery->branch->business->name ?? "Null" }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        {{ $delivery->created_at }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        Uploaded By
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        {{ $delivery->branch->address }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-100px">
+                                        Food
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-100px">
+                                        {{ $delivery->is_notification_enabled ? 'Yes' : 'No' }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-100px">
+                                        {{ $delivery->payment_status ? 'Yes' : 'No' }}
+                                    </div>
+                                </td>
+                                {{-- <td>
+                                    <div class="w-150px">
+                                        {{ $delivery->id }}
+                                    </div>
+                                </td> --}}
+                                <td>
+                                    <div class="w-150px">
+                                        https://www.google.co.uk/ </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span class="table-icon" onclick="">
+                                            <x-iconsax-bul-edit-2 />
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                {{-- end table div --}}
+
 
 
             </div>
@@ -301,45 +301,104 @@
             window.open(url, '_blank');
         }
 
-        // assign button
-        document.addEventListener("DOMContentLoaded", function() {
-            // Get references to the "Assign" button and the driver selection dropdown
-            const assignButton = document.getElementById("assignButton");
-            const driverSelect = document.getElementById("driverSelect");
-            // Add a click event listener to the "Assign" button
-            assignButton.addEventListener("click", function() {
-                // Get all the checked checkboxes
-                const checkboxes = document.querySelectorAll('input.form-check-input:checked');
-                // Get the selected driver's information
-                const selectedDriverId = driverSelect.value;
-                const selectedDriverName = driverSelect.options[driverSelect.selectedIndex].text;
-                // Create an array to store the selected row data with the driver information
-                const selectedRowsData = [];
-                // Iterate through the checked checkboxes
-                checkboxes.forEach(function(checkbox) {
-                    // Get the closest <tr> element (the parent row) for each checked checkbox
-                    const row = checkbox.closest("tr");
-                    // Collect the data from the row's cells (td elements)
-                    const rowData = Array.from(row.querySelectorAll("td")).map(function(cell) {
-                        return cell.textContent.trim();
-                    });
-                    // Add the driver information to the row's data
-                    rowData.push({
-                        driverId: selectedDriverId,
-                        driverName: selectedDriverName,
-                    });
-                    // Add the rowData array to the selectedRowsData array
-                    selectedRowsData.push(rowData);
-                });
-                // Prepare the data to be sent to the backend (you can customize this as needed)
-                const dataToSend = {
-                    selectedRows: selectedRowsData,
-                    // Add other details here as needed
-                };
-                console.log('hehe', dataToSend)
-                // Send an AJAX request to the backend (you need to specify the backend endpoint)
+        function assignDeliveries() {
+             // Get all checkboxes
+             const checkboxes = document.querySelectorAll('input.form-check-input[type="checkbox"]');
+            console.log('checkbox', checkboxes)
+            // Initialize an array to store selected values
+            const selectedDeliveryIds = [];
+            // Loop through checkboxes and add the selected values to the array
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    selectedDeliveryIds.push(checkbox.value);
+                }
             });
-        });
+            const driver_id = document.getElementById("driverSelect").value;
+            console.log("selectedDeliveryIds");
+            console.log(selectedDeliveryIds +"=---==-"+ driver_id);
+
+            var url = "{{ route('assigned_delivery_to_driver') }}";
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                data: { selected_delivery_ids: selectedDeliveryIds, driver_id: driver_id },
+                success: function(response) {
+                    if (response.redirect) {
+                        // Pass the selected deliveries as a parameter when redirecting
+                        window.location.href = response.redirect + '?deliveries=' + selectedDeliveries.join(',');
+                    } 
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+
+        }
+
+        // assign button
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     // Get references to the "Assign" button and the driver selection dropdown
+        //     const assignButton = document.getElementById("assignButton");
+        //     const driverSelect = document.getElementById("driverSelect");
+        //     // Add a click event listener to the "Assign" button
+        //     assignButton.addEventListener("click", function() {
+        //         // Get all the checked checkboxes
+        //         const checkboxes = document.querySelectorAll('input.form-check-input:checked');
+        //         // Get the selected driver's information
+        //         const selectedDriverId = driverSelect.value;
+        //         const selectedDriverName = driverSelect.options[driverSelect.selectedIndex].text;
+        //         // Create an array to store the selected row data with the driver information
+        //         const selectedRowsData = [];
+        //         // Iterate through the checked checkboxes
+        //         checkboxes.forEach(function(checkbox) {
+        //             // Get the closest <tr> element (the parent row) for each checked checkbox
+        //             const row = checkbox.closest("tr");
+        //             // Collect the data from the row's cells (td elements)
+        //             const rowData = Array.from(row.querySelectorAll("td")).map(function(cell) {
+        //                 return cell.textContent.trim();
+        //             });
+        //             // Add the driver information to the row's data
+        //             rowData.push({
+        //                 driverId: selectedDriverId,
+        //                 driverName: selectedDriverName,
+        //             });
+        //             // Add the rowData array to the selectedRowsData array
+        //             selectedRowsData.push(rowData);
+        //         });
+        //         // Prepare the data to be sent to the backend (you can customize this as needed)
+        //         const dataToSend = {
+        //             selectedRows: selectedRowsData,
+        //             // Add other details here as needed
+        //         };
+        //     console.log("dataToSend");
+        //     console.log(dataToSend);
+
+        //         // var url = "{{ route('assigned_delivery_to_driver') }}";
+
+        //         // $.ajax({
+        //         //     url: url,
+        //         //     type: "POST",
+        //         //     data: { selected_delivery_ids: dataToSend },
+        //         //     success: function(response) {
+        //         //         // if (response.redirect) {
+        //         //         //     // Pass the selected deliveries as a parameter when redirecting
+        //         //         //     window.location.href = response.redirect + '?deliveries=' + selectedDeliveries.join(',');
+        //         //         // } 
+        //         //     },
+        //         //     error: function(error) {
+        //         //         console.log(error);
+        //         //     }
+        //         // });
+           
+        //         // Send an AJAX request to the backend (you need to specify the backend endpoint)
+           
+           
+        //     });
+        // });
 
         function handleDriverSelection() {
             // Get the selected driver value
@@ -359,58 +418,58 @@
         }
 
         // auto assign button
-        document.addEventListener("DOMContentLoaded", function() {
-            // Get a reference to the "Auto Assign" button
-            const autoAssignButton = document.getElementById("autoAssignButton");
-            // Add a click event listener to the button
-            autoAssignButton.addEventListener("click", function() {
-                // Get all the checked checkboxes
-                const checkboxes = document.querySelectorAll('input.form-check-input:checked');
-                // Create an array to store the selected checkbox values
-                const selectedRowData = [];
-                // Iterate through the checked checkboxes
-                checkboxes.forEach(function(checkbox) {
-                    // Get the closest tr > element(the parent row) for each checked checkbox
-                    const row = checkbox.closest("tr");
-                    // Collect the data from the row's cells (td elements)
-                    const rowData = Array.from(row.querySelectorAll("td")).map(function(cell) {
-                        return cell.textContent.trim();
-                    });
-                    // Add the rowData array to the selectedRowData array
-                    selectedRowData.push(rowData);
-                });
-                // Prepare the data to be sent to the backend (you can customize this as needed)
-                const dataToSend = {
-                    selectedRows: selectedRowData,
-                    // Add other details here as needed
-                };
-                console.log('Selected Rows Data', dataToSend);
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     // Get a reference to the "Auto Assign" button
+        //     const autoAssignButton = document.getElementById("autoAssignButton");
+        //     // Add a click event listener to the button
+        //     autoAssignButton.addEventListener("click", function() {
+        //         // Get all the checked checkboxes
+        //         const checkboxes = document.querySelectorAll('input.form-check-input:checked');
+        //         // Create an array to store the selected checkbox values
+        //         const selectedRowData = [];
+        //         // Iterate through the checked checkboxes
+        //         checkboxes.forEach(function(checkbox) {
+        //             // Get the closest tr > element(the parent row) for each checked checkbox
+        //             const row = checkbox.closest("tr");
+        //             // Collect the data from the row's cells (td elements)
+        //             const rowData = Array.from(row.querySelectorAll("td")).map(function(cell) {
+        //                 return cell.textContent.trim();
+        //             });
+        //             // Add the rowData array to the selectedRowData array
+        //             selectedRowData.push(rowData);
+        //         });
+        //         // Prepare the data to be sent to the backend (you can customize this as needed)
+        //         const dataToSend = {
+        //             selectedRows: selectedRowData,
+        //             // Add other details here as needed
+        //         };
+        //         console.log('Selected Rows Data', dataToSend);
 
-                // Send an AJAX request to the backend (you need to specify the backend endpoint)
-                // You can use libraries like Axios or the native fetch API for this
-                // Example using fetch:
-                // fetch('/your-backend-endpoint', {
-                // method: 'POST',
-                // headers: {
-                // 'Content-Type': 'application/json',
-                // },
-                // body: JSON.stringify(dataToSend),
-                // })
-                // .then(response => {
-                // if (response.ok) {
-                // // Handle success, e.g., show a success message
-                // alert("Selected checkboxes have been sent to the backend.");
-                // } else {
-                // // Handle errors, e.g., display an error message
-                // alert("An error occurred while sending data to the backend.");
-                // }
-                // })
-                // .catch(error => {
-                // // Handle network errors
-                // console.error("Network error:", error);
-                // });
-            });
-        })
+        //         // Send an AJAX request to the backend (you need to specify the backend endpoint)
+        //         // You can use libraries like Axios or the native fetch API for this
+        //         // Example using fetch:
+        //         // fetch('/your-backend-endpoint', {
+        //         // method: 'POST',
+        //         // headers: {
+        //         // 'Content-Type': 'application/json',
+        //         // },
+        //         // body: JSON.stringify(dataToSend),
+        //         // })
+        //         // .then(response => {
+        //         // if (response.ok) {
+        //         // // Handle success, e.g., show a success message
+        //         // alert("Selected checkboxes have been sent to the backend.");
+        //         // } else {
+        //         // // Handle errors, e.g., display an error message
+        //         // alert("An error occurred while sending data to the backend.");
+        //         // }
+        //         // })
+        //         // .catch(error => {
+        //         // // Handle network errors
+        //         // console.error("Network error:", error);
+        //         // });
+        //     });
+        // })
 
         $(document).ready(function() {
             $("#kt_datepicker_7").flatpickr({
@@ -487,7 +546,6 @@
 
             // Create an array to store the selected delivery IDs
             const selectedDeliveryIds = Array.from(checkboxes).map(checkbox => checkbox.value);
-
             // Add the selected delivery IDs as a hidden field in the form
             const hiddenField = document.createElement('input');
             hiddenField.type = 'hidden';
