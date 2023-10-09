@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Request;
 use App\Http\Helper\Helper;
 use Modules\BusinessService\Entities\Business;
+
 class BusinessWallet extends Model
 {
     use HasFactory;
@@ -22,11 +23,12 @@ class BusinessWallet extends Model
 
     ];
 
-
-    public function business(){
+    public function business()
+    {
         return $this->belongsTo(Business::class);
     }
-    public function cards(){
+    public function cards()
+    {
         return $this->hasMany(BusinessCard::class);
     }
 
@@ -55,9 +57,18 @@ class BusinessWallet extends Model
             $method = Request::method();
 
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
         });
@@ -82,9 +93,18 @@ class BusinessWallet extends Model
                 $method = Request::method();
 
                 $helper->logActivity(
-                    userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                    url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                    oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                    userId: $user_id,
+                    moduleName: $module_name,
+                    action: $action,
+                    subject: $subject,
+                    url: $url,
+                    description: $description,
+                    ipAddress: $ip_address,
+                    userAgent: $user_agent,
+                    oldValues: $old_values,
+                    newValues: $new_values,
+                    recordId: $record_id,
+                    recordType: $record_type,
                     method: $method
                 );
             }
@@ -106,14 +126,20 @@ class BusinessWallet extends Model
             $record_type = get_class($model);
             $method = Request::method();
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
-
         });
-
     }
-
 }

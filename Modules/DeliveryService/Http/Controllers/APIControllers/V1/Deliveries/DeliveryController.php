@@ -609,9 +609,7 @@ class DeliveryController extends Controller
                 'signature_img' => ['image'],
                 'address_img' => ['image'],
                 'empty_bag_count' => [],
-
             ]);
-
 
             // Check if validation fails
             if ($validator->fails()) {
@@ -626,6 +624,10 @@ class DeliveryController extends Controller
             $signature_img = $request->file('signature_img');
             $address_img = $request->file('address_img');
             $empty_bag_count = $request->post('empty_bag_count');
+
+            $delivery = $this->deliveryRepository->getSingleDelivery($delivery_id);
+            $date = date('Y-m-d');
+            $deliveryCount =  $this->deliveryRepository->getDeliveredCountOfDays($delivery->branch_id, $date,  $date);
 
             DB::beginTransaction();
 

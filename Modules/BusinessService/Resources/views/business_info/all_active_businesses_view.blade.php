@@ -6,7 +6,7 @@
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <!--begin::Container-->
     <div id="kt_content_container" class="container-fluid">
-        <h1 class="fs-lg-2x  pb-7 px-2">New Business Requests </h1>
+        <h1 class="fs-lg-2x  pb-7 px-2">All Active Businesses </h1>
 
         <div class="d-flex flex-column flex-lg-row">
             <!--begin::Content-->
@@ -53,6 +53,8 @@
                                     <th class="min-w-50px">Application Date</th>
                                     <th class="min-w-50px">Admin</th>
                                     <th class="min-w-50px">Status</th>
+                                    <th class="min-w-50px">Wallet</th>
+
                                     <th class="text-end min-w-100px">Actions</th>
                                 </tr>
                                 <!--end::Table row-->
@@ -96,6 +98,15 @@
 
                                         @if ($business->business_categories)
                                         {{$business->business_categories->name}}
+                                        @endif
+
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-light-success">Wallet Balance</span>
+                                        <br>
+                                        @if ($business->wallet)
+                                        {{$business->wallet->balance}}
                                         @endif
 
                                     </td>

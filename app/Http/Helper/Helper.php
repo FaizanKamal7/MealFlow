@@ -66,6 +66,7 @@ class Helper
             'description' => $description,
         ]);
     }
+    
     public function createWallet($business_id)
     {
         BusinessWallet::create([

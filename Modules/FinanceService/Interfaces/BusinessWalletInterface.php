@@ -2,9 +2,11 @@
 
 namespace Modules\FinanceService\Interfaces;
 
-interface BusinessWalletInterface {
-    
+interface BusinessWalletInterface
+{
+
     public function createWallet($balance);
     public function getWallet($id);
-    public function updateWallet($id,$balance);
+    public function updateWallet($id, $balance);
+    public function getBusinessWallet($id);
 }
