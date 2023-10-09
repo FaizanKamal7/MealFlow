@@ -104,7 +104,8 @@ class EmptyBagCollectionController extends Controller
             }
             return $this->success($created, "Bag Collected successfully");
         } catch (Exception $exception) {
-            return $this->error($exception, "Error occured  while creating  bag collection Please contact support", 500);
+            dd($exception);
+            return $this->error($exception, "Exception while creating  bag collection Please contact support", 500);
         }
     }
 
