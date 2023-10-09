@@ -85,7 +85,9 @@ class EmptyBagCollectionController extends Controller
             $customer_id = $request->post('customer_id');
 
             $delivery_bag = $this->deliveryBagRepository->getLastDeliveryBagInfo($bag_id);
-
+            if ($delivery_bag == null) {
+                return $this->error($bag_id, "Error: Bag is not associated with any delivery", 500);
+            }
             // ----------------GETTTING BAG FROM BAG ID -------------
             // $bag = $this->bagsRepository->getBag($bag_id);
             // $delivery_id = $bag->bagTimeline->last()->delivery_id; // this id refers to the delivery when this bag was delivered
@@ -104,7 +106,8 @@ class EmptyBagCollectionController extends Controller
             }
             return $this->success($created, "Bag Collected successfully");
         } catch (Exception $exception) {
-            return $this->error($exception, "Error occured  while creating  bag collection Please contact support", 500);
+            dd($exception);
+            return $this->error($exception, "Exception while creating  bag collection Please contact support", 500);
         }
     }
 
