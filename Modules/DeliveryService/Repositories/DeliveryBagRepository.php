@@ -18,4 +18,11 @@ class DeliveryBagRepository implements DeliveryBagInterface
     {
         return DeliveryBag::where('delivery_id', $delivery_id)->exists();
     }
+
+    public function getLastDeliveryBagInfo($bag_id)
+    {
+        return DeliveryBag::where('bag_id', '=', $bag_id)
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
 }

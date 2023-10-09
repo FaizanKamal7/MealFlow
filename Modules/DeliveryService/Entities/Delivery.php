@@ -189,7 +189,6 @@ class Delivery extends Model
                     // TODO ADD BAGID BY USING RELATIONSHIP OF DELIVERY WITH BAG
 
                     // $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
-
                 }
             }
         });

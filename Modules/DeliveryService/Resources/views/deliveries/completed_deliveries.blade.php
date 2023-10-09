@@ -1,5 +1,5 @@
 @extends('businessservice::layouts.master')
-@section('title', 'Assigned Deliveries')
+@section('title', 'Completed Deliveries')
 
 @section('extra_style')
 <link href="{{ asset('static/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css/">
@@ -16,7 +16,7 @@
                 <!--begin::Card header-->
                 <div class="d-flex mt-2 align-items-center pricing-header justify-content-between">
                     <div class="activate-service">
-                        <h1 class="fs-lg-2x ">Assigned Deliveries</h1>
+                        <h1 class="fs-lg-2x ">Completed Deliveries</h1>
                     </div>
                     <!--begin::Card title-->
                     <div class="card-title d-flex align-items-center">

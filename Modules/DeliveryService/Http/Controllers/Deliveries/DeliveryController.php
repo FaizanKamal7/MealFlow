@@ -109,10 +109,6 @@ class DeliveryController extends Controller
         return view('deliveryservice::deliveries.unassigned_deliveries');
     }
 
-    public function viewAssignedDeliveries()
-    {
-        return view('deliveryservice::deliveries.assigned_delivery');
-    }
 
     public function uploadDeliveriesByForm(Request $request)
     {
@@ -564,6 +560,23 @@ class DeliveryController extends Controller
         // return view('deliveryservice::deliveries.unassigned_deliveries', $data);
         return view('deliveryservice::deliveries.unassigned_deliveries', $data);
     }
+
+    function viewAssignedDeliveries()
+    {
+        $deliveries = $this->deliveryRepository->getDeliveriesByStatus('ASSIGNED');
+        $drivers = $this->driverRepository->getDetailDrivers();
+        $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
+        return view('deliveryservice::deliveries.assigned_deliveries', $data);
+    }
+
+    function viewCompletedDeliveries()
+    {
+        $deliveries = $this->deliveryRepository->getDeliveriesByStatus('DELIVERED');
+        $drivers = $this->driverRepository->getDetailDrivers();
+        $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
+        return view('deliveryservice::deliveries.completed_deliveries', $data);
+    }
+
     public function view_labels()
     {
         $path = 'media/bags/qrcodes/' . time() . '.svg';
@@ -607,14 +620,15 @@ class DeliveryController extends Controller
         try {
             // --------------- GETTING DELIVERIES AND DRIVER TO ASSIGN-------------
             $driver_id = $request->get("driver_id");
-            $deliveries = explode(',', $request->get("selected_delivery_ids"));
-
+            // $deliveries = explode(',', $request->get("selected_delivery_ids"));
+            $deliveries = $request->get("selected_delivery_ids");
 
             // -------------------- CREATING NEW BATCH FOR DELIVERY BASED ON DRIVER id-----------
             $batch = $this->deliveryBatchRepository->getActiveDeliveryBatchByDriver($driver_id);
 
             // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
             $this->deliveryRepository->assignDeliveryBatch($batch->id, $deliveries);
+
 
 
             // $drivers = $this->driverRepository->getDetailDrivers();
