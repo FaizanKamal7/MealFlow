@@ -32,4 +32,21 @@ class DeliverySlotPricingRepository implements DeliverySlotPricingInterface
     {
         return DeliverySlotPricing::where(['business_id' => $business_id])->get();
     }
+
+    public function getDeliverySlotPriceOfDelivery($delivery_slot_id, $city_id, $business_id = null)
+    {
+        $delivery_slot_pricing = null;
+
+        if ($business_id !== null) {
+            $delivery_slot_pricing = DeliverySlotPricing::where('delivery_slot_id', '=', $delivery_slot_id)
+                ->where('city_id', '=', $city_id)->where('business_id', '=', $business_id)->orderBy('created_at', 'desc')->first();
+        }
+
+        if ($delivery_slot_pricing == null || $business_id == null) {
+            $delivery_slot_pricing = DeliverySlotPricing::where('delivery_slot_id', '=', $delivery_slot_id)
+                ->where('city_id', '=', $city_id)->orderBy('created_at', 'desc')->first();
+        }
+
+        return $delivery_slot_pricing;
+    }
 }

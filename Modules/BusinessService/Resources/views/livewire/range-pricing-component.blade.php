@@ -259,8 +259,9 @@
                             <p style="display: inline;">Below Daily Range Pricing would be same for <b> delivery, bag
                                     collection and cash.
                                     collection.</b></p>
-                            <button type="button" class="button-no-style" onclick=" (this)">Click
-                                here</button>
+                            <button type="button" class="button-no-style" onclick="changeNewlyAddedPricingView(this)">
+                                Click here
+                            </button>
                             <p id="pricing_text_id_new" style="display: inline;">
                                 to set same pricing for all services</p>
                             <div class="form-group row">
@@ -283,14 +284,17 @@
             <!--begin::Form group-->
             <div class="form-group mt-5">
                 <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
-                    <i class="la la-plus"></i>Add new Range
+                    <i class="la la-plus"></i>
+                    Add new Range
                 </a>
             </div>
             <!--end::Form group-->
         </div>
         <br>
-        <button type="submit" data-kt-contacts-type="submit" class="btn btn-primary float-right">Submit
+        <button type="submit" data-kt-contacts-type="submit" class="btn btn-primary float-right">
+            Submit
         </button>
+
     </form>
 
 
@@ -307,8 +311,6 @@
         var btn_text = document.getElementById('pricing_text_id_' + index);
         var is_same_price = document.getElementById('is_same_price_' + index);
         
-
-        console.log(diff_service_wise_pricing_div.style.display);
         if (diff_service_wise_pricing_div.style.display == 'none') {    
             btn_text.textContent = 'to set same pricing for all services';
             same_pricing_div.style.display = 'none';
@@ -368,6 +370,70 @@
         initRepeater();
     });
 
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     // Define the existing repeater data here
+    //     var existingRepeaterData = {!! json_encode($available_base_range_pricings) !!};
+    //     var repeaterList = document.querySelector('[data-repeater-list="range_pricing_list"]');
+
+    //     // Iterate through the existing data and add them to the repeater list
+    //     existingRepeaterData.forEach(function (item) {
+    //         var newRepeaterItem = document.createElement('div');
+    //         newRepeaterItem.setAttribute('data-repeater-item', '');
+
+    //         // Define the HTML structure for the new repeater item here
+    //         newRepeaterItem.innerHTML = `
+    //             <!-- Your HTML structure for a repeater item here -->
+    //             <div>
+    //                 <!-- Populate the fields with data from existing items -->
+    //                 <input type="hidden" name="is_same_price" value="true" />
+    //                 <input type="hidden" name="available_base_range_pricing_id" value="${item.id}" />
+    //                 <!-- Populate other fields as needed -->
+
+    //                 <!-- Add more fields and HTML structure as needed -->
+    //             </div>
+    //         `;
+
+    //         // Append the new repeater item to the repeater list
+    //         repeaterList.appendChild(newRepeaterItem);
+    //     });
+    // });
+
+
+        // Get the existing repeater items
+        // var existingRepeaterItems = document.querySelectorAll('[data-repeater-item]');
+
+        // // Initialize an array to store the data
+        // var rangePricingListData = [];
+
+        // // Iterate through the existing repeater items
+        // existingRepeaterItems.forEach(function(item) {
+        //     var data = {
+        //         min_range: item.querySelector('input[name="min_range"]').value,
+        //         max_range: item.querySelector('input[name="max_range"]').value,
+        //         price: item.querySelector('input[name="price"]').value,
+        //         same_loc_price: item.querySelector('input[name="same_loc_price"]').value,
+        //         // Add more fields as needed
+        //     };
+
+        //     // Push the data to the array
+        //     rangePricingListData.push(data);
+        // });
+
+        // // Populate the range_pricing_list with the data
+        // var rangePricingList = document.querySelector('[data-repeater-list="range_pricing_list"]');
+        // rangePricingListData.forEach(function(data) {
+        //     var newItem = rangePricingList.querySelector('[data-repeater-item]').cloneNode(true);
+
+        //     // Set the values in the new repeater item
+        //     newItem.querySelector('input[name="min_range"]').value = data.min_range;
+        //     newItem.querySelector('input[name="max_range"]').value = data.max_range;
+        //     newItem.querySelector('input[name="price"]').value = data.price;
+        //     newItem.querySelector('input[name="same_loc_price"]').value = data.same_loc_price;
+        //     // Set more values as needed
+
+        //     // Append the new item to the repeater list
+        //     rangePricingList.appendChild(newItem);
+        // });
 
 
 </script>

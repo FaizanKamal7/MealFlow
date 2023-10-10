@@ -20,7 +20,7 @@ class DeliveryRepository implements DeliveryInterface
 
     public function getSingleDelivery($id)
     {
-        return Delivery::with('deliverySlot', 'customerAddress')->find($id)->get();
+        return Delivery::with('deliverySlot', 'customerAddress')->find($id)->first();
     }
 
     public function getDeliveredCountOfDays($branch_id, $start_date, $end_date)
@@ -160,4 +160,6 @@ class DeliveryRepository implements DeliveryInterface
             ->whereNotNull('delivery_bags.delivery_id')
             ->get();
     }
+
+    
 }

@@ -23,6 +23,9 @@ use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\CustomerAddressInterface;
 use Modules\BusinessService\Interfaces\CustomerInterface;
 use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
+use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
+use Modules\BusinessService\Interfaces\RangePricingInterface;
+use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Entities\DeliveryBag;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
 use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
@@ -32,6 +35,7 @@ use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\DeliveryService\Repositories\DeliveryBagRepository;
 use Modules\DeliveryService\Repositories\PickupBatchRepository;
+use Modules\FinanceService\Interfaces\InvoiceItemInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 
@@ -57,6 +61,12 @@ class DeliveryController extends Controller
     private $deliveryImagesRepository;
     private $deliveryBagRepository;
     private $pickupBatchRepository;
+    private $rangePricingRepository;
+    private $deliverySlotPricingRepository;
+    private $invoiceItemRepository;
+
+
+
     use HttpResponses;
 
     public function __construct(
@@ -78,6 +88,10 @@ class DeliveryController extends Controller
         DeliveryImagesInterface $deliveryImagesRepository,
         DeliveryBagInterface $deliveryBagRepository,
         PickupBatchRepository $pickupBatchRepository,
+        RangePricingInterface $rangePricingRepository,
+        DeliverySlotPricingInterface $deliverySlotPricingRepository,
+        InvoiceItemInterface $invoiceItemRepository,
+
 
     ) {
         $this->customerRepository = $customerRepository;
@@ -98,6 +112,10 @@ class DeliveryController extends Controller
         $this->deliveryImagesRepository = $deliveryImagesRepository;
         $this->deliveryBagRepository = $deliveryBagRepository;
         $this->pickupBatchRepository = $pickupBatchRepository;
+        $this->rangePricingRepository = $rangePricingRepository;
+        $this->deliverySlotPricingRepository = $deliverySlotPricingRepository;
+        $this->invoiceItemRepository = $invoiceItemRepository;
+
         $this->helper = new Helper();
     }
 
@@ -624,10 +642,14 @@ class DeliveryController extends Controller
             $signature_img = $request->file('signature_img');
             $address_img = $request->file('address_img');
             $empty_bag_count = $request->post('empty_bag_count');
-
             $delivery = $this->deliveryRepository->getSingleDelivery($delivery_id);
+
             $date = date('Y-m-d');
-            $deliveryCount =  $this->deliveryRepository->getDeliveredCountOfDays($delivery->branch_id, $date,  $date);
+            $delivery_count =  $this->deliveryRepository->getDeliveredCountOfDays($delivery->branch_id, $date,  $date);
+            $range_price =  $this->rangePricingRepository->getRangePriceOfDelivery($delivery_count, $delivery->customerAddress->city_id,  $delivery->branch->business_id);
+            $delivery_slot_price =  $this->deliverySlotPricingRepository->getDeliverySlotPriceOfDelivery($delivery->delivery_slot_id, $delivery->customerAddress->city_id,  $delivery->branch->business_id);
+            $amount_to_deduct = min($delivery_slot_price, $range_price);
+            // $invoice_item = $this->i
 
             DB::beginTransaction();
 
@@ -687,14 +709,6 @@ class DeliveryController extends Controller
             $driver_id = $request->get("driver_id");
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
-<<<<<<< Updated upstream
-
-            if (!$db_deliveries) {
-                return $this->error($db_deliveries, "Something went wrong please contact support. No bag pickups for driver");
-            }
-
-            return $this->success($db_deliveries, "Drivers assigned pickup bags recieved successfully");
-=======
             $grouped_deliveries = [];
 
             // Iterate over the data
@@ -752,7 +766,6 @@ class DeliveryController extends Controller
             }
 
             return $this->success($grouped_deliveries, "Drivers partner wise assigned pickup  recieved successfully");
->>>>>>> Stashed changes
         } catch (Exception $exception) {
             dd($exception);
             return $this->error($exception, "Something went wrong please contact support");
