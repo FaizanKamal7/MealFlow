@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Request;
 use App\Http\Helper\Helper;
 
 class WalletDeduction extends Model
-{
+{ 
     use HasFactory;
     use HasUuids;
     use SoftDeletes;

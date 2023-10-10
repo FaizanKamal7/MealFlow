@@ -16,13 +16,14 @@ class EmptyBagCollection extends Model
 {
     use HasFactory;
     use HasUuids;
+
     protected $fillable = [
         "customer_id",
         "bag_id",
         "delivery_id",
         "empty_bag_collection_batch_id",
         "empty_bag_collection_delivery_id",
-        
+
     ];
 
     public function customer()
@@ -62,8 +63,8 @@ class EmptyBagCollection extends Model
             $helper = new Helper();
             $action_by = auth()->id();
             $bag_id = $attributes['bag_id'];
-            $delivery_id = $attributes['delivery_id']? $attributes['delivery_id']: null;
-            $status = $attributes['empty_bag_collection_delivery_id']? 'Collected from customer' : 'Unassigned for collection ';
+            $delivery_id = $attributes['delivery_id'] ? $attributes['delivery_id'] : null;
+            $status = $attributes['empty_bag_collection_delivery_id'] ? 'Collected from customer' : 'Unassigned for collection ';
             $vehicle_id = null;
             $description = "New bag collection added";
 
@@ -86,12 +87,21 @@ class EmptyBagCollection extends Model
             $record_type = get_class($model);
             $method = Request::method();
 
-            
+
 
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
         });
@@ -104,13 +114,12 @@ class EmptyBagCollection extends Model
                 $helper = new Helper();
                 $action_by = auth()->id();
                 $bag_id = $attributes['id'];
-                $delivery_id = $attributes['delivery_id']? $attributes['delivery_id']: null;
-                $status = $attributes['empty_bag_collection_delivery_id']? 'Collected from customer' :'Unassigned for collection ';
+                $delivery_id = $attributes['delivery_id'] ? $attributes['delivery_id'] : null;
+                $status = $attributes['empty_bag_collection_delivery_id'] ? 'Collected from customer' : 'Unassigned for collection ';
                 $vehicle_id = $model->getOriginal('vehicle_id');
                 $description = "status updated";
                 // TODO STATUS THING
                 $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
-                
             }
         });
 
@@ -130,13 +139,20 @@ class EmptyBagCollection extends Model
             $record_type = get_class($model);
             $method = Request::method();
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
-
         });
-
     }
 }
