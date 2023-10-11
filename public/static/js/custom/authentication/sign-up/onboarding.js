@@ -29,6 +29,7 @@ var KTCreateAccount = (function () {
                           o.classList.remove("d-none"),
                           s.classList.remove("d-none"));
                 }),
+                // console.log('form', i)
                 r.on("kt.stepper.next", function (e) {
                     console.log("stepper.next");
                     var t = a[e.getCurrentStepIndex() - 1];
@@ -156,6 +157,11 @@ var KTCreateAccount = (function () {
                         },
                     })
                 ),
+                console.log('a', a)
+                const deliveryNameInput = document.getElementById('asdasd');
+                console.log('adsdasdad', deliveryNameInput)
+
+
                 a.push(
                     FormValidation.formValidation(i, {
                         fields: {

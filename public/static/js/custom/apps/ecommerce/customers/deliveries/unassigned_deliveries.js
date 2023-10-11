@@ -57,6 +57,7 @@ function printSelectedLabels() {
             selectedDeliveryIds.push(checkbox.value);
         }
     });
+    console.log('checkboxes',checkboxes)
     // Create the URL for the new view with selected_delivery_ids as a query parameter
     const url = `/admin/deliveries/print-label?selected_deliveries=${selectedDeliveryIds.join(
         ","
@@ -105,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
             selectedRows: selectedRowsData,
             // Add other details here as needed
         };
+        console.log('data', dataToSend)
         console.log("hehe", dataToSend);
         // Send an AJAX request to the backend (you need to specify the backend endpoint)
     });

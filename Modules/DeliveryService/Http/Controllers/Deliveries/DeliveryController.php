@@ -7,6 +7,7 @@ use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
 use App\Interfaces\DeliverySlotInterface;
 use App\Interfaces\UserInterface;
+use App\Models\DeliverySlot;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\BusinessService\Entities\CustomerAddress;
 use Modules\BusinessService\Interfaces\BranchInterface;
+use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
 use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\CustomerAddressInterface;
@@ -41,6 +43,7 @@ class DeliveryController extends Controller
     private $userRepository;
     private $branchRepository;
     private $businessRepository;
+    private $BusinessCategoryRepository;
     private $businessCustomerRepository;
     private $deliveryTypeRepository;
     private $deliveryRepository;
@@ -59,6 +62,7 @@ class DeliveryController extends Controller
         UserInterface $userRepository,
         BranchInterface $branchRepository,
         BusinessInterface $businessRepository,
+        BusinessCategoryInterface $businessCategoryRepository,
         BusinessCustomerInterface $businessCustomerRepository,
         DeliveryTypeInterface $deliveryTypeRepository,
         DeliveryInterface $deliveryRepository,
@@ -77,6 +81,7 @@ class DeliveryController extends Controller
         $this->customerSecondaryNumberRepository = $customerSecondaryNumberRepository;
         $this->branchRepository = $branchRepository;
         $this->businessRepository = $businessRepository;
+        $this->BusinessCategoryRepository = $businessCategoryRepository;
         $this->businessCustomerRepository = $businessCustomerRepository;
         $this->deliveryTypeRepository = $deliveryTypeRepository;
         $this->deliveryRepository = $deliveryRepository;
@@ -97,11 +102,6 @@ class DeliveryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function uploadDeliveries()
-    {
-        $businesses = $this->businessRepository->getActiveBusinesses();
-        return view('deliveryservice::deliveries.upload_delivery', ['businesses' => $businesses]);
-    }
 
     public function viewUnassignedDeliveries()
     {
@@ -110,36 +110,80 @@ class DeliveryController extends Controller
 
     public function UploadDeliveriesMultiple(Request $request)
     {
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'phone' => 'required|string|max:20',
-        //     'area' => 'required|string|max:255',
-        //     // Add validation rules for each field
-        //     'emirates_with_time' => 'required|string|max:255',
-        //     // Add validation rules for each field
-        //     'datepicker' => 'required|date',
-        //     // Adjust date validation as needed
-        //     'company_delivery_id' => 'required|string|max:255',
-        //     // Add validation rules for each field
-        //     'delivery_amount' => 'required|numeric',
-        //     // Adjust numeric validation as needed
-        //     'signature' => 'required|string|max:255',
-        //     // Add validation rules for each field
-        //     'notification' => 'required|string|max:255',
-        //     // Add validation rules for each field
-        //     'pickup_address' => 'required|string|max:255',
-        //     // Add validation rules for each field
-        //     'delivery_address' => 'required|string|max:255',
-        //     // Add validation rules for each field
-        //     'product_type' => 'required|string|max:255',
-        //     // Add validation rules for each field
-        //     'notes' => 'required|string|max:255',
-        //     // Add validation rules for each field
-        //     'google_link_address' => 'required|string|max:255',
-        //     // Add validation rules for each field
-        // ]);
+        // dd($request);
+        $validatedData = $request->validate([
+            'kt_docs_repeater_advanced.*.delivery_name' => 'required|string|max:255',
+            'kt_docs_repeater_advanced.*.phone_number' => 'required|string|max:20',
+            'kt_docs_repeater_advanced.*.area' => 'required',
+            'kt_docs_repeater_advanced.*.emirates_with_time' => 'required',
+            'kt_docs_repeater_advanced.*.datepicker' => 'required|date',
+            'kt_docs_repeater_advanced.*.company_delivery_id' => 'required|string|max:255',
+            'kt_docs_repeater_advanced.*.delivery_amount' => 'required|numeric',
+            'kt_docs_repeater_advanced.*.signature' => 'required|in:0,1',
+            'kt_docs_repeater_advanced.*.notification' => 'required|in:0,1',
+            'kt_docs_repeater_advanced.*.pickup_address' => 'required|string|max:255',
+            'kt_docs_repeater_advanced.*.delivery_address' => 'required|string|max:255',
+            'kt_docs_repeater_advanced.*.product_type' => 'required',
+            'kt_docs_repeater_advanced.*.notes' => 'required|string|max:255',
+            'kt_docs_repeater_advanced.*.google_link_address' => 'required|url',
+        ], [
+            'kt_docs_repeater_advanced.*.delivery_name.required' => 'Delivery name is required',
+            'kt_docs_repeater_advanced.*.phone_number.required' => 'Phone number is required',
+            'kt_docs_repeater_advanced.*.area.required' => 'Area is required',
+            'kt_docs_repeater_advanced.*.emirates_with_time.required' => 'Emirates with time is required',
+            'kt_docs_repeater_advanced.*.datepicker.required' => 'Date is required',
+            'kt_docs_repeater_advanced.*.company_delivery_id.required' => 'Company Delivery ID is required',
+            'kt_docs_repeater_advanced.*.delivery_amount.required' => 'Delivery Amount is required',
+            'kt_docs_repeater_advanced.*.signature.required' => 'Signature is required',
+            'kt_docs_repeater_advanced.*.notification.required' => 'Notification is required',
+            'kt_docs_repeater_advanced.*.pickup_address.required' => 'Pickup Address is required',
+            'kt_docs_repeater_advanced.*.delivery_address.required' => 'Delivery Address is required',
+            'kt_docs_repeater_advanced.*.product_type.required' => 'Product Type is required',
+            'kt_docs_repeater_advanced.*.notes.required' => 'Notes are required',
+            'kt_docs_repeater_advanced.*.google_link_address.required' => 'Google Link Address is required',
+        ]);
 
-        // dd($validatedData);
+        $repeaterData = $request->input('kt_docs_repeater_advanced.*');
+//form can be multiple, making this like to accept multiform value
+        foreach ($repeaterData as $row) {
+            dd($row);
+            // Process the data for each row
+        }
+
+
+
+        // $name = $request->input('kt_docs_repeater_advanced.0.delivery_name');
+        // $phoneNumber = $request->input('kt_docs_repeater_advanced.0.phone_number');
+        // $area = $request->input('kt_docs_repeater_advanced.0.area');
+        // $emiratesWithTime = $request->input('kt_docs_repeater_advanced.0.emirates_with_time');
+        // $datepicker = $request->input('kt_docs_repeater_advanced.0.datepicker');
+        // $companyDeliveryId = $request->input('kt_docs_repeater_advanced.0.company_delivery_id');
+        // $deliveryAmount = $request->input('kt_docs_repeater_advanced.0.delivery_amount');
+        // $signature = $request->input('kt_docs_repeater_advanced.0.signature');
+        // $notification = $request->input('kt_docs_repeater_advanced.0.notification');
+        // $pickupAddress = $request->input('kt_docs_repeater_advanced.0.pickup_address');
+        // $deliveryAddress = $request->input('kt_docs_repeater_advanced.0.delivery_address');
+        // $productType = $request->input('kt_docs_repeater_advanced.0.product_type');
+        // $notes = $request->input('kt_docs_repeater_advanced.0.notes');
+        // $googleLinkAddress = $request->input('kt_docs_repeater_advanced.0.google_link_address');
+
+        // dd(
+        //     $name,
+        //     $phoneNumber,
+        //     $area,
+        //     $emiratesWithTime,
+        //     $datepicker,
+        //     $companyDeliveryId,
+        //     $deliveryAmount,
+        //     $signature,
+        //     $notification,
+        //     $pickupAddress,
+        //     $deliveryAddress,
+        //     $productType,
+        //     $notes,
+        //     $googleLinkAddress
+        // );
+
     }
 
     public function uploadDeliveriesByForm(Request $request)
@@ -538,6 +582,24 @@ class DeliveryController extends Controller
         return $actual_headers === $expected_headers;
     }
 
+    public function uploadDeliveries()
+    {
+        $businesses = $this->businessRepository->getActiveBusinesses();
+        $areas = $this->areaRepository->getAllAreas();
+        $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
+        $product_type = $this->BusinessCategoryRepository->getBusinessCategory();
+        usort($time_slot, function ($a, $b) {
+            return strcmp($a['start_time'], $b['start_time']);
+        });
+        $time_slot = DeliverySlot::hydrate($time_slot);
+        $data = [
+            'businesses' => $businesses,
+            'areas' => $areas,
+            'time_slot' => $time_slot,
+            'product_type' => $product_type
+        ];
+        return view('deliveryservice::deliveries.upload_delivery', $data);
+    }
 
     public function viewAssignedDeliveries()
     {
