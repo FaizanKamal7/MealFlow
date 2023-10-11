@@ -11,4 +11,5 @@ interface RangePricingInterface
     public function getAllRangeBasePricesOfCity($city);
     public function getAllRangeBusinessPricesOfCities($cities, $business_id);
     public function getBusinessPricing($business_id);
+    public function getRangePriceOfDelivery($delivery_count, $city_id, $business_id = null);
 }

@@ -23,6 +23,7 @@ use Modules\BusinessService\Interfaces\OnboardingInterface;
 use Modules\BusinessService\Interfaces\BranchCoverageDeliverySlotsInterface;
 use Illuminate\Support\Facades\Session;
 use Modules\BusinessService\Http\Requests\BusinessRequest;
+use Modules\FinanceService\Interfaces\BusinessWalletInterface;
 
 class BusinessOnboardingController extends Controller
 {
@@ -40,6 +41,8 @@ class BusinessOnboardingController extends Controller
     private CityInterface $cityRepository;
     private AreaInterface $areaRepository;
     private BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository;
+    private BusinessWalletInterface $businessWalletRepository;
+
     private Helper $helper;
 
 
@@ -59,6 +62,7 @@ class BusinessOnboardingController extends Controller
         CityInterface $cityRepository,
         AreaInterface $areaRepository,
         BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository,
+        BusinessWalletInterface $businessWalletRepository,
         Helper $helper
 
 
@@ -76,6 +80,7 @@ class BusinessOnboardingController extends Controller
         $this->cityRepository = $cityRepository;
         $this->areaRepository = $areaRepository;
         $this->branchCoverageDeliverySlotRepository = $branchCoverageDeliverySlotRepository;
+        $this->businessWalletRepository = $businessWalletRepository;
         $this->helper = $helper;
     }
 
@@ -173,6 +178,7 @@ class BusinessOnboardingController extends Controller
                 user_id: $user->id,
             );
 
+            $this->businessWalletRepository->createWallet($business->id);
 
 
             $branch = $this->branchRepository->createBranch(
