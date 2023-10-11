@@ -18,7 +18,7 @@ use Modules\DeliveryService\Http\Controllers\APIControllers\V1\EmptyBagCollectio
 |
 */
 
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'deliveryservice/'], function () {
+Route::group(['prefix' => 'deliveryservice/'], function () {
 
     Route::prefix('driver/')->group(function () {
         Route::GET('deliveries', [DeliveryController::class, "getDriverDeliveries"]);

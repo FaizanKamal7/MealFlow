@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string("payment_status");
             $table->boolean("is_sign_required")->nullable();
             $table->integer('empty_bag_count')->nullable();
-
             $table->string("note")->nullable();
             $table->date("delivery_date");
             $table->uuid("branch_id")->nullable();
