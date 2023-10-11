@@ -15,7 +15,7 @@ interface DeliveryInterface
     public function getDriverPickupAssignedDeliveries($start_date, $end_date, $batch_id);
     public function getDriverPendingPickups($driver_id, $batch_id);
     public function getDriverCompletedPickups($driver_id, $batch_id);
-    // public function getDriverPendingBranchPickups($driver_id, $batch_id, $branch_id);
-    // public function getDriverCompletedBranchPickups($driver_id, $batch_id, $branch_id);
     public function getDeliveredCountOfDays($branch_id, $start_date, $end_date);
+    public function getDriverPendingBranchPickups($driver_id, $batch_id, $branch_id);
+    public function getDriverCompletedBranchPickups($driver_id, $batch_id, $branch_id);
 }
