@@ -82,16 +82,33 @@ class BagsController extends Controller
         $bag_count = (int) $request->get("no_of_bags");
 
         try {
-
             for ($i = 0; $i < $bag_count; $i++) {
-
-                $bag = $this->bagsRepository->addNewBag(qrCode: "", business_id: $request->get("business_id"), bagNumber: $request->get("bag_number"), bagSize: $request->get("bag_size"), bagType: $request->get("bag_size"), weight: $request->get("weight"), dimensions: $request->get("dimensions"), status: 'Added');
+                $bag = $this->bagsRepository->addNewBag(
+                    qrCode: "",
+                    business_id: $request->get("business_id"),
+                    bagNumber: $request->get("bag_number"),
+                    bagSize: $request->get("bag_size"),
+                    bagType: $request->get("bag_size"),
+                    weight: $request->get("weight"),
+                    dimensions: $request->get("dimensions"),
+                    status: 'Added'
+                );
                 $qr_data = json_encode([
                     'bag_id' => $bag->id,
                     'type' => 'bag',
                 ]);
                 QrCode::size(400)->generate($qr_data, $path);
-                $this->bagsRepository->updateBag(id: $bag->id, business_id: $bag->business_id, qrCode: $path, bagNumber: $bag->bag_number, bagSize: $bag->bag_size, bagType: $bag->bag_type, status: $bag->status, weight: $bag->weight, dimensions: $bag->dimensions);
+                $this->bagsRepository->updateBag(
+                    id: $bag->id,
+                    business_id: $bag->business_id,
+                    qrCode: $path,
+                    bagNumber: $bag->bag_number,
+                    bagSize: $bag->bag_size,
+                    bagType: $bag->bag_type,
+                    status: $bag->status,
+                    weight: $bag->weight,
+                    dimensions: $bag->dimensions
+                );
             }
 
             return redirect()->route("add_new_bag")->with("Success", "Bags added successfully");

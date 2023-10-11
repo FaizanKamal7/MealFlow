@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enum\ServiceTypeEnum;
 use App\Interfaces\ApplicationModelInterface;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
@@ -26,6 +27,7 @@ use App\Repositories\StateRepository;
 use App\Repositories\UserPermissionRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRoleRepository;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
@@ -45,8 +47,12 @@ use Modules\BusinessService\Repositories\CustomerSecondaryNumberRepository;
 use Modules\BusinessService\Repositories\DeliverySlotPricingRepository;
 use Modules\BusinessService\Repositories\PricingTypeRepository;
 use Modules\BusinessService\Repositories\RangePricingRepository;
+use Modules\DeliveryService\Entities\Delivery;
+use Modules\DeliveryService\Entities\EmptyBagCollection;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Repositories\DeliveryRepository;
+use Modules\FinanceService\Interfaces\InvoiceItemInterface;
+use Modules\FinanceService\Repositories\InvoiceItemRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -78,6 +84,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CustomerAddressInterface::class, CustomerAddressRepository::class);
         $this->app->bind(CustomerSecondaryNumberInterface::class, CustomerSecondaryNumberRepository::class);
         $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
+        $this->app->bind(InvoiceItemInterface::class, InvoiceItemRepository::class);
     }
 
     /**
@@ -109,5 +116,11 @@ class AppServiceProvider extends ServiceProvider
         //         return count(array_intersect($rolesArray, $roles)) > 0;
         //     });
         // }
+
+
+        Relation::morphMap([
+            'delivery' => Delivery::class,
+            'bag_collection' => EmptyBagCollection::class,
+        ]);
     }
 }

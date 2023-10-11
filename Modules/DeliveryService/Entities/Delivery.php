@@ -11,6 +11,7 @@ use Modules\BusinessService\Entities\Customer;
 use Modules\BusinessService\Entities\CustomerAddress;
 use Illuminate\Support\Facades\Request;
 use App\Http\Helper\Helper;
+use Modules\FinanceService\Entities\InvoiceItem;
 use Modules\FleetService\Entities\Vehicle;
 
 class Delivery extends Model
@@ -82,10 +83,16 @@ class Delivery extends Model
         return $this->hasMany(DeliveryBag::class);
     }
 
+    public function invoiceItems()
+    {
+        return $this->morphMany(InvoiceItem::class, 'service');
+    }
+
     protected static function newFactory()
     {
         return \Modules\DeliveryService\Database\factories\DeliveryFactory::new();
     }
+
 
     public static function boot()
     {
