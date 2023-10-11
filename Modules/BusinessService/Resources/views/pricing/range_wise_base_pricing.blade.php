@@ -9,11 +9,6 @@
 
     <div id="kt_content_container" class="container-xxl">
         <div class="container">
-            {{-- <div class="base">
-                <a href="#" class="btn btn-primary btn-base">Base</a>
-                <a href="#" class="btn btn-active-light">Other</a>
-            </div> --}}
-            {{-- base and other div --}}
             <div class="d-flex mt-2 align-items-center pricing-header justify-content-between">
                 <div class="activate-service">
                     <h1 class="fs-24">Daily Delivery Range Based Pricing</h1>

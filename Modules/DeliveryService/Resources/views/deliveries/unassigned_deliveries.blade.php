@@ -72,8 +72,8 @@
                                     </select>
                                 </div>
                                 <div class="me-3">
-                                    <select id="emirateSelect" class="form-select" data-control="select2" 
-                                    data-placeholder="Select Emirate" data-allow-clear="true">
+                                    <select id="emirateSelect" class="form-select" data-control="select2"
+                                        data-placeholder="Select Emirate" data-allow-clear="true">
                                         <option></option>
                                         @foreach ($emirate as $city)
                                             <option value="{{ $city->name }}">
@@ -117,22 +117,24 @@
                             </div>
                             <div class="d-flex align-items-center assign-div">
                                 <div class="me-3">
-                                    <button id="assignButton" type="submit" class="btn csv-btn">Assign Driver</button>
+                                    <button id="assignButton" type="submit" class="btn csv-btn other-btn">Assign
+                                        Driver</button>
                                 </div>
                                 <div class="me-3">
-                                    <a id="autoAssignButton" class="btn csv-btn">Auto-Assign</a>
+                                    <a id="autoAssignButton" class="btn csv-btn other-btn">Auto-Assign</a>
                                 </div>
                                 <div class="me-3">
-                                    <a class="btn csv-btn">Reschedule</a>
+                                    <a class="btn csv-btn other-btn">Reschedule</a>
                                 </div>
                                 <div class="me-3">
                                     <a class="btn csv-btn cancel" onclick="uncheckAllCheckboxes()">Cancel</a>
                                 </div>
                                 <div class="me-3">
-                                    <a class="btn csv-btn">Delete</a>
+                                    <a class="btn csv-btn cancel">Delete</a>
                                 </div>
                                 <div class="">
-                                    <a class="btn csv-btn" href="#" onclick="printSelectedLabels()">Print Label with
+                                    <a class="btn csv-btn other-btn" href="#" onclick="printSelectedLabels()">Print
+                                        Label with
                                         Logo</a>
                                 </div>
 

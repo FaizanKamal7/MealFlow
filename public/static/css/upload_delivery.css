@@ -46,3 +46,8 @@
     border: 0.5px solid rgba(179, 225, 255, 1);
     height: 41px;
 }
+
+.upload-errors {
+    margin: 10px;
+    color: #f1416c;
+}
