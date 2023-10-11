@@ -20,13 +20,13 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('active_status');
             $table->boolean('is_main_branch');
-            $table->uuid('city_id')->nullable();
-            $table->uuid('state_id')->nullable();
             $table->string('map_selected_area')->nullable();
             $table->decimal('latitude', 10, 7)->nullable();  // 10 digits total, 7 after the decimal point
             $table->decimal('longitude', 10, 7)->nullable(); // 10 digits total, 7 after the decimal point
-            $table->uuid('area_id')->nullable();;
-            $table->uuid('country_id')->nullable();;
+            $table->uuid('city_id')->nullable();
+            $table->uuid('state_id')->nullable();
+            $table->uuid('area_id')->nullable();
+            $table->uuid('country_id')->nullable();
             $table->uuid('business_id');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('set null');
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('set null');
