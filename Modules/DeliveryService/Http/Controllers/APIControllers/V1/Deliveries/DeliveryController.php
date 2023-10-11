@@ -702,8 +702,8 @@ class DeliveryController extends Controller
     {
         // $start_date = date("Y/m/d");
         // $end_date = date("Y-m-d", strtotime($start_date . " +1 day"));
-        $start_date = '2023-09-24';
-        $end_date = '2023-11-10';
+        $start_date = '2022-09-24';
+        $end_date = '2024-11-10';
 
         try {
             $driver_id = $request->get("driver_id");
@@ -780,9 +780,10 @@ class DeliveryController extends Controller
 
         try {
             $driver_id = $request->get("driver_id");
+            $branch_id = $request->get("branch_id");
 
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
-            $db_deliveries = $this->deliveryRepository->getDriverPendingPickups($driver_id, $batch->id);
+            $db_deliveries = $this->deliveryRepository->getDriverPendingBranchPickups($driver_id, $batch->id, $branch_id);
             // $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
 
             if (!$db_deliveries) {
@@ -804,9 +805,10 @@ class DeliveryController extends Controller
 
         try {
             $driver_id = $request->get("driver_id");
+            $branch_id = $request->get("branch_id");
 
             $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
-            $db_deliveries = $this->deliveryRepository->getDriverCompletedPickups($driver_id, $batch->id);
+            $db_deliveries = $this->deliveryRepository->getDriverCompletedBranchPickups($driver_id, $batch->id, $branch_id);
             // $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
 
             if (!$db_deliveries) {
