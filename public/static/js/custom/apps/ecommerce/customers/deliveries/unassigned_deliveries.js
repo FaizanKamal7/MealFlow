@@ -57,7 +57,7 @@ function printSelectedLabels() {
             selectedDeliveryIds.push(checkbox.value);
         }
     });
-    console.log('checkboxes',checkboxes)
+    console.log('checkboxes', checkboxes)
     // Create the URL for the new view with selected_delivery_ids as a query parameter
     const url = `/admin/deliveries/print-label?selected_deliveries=${selectedDeliveryIds.join(
         ","
@@ -222,8 +222,7 @@ $("#columnVisibility").change(function () {
         // Hide selected columns
         selectedColumns.forEach(function (index) {
             $(
-                `#unassigned_table th:nth-child(${
-                    parseInt(index) + 1
+                `#unassigned_table th:nth-child(${parseInt(index) + 1
                 }), #unassigned_table td:nth-child(${parseInt(index) + 1})`
             ).hide();
         });
@@ -289,3 +288,43 @@ document.querySelector("form").addEventListener("submit", function (e) {
     // Now, you can submit the form with the selected delivery IDs
     this.submit();
 });
+
+
+function assignDeliveries() {
+    // Get all checkboxes
+    const checkboxes = document.querySelectorAll('input.form-check-input[type="checkbox"]');
+    console.log('checkbox', checkboxes)
+    // Initialize an array to store selected values
+    const selectedDeliveryIds = [];
+    // Loop through checkboxes and add the selected values to the array
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            selectedDeliveryIds.push(checkbox.value);
+        }
+    });
+    const driver_id = document.getElementById("driverSelect").value;
+    console.log("selectedDeliveryIds");
+    console.log(selectedDeliveryIds + "=---==-" + driver_id);
+
+    var url = "{{ route('assigned_delivery_to_driver') }}";
+
+    $.ajax({
+        url: url,
+        type: "POST",
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+        },
+        data: { selected_delivery_ids: selectedDeliveryIds, driver_id: driver_id },
+        success: function (response) {
+            if (response.redirect) {
+                // Pass the selected deliveries as a parameter when redirecting
+                window.location.href = response.redirect + '?deliveries=' + selectedDeliveries.join(',');
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+}
+
