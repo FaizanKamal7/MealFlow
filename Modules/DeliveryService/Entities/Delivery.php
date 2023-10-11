@@ -19,6 +19,7 @@ class Delivery extends Model
     use HasUuids;
     protected $fillable = [
         "status",
+        "qr_code",
         "is_recurring",
         "payment_status",
         "is_sign_required",
@@ -70,10 +71,17 @@ class Delivery extends Model
     {
         return $this->belongsTo(DeliveryBatch::class, 'delivery_batch_id');
     }
+
     public function vehicle()
     {
         return $this->belongsToThrough(Vehicle::class, DeliveryBatch::class);
     }
+
+    public function deliveryBags()
+    {
+        return $this->hasMany(DeliveryBag::class);
+    }
+
     protected static function newFactory()
     {
         return \Modules\DeliveryService\Database\factories\DeliveryFactory::new();
@@ -181,15 +189,8 @@ class Delivery extends Model
                     // TODO ADD BAGID BY USING RELATIONSHIP OF DELIVERY WITH BAG
 
                     // $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
-
                 }
             }
-
-
-
-
-
-
         });
 
         static::deleting(function ($model) {
@@ -222,8 +223,6 @@ class Delivery extends Model
                 recordType: $record_type,
                 method: $method
             );
-
         });
-
     }
 }

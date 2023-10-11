@@ -10,6 +10,7 @@ use Modules\DeliveryService\Interfaces\EmptyBagCollectionBatchInterface;
 use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
 use Modules\DeliveryService\Interfaces\BagsInterface;
 use Modules\DeliveryService\Interfaces\BagStatusInterface;
+use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\DeliveryService\Interfaces\PickupBatchBranchInterface;
@@ -19,6 +20,7 @@ use Modules\DeliveryService\Repositories\EmptyBagCollectionBatchRepository;
 use Modules\DeliveryService\Repositories\EmptyBagCollectionRepository;
 use Modules\DeliveryService\Repositories\BagsRepository;
 use Modules\DeliveryService\Repositories\BagStatusRepository;
+use Modules\DeliveryService\Repositories\DeliveryBagRepository;
 use Modules\DeliveryService\Repositories\DeliveryBatchRepository;
 use Modules\DeliveryService\Repositories\DeliveryTypeRepository;
 use Modules\DeliveryService\Repositories\PickupBatchBranchRepository;
@@ -71,6 +73,7 @@ class DeliveryServiceServiceProvider extends ServiceProvider
         $this->app->bind(EmptyBagCollectionInterface::class, EmptyBagCollectionRepository::class);
         $this->app->bind(EmptyBagCollectionBatchInterface::class, EmptyBagCollectionBatchRepository::class);
         $this->app->bind(DeliveryImagesInterface::class, DeliveryImagesRepository::class);
+        $this->app->bind(DeliveryBagInterface::class, DeliveryBagRepository::class);
     }
 
 

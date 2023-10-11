@@ -977,7 +977,7 @@ class Validator implements ValidatorContract
      */
     public function messages()
     {
-        if (! $this->messages) {
+        if (!$this->messages) {
             $this->passes();
         }
 

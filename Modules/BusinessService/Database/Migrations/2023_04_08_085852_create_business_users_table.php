@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('business_users', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->uuid('user_id');
+            $table->uuid('user_id')->nullable();
             $table->uuid('business_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

@@ -23,11 +23,19 @@ use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\CustomerAddressInterface;
 use Modules\BusinessService\Interfaces\CustomerInterface;
 use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
+use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
+use Modules\BusinessService\Interfaces\RangePricingInterface;
+use Modules\DeliveryService\Entities\Delivery;
+use Modules\DeliveryService\Entities\DeliveryBag;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
+use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryImagesInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Repositories\DeliveryBagRepository;
+use Modules\DeliveryService\Repositories\PickupBatchRepository;
+use Modules\FinanceService\Interfaces\InvoiceItemInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 
@@ -51,6 +59,14 @@ class DeliveryController extends Controller
     private $driverRepository;
     private $deliveryBatchRepository;
     private $deliveryImagesRepository;
+    private $deliveryBagRepository;
+    private $pickupBatchRepository;
+    private $rangePricingRepository;
+    private $deliverySlotPricingRepository;
+    private $invoiceItemRepository;
+
+
+
     use HttpResponses;
 
     public function __construct(
@@ -70,6 +86,12 @@ class DeliveryController extends Controller
         DriverInterface $driverRepository,
         DeliveryBatchInterface $deliveryBatchRepository,
         DeliveryImagesInterface $deliveryImagesRepository,
+        DeliveryBagInterface $deliveryBagRepository,
+        PickupBatchRepository $pickupBatchRepository,
+        RangePricingInterface $rangePricingRepository,
+        DeliverySlotPricingInterface $deliverySlotPricingRepository,
+        InvoiceItemInterface $invoiceItemRepository,
+
 
     ) {
         $this->customerRepository = $customerRepository;
@@ -88,7 +110,11 @@ class DeliveryController extends Controller
         $this->driverRepository = $driverRepository;
         $this->deliveryBatchRepository = $deliveryBatchRepository;
         $this->deliveryImagesRepository = $deliveryImagesRepository;
-
+        $this->deliveryBagRepository = $deliveryBagRepository;
+        $this->pickupBatchRepository = $pickupBatchRepository;
+        $this->rangePricingRepository = $rangePricingRepository;
+        $this->deliverySlotPricingRepository = $deliverySlotPricingRepository;
+        $this->invoiceItemRepository = $invoiceItemRepository;
 
         $this->helper = new Helper();
     }
@@ -542,7 +568,9 @@ class DeliveryController extends Controller
         $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
         return view('deliveryservice::deliveries.unassigned_deliveries', $data);
     }
-    public function assigned_delivery_to_driver(Request $request)
+
+
+    public function assignDeliveriesToDriver(Request $request)
     {
         try {
             // --------------- GETTING DELIVERIES AND DRIVER TO ASSIGN-------------
@@ -565,7 +593,7 @@ class DeliveryController extends Controller
     }
 
 
-
+    // -------------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------DRIVER APP ----------------------------------------------
     // -------------------------------------------------------------------------------------------------------------
 
@@ -588,22 +616,18 @@ class DeliveryController extends Controller
 
     public function completeDelivery(Request $request)
     {
-
         try {
-
-            // BAG cOLLECTION
-
             // Check if $validator = Validator::make($request->all(), [
             $validator = Validator::make($request->all(), [
                 'delivery_id' => ['required', 'exists:deliveries,id'],
                 'open_bag_img' => ['required', 'image'],
                 'close_bag_img' => ['required', 'image'],
                 'delivered_bag_img' => ['required', 'image'],
-                'empty_bag_img' => ['image'],
+                'delivery_img' => ['image'],
+                'signature_img' => ['image'],
+                'address_img' => ['image'],
                 'empty_bag_count' => [],
             ]);
-
-            // BAG cOLLECTION
 
             // Check if validation fails
             if ($validator->fails()) {
@@ -611,11 +635,22 @@ class DeliveryController extends Controller
             }
 
             $delivery_id = $request->post('delivery_id');
-            $empty_bag_count = $request->post('empty_bag_count');
             $open_bag_img = $request->file('open_bag_img');
             $close_bag_img = $request->file('close_bag_img');
             $delivered_bag_img = $request->file('delivered_bag_img');
-            $empty_bag_img = $request->file('empty_bag_img');
+            $delivery_img = $request->file('delivery_img');
+            $signature_img = $request->file('signature_img');
+            $address_img = $request->file('address_img');
+            $empty_bag_count = $request->post('empty_bag_count');
+            $delivery = $this->deliveryRepository->getSingleDelivery($delivery_id);
+
+            $date = date('Y-m-d');
+            $delivery_count =  $this->deliveryRepository->getDeliveredCountOfDays($delivery->branch_id, $date,  $date);
+            $range_price =  $this->rangePricingRepository->getRangePriceOfDelivery($delivery_count, $delivery->customerAddress->city_id,  $delivery->branch->business_id);
+            $delivery_slot_price =  $this->deliverySlotPricingRepository->getDeliverySlotPriceOfDelivery($delivery->delivery_slot_id, $delivery->customerAddress->city_id,  $delivery->branch->business_id);
+            $amount_to_deduct = min($delivery_slot_price, $range_price);
+            // $invoice_item = $this->i
+
             DB::beginTransaction();
 
             if ($open_bag_img) {
@@ -630,12 +665,20 @@ class DeliveryController extends Controller
                 $delivered_bag_img_url = $this->helper->storeFile($delivered_bag_img, "DeliveryServce", "Deliveries");
                 $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $delivered_bag_img_url, 'image_type' => 'delivered_bag_img']);
             }
-            if ($empty_bag_img) {
-                $empty_bag_img_url = $this->helper->storeFile($empty_bag_img, "DeliveryServce", "Bags");
-                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $empty_bag_img_url, 'image_type' => 'empty_bag_img']);
+            if ($delivery_img) {
+                $delivery_img_url = $this->helper->storeFile($delivery_img, "DeliveryServce", "Deliveries");
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $delivery_img_url, 'image_type' => 'delivery_img']);
+            }
+            if ($signature_img) {
+                $signature_img_url = $this->helper->storeFile($signature_img, "DeliveryServce", "Deliveries");
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $signature_img_url, 'image_type' => 'signature_img']);
+            }
+            if ($address_img) {
+                $address_img_url = $this->helper->storeFile($address_img, "DeliveryServce", "Deliveries");
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $address_img_url, 'image_type' => 'address_img']);
             }
 
-            $data =  $this->deliveryRepository->UpdateDelivery($delivery_id, [
+            $data =  $this->deliveryRepository->updateDelivery($delivery_id, [
                 'status' => 'DELIVERED',
                 'empty_bag_count' => $empty_bag_count,
             ]);
@@ -647,9 +690,173 @@ class DeliveryController extends Controller
             return $this->success($data, "Delivery completed successfully");
         } catch (Exception $exception) {
             DB::rollback();
+            dd($exception);
             return $this->error($exception, "Something went wrong please contact support");
         }
+    }
 
-        // $helper->storeFile();
+    // --------------------------------------------------- P I C K   U P  ----------------------------------------------
+
+
+    public function driverAssignedPickup(Request $request)
+    {
+        // $start_date = date("Y/m/d");
+        // $end_date = date("Y-m-d", strtotime($start_date . " +1 day"));
+        $start_date = '2023-09-24';
+        $end_date = '2023-11-10';
+
+        try {
+            $driver_id = $request->get("driver_id");
+            $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
+            $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
+            $grouped_deliveries = [];
+
+            // Iterate over the data
+            foreach ($db_deliveries as $delivery) {
+                $branchId = $delivery['branch_id'];
+
+                // Check if the branch_id already exists in $grouped_deliveries
+                $found = false;
+                foreach ($grouped_deliveries as &$groupedDelivery) {
+                    if ($groupedDelivery['branch_id'] === $branchId) {
+                        $exist = $this->deliveryBagRepository->isDeliveryReccordExist($delivery->id);
+                        // If branch_id exists, increment the assigned_deliveries count
+                        $groupedDelivery['assigned_pickups']++;
+                        if (!$exist) {
+                            $groupedDelivery['pending_pickups']++;
+                        }
+                        $found = true;
+                        break;
+                    }
+                }
+
+                // If branch_id doesn't exist in $grouped_deliveries, add it as a new entry
+                if (!$found) {
+                    $exist = $this->deliveryBagRepository->isDeliveryReccordExist($delivery->id);
+                    $grouped_deliveries[] = [
+                        'branch_id' => $delivery->branch_id,
+                        'branch_name' => $delivery->branch->name, // You can populate branch name here if available
+                        'assigned_pickups' => 1, // Initialize with 1 for the first record
+                        'pending_pickups' => $exist ? 0 : 1,
+                    ];
+                }
+            }
+
+
+
+            // foreach ($db_deliveries as $delivery) {
+            //     $branchId = $delivery['branch_id'];
+
+            //     // Check if the branch ID exists in the grouped array
+            //     if (!isset($grouped_deliveries[$branchId])) {
+            //         // If it doesn't exist, initialize an empty array for that branch
+            //         $grouped_deliveries[$branchId] = [];
+            //     }
+
+            //     // Add the current delivery to the branch's array
+            //     $grouped_deliveries[$branchId][] = $delivery;
+            // }
+
+            // Now $grouped_deliveries contains deliveries grouped by branch ID
+
+            // If you want to convert it to JSON
+            // $grouped_deliveriesJSON = json_encode(['data' => $grouped_deliveries]);
+            if (!$grouped_deliveries) {
+                return $this->error($grouped_deliveries, "Something went wrong please contact support. No bag pickups for driver");
+            }
+
+            return $this->success($grouped_deliveries, "Drivers partner wise assigned pickup  recieved successfully");
+        } catch (Exception $exception) {
+            dd($exception);
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
+
+    public function driverPendingPickups(Request $request)
+    {
+        // $end_date = date("Y-m-d", strtotime($start_date . " +1 day"));
+        $start_date = '2023-09-24';
+        $end_date = '2023-10-10';
+
+        try {
+            $driver_id = $request->get("driver_id");
+
+            $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
+            $db_deliveries = $this->deliveryRepository->getDriverPendingPickups($driver_id, $batch->id);
+            // $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
+
+            if (!$db_deliveries) {
+                return $this->error($db_deliveries, "Something went wrong please contact support. No bag pickups for driver");
+            }
+
+            return $this->success($db_deliveries, "Drivers assigned pickup bags recieved successfully");
+        } catch (Exception $exception) {
+            dd($exception);
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
+
+    public function driverCompletedPickups(Request $request)
+    {
+        // $end_date = date("Y-m-d", strtotime($start_date . " +1 day"));
+        $start_date = '2023-09-24';
+        $end_date = '2023-10-10';
+
+        try {
+            $driver_id = $request->get("driver_id");
+
+            $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
+            $db_deliveries = $this->deliveryRepository->getDriverCompletedPickups($driver_id, $batch->id);
+            // $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
+
+            if (!$db_deliveries) {
+                return $this->error($db_deliveries, "Something went wrong please contact support. No completed bag pickups for driver");
+            }
+
+            return $this->success($db_deliveries, "Drivers completed pickup bags recieved successfully");
+        } catch (Exception $exception) {
+            dd($exception);
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
+
+    public function linkBagWithDelivery(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'delivery_id' => ['required', 'exists:deliveries,id'],
+                'bag_id' => ['required', 'exists:bags,id'],
+            ]);
+
+            DB::beginTransaction();
+
+            // Check if validation fails
+            if ($validator->fails()) {
+                return $this->error($validator->errors(), "Validation Failed", 422);
+            }
+
+            $delivery_id = $request->get('delivery_id');
+            $bag_id = $request->get('bag_id');
+            $data = [
+                "delivery_id" => $delivery_id,
+                "bag_id" => $bag_id
+            ];
+
+            // --- Link bag with delivery
+            $result =  $this->deliveryBagRepository->create([
+                "delivery_id" => $delivery_id,
+                "bag_id" => $bag_id
+            ]);
+
+            if (!$result) {
+                return $this->error($result, "Something went wrong. Bag did not link");
+            }
+
+            DB::commit();
+            return $this->success($result, "Bag linked successfully");
+        } catch (Exception $exception) {
+            DB::rollback();
+            return $this->error($exception, "Something went wrong please contact support");
+        }
     }
 }

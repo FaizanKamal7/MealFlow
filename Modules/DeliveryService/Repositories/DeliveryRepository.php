@@ -3,6 +3,7 @@
 namespace Modules\DeliveryService\Repositories;
 
 use Modules\DeliveryService\Entities\Delivery;
+use Modules\DeliveryService\Entities\PickupBatch;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 
 class DeliveryRepository implements DeliveryInterface
@@ -17,12 +18,25 @@ class DeliveryRepository implements DeliveryInterface
         return Delivery::with('deliverySlot', 'customerAddress')->get();
     }
 
+    public function getSingleDelivery($id)
+    {
+        return Delivery::with('deliverySlot', 'customerAddress')->find($id)->first();
+    }
+
+    public function getDeliveredCountOfDays($branch_id, $start_date, $end_date)
+    {
+        return Delivery::where('branch_id', $branch_id)
+            ->where('status', 'DELIVERED')
+            ->where('delivery_date', '>=', $start_date)->where('delivery_date', '<', $end_date)
+            ->count();
+    }
+
     public function getDeliveriesByIds(array $deliveryIds)
     {
         // Retrieve the deliveries by their IDs
         return Delivery::whereIn('id', $deliveryIds)->get();
     }
-    
+
     public function updateDelivery($delivery_id, $data)
     {
         $delivery = Delivery::findOrFail($delivery_id);
@@ -74,9 +88,78 @@ class DeliveryRepository implements DeliveryInterface
         return Delivery::whereNotNull('pickup_batch_id')->get();
     }
 
+    public function getDriverPickupAssignedDeliveries($start_date, $end_date, $batch_id)
+    {
+        return Delivery::where('pickup_batch_id', $batch_id)->whereBetween('delivery_date', [$start_date, $end_date])->get();
+    }
+
 
     public function getPickupUnassignedDeliveries($start_date, $end_date)
     {
         return Delivery::whereNull('pickup_batch_id')->get();
     }
+
+    public function updateDeliveryQR($delivery_id, $data)
+    {
+        return  Delivery::where('id', $delivery_id)->whereNull('qr_code')->update($data);
+    }
+
+
+
+    public function getDriverPendingPickups($driver_id, $batch_id)
+    {
+        // $deliveries = Delivery::with([
+        //     'pickupBatch' => function ($query) use ($driver_id, $batch_id) {
+        //         $query->where('driver_id', '=', $driver_id);
+        //         $query->where('id', '=', $batch_id);
+        //     },
+        //     'deliveryBags'
+        // ])
+        //     ->get();
+
+
+        return Delivery::select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id', 'deliveries.pickup_batch_id')->with([
+            'customer' => function ($query) {
+                $query->select('id', 'user_id');
+            },
+            'customer.user' => function ($query) {
+                $query->select('id', 'name');
+            },
+            'branch' => function ($query) {
+                $query->select('id', 'name');
+            },
+
+        ])
+            ->join('pickup_batches', 'deliveries.pickup_batch_id', '=', 'pickup_batches.id')
+            ->leftJoin('delivery_bags', 'deliveries.id', '=', 'delivery_bags.delivery_id')
+            ->where('deliveries.pickup_batch_id', '=', $batch_id)
+            ->where('pickup_batches.driver_id', '=', $driver_id)
+            ->whereNull('delivery_bags.delivery_id')
+            ->get();
+    }
+
+    public function getDriverCompletedPickups($driver_id, $batch_id)
+    {
+
+        return Delivery::select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id')->with([
+            'customer' => function ($query) {
+                $query->select('id', 'user_id');
+            },
+            'customer.user' => function ($query) {
+                $query->select('id', 'name');
+            },
+            'branch' => function ($query) {
+                $query->select('id', 'name');
+            },
+
+        ])
+            ->join('pickup_batches', 'deliveries.pickup_batch_id', '=', 'pickup_batches.id')
+            ->leftJoin('delivery_bags', 'deliveries.id', '=', 'delivery_bags.delivery_id')
+            ->where('deliveries.pickup_batch_id', '=', $batch_id)
+            ->where('pickup_batches.driver_id', '=', $driver_id)
+            ->whereNotNull('delivery_bags.delivery_id')
+            ->get();
+    }
+
+    
 }

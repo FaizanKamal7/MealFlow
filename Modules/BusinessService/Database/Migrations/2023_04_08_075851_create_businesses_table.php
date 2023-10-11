@@ -20,19 +20,14 @@ return new class extends Migration
             $table->string('TRN')->nullable();
             $table->string('logo')->nullable();
             $table->string('status');
-            $table->boolean('active_status')->nullable();
-            $table->uuid('admin_id');
-            $table->uuid('business_category_id');
-            $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('business_category_id')->references('id')->on('business_categories')->onDelete('cascade');
+            $table->boolean('active_status')->default(1)->nullable();
+            $table->uuid('admin_id')->nullable();
+            $table->uuid('business_category_id')->nullable();;
+            $table->foreign('admin_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('business_category_id')->references('id')->on('business_categories')->onDelete('set null');
             $table->softDeletes();
             $table->timestamps();
         });
-
-        // Schema::table('businesses', function ($table) {
-        //     $table->uuid('admin_id')->change();
-        //     $table->uuid('business_category_id')->change();
-        // });
     }
 
     /**

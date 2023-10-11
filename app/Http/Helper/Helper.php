@@ -14,6 +14,7 @@ use Modules\DeliveryService\Entities\DeliveryTimeline;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
+use Modules\FinanceService\Entities\BusinessWalletTransaction;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Helper
@@ -22,8 +23,8 @@ class Helper
     {
         $file_url = $file->getClientOriginalName();
         $file_url = time() . '-' . date('YmdHi') . '-' . $file_url;
-        $file_url = $module."/" . $directory . "/" . $file_url;
-        $file->move($module."/" . $directory . "/", $file_url);
+        $file_url = $module . "/" . $directory . "/" . $file_url;
+        $file->move($module . "/" . $directory . "/", $file_url);
         return $file_url;
     }
     public function logActivity($userId, $moduleName, $action, $subject, $url, $description, $ipAddress, $userAgent, $oldValues, $newValues, $recordId, $recordType, $method)
@@ -66,6 +67,22 @@ class Helper
             'description' => $description,
         ]);
     }
+
+    public function businessWalletTransactions($amount, $type,  $wallet_id, $note = null, $payment_method_id = null, $invoice_item_id  = null, $card_id = null)
+    {
+        BusinessWalletTransaction::create([
+            'amount' => $amount,
+            'type' => $type,
+            'wallet_id' => $wallet_id,
+            'note' => $note,
+            'payment_method_id' => $payment_method_id,
+            'invoice_item_id' => $invoice_item_id,
+            'card_id' => $card_id,
+            'transaction_date' => date("Y-m-d H:i:s"),
+
+        ]);
+    }
+
     public function createWallet($business_id)
     {
         BusinessWallet::create([
