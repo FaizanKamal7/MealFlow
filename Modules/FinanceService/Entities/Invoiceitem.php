@@ -21,7 +21,7 @@ class InvoiceItem extends Model
         'amount',
         'invoice_id',
     ];
-    
+
     protected static function newFactory()
     {
         return \Modules\FinanceService\Database\factories\InvoiceItemFactory::new();
@@ -47,9 +47,18 @@ class InvoiceItem extends Model
             $method = Request::method();
 
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
         });
@@ -74,9 +83,18 @@ class InvoiceItem extends Model
                 $method = Request::method();
 
                 $helper->logActivity(
-                    userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                    url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                    oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                    userId: $user_id,
+                    moduleName: $module_name,
+                    action: $action,
+                    subject: $subject,
+                    url: $url,
+                    description: $description,
+                    ipAddress: $ip_address,
+                    userAgent: $user_agent,
+                    oldValues: $old_values,
+                    newValues: $new_values,
+                    recordId: $record_id,
+                    recordType: $record_type,
                     method: $method
                 );
             }
@@ -98,14 +116,20 @@ class InvoiceItem extends Model
             $record_type = get_class($model);
             $method = Request::method();
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
-
         });
-
     }
-
 }

@@ -13,20 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_items', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('item_type');
-            $table->uuid('item_id');
-            $table->decimal('amount', 8, 2);
-
-            $table->uuid('invoice_id');
-
-            // Timestamps
+        Schema::create('payment_methods', function (Blueprint $table) {
+            $table->uuid("id")->primary();
+            $table->string("name");
+            $table->boolean("active_status")->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-
-            $table->foreign("invoice_id")->references("id")->on("invoices")->onDelete("cascade");
         });
     }
 
@@ -37,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_items');
+        Schema::dropIfExists('payment_methods');
     }
 };

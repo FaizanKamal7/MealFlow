@@ -18,35 +18,40 @@ use Modules\DeliveryService\Http\Controllers\APIControllers\V1\EmptyBagCollectio
 |
 */
 
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'deliveryservice/'], function () {
+Route::group(['prefix' => 'deliveryservice/'], function () {
 
     Route::prefix('driver/')->group(function () {
-        Route::get('deliveries', [DeliveryController::class, "getDriverDeliveries"]);
+        Route::GET('deliveries', [DeliveryController::class, "getDriverDeliveries"]);
     });
     Route::prefix('deliverybatch/')->group(function () {
-        Route::post('start-batch', [DeliveryBatchController::class, "startDeliveryBatch"]);
-        Route::post('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
+        Route::POST('start-batch', [DeliveryBatchController::class, "startDeliveryBatch"]);
+        Route::POST('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
     });
     Route::prefix('deliveries/')->group(function () {
-        Route::post('complete-delivery', [DeliveryController::class, "completeDelivery"]);
-        Route::post('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
+        Route::POST('complete-delivery', [DeliveryController::class, "completeDelivery"]);
+        Route::POST('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
     });
 
     // Route::group(['prefix' => 'Collection/'], function () {
-    //     Route::post('create', [BagCollectionController::class, "createBagCollection"]);
+    //     Route::POST('create', [BagCollectionController::class, "createBagCollection"]);
     // });
 
     // Route::group(['prefix' => 'Pickup/'], function () {
-    //     Route::get('driver-bags-pickup', [BagsController::class, "driverBagsPickup"]);
+    //     Route::GET('driver-bags-pickup', [BagsController::class, "driverBagsPickup"]);
     // });
 
     Route::group(['prefix' => 'bag/'], function () {
 
         Route::group(['prefix' => 'collection/'], function () {
-            Route::post('create', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
+            Route::POST('create', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
+            Route::POST('create-delivery-bag-collection', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
         });
-        Route::group(['prefix' => 'Pickup/'], function () {
-            Route::get('driver-bags-pickup', [BagsController::class, "driverBagsPickup"]);
+
+        Route::group(['prefix' => 'pickup/'], function () {
+            Route::GET('driver-assigned-pickup', [DeliveryController::class, "driverAssignedPickup"]);
+            Route::GET('driver-pending-pickups', [DeliveryController::class, "driverPendingPickups"]);
+            Route::GET('driver-completed-pickups', [DeliveryController::class, "driverCompletedPickups"]);
+            Route::POST('link-bag-with-delivery', [DeliveryController::class, "linkBagWithDelivery"]);
         });
     });
 });

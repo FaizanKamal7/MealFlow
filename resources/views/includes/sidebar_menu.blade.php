@@ -180,7 +180,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('view_assign') }}">
+                        <a class="menu-link" href="{{ route('view_assigned_deliveries') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -190,8 +190,8 @@
 
 
                     <div class="menu-item">
-                        <a class="menu-link" href="">
-                            <span class="menu-bullet">
+                        <a class="menu-link" href="{{ route('view_completed_deliveries') }}">
+                            <span class=" menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Completed Deliveries</span>

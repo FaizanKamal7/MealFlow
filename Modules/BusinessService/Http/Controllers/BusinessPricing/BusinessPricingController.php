@@ -168,9 +168,9 @@ class BusinessPricingController extends Controller
     public function storeCityRangeBasePrice(Request $request)
     {
         $data = $request->all();
-
-        // --- TODO: There was issue fetching repeater data when no new repeater item is added
-        if (!(array_key_exists("range_pricing_list", []))) {
+        // --- TODO: There was issue fetching repeater data when no new repeater item is added with eisting pricing
+        if (!array_key_exists("range_pricing_list", $data)) {
+            return redirect()->back()->with("error", "Error: You have to add new pricing to existing pricing (BUG)");
 
             $data = [
                 "_token" => $data['_token'],
@@ -382,7 +382,6 @@ class BusinessPricingController extends Controller
             && $range_pricing['same_loc_bag_collection_price'] == $range_pricing['same_loc_delivery_price']
 
         ) {
-
             return true;
         } else {
             return false;

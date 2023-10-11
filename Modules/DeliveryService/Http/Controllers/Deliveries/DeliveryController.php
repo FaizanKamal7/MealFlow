@@ -29,6 +29,7 @@ use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -144,7 +145,7 @@ class DeliveryController extends Controller
         ]);
 
         $repeaterData = $request->input('kt_docs_repeater_advanced.*');
-//form can be multiple, making this like to accept multiform value
+        //form can be multiple, making this like to accept multiform value
         foreach ($repeaterData as $row) {
             dd($row);
             // Process the data for each row
@@ -254,7 +255,7 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
@@ -564,8 +565,8 @@ class DeliveryController extends Controller
         // - Making all words lower case
         // - replace spaces with underscore "_"
         // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
 
         // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
         // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
@@ -601,6 +602,13 @@ class DeliveryController extends Controller
         return view('deliveryservice::deliveries.upload_delivery', $data);
     }
 
+    // function viewAssignedDeliveries()
+    // {
+    //     $deliveries = $this->deliveryRepository->getDeliveriesByStatus('ASSIGNED');
+    //     $drivers = $this->driverRepository->getDetailDrivers();
+    //     $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
+    //     return view('deliveryservice::deliveries.assigned_deliveries', $data);
+    // }
     public function viewAssignedDeliveries()
     {
         $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
@@ -618,7 +626,6 @@ class DeliveryController extends Controller
             // Step 1: Find a driver that matches the delivery area and has deuty timing eligilable for that slot
             $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
             $delivery->setAttribute('suggested_drivers', $drivers);
-
         }
         $drivers = $this->driverRepository->getDetailDrivers();
         $data = [
@@ -629,7 +636,6 @@ class DeliveryController extends Controller
             'emirate' => $emirate
         ];
         return view('deliveryservice::deliveries.assigned_delivery', $data);
-
     }
 
     // ------------------------------------- SUGGESTED DRIVER-----------------------
@@ -681,8 +687,20 @@ class DeliveryController extends Controller
             // Step 1: Find a driver that matches the delivery area and has deuty timing eligilable for that slot
             $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
             $delivery->setAttribute('suggested_drivers', $drivers);
-
         }
+        // foreach ($deliveries as $delivery) {
+        //     echo ('Delivery : ' . $delivery->deliverySlot->start_time . '-' . $delivery->deliverySlot->end_time . 'area : ' . $delivery->customerAddress->area->name);
+        //     echo "<br><br>";
+        //     foreach ($delivery->suggested_drivers as $driver) {
+        //         echo ('Driver : ' . $driver->employee->first_name . ' - ' . $driver->employee->duty_start_time . '-' . $driver->employee->duty_end_time . ' - ' . $driver->areas->pluck('name'));
+        //     }
+
+        //     echo "<br>next delivery<br>";
+        // }
+        $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
+        $delivery->setAttribute('suggested_drivers', $drivers);
+
+
         $drivers = $this->driverRepository->getDetailDrivers();
         $data = [
             'deliveries' => $deliveries,
@@ -693,6 +711,17 @@ class DeliveryController extends Controller
         ];
         return view('deliveryservice::deliveries.unassigned_deliveries', $data);
     }
+
+
+
+    function viewCompletedDeliveries()
+    {
+        $deliveries = $this->deliveryRepository->getDeliveriesByStatus('DELIVERED');
+        $drivers = $this->driverRepository->getDetailDrivers();
+        $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
+        return view('deliveryservice::deliveries.completed_deliveries', $data);
+    }
+
     public function view_labels()
     {
         $path = 'media/bags/qrcodes/' . time() . '.svg';
@@ -703,21 +732,41 @@ class DeliveryController extends Controller
     public function printLabel(Request $request)
     {
         $selectedDeliveryIds = explode(',', $request->input('selected_deliveries', ''));
+
         // Fetch the corresponding delivery data based on the IDs
         $selectedDeliveries = $this->deliveryRepository->getDeliveriesByIds($selectedDeliveryIds);
-        // Pass the selected data to the view
+        foreach ($selectedDeliveries as $key => $delivery) {
+            // --- Create a QR if no QR is ccreated for delivery yet 
+            if ($delivery->qr_code == null) {
+                $directory = 'media/deliveries/qrcodes/';
+                if (!file_exists($directory)) {
+                    // Create the directory if it doesn't exist
+                    mkdir($directory, 0777, true);
+                }
+                echo ('<pre> address :' . var_dump($delivery->id) . ' </pre>');
+
+                $qr_data = json_encode([
+                    'delivery_id' => $delivery->id,
+                    'type' => 'delivery',
+                ]);
+                echo ('<pre> address :' . var_dump($qr_data) . ' </pre>');
+
+                $path = $directory . time() . '.svg';
+                QrCode::size(400)->generate($qr_data, $path);
+                $this->deliveryRepository->updateDeliveryQR($delivery->id, ['qr_code' => $path]);
+            }
+        }
+
         return view('deliveryservice::deliveries.print_label', ['selectedDeliveries' => $selectedDeliveries]);
     }
 
-    public function assigned_delivery_to_driver(Request $request)
+    public function assignDeliveriesToDriver(Request $request)
     {
-
-
         try {
             // --------------- GETTING DELIVERIES AND DRIVER TO ASSIGN-------------
             $driver_id = $request->get("driver_id");
-            $deliveries = explode(',', $request->get("selected_delivery_ids"));
-
+            // $deliveries = explode(',', $request->get("selected_delivery_ids"));
+            $deliveries = $request->get("selected_delivery_ids");
 
             // -------------------- CREATING NEW BATCH FOR DELIVERY BASED ON DRIVER id-----------
             $batch = $this->deliveryBatchRepository->getActiveDeliveryBatchByDriver($driver_id);
@@ -726,10 +775,12 @@ class DeliveryController extends Controller
             $this->deliveryRepository->assignDeliveryBatch($batch->id, $deliveries);
 
 
-            $drivers = $this->driverRepository->getDetailDrivers();
-            $db_deliveries = $this->deliveryRepository->getDeliveriesByStatus('ASSIGNED');
-            $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
-            return view('deliveryservice::deliveries.assigned_deliveries', $data);
+
+            // $drivers = $this->driverRepository->getDetailDrivers();
+            // $db_deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
+            // $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
+            // return view('deliveryservice::deliveries.unassigned_deliveries', $data);
+            return $this->unassignedDeliveries();
         } catch (Exception $exception) {
             dd($exception);
         }
