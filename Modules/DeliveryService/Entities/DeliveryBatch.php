@@ -18,7 +18,7 @@ class DeliveryBatch extends Model
     protected $fillable = [
         "batch_start_time",
         "batch_end_time",
-        "batch_arrival_map_coordinates",
+        "batch_start_map_coordinates",
         "batch_end_map_coordinates",
         "status",
         "vehicle_id",
@@ -34,7 +34,8 @@ class DeliveryBatch extends Model
     {
         return $this->belongsTo(Driver::class, 'driver_id');
     }
-    public function deliveries(){
+    public function deliveries()
+    {
         return $this->hasMany(Delivery::class);
     }
 
@@ -63,9 +64,18 @@ class DeliveryBatch extends Model
             $method = Request::method();
 
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
         });
@@ -90,9 +100,18 @@ class DeliveryBatch extends Model
                 $method = Request::method();
 
                 $helper->logActivity(
-                    userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                    url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                    oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                    userId: $user_id,
+                    moduleName: $module_name,
+                    action: $action,
+                    subject: $subject,
+                    url: $url,
+                    description: $description,
+                    ipAddress: $ip_address,
+                    userAgent: $user_agent,
+                    oldValues: $old_values,
+                    newValues: $new_values,
+                    recordId: $record_id,
+                    recordType: $record_type,
                     method: $method
                 );
             }
@@ -114,13 +133,20 @@ class DeliveryBatch extends Model
             $record_type = get_class($model);
             $method = Request::method();
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
-
         });
-
     }
 }

@@ -11,6 +11,7 @@
 |
 */
 
+use Modules\DeliveryService\Http\Controllers\APIControllers\V1\Deliveries\DeliveryController as DeliveriesDeliveryController;
 use Modules\DeliveryService\Http\Controllers\Bags\BagsController;
 use Modules\DeliveryService\Http\Controllers\Customers\CustomersController;
 use Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController;
@@ -22,6 +23,8 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('/upload/bulk', 'DeliveryServiceController@bulkAddView')->name("bulk_delivery_add_view");
     Route::post('/upload/save', 'DeliveryServiceController@uploadFile')->name("upload_file");
     Route::get('/', 'DeliveryServiceController@index');
+    Route::view('/myview', 'upload_delivery_2')->name('temp_excel_view');
+
 
 
 
@@ -43,7 +46,7 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('/completed-deliveries', [DeliveryController::class, "viewCompletedDeliveries"])->name("view_completed_deliveries");
 
     Route::get('/print-label', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "printLabel"])->name('print-label');
-    Route::post('/upload_deliveries_multiple', [DeliveryController::class, "UploadDeliveriesMultiple"])->name("upload_deliveries_multiple");
+    Route::post('/upload_deliveries_multiple', [DeliveryController::class, "uploadDeliveriesMultiple"])->name("upload_deliveries_multiple");
 
 
 
@@ -57,6 +60,7 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('unassign', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewUnassignedDeliveries"])->name("view_unassign");
     Route::get('update-deliveries-label', [DeliveryController::class, "updateDeliveriesLabel"])->name("update_deliveries_label");
     Route::get('deliveries-label/{deliveries}', [DeliveryController::class, "viewDeliveriesLabelView"])->name("view_deliveries_label");
+    Route::get('{delivery_id}/timeline', [DeliveryController::class, "deliveryTimeline"])->name("view_delivery_timeline");
 
 
     //    });

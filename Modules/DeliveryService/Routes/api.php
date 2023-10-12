@@ -24,8 +24,9 @@ Route::group(['prefix' => 'deliveryservice/'], function () {
         Route::GET('deliveries', [DeliveryController::class, "getDriverDeliveries"]);
     });
     Route::prefix('deliverybatch/')->group(function () {
-        Route::POST('start-batch', [DeliveryBatchController::class, "startDeliveryBatch"]);
-        Route::POST('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
+        // Route::POST('start-batch', [DeliveryBatchController::class, "startDeliveryBatch"]);
+        // Route::POST('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
+        Route::POST('update-pickup-batch-progress', [DeliveryBatchController::class, "updateDeliveryBatchpProgress"]);
     });
     Route::prefix('deliveries/')->group(function () {
         Route::POST('complete-delivery', [DeliveryController::class, "completeDelivery"]);
@@ -52,6 +53,7 @@ Route::group(['prefix' => 'deliveryservice/'], function () {
             Route::GET('driver-pending-pickups', [DeliveryController::class, "driverPendingPickups"]);
             Route::GET('driver-completed-pickups', [DeliveryController::class, "driverCompletedPickups"]);
             Route::POST('link-bag-with-delivery', [DeliveryController::class, "linkBagWithDelivery"]);
+            Route::POST('update-pickup-batch-progress', [DeliveryController::class, "updatePickupBatchpProgress"]);
         });
     });
 });

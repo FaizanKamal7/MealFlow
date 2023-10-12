@@ -26,6 +26,7 @@ use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
+use Modules\DeliveryService\Interfaces\DeliveryTimelineInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
@@ -52,6 +53,7 @@ class DeliveryController extends Controller
     private $driverAreaRepository;
     private $driverRepository;
     private $deliveryBatchRepository;
+    private $deliveryTimelineRepository;
 
     public function __construct(
         CustomerInterface $customerRepository,
@@ -70,6 +72,8 @@ class DeliveryController extends Controller
         DriverAreaInterface $driverAreaRepository,
         DriverInterface $driverRepository,
         DeliveryBatchInterface $deliveryBatchRepository,
+        DeliveryTimelineInterface $deliveryTimelineRepository,
+
 
         Helper $helper,
     ) {
@@ -89,7 +93,7 @@ class DeliveryController extends Controller
         $this->driverAreaRepository = $driverAreaRepository;
         $this->driverRepository = $driverRepository;
         $this->deliveryBatchRepository = $deliveryBatchRepository;
-
+        $this->deliveryTimelineRepository = $deliveryTimelineRepository;
         $this->helper = $helper;
     }
     /**
@@ -109,7 +113,7 @@ class DeliveryController extends Controller
         return view('deliveryservice::deliveries.unassigned_deliveries');
     }
 
-    public function UploadDeliveriesMultiple(Request $request)
+    public function uploadDeliveriesMultiple(Request $request)
     {
         // dd($request);
         $validatedData = $request->validate([
@@ -153,38 +157,37 @@ class DeliveryController extends Controller
 
 
 
-        // $name = $request->input('kt_docs_repeater_advanced.0.delivery_name');
-        // $phoneNumber = $request->input('kt_docs_repeater_advanced.0.phone_number');
-        // $area = $request->input('kt_docs_repeater_advanced.0.area');
-        // $emiratesWithTime = $request->input('kt_docs_repeater_advanced.0.emirates_with_time');
-        // $datepicker = $request->input('kt_docs_repeater_advanced.0.datepicker');
-        // $companyDeliveryId = $request->input('kt_docs_repeater_advanced.0.company_delivery_id');
-        // $deliveryAmount = $request->input('kt_docs_repeater_advanced.0.delivery_amount');
-        // $signature = $request->input('kt_docs_repeater_advanced.0.signature');
-        // $notification = $request->input('kt_docs_repeater_advanced.0.notification');
-        // $pickupAddress = $request->input('kt_docs_repeater_advanced.0.pickup_address');
-        // $deliveryAddress = $request->input('kt_docs_repeater_advanced.0.delivery_address');
-        // $productType = $request->input('kt_docs_repeater_advanced.0.product_type');
-        // $notes = $request->input('kt_docs_repeater_advanced.0.notes');
-        // $googleLinkAddress = $request->input('kt_docs_repeater_advanced.0.google_link_address');
+        $name = $request->input('kt_docs_repeater_advanced.0.delivery_name');
+        $phoneNumber = $request->input('kt_docs_repeater_advanced.0.phone_number');
+        $area = $request->input('kt_docs_repeater_advanced.0.area');
+        $emiratesWithTime = $request->input('kt_docs_repeater_advanced.0.emirates_with_time');
+        $datepicker = $request->input('kt_docs_repeater_advanced.0.datepicker');
+        $companyDeliveryId = $request->input('kt_docs_repeater_advanced.0.company_delivery_id');
+        $deliveryAmount = $request->input('kt_docs_repeater_advanced.0.delivery_amount');
+        $signature = $request->input('kt_docs_repeater_advanced.0.signature');
+        $notification = $request->input('kt_docs_repeater_advanced.0.notification');
+        $pickupAddress = $request->input('kt_docs_repeater_advanced.0.pickup_address');
+        $deliveryAddress = $request->input('kt_docs_repeater_advanced.0.delivery_address');
+        $productType = $request->input('kt_docs_repeater_advanced.0.product_type');
+        $notes = $request->input('kt_docs_repeater_advanced.0.notes');
+        $googleLinkAddress = $request->input('kt_docs_repeater_advanced.0.google_link_address');
 
-        // dd(
-        //     $name,
-        //     $phoneNumber,
-        //     $area,
-        //     $emiratesWithTime,
-        //     $datepicker,
-        //     $companyDeliveryId,
-        //     $deliveryAmount,
-        //     $signature,
-        //     $notification,
-        //     $pickupAddress,
-        //     $deliveryAddress,
-        //     $productType,
-        //     $notes,
-        //     $googleLinkAddress
-        // );
-
+        dd(
+            $name,
+            $phoneNumber,
+            $area,
+            $emiratesWithTime,
+            $datepicker,
+            $companyDeliveryId,
+            $deliveryAmount,
+            $signature,
+            $notification,
+            $pickupAddress,
+            $deliveryAddress,
+            $productType,
+            $notes,
+            $googleLinkAddress
+        );
     }
 
     public function uploadDeliveriesByForm(Request $request)
@@ -636,6 +639,12 @@ class DeliveryController extends Controller
             'emirate' => $emirate
         ];
         return view('deliveryservice::deliveries.assigned_delivery', $data);
+    }
+
+    public function deliveryTimeline(Request $request, $id)
+    {
+        $delivery_timeline = $this->deliveryTimelineRepository->getDeliveryTimeline($id);
+        return view('deliveryservice::deliveries.delivery_timeline', ["delivery_timeline" => $delivery_timeline]);
     }
 
     // ------------------------------------- SUGGESTED DRIVER-----------------------

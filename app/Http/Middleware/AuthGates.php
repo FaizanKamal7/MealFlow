@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
+
 class AuthGates
 {
     public function handle($request, Closure $next)
