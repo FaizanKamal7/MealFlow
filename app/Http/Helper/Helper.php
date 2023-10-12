@@ -57,6 +57,7 @@ class Helper
             'description' => $description,
         ]);
     }
+    
     public function deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description)
     {
         DeliveryTimeline::create([

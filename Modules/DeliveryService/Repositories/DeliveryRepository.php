@@ -2,6 +2,7 @@
 
 namespace Modules\DeliveryService\Repositories;
 
+use App\Enum\DeliveryStatusEnum;
 use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Entities\PickupBatch;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
@@ -71,7 +72,7 @@ class DeliveryRepository implements DeliveryInterface
     {
         Delivery::whereIn('id', $deliveries)->update([
             'delivery_batch_id' => $batch_id,
-            'status' => 'ASSIGNED',
+            'status' => DeliveryStatusEnum::ASSIGNED->value,
         ]);
     }
 
@@ -218,5 +219,9 @@ class DeliveryRepository implements DeliveryInterface
             ->get();
     }
 
-    
+
+    public function getAllBatchDeliveries($delivery_batch_id)
+    {
+        return Delivery::where('delivery_batch_id', $delivery_batch_id)->get();
+    }
 }

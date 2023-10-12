@@ -41,7 +41,7 @@ Route::prefix('admin/deliveries')->group(function () {
 
     // thhese routes are for suggested driver and assigning of delivery    
     Route::get('/unassigned-deliveries',  [DeliveryController::class, "unassignedDeliveries"])->name("unassigned_deliveries");
-    Route::POST('/assigning_process',  [DeliveryController::class, "assignDeliveriesToDriver"])->name('assigned_delivery_to_driver');
+    Route::POST('/assigning_process',  [DeliveryController::class, "assignDeliveriesToDriver"])->name('assign_delivery_to_driver');
     Route::get('/assigned-deliveries', [DeliveryController::class, "viewAssignedDeliveries"])->name("view_assigned_deliveries");
     Route::get('/completed-deliveries', [DeliveryController::class, "viewCompletedDeliveries"])->name("view_completed_deliveries");
 

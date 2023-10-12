@@ -23,6 +23,7 @@ use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
 use Modules\DeliveryService\Rules\DeliveryBatchStatusRule;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
@@ -47,6 +48,7 @@ class DeliveryBatchController extends Controller
     private $driverAreaRepository;
     private $driverRepository;
     private $deliveryBatchRepository;
+    private $emptyBagCollectionRepository;
     use HttpResponses;
 
     public function __construct(
@@ -65,7 +67,7 @@ class DeliveryBatchController extends Controller
         DriverAreaInterface $driverAreaRepository,
         DriverInterface $driverRepository,
         DeliveryBatchInterface $deliveryBatchRepository,
-
+        EmptyBagCollectionInterface $emptyBagCollectionRepository,
         Helper $helper,
     ) {
         $this->customerRepository = $customerRepository;
@@ -83,7 +85,7 @@ class DeliveryBatchController extends Controller
         $this->driverAreaRepository = $driverAreaRepository;
         $this->driverRepository = $driverRepository;
         $this->deliveryBatchRepository = $deliveryBatchRepository;
-
+        $this->emptyBagCollectionRepository = $emptyBagCollectionRepository;
         $this->helper = $helper;
     }
 
@@ -107,20 +109,31 @@ class DeliveryBatchController extends Controller
             $map_coordinates = $request->get('map_coordinates');
             $delivery_batch_id = $request->get('delivery_batch_id');
             $vehicle_id = $request->get('vehicle_id');
+            $data = [];
 
-            $data = $status == DeliveryBatchStatusEnum::STARTED->value ? [
-                "batch_start_time" => date("Y-m-d H:i:s"),
-                "batch_start_map_coordinates" => $map_coordinates,
-                "status" => $status,
-                "vehicle_id" => $vehicle_id,
+            if ($status == DeliveryBatchStatusEnum::STARTED->value) {
+                $data = [
+                    "batch_start_time" => date("Y-m-d H:i:s"),
+                    "batch_start_map_coordinates" => $map_coordinates,
+                    "status" => $status,
+                    "vehicle_id" => $vehicle_id,
+                ];
+            } elseif ($status == DeliveryBatchStatusEnum::ENDED->value) {
+                $data = [
+                    "batch_end_time" => date("Y-m-d H:i:s"),
+                    "batch_end_map_coordinates" => $map_coordinates,
+                    "status" => $status,
+                    "vehicle_id" => $vehicle_id,
+                ];
 
-            ] : [
-                "batch_end_time" => date("Y-m-d H:i:s"),
-                "batch_end_map_coordinates" => $map_coordinates,
-                "status" => $status,
-                "vehicle_id" => $vehicle_id,
+                // Change status of all the collected bags with completed_batch to "Arrived at warehouse"
 
-            ];
+                $completed_batch_deliveries = $this->deliveryRepository->getAllBatchDeliveries($delivery_batch_id);
+                $delivery_ids = collect($completed_batch_deliveries)->pluck('id')->toArray();
+                $this->emptyBagCollectionRepository->updateBagsTimelineOnDeliveryBatchCompletion($delivery_ids, $vehicle_id);
+            }
+
+
 
             $result =  $this->deliveryBatchRepository->updateDeliveryBatch($delivery_batch_id, $data);
 

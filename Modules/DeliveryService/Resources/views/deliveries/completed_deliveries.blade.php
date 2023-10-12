@@ -49,7 +49,7 @@
                     </div>
 
                 </div>
-                <form method="POST" action="{{ route('assigned_delivery_to_driver') }}">
+                <form method="POST" action="{{ route('assign_delivery_to_driver') }}">
                     @csrf
                     <div class="d-flex mt-2 align-items-center justify-content-between unassigned-second-div">
 

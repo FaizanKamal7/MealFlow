@@ -2,6 +2,8 @@
 
 namespace Modules\DeliveryService\Entities;
 
+use App\Enum\BagStatusEnum;
+use App\Enum\DeliveryStatusEnum;
 use App\Models\DeliverySlot;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +13,8 @@ use Modules\BusinessService\Entities\Customer;
 use Modules\BusinessService\Entities\CustomerAddress;
 use Illuminate\Support\Facades\Request;
 use App\Http\Helper\Helper;
+use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
+use Modules\DeliveryService\Repositories\DeliveryBagRepository;
 use Modules\FinanceService\Entities\InvoiceItem;
 use Modules\FleetService\Entities\Vehicle;
 
@@ -33,7 +37,7 @@ class Delivery extends Model
         "delivery_type_id",
         "customer_id",
         "customer_address_id",
-        "pick_up_batch_id",
+        "pickup_batch_id",
         "delivery_batch_id",
         'empty_bag_count'
     ];
@@ -65,7 +69,7 @@ class Delivery extends Model
 
     public function pickupBatch()
     {
-        return $this->belongsTo(PickupBatch::class, 'pick_up_batch_id');
+        return $this->belongsTo(PickupBatch::class, 'pickup_batch_id');
     }
 
     public function deliveryBatch()
@@ -103,14 +107,11 @@ class Delivery extends Model
             $helper = new Helper();
             $action_by = auth()->id();
             $delivery_id = $attributes['id'];
-            $status = "UNASSIGNED";
+            $status = DeliveryStatusEnum::UNASSIGNED->value;
             $vehicle_id = null;
             $description = "New Delivery added";
 
-
             $helper->deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description);
-
-
 
             $user_id = auth()->id();
             $module_name = "DeliveryService";
@@ -176,25 +177,50 @@ class Delivery extends Model
                     recordType: $record_type,
                     method: $method
                 );
-
+                dd($model->getAttributes('status'));
                 if ($model->isDirty('status')) {
                     $attributes = $model->getAttributes();
                     $helper = new Helper();
                     $action_by = auth()->id();
-                    $bag_id = $attributes['id'];
                     $delivery_id = $attributes['id'];
-                    $status = $attributes['status'];
-                    $vehicle_id = null;
-                    $description = "status updated";
+                    $status = $model->getAttributes('status');
+                    $description = "Bag Delivered at customer's location";
 
                     // Access the related vehicle using the vehicle (through) relationship
                     $vehicle_id = Delivery::find($delivery_id)->deliveryBatch->vehicle->id;
 
-                    $helper->deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description);
+                    if ($status == DeliveryStatusEnum::ASSIGNED->value) {
+                        $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED->value, $action_by, $vehicle_id, $description);
+                    } elseif ($status == DeliveryStatusEnum::DELIVERED->value) {
+                        $bag = DeliveryBag::where('delivery_id', $delivery_id)->last();
+                        $helper->bagTimeline($bag->id, $delivery_id, BagStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
+                        $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
+                    }
+                }
+            }
+        });
 
-                    // TODO ADD BAGID BY USING RELATIONSHIP OF DELIVERY WITH BAG
+        static::updated(function ($model) {
 
-                    // $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
+            $attributes = $model->getAttributes();
+
+            if ($model->isDirty('status')) {
+                $attributes = $model->getAttributes();
+                $helper = new Helper();
+                $action_by = auth()->id();
+                $delivery_id = $attributes['id'];
+                $status = $attributes['status'];
+                $description = "Bag Delivered at customer's location";
+
+                // Access the related vehicle using the vehicle (through) relationship
+                $vehicle_id = Delivery::find($delivery_id)->deliveryBatch->vehicle->id;
+
+                if ($status == DeliveryStatusEnum::ASSIGNED->value) {
+                    $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED->value, $action_by, $vehicle_id, $description);
+                } elseif ($status == DeliveryStatusEnum::DELIVERED->value) {
+                    $bag = DeliveryBag::where('delivery_id', $delivery_id)->last();
+                    $helper->bagTimeline($bag->id, $delivery_id, BagStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
+                    $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
                 }
             }
         });

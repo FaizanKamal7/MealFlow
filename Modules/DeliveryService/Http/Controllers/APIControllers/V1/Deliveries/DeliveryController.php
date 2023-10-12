@@ -881,6 +881,7 @@ class DeliveryController extends Controller
             DB::commit();
             return $this->success($result, "Bag linked successfully");
         } catch (Exception $exception) {
+            dd($exception);
             DB::rollback();
             return $this->error($exception, "Something went wrong please contact support");
         }
@@ -933,6 +934,4 @@ class DeliveryController extends Controller
             return $this->error($exception, "Something went wrong please contact support");
         }
     }
-
-   
 }
