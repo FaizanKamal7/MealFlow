@@ -102,8 +102,7 @@ class Delivery extends Model
             $attributes = $model->getAttributes();
             $helper = new Helper();
             $action_by = auth()->id();
-            $bag_id = $attributes['id'];
-            $delivery_id = null;
+            $delivery_id = $attributes['id'];
             $status = "UNASSIGNED";
             $vehicle_id = null;
             $description = "New Delivery added";

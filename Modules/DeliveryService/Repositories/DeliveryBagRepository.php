@@ -25,4 +25,6 @@ class DeliveryBagRepository implements DeliveryBagInterface
             ->orderBy('created_at', 'desc')
             ->first();
     }
+
+   
 }

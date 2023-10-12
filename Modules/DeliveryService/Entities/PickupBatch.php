@@ -14,7 +14,7 @@ class PickupBatch extends Model
     protected $fillable = [
         "batch_start_time",
         "batch_end_time",
-        "batch_arrival_map_coordinates",
+        "batch_start_map_coordinates",
         "batch_end_map_coordinates",
         "status",
         "vehicle_id",

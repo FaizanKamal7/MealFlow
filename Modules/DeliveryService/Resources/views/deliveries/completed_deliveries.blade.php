@@ -149,7 +149,12 @@
                                     </td>
                                     <td>
                                         <div class="w-150px">
-                                            <b>{{ $delivery->id }}</b>
+                                            <b>
+                                                <a
+                                                    href="{{route('view_delivery_timeline',['delivery_id'=>$delivery->id])}}">
+                                                    {{ $delivery->id}}
+                                                </a>
+                                            </b>
                                         </div>
                                     </td>
 

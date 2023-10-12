@@ -3,7 +3,9 @@
 namespace Modules\DeliveryService\Http\Controllers\APIControllers\V1\Deliveries;
 
 use App\Enum\BusinessWalletTransactionTypeEnum;
+use App\Enum\DeliveryBatchStatusEnum;
 use App\Enum\InvoiceItemTypeEnum;
+use App\Enum\PickupBatchStatusEnum;
 use App\Enum\ServiceTypeEnum;
 use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
@@ -31,12 +33,15 @@ use Modules\BusinessService\Interfaces\RangePricingInterface;
 use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Entities\DeliveryBag;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
+use Modules\DeliveryService\Http\Requests\PickupBatchRequest;
 use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryImagesInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\DeliveryService\Repositories\PickupBatchRepository;
+use Modules\DeliveryService\Rules\DeliveryBatchStatusRule;
+use Modules\DeliveryService\Rules\PickupBatchStatusRule;
 use Modules\FinanceService\Interfaces\BusinessWalletInterface;
 use Modules\FinanceService\Interfaces\BusinessWalletTransactionInterface;
 use Modules\FinanceService\Interfaces\InvoiceItemInterface;
@@ -704,7 +709,7 @@ class DeliveryController extends Controller
                 'status' => 'DELIVERED',
                 'empty_bag_count' => $empty_bag_count,
             ]);
-            
+
             if (!$data) {
                 return $this->error($data, "Something went wrong please contact support,Delivery not completed");
             }
@@ -757,6 +762,7 @@ class DeliveryController extends Controller
                 if (!$found) {
                     $exist = $this->deliveryBagRepository->isDeliveryReccordExist($delivery->id);
                     $grouped_deliveries[] = [
+                        'pickup_batch_id' => $batch->id,
                         'branch_id' => $delivery->branch_id,
                         'branch_name' => $delivery->branch->name, // You can populate branch name here if available
                         'assigned_pickups' => 1, // Initialize with 1 for the first record
@@ -812,10 +818,8 @@ class DeliveryController extends Controller
             if (!$db_deliveries) {
                 return $this->error($db_deliveries, "Something went wrong please contact support. No bag pickups for driver");
             }
-
             return $this->success($db_deliveries, "Drivers assigned pickup bags recieved successfully");
         } catch (Exception $exception) {
-            dd($exception);
             return $this->error($exception, "Something went wrong please contact support");
         }
     }
@@ -868,10 +872,7 @@ class DeliveryController extends Controller
             ];
 
             // --- Link bag with delivery
-            $result =  $this->deliveryBagRepository->create([
-                "delivery_id" => $delivery_id,
-                "bag_id" => $bag_id
-            ]);
+            $result =  $this->deliveryBagRepository->create($data);
 
             if (!$result) {
                 return $this->error($result, "Something went wrong. Bag did not link");
@@ -884,4 +885,54 @@ class DeliveryController extends Controller
             return $this->error($exception, "Something went wrong please contact support");
         }
     }
+
+    public function updatePickupBatchpProgress(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'status' => ['required', new PickupBatchStatusRule()],
+                'map_coordinates' => ['required'],
+                'pickup_batch_id' => ['required', 'exists:pickup_batches,id'],
+                'vehicle_id' => ['required', 'exists:vehicles,id'],
+            ]);
+            DB::beginTransaction();
+
+            // Check if validation fails
+            if ($validator->fails()) {
+                return $this->error($validator->errors(), "Validation Failed", 422);
+            }
+
+            $status = $request->get('status');
+            $map_coordinates = $request->get('map_coordinates');
+            $pickup_batch_id = $request->get('pickup_batch_id');
+            $vehicle_id = $request->get('vehicle_id');
+
+
+            $data = $status == PickupBatchStatusEnum::STARTED->value ? [
+                "batch_start_time" => date("Y-m-d H:i:s"),
+                "batch_start_map_coordinates" => $map_coordinates,
+                "status" => $status,
+                "vehicle_id" => $vehicle_id,
+            ] : [
+                "batch_end_time" => date("Y-m-d H:i:s"),
+                "batch_end_map_coordinates" => $map_coordinates,
+                "status" => $status,
+                "vehicle_id" => $vehicle_id,
+            ];
+
+            $result =  $this->pickupBatchRepository->updatePickupBatch($pickup_batch_id, $data);
+
+            if (!$result) {
+                return $this->error($result, "Error: Pickup Batch Not Updated");
+            }
+
+            DB::commit();
+            return $this->success($result, "Pickup Batch updated successfully");
+        } catch (Exception $exception) {
+            DB::rollback();
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
+
+   
 }
