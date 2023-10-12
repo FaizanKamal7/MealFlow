@@ -2,6 +2,7 @@
 
 namespace Modules\DeliveryService\Http\Controllers\APIControllers\V1\EmptyBagCollection;
 
+use App\Enum\EmptyBagCollectionStatusEnum;
 use App\Traits\HttpResponses;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
@@ -83,6 +84,10 @@ class EmptyBagCollectionController extends Controller
             $bag_id = $request->post('bag_id');
             $bag_collection_delivery_id = $request->post('empty_bag_collection_delivery_id'); // This refers to the delivery id when this bag was being collected
             $customer_id = $request->post('customer_id');
+            $delivery_slot_id = $request->post('delivery_slot_id');
+            $customer_address_id = $request->post('customer_address_id');
+
+
 
             $delivery_bag = $this->deliveryBagRepository->getLastDeliveryBagInfo($bag_id);
             if ($delivery_bag == null) {
@@ -91,13 +96,14 @@ class EmptyBagCollectionController extends Controller
             // ----------------GETTTING BAG FROM BAG ID -------------
             // $bag = $this->bagsRepository->getBag($bag_id);
             // $delivery_id = $bag->bagTimeline->last()->delivery_id; // this id refers to the delivery when this bag was delivered
-            $delivery_id = $delivery_bag->delivery_id;
             $data = [
                 'bag_id' => $bag_id,
                 'empty_bag_collection_delivery_id' => $bag_collection_delivery_id,
-                'delivery_id' => $delivery_id,
+                'delivery_id' => $delivery_bag->delivery_id,
                 'customer_id' => $customer_id,
-
+                'delivery_slot_id' => $delivery_slot_id,
+                'customer_address_id' => $customer_address_id,
+                'status' => EmptyBagCollectionStatusEnum::COMPLETED->value,
             ];
             $created =  $this->emptyBagCollectionRepository->createBagCollection($data);
 
@@ -106,7 +112,6 @@ class EmptyBagCollectionController extends Controller
             }
             return $this->success($created, "Bag Collected successfully");
         } catch (Exception $exception) {
-            dd($exception);
             return $this->error($exception, "Exception while creating  bag collection Please contact support", 500);
         }
     }
