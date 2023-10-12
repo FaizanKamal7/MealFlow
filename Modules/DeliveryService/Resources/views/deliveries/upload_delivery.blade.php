@@ -110,7 +110,7 @@
                                                         <option></option>
                                                         @foreach ($areas as $area)
                                                             <option value="{{ $area->id }}">
-                                                                {{ $area->city->name }}({{ $area->name }})</option>
+                                                                {{ $area->city->name }} ({{ $area->name }})</option>
                                                         @endforeach
                                                     </select>
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.area'))

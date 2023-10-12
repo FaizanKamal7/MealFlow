@@ -19,10 +19,14 @@ function showCitiesForPage(page) {
 }
 // Initially, show cities for the first page
 showCitiesForPage(currentPage);
+paginator_number(currentPage)
+
+
 // Event listener for "Next" button
 document.getElementById("nextPage").addEventListener("click", () => {
     if (currentPage < Math.ceil(cities.length / citiesPerPage) - 1) {
         currentPage++;
+        paginator_number(currentPage)
         showCitiesForPage(currentPage);
     }
 });
@@ -31,9 +35,20 @@ document.getElementById("nextPage").addEventListener("click", () => {
 document.getElementById("prevPage").addEventListener("click", () => {
     if (currentPage > 0) {
         currentPage--;
+        paginator_number(currentPage)
         showCitiesForPage(currentPage);
     }
 });
+
+function paginator_number(num) {
+    const currentLi = document.querySelector(".pagination .page-item.active");
+    // Check if the element is found
+    if (currentLi) {
+        currentLi.innerHTML = `<a href="#" class=" page-link existing-content">${
+            num + 1
+        }</a>`;
+    }
+}
 
 $(document).ready(function () {
     // Get the input element
