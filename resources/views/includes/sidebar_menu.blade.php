@@ -671,6 +671,7 @@
 
                 </div>
             </div>
+
             <div class="separator"></div>
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
@@ -1020,7 +1021,9 @@
                     </div>
                 </div>
             @endcan
+
             <div class="separator"></div>
+
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
                     <span class="menu-section text-dark text-uppercase fs-8 ls-1">TEAM</span>
@@ -1269,7 +1272,6 @@
         // Check if a menu item is stored in session storage
         const selectedMenuItem = sessionStorage.getItem("selectedMenuItem");
         // If a menu item is stored, select it and expand its submenu
-        console.log('selected stored', selectedMenuItem);
         if (selectedMenuItem) {
             const menuLink = document.querySelector(`a[href="${selectedMenuItem}"]`);
             if (menuLink) {
@@ -1295,8 +1297,6 @@
                 const href = menuItem.getAttribute("href");
                 // Store the selected menu item in session storage
                 sessionStorage.setItem("selectedMenuItem", href);
-                console.log('selected after', href);
-
             });
         });
     });

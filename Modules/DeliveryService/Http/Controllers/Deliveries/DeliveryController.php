@@ -146,8 +146,8 @@ class DeliveryController extends Controller
 
         $repeaterData = $request->input('kt_docs_repeater_advanced.*');
         //form can be multiple, making this like to accept multiform value
+        dd($repeaterData);
         foreach ($repeaterData as $row) {
-            dd($row);
             // Process the data for each row
         }
 
@@ -255,7 +255,7 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
@@ -565,8 +565,8 @@ class DeliveryController extends Controller
         // - Making all words lower case
         // - replace spaces with underscore "_"
         // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+        $actual_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
 
         // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
         // $expected_headers_lowercase = array_map('strtolower', $expected_headers);

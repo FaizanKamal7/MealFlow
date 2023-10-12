@@ -91,7 +91,6 @@ class BusinessPricingController extends Controller
             $slotData = [
                 'slot' => $startTime . ' - ' . $endTime,
                 'business' => 'Base',
-                // Assuming you have a relationship with the 'Business' model
                 'price' => $pricing['delivery_price'] . ' (' . $pricing['same_loc_delivery_price'] . ')',
                 'bag' => $pricing['bag_collection_price'] . ' (' . $pricing['same_loc_bag_collection_price'] . ')',
                 'cash' => $pricing['cash_collection_price'] . ' (' . $pricing['same_loc_cash_collection_price'] . ')',
@@ -104,12 +103,40 @@ class BusinessPricingController extends Controller
     }
 
     public function rangeBasePricing()
-    {
-        $pricings = $this->rangePricingRepository->get();
-        return view('businessservice::pricing.range_wise_base_pricing', ['pricings' => $pricings]);
+    { {
+            $range_pricings = $this->rangePricingRepository->get()->toArray();
+            $organized_Data = [];
+            foreach ($range_pricings as $pricing) {
+                $cityId = $pricing['city_id'];
+                $city = City::find($cityId);
+                if ($city) {
+                    $city_name_with_Country_State = $city->name . ', ' . '(' . $city->state->name . ', ' . $city->state->country->name . ')';                  
+                }
+                // Check if the city already exists in the organized data
+                if (!isset($organized_Data[$cityId])) {
+                    // If not, create a new entry for the city
+                    $organized_Data[$cityId] = [
+                        'id' => $cityId,
+                        'name' => $city_name_with_Country_State,
+                        'slots' => [],
+                    ];
+                }
+                $createdAt = Carbon::parse($pricing['created_at'])->format('Y-m-d H:i:s');
+                // Add the slot data to the city's 'slots' array
+                $slotData = [
+                    'range' => $pricing['min_range'] . '-' . $pricing['max_range'],
+                    'price' => $pricing['delivery_price'] . ' (' . $pricing['same_loc_delivery_price'] . ')' . ' BRL',
+                    'bag' => $pricing['bag_collection_price'] . ' (' . $pricing['same_loc_bag_collection_price'] . ')',
+                    'cash' => $pricing['cash_collection_price'] . ' (' . $pricing['same_loc_cash_collection_price'] . ')',
+                    'status' => $pricing['active_status'] == 1 ? 'Active' : 'Not Active',
+                    'added' => $createdAt,
+                ];
+
+                $organized_Data[$cityId]['slots'][] = $slotData;
+            }
+            return view('businessservice::pricing.range_wise_base_pricing', ['cities' => $organized_Data]);
+        }
     }
-
-
 
     public function addDeliverySlotBasePricing()
     {
