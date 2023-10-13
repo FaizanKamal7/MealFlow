@@ -37,13 +37,15 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::post('/upload-conflicted-deliveries', [DeliveryController::class, "uploadConflictedDeliveries"])->name("upload_conflicted_deliveries");
 
     // thhese routes are for suggested driver and assigning of delivery    
-    Route::get('/unassigned-deliveries',  [DeliveryController::class, "unassignedDeliveries"])->name("unassigned_deliveries");
-    Route::POST('/assigning_process',  [DeliveryController::class, "assignDeliveriesToDriver"])->name('assigned_delivery_to_driver');
+    Route::get('/unassigned-deliveries', [DeliveryController::class, "unassignedDeliveries"])->name("unassigned_deliveries");
+    Route::POST('/assigning_process', [DeliveryController::class, "assignDeliveriesToDriver"])->name('assigned_delivery_to_driver');
     Route::get('/assigned-deliveries', [DeliveryController::class, "viewAssignedDeliveries"])->name("view_assigned_deliveries");
     Route::get('/completed-deliveries', [DeliveryController::class, "viewCompletedDeliveries"])->name("view_completed_deliveries");
 
     Route::get('/print-label', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "printLabel"])->name('print-label');
     Route::post('/upload_deliveries_multiple', [DeliveryController::class, "UploadDeliveriesMultiple"])->name("upload_deliveries_multiple");
+    // routes/web.php
+    Route::get('/get-business-branches/{id}', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "getBusinessBranches"]);
 
 
 
@@ -76,4 +78,5 @@ Route::prefix('admin/deliveries')->group(function () {
 
         // Route::GET('/driver-bag-pickup', [BagsController::class, "assignBagsPickup"])->name("assign_bag_pickup_to_driver");
     });
+
 });
