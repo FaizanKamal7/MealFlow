@@ -70,10 +70,17 @@ class DeliveryRepository implements DeliveryInterface
 
     public function assignDeliveryBatch($batch_id, $deliveries)
     {
-        Delivery::whereIn('id', $deliveries)->update([
-            'delivery_batch_id' => $batch_id,
-            'status' => DeliveryStatusEnum::ASSIGNED->value,
-        ]);
+        Delivery::whereIn('id', $deliveries)->each(function ($delivery) use ($batch_id) {
+            $delivery->update([
+                'delivery_batch_id' => $batch_id,
+                'status' => DeliveryStatusEnum::ASSIGNED->value,
+            ]);
+        });
+        // ---- Below query is fast but avoiding below as it wont triggger laravel event observer 
+        // Delivery::whereIn('id', $deliveries)->update([
+        //     'delivery_batch_id' => $batch_id,
+        //     'status' => DeliveryStatusEnum::ASSIGNED->value,
+        // ]);
     }
 
     public function assignPickupBatch($batch_id, $deliveries)
