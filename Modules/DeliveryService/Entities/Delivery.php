@@ -92,6 +92,11 @@ class Delivery extends Model
         return $this->morphMany(InvoiceItem::class, 'service');
     }
 
+    public function deliveryTimelines()
+    {
+        return $this->hasMany(DeliveryTimeline::class);
+    }
+
     protected static function newFactory()
     {
         return \Modules\DeliveryService\Database\factories\DeliveryFactory::new();
@@ -105,7 +110,7 @@ class Delivery extends Model
         static::created(function ($model) {
             $attributes = $model->getAttributes();
             $helper = new Helper();
-            $action_by = auth()->id();
+            $action_by = $user_id = auth()->check() ? auth()->id() : null;
             $delivery_id = $attributes['id'];
             $status = DeliveryStatusEnum::UNASSIGNED->value;
             $vehicle_id = null;
@@ -148,7 +153,7 @@ class Delivery extends Model
             $changes = $model->getDirty();
             if ($changes) {
                 $helper = new Helper();
-                $user_id = auth()->id();
+                $user_id = $user_id = auth()->check() ? auth()->id() : null;
                 $module_name = "DeliveryService";
                 $action = "updated";
                 $subject = "Record updated";
@@ -177,21 +182,23 @@ class Delivery extends Model
                     recordType: $record_type,
                     method: $method
                 );
-                dd($model->getAttributes('status'));
                 if ($model->isDirty('status')) {
                     $attributes = $model->getAttributes();
                     $helper = new Helper();
                     $action_by = auth()->id();
                     $delivery_id = $attributes['id'];
                     $status = $model->getAttributes('status');
-                    $description = "Bag Delivered at customer's location";
+                    $vehicle_id = Delivery::find($delivery_id)->deliveryBatch ? Delivery::find($delivery_id)->deliveryBatch->vehicle->id : null;
+
+                    $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED->value, $action_by, $vehicle_id, $description);
 
                     // Access the related vehicle using the vehicle (through) relationship
-                    $vehicle_id = Delivery::find($delivery_id)->deliveryBatch->vehicle->id;
 
                     if ($status == DeliveryStatusEnum::ASSIGNED->value) {
                         $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED->value, $action_by, $vehicle_id, $description);
+                        $description = "Delivery assigned to the driver";
                     } elseif ($status == DeliveryStatusEnum::DELIVERED->value) {
+                        $description = "Delivery Bag Delivered at customer's location";
                         $bag = DeliveryBag::where('delivery_id', $delivery_id)->last();
                         $helper->bagTimeline($bag->id, $delivery_id, BagStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
                         $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
@@ -200,34 +207,9 @@ class Delivery extends Model
             }
         });
 
-        static::updated(function ($model) {
-
-            $attributes = $model->getAttributes();
-
-            if ($model->isDirty('status')) {
-                $attributes = $model->getAttributes();
-                $helper = new Helper();
-                $action_by = auth()->id();
-                $delivery_id = $attributes['id'];
-                $status = $attributes['status'];
-                $description = "Bag Delivered at customer's location";
-
-                // Access the related vehicle using the vehicle (through) relationship
-                $vehicle_id = Delivery::find($delivery_id)->deliveryBatch->vehicle->id;
-
-                if ($status == DeliveryStatusEnum::ASSIGNED->value) {
-                    $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED->value, $action_by, $vehicle_id, $description);
-                } elseif ($status == DeliveryStatusEnum::DELIVERED->value) {
-                    $bag = DeliveryBag::where('delivery_id', $delivery_id)->last();
-                    $helper->bagTimeline($bag->id, $delivery_id, BagStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
-                    $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
-                }
-            }
-        });
-
         static::deleting(function ($model) {
             $helper = new Helper();
-            $user_id = auth()->id();
+            $user_id = $user_id = auth()->check() ? auth()->id() : null;
             $module_name = "DeliveryService";
             $action = "Deleted";
             $subject = "Record Deleted";

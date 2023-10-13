@@ -5,7 +5,7 @@ namespace App\Enum;
 enum DeliveryStatusEnum: string
 {
     case UNASSIGNED = 'unassigned';
-    case ASSIGNED = 'assigned';
+    caseASSIGNED = 'assigned';
         // case DISPATCHED = 'dispatched';
     case DELIVERED = 'delivered';
     case CANCELED = 'canceled';
