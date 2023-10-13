@@ -14,13 +14,22 @@
 use Modules\BusinessService\Http\Controllers\BusinessInfo\BusinessInfoController;
 use Modules\BusinessService\Http\Controllers\BusinessPricing\BusinessPricingController;
 use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsController;
+use Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController;
 use Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController;
 use Modules\FinanceService\Http\Controllers\WalletController;
 use Modules\FinanceService\Http\Controllers\WalletCreditController;
 use Modules\BusinessService\Http\Middleware\BusinessCheck;
 
 
-Route::middleware(['businessCheck'])->group(function () {
+
+
+Route::group(['prefix' => 'businessservice/onboarding/'], function () {
+    Route::get("", [BusinessOnboardingController::class, "index"])->name("business_onboarding");
+    Route::post("add/", [BusinessOnboardingController::class, "businessOnboarding"])->name("business_onboarding_add");
+    Route::get("pricing", [BusinessOnboardingController::class, "pricingCalculator"])->name("pricing_calculator");
+});
+
+Route::middleware(['auth'])->group(function () {
     Route::prefix('businessservice')->group(function () {
         Route::get("", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
         Route::get("deliveries/upload", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "uploadDeliveriesByForm"])->name("partner_upload_deliveries");
@@ -30,12 +39,6 @@ Route::middleware(['businessCheck'])->group(function () {
 
         Route::group(['prefix' => 'business_info/'], function () {
             Route::get("overview/{business_id}", [BusinessInfoController::class, "index"])->name("business_overview");
-        });
-
-        Route::group(['prefix' => 'onboarding/'], function () {
-            Route::get("", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "index"])->name("business_onboarding");
-            Route::post("add/", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "businessOnboarding"])->name("business_onboarding_add");
-            Route::get("pricing", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "pricingCalculator"])->name("pricing_calculator");
         });
 
         Route::group(['prefix' => 'business_info/'], function () {
