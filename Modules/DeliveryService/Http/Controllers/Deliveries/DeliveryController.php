@@ -154,7 +154,7 @@ class DeliveryController extends Controller
             $area = $row['area'];
             $emiratesWithTime = $row['emirates_with_time'];
             $delivery_date = $row['datepicker'];
-            $companyDeliveryId = $row['company_delivery_id'];
+            // $companyDeliveryId = $row['company_delivery_id'];
             $deliveryAmount = $row['delivery_amount'];
             $signature = $row['signature'];
             $notification = $row['notification'];
@@ -162,13 +162,10 @@ class DeliveryController extends Controller
             $deliveryAddress = $row['delivery_address'];
             $productType = $row['product_type'];
             $notes = $row['notes'];
-            $businessIdInput = $row['businessIdInput'];
+            $businessIdInput = $row['business_id'];
             $googleLinkAddress = !empty($row['google_link_address']) ? $row['google_link_address'] : null;
             $conflicted_deliveries = [];
             // $city = $area->city;
-
-
-
             try {
                 DB::beginTransaction();
                 $area = $this->areaRepository->getAreaById($area);
@@ -192,7 +189,7 @@ class DeliveryController extends Controller
                     ]);
 
                     $customer = $this->customerRepository->create(['user_id' => $user->id]);
-                    $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $companyDeliveryId]);
+                    $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $businessIdInput]);
                     // $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
                 }
 
@@ -222,6 +219,7 @@ class DeliveryController extends Controller
                 ];
 
                 $delivery_data['customer_address_id'] = null; // Initialize to null
+                // $delivery_data['customer_address_id'] = '9a45c3fe-10d7-4d50-a822-bda59262500b'; // Initialize to null
 
                 if ($address_matching == null || ($address_matching && $address_matching['status'] == 'MISSING')) {
 
