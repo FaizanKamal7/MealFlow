@@ -82,9 +82,9 @@
                                                         value="{{ old('kt_docs_repeater_advanced.0.delivery_name') }}" />
 
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.delivery_name'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.delivery_name') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.delivery_name') }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="fv-row col-md-3">
@@ -94,10 +94,13 @@
                                                         placeholder="+971 123 456" autocomplete="off"
                                                         value="{{ old('kt_docs_repeater_advanced.0.phone_number') }}" />
 
-                                                    @if ($errors->has('kt_docs_repeater_advanced.*.phone_number'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.phone_number') as $error)
+                                                    @if ($errors->has('kt_docs_repeater_advanced.0.phone_number'))
+                                                        {{-- @foreach ($errors->get('kt_docs_repeater_advanced.*.phone_number') as $error)
                                                             <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        @endforeach --}}
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.phone_number') }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="col-md-3">
@@ -111,9 +114,9 @@
                                                         @endforeach
                                                     </select>
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.area'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.area') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.area') }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="col-md-3">
@@ -129,9 +132,9 @@
                                                         @endforeach
                                                     </select>
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.emirates_with_time'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.emirates_with_time') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.emirates_with_time') }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                             </div>
@@ -141,23 +144,11 @@
                                                     <input class="form-control upload-control" data-kt-repeater="datepicker"
                                                         placeholder="Pick a date" name="datepicker" />
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.datepicker'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.datepicker') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.datepicker') }}
+                                                        </div>
                                                     @endif
                                                 </div>
-                                                {{-- <div class="col-md-3">
-                                                    <label class="form-label upload-label">Company Delivery Id</label>
-                                                    <input type="text" class="form-control upload-control mb-2 mb-md-0"
-                                                        placeholder="UAE" name="company_delivery_id" autocomplete="off"
-                                                        value="{{ old('kt_docs_repeater_advanced.0.company_delivery_id') }}" />
-
-                                                    @if ($errors->has('kt_docs_repeater_advanced.*.company_delivery_id'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.company_delivery_id') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
-                                                    @endif
-                                                </div> --}}
                                                 <div class="col-md-3">
                                                     <label class="form-label upload-label">Delivery Amount</label>
                                                     <input type="text" class="form-control upload-control mb-2 mb-md-0"
@@ -165,9 +156,9 @@
                                                         value="{{ old('kt_docs_repeater_advanced.0.delivery_amount') }}" />
 
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.delivery_amount'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.delivery_amount') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.delivery_amount') }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="col-md-3">
@@ -179,9 +170,9 @@
                                                         <option value="0">No</option>
                                                     </select>
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.signature'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.signature') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.signature') }}
+                                                        </div>
                                                     @endif
 
                                                 </div>
@@ -194,9 +185,9 @@
                                                         <option value="0">No</option>
                                                     </select>
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.notification'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.notification') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.notification') }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                             </div>
@@ -209,24 +200,11 @@
                                                         <option></option>
                                                     </select>
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.pickup_address'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.pickup_address') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.pickup_address') }}
+                                                        </div>
                                                     @endif
                                                 </div>
-                                                {{-- <div class="col-md-5">
-                                                    <label class="form-label upload-label">Pickup Address</label>
-                                                    <input type="text" class="form-control upload-control mb-2 mb-md-0"
-                                                        placeholder="Pickup address" name="pickup_address"
-                                                        autocomplete="off"
-                                                        value="{{ old('kt_docs_repeater_advanced.0.pickup_address') }}" />
-
-                                                    @if ($errors->has('kt_docs_repeater_advanced.*.pickup_address'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.pickup_address') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
-                                                    @endif
-                                                </div> --}}
                                                 <div class="col-md-5">
                                                     <label class="form-label upload-label">Delivery Address</label>
                                                     <input type="text" class="form-control upload-control mb-2 mb-md-0"
@@ -235,9 +213,9 @@
                                                         value="{{ old('kt_docs_repeater_advanced.0.delivery_address') }}" />
 
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.delivery_address'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.delivery_address') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.delivery_address') }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="col-md-2">
@@ -252,9 +230,9 @@
                                                         @endforeach
                                                     </select>
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.product_type'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.product_type') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.product_type') }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                             </div>
@@ -266,9 +244,9 @@
                                                         value="{{ old('kt_docs_repeater_advanced.0.notes') }}" />
 
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.notes'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.notes') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.notes') }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="col-md-6">
@@ -279,9 +257,9 @@
                                                         value="{{ old('kt_docs_repeater_advanced.0.google_link_address') }}" />
 
                                                     @if ($errors->has('kt_docs_repeater_advanced.*.google_link_address'))
-                                                        @foreach ($errors->get('kt_docs_repeater_advanced.*.google_link_address') as $error)
-                                                            <div class="upload-errors">{{ $error[0] }}</div>
-                                                        @endforeach
+                                                        <div class="upload-errors">
+                                                            {{ $errors->first('kt_docs_repeater_advanced.0.google_link_address') }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                             </div>
@@ -382,15 +360,6 @@
                                     <i class="fa fa-file-download fs-4 text-white"></i>
                                 </button>
                             </label>
-                            <!--end::Label-->
-                            <!--begin::Input group-->
-                            {{-- <div class="input-group mb-5">
-                                <input type="text" class="form-control form-control-solid"
-                                    placeholder="Enter total deliveries" name="total_deliveries"
-                                    aria-describedby="basic-addon2" />
-
-                            </div> --}}
-                            <!--end::Input group-->
                         </div>
                         <!--end::Input group-->
                     </form>
@@ -495,16 +464,6 @@
                 });
             }
         });
-        document.addEventListener('DOMContentLoaded', function() {
-            const businessSelect = document.getElementById('businessSelect');
-            const businessIdInput = document.getElementById('businessId');
-
-            businessSelect.addEventListener('change', function() {
-                businessIdInput.value = businessSelect.value;
-                console.log('in here', businessIdInput)
-            });
-        });
-
 
         function getBusinessBranches() {
 
@@ -512,10 +471,11 @@
             var branchDropdown = document.getElementById("business_branches");
             const businessIdInput = document.getElementById('businessId');
             // setting hidden field value to business which is selected
-            businessIdInput.value = businessId.value;
+            businessIdInput.value = businessId;
+            console.log(businessId)
 
             // Clear current options
-            branchDropdown.innerHTML = '<option value="">Select an option</option>';
+            branchDropdown.innerHTML = '';
             // Make AJAX request to fetch states
             if (businessId) {
                 const url = `/admin/deliveries/get-business-branches/${businessId}`
@@ -553,6 +513,5 @@
                 dateFormat: "Y-m-d",
             });
         });
-
     </script>
 @endsection
