@@ -156,7 +156,7 @@
                                     <!--end::Title-->
                                     <!--begin::Link-->
                                     <div class="text-gray-400 fw-bold fs-4">Already have an account?
-                                        <a href="/accounts/login/" class="link-primary fw-bolder">Sign in here</a>
+                                        <a href="/login/" class="link-primary fw-bolder">{{ __('Login here') }}</a>
                                     </div>
                                     <!--end::Link-->
                                 </div>
@@ -192,11 +192,10 @@
                                 <div class="row fv-row">
 
                                     <div class="col-md-6 mb-5">
-                                        <label class="form-label fw-bolder text-dark fs-6 required">Business
-                                            Name</label>
+                                        <label class="form-label fw-bolder text-dark fs-6 required">Phone</label>
                                         <input class="form-control form-control-lg form-control-solid" placeholder=""
-                                            name="buisness_name" autocomplete="off" />
-                                        @error('buisness_name')
+                                            name="phone" autocomplete="off" />
+                                        @error('phone')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -206,7 +205,7 @@
                                         <label class="form-label fw-bolder text-dark fs-6 required">Email
                                             Address</label>
                                         <input class="form-control form-control-lg form-control-solid" placeholder=""
-                                            name="email" autocomplete="off" />
+                                            name="email" id="email" value="" autocomplete="off" />
                                         @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -224,7 +223,8 @@
                                             <!--begin::Input wrapper-->
                                             <div class="position-relative mb-5">
                                                 <input class="form-control form-control-lg form-control-solid"
-                                                    type="password" placeholder="" name="password" autocomplete="off" />
+                                                    type="password" placeholder="" value="" name="password"
+                                                    autocomplete="off" />
                                                 <span
                                                     class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
                                                     data-kt-password-meter-control="visibility">
@@ -261,8 +261,10 @@
                                     <div class="col-md-6 fv-row mb-5">
                                         <label class="form-label fw-bolder text-dark fs-6 required">Confirm
                                             Password</label>
-                                        <input class="form-control form-control-lg form-control-solid" type="password"
-                                            placeholder="" name="confirm_password" autocomplete="off" />
+                                        <input class="form-control form-control-lg form-control-solid"
+                                            value="__('Confirm Password')" type="password" placeholder=""
+                                            id="password_confirmation" name="password_confirmation"
+                                            autocomplete="off" />
                                     </div>
                                 </div>
                                 <!--end::Input group-->
@@ -320,39 +322,54 @@
                                     <!--end::Input-->
                                 </div> --}}
                                 <!--end::Input group-->
-                                <div class="fv-row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label required">Category</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <select name="category" class="form-select form-select-lg form-select-solid"
-                                        data-control="select2" data-placeholder="Select..." data-allow-clear="true"
-                                        data-hide-search="true">
 
-                                        @if ($business_categories->count())
-                                        @foreach ($business_categories as $business_category)
-                                        <option value={{ $business_category['id'] }}>
-                                            {{ $business_category['name'] }}
-                                        </option>
-                                        @endforeach
-                                        @else
-                                        <option value="">Category not available</option>
-                                        @endif
-
-                                    </select>
-                                    <!--end::Input-->
-                                </div>
                                 <!--begin::Input group-->
                                 <div class="fv-row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label required">Phone Number</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input name="phone" class="form-control form-control-lg form-control-solid"
-                                        type="numbers" />
-                                    <!--end::Input-->
+                                    <label class="form-label fw-bolder text-dark fs-6 required">Business
+                                        Name</label>
+                                    <input class="form-control form-control-lg form-control-solid" placeholder=""
+                                        name="buisness_name" autocomplete="off" />
+                                    @error('buisness_name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                                <!--end::Input group-->
+
+                                <div class="row fv-row">
+                                    <div class="col-md-6 mb-5">
+                                        <label class="form-label">Business
+                                            Contact Number</label>
+                                        <input class="form-control form-control-lg form-control-solid"
+                                            placeholder="Enter Business Contact info (It won't be used for the authentication)"
+                                            name="business_phone" autocomplete="off" />
+                                        @error('business_phone')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="col-md-6 mb-5">
+                                        <!--begin::Label-->
+                                        <label class="form-label">Category</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <select name="category" class="form-select form-select-lg form-select-solid"
+                                            data-control="select2" data-placeholder="Select..." data-allow-clear="true"
+                                            data-hide-search="true">
+
+                                            @if ($business_categories->count())
+                                            @foreach ($business_categories as $business_category)
+                                            <option value={{ $business_category['id'] }}>
+                                                {{ $business_category['name'] }}
+                                            </option>
+                                            @endforeach
+                                            @else
+                                            <option value="">Category not available</option>
+                                            @endif
+
+                                        </select>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
 
 
                                 <!--begin::Input group-->

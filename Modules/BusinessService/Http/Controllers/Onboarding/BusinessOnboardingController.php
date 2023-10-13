@@ -113,6 +113,7 @@ class BusinessOnboardingController extends Controller
         $card_cvv = $request->card_cvv;
         $business_category_id = $request->category;
         $phone = $request->phone;
+        $business_phone = $request->business_phone;
         $address = $request->address;
         $address_country = $request->address_country;
         $address_state = $request->address_state;
@@ -151,6 +152,7 @@ class BusinessOnboardingController extends Controller
             $user = $this->userRepository->createUser([
                 'name' => $first_name . " " . $last_name,
                 'email' =>  $email,
+                'phone' =>  $phone,
                 'password' => Hash::make($password),
                 'isActive' => true
             ]);
