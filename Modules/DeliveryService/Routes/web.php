@@ -23,7 +23,6 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('/upload/bulk', 'DeliveryServiceController@bulkAddView')->name("bulk_delivery_add_view");
     Route::post('/upload/save', 'DeliveryServiceController@uploadFile')->name("upload_file");
     Route::get('/', 'DeliveryServiceController@index');
-    Route::view('/myview', 'upload_delivery_2')->name('temp_excel_view');
 
 
 
@@ -47,6 +46,7 @@ Route::prefix('admin/deliveries')->group(function () {
 
     Route::get('/print-label', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "printLabel"])->name('print-label');
     Route::post('/upload_deliveries_multiple', [DeliveryController::class, "uploadDeliveriesMultiple"])->name("upload_deliveries_multiple");
+    Route::get('/get-business-branches/{id}', [DeliveryController::class, "getBusinessBranches"]);
 
 
 

@@ -252,13 +252,14 @@ class DeliveryController extends Controller
                             $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
                             $address_matching = $this->addressDBStatus($sheet_address, $customer_addresses);
                         } else {
+                            var_dump("inside else");
                             $user = $this->userRepository->createUser([
                                 'name' => $row['full_name'],
                                 'email' => $row['email_optional'] ?? '',
                                 'phone' => $row['phone'] ?? '',
                                 'password' => Hash::make("1234abcd"),
                                 'isActive' => true
-                            ]);
+                            ], false);
 
                             $customer = $this->customerRepository->create(['user_id' => $user->id]);
                             $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);

@@ -41,12 +41,17 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         '9f394da3192a168c4633675768d80428' => __DIR__ . '/..' . '/nwidart/laravel-modules/src/helpers.php',
         '320163ac6b93aebe3dc25b60a0533d56' => __DIR__ . '/..' . '/spatie/laravel-ignition/src/helpers.php',
         '0b47d6d4a00ca9112ba3953b49e7c9a4' => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src/helper.php',
+        '017b24472353920ed42bb364f7653c43' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'v' => 
         array (
             'voku\\' => 5,
+        ),
+        'l' => 
+        array (
+            'libphonenumber\\' => 15,
         ),
         'Z' => 
         array (
@@ -121,6 +126,7 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
             'Psr\\Container\\' => 14,
             'Psr\\Clock\\' => 10,
             'Psr\\Cache\\' => 10,
+            'Propaganistas\\LaravelPhone\\' => 27,
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
             'PhpOffice\\PhpSpreadsheet\\' => 25,
@@ -170,6 +176,7 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
             'GrahamCampbell\\ResultType\\' => 26,
+            'Giggsey\\Locale\\' => 15,
         ),
         'F' => 
         array (
@@ -223,6 +230,10 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'voku\\' => 
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
+        ),
+        'libphonenumber\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src',
         ),
         'ZipStream\\' => 
         array (
@@ -437,6 +448,10 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
+        'Propaganistas\\LaravelPhone\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/propaganistas/laravel-phone/src',
+        ),
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
@@ -562,6 +577,10 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'GrahamCampbell\\ResultType\\' => 
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
+        ),
+        'Giggsey\\Locale\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/giggsey/locale/src',
         ),
         'Fruitcake\\Cors\\' => 
         array (
@@ -713,8 +732,18 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'App\\Http\\Controllers\\Admin\\UserManagement\\PermissionsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/PermissionsController.php',
         'App\\Http\\Controllers\\Admin\\UserManagement\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/RolesController.php',
         'App\\Http\\Controllers\\Admin\\UserManagement\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/UsersController.php',
+        'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
+        'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
+        'App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationNotificationController.php',
+        'App\\Http\\Controllers\\Auth\\EmailVerificationPromptController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationPromptController.php',
+        'App\\Http\\Controllers\\Auth\\NewPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/NewPasswordController.php',
+        'App\\Http\\Controllers\\Auth\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordController.php',
+        'App\\Http\\Controllers\\Auth\\PasswordResetLinkController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordResetLinkController.php',
+        'App\\Http\\Controllers\\Auth\\RegisteredUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisteredUserController.php',
+        'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Authentication\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Authentication/LoginController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
         'App\\Http\\Helper\\Helper' => __DIR__ . '/../..' . '/app/Http/Helper/Helper.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\AuthGates' => __DIR__ . '/../..' . '/app/Http/Middleware/AuthGates.php',
@@ -727,9 +756,11 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\MassDestroyPermissionRequest' => __DIR__ . '/../..' . '/app/Http/Requests/MassDestroyPermissionRequest.php',
         'App\\Http\\Requests\\MassDestroyRoleRequest' => __DIR__ . '/../..' . '/app/Http/Requests/MassDestroyRoleRequest.php',
         'App\\Http\\Requests\\MassDestroyUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/MassDestroyUserRequest.php',
+        'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Http\\Requests\\StorePermissionRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StorePermissionRequest.php',
         'App\\Http\\Requests\\StoreRoleRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreRoleRequest.php',
         'App\\Http\\Requests\\StoreUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreUserRequest.php',
@@ -782,6 +813,8 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'App\\Repositories\\UserRepository' => __DIR__ . '/../..' . '/app/Repositories/UserRepository.php',
         'App\\Repositories\\UserRoleRepository' => __DIR__ . '/../..' . '/app/Repositories/UserRoleRepository.php',
         'App\\Traits\\HttpResponses' => __DIR__ . '/../..' . '/app/Traits/HttpResponses.php',
+        'App\\View\\Components\\AppLayout' => __DIR__ . '/../..' . '/app/View/Components/AppLayout.php',
+        'App\\View\\Components\\GuestLayout' => __DIR__ . '/../..' . '/app/View/Components/GuestLayout.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'BaconQrCode\\Common\\BitArray' => __DIR__ . '/..' . '/bacon/bacon-qr-code/src/Common/BitArray.php',
         'BaconQrCode\\Common\\BitMatrix' => __DIR__ . '/..' . '/bacon/bacon-qr-code/src/Common/BitMatrix.php',
@@ -2780,6 +2813,7 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'Firebase\\JWT\\SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/SignatureInvalidException.php',
         'Fruitcake\\Cors\\CorsService' => __DIR__ . '/..' . '/fruitcake/php-cors/src/CorsService.php',
         'Fruitcake\\Cors\\Exceptions\\InvalidOptionException' => __DIR__ . '/..' . '/fruitcake/php-cors/src/Exceptions/InvalidOptionException.php',
+        'Giggsey\\Locale\\Locale' => __DIR__ . '/..' . '/giggsey/locale/src/Locale.php',
         'GrahamCampbell\\ResultType\\Error' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Error.php',
         'GrahamCampbell\\ResultType\\Result' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Result.php',
         'GrahamCampbell\\ResultType\\Success' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Success.php',
@@ -7023,6 +7057,18 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'PhpParser\\PrettyPrinterAbstract' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinterAbstract.php',
         'PhpParser\\PrettyPrinter\\Standard' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinter/Standard.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+        'Propaganistas\\LaravelPhone\\Aspects\\PhoneNumberCountry' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/Aspects/PhoneNumberCountry.php',
+        'Propaganistas\\LaravelPhone\\Aspects\\PhoneNumberFormat' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/Aspects/PhoneNumberFormat.php',
+        'Propaganistas\\LaravelPhone\\Aspects\\PhoneNumberType' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/Aspects/PhoneNumberType.php',
+        'Propaganistas\\LaravelPhone\\Casts\\E164PhoneNumberCast' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/Casts/E164PhoneNumberCast.php',
+        'Propaganistas\\LaravelPhone\\Casts\\PhoneNumberCast' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/Casts/PhoneNumberCast.php',
+        'Propaganistas\\LaravelPhone\\Casts\\RawPhoneNumberCast' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/Casts/RawPhoneNumberCast.php',
+        'Propaganistas\\LaravelPhone\\Exceptions\\CountryCodeException' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/Exceptions/CountryCodeException.php',
+        'Propaganistas\\LaravelPhone\\Exceptions\\NumberFormatException' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/Exceptions/NumberFormatException.php',
+        'Propaganistas\\LaravelPhone\\Exceptions\\NumberParseException' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/Exceptions/NumberParseException.php',
+        'Propaganistas\\LaravelPhone\\PhoneNumber' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/PhoneNumber.php',
+        'Propaganistas\\LaravelPhone\\PhoneServiceProvider' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/PhoneServiceProvider.php',
+        'Propaganistas\\LaravelPhone\\Rules\\Phone' => __DIR__ . '/..' . '/propaganistas/laravel-phone/src/Rules/Phone.php',
         'Psr\\Cache\\CacheException' => __DIR__ . '/..' . '/psr/cache/src/CacheException.php',
         'Psr\\Cache\\CacheItemInterface' => __DIR__ . '/..' . '/psr/cache/src/CacheItemInterface.php',
         'Psr\\Cache\\CacheItemPoolInterface' => __DIR__ . '/..' . '/psr/cache/src/CacheItemPoolInterface.php',
@@ -9038,7 +9084,14 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'Termwind\\ValueObjects\\Style' => __DIR__ . '/..' . '/nunomaduro/termwind/src/ValueObjects/Style.php',
         'Termwind\\ValueObjects\\Styles' => __DIR__ . '/..' . '/nunomaduro/termwind/src/ValueObjects/Styles.php',
         'Tests\\CreatesApplication' => __DIR__ . '/../..' . '/tests/CreatesApplication.php',
+        'Tests\\Feature\\Auth\\AuthenticationTest' => __DIR__ . '/../..' . '/tests/Feature/Auth/AuthenticationTest.php',
+        'Tests\\Feature\\Auth\\EmailVerificationTest' => __DIR__ . '/../..' . '/tests/Feature/Auth/EmailVerificationTest.php',
+        'Tests\\Feature\\Auth\\PasswordConfirmationTest' => __DIR__ . '/../..' . '/tests/Feature/Auth/PasswordConfirmationTest.php',
+        'Tests\\Feature\\Auth\\PasswordResetTest' => __DIR__ . '/../..' . '/tests/Feature/Auth/PasswordResetTest.php',
+        'Tests\\Feature\\Auth\\PasswordUpdateTest' => __DIR__ . '/../..' . '/tests/Feature/Auth/PasswordUpdateTest.php',
+        'Tests\\Feature\\Auth\\RegistrationTest' => __DIR__ . '/../..' . '/tests/Feature/Auth/RegistrationTest.php',
         'Tests\\Feature\\ExampleTest' => __DIR__ . '/../..' . '/tests/Feature/ExampleTest.php',
+        'Tests\\Feature\\ProfileTest' => __DIR__ . '/../..' . '/tests/Feature/ProfileTest.php',
         'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Tests\\Unit\\ExampleTest' => __DIR__ . '/../..' . '/tests/Unit/ExampleTest.php',
         'TheSeer\\Tokenizer\\Exception' => __DIR__ . '/..' . '/theseer/tokenizer/src/Exception.php',
@@ -9124,6 +9177,46 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'ZipStream\\Zip64\\ExtendedInformationExtraField' => __DIR__ . '/..' . '/maennchen/zipstream-php/src/Zip64/ExtendedInformationExtraField.php',
         'ZipStream\\ZipStream' => __DIR__ . '/..' . '/maennchen/zipstream-php/src/ZipStream.php',
         'ZipStream\\Zs\\ExtendedInformationExtraField' => __DIR__ . '/..' . '/maennchen/zipstream-php/src/Zs/ExtendedInformationExtraField.php',
+        'libphonenumber\\AlternateFormatsCountryCodeSet' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/AlternateFormatsCountryCodeSet.php',
+        'libphonenumber\\AsYouTypeFormatter' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/AsYouTypeFormatter.php',
+        'libphonenumber\\CountryCodeSource' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/CountryCodeSource.php',
+        'libphonenumber\\CountryCodeToRegionCodeMap' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/CountryCodeToRegionCodeMap.php',
+        'libphonenumber\\DefaultMetadataLoader' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/DefaultMetadataLoader.php',
+        'libphonenumber\\Leniency' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/Leniency.php',
+        'libphonenumber\\Leniency\\AbstractLeniency' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/Leniency/AbstractLeniency.php',
+        'libphonenumber\\Leniency\\ExactGrouping' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/Leniency/ExactGrouping.php',
+        'libphonenumber\\Leniency\\Possible' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/Leniency/Possible.php',
+        'libphonenumber\\Leniency\\StrictGrouping' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/Leniency/StrictGrouping.php',
+        'libphonenumber\\Leniency\\Valid' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/Leniency/Valid.php',
+        'libphonenumber\\MatchType' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/MatchType.php',
+        'libphonenumber\\Matcher' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/Matcher.php',
+        'libphonenumber\\MatcherAPIInterface' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/MatcherAPIInterface.php',
+        'libphonenumber\\MetadataLoaderInterface' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/MetadataLoaderInterface.php',
+        'libphonenumber\\MetadataSourceInterface' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/MetadataSourceInterface.php',
+        'libphonenumber\\MultiFileMetadataSourceImpl' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/MultiFileMetadataSourceImpl.php',
+        'libphonenumber\\NumberFormat' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/NumberFormat.php',
+        'libphonenumber\\NumberParseException' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/NumberParseException.php',
+        'libphonenumber\\PhoneMetadata' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/PhoneMetadata.php',
+        'libphonenumber\\PhoneNumber' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/PhoneNumber.php',
+        'libphonenumber\\PhoneNumberDesc' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/PhoneNumberDesc.php',
+        'libphonenumber\\PhoneNumberFormat' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/PhoneNumberFormat.php',
+        'libphonenumber\\PhoneNumberMatch' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/PhoneNumberMatch.php',
+        'libphonenumber\\PhoneNumberMatcher' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/PhoneNumberMatcher.php',
+        'libphonenumber\\PhoneNumberToCarrierMapper' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/PhoneNumberToCarrierMapper.php',
+        'libphonenumber\\PhoneNumberToTimeZonesMapper' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/PhoneNumberToTimeZonesMapper.php',
+        'libphonenumber\\PhoneNumberType' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/PhoneNumberType.php',
+        'libphonenumber\\PhoneNumberUtil' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/PhoneNumberUtil.php',
+        'libphonenumber\\RegexBasedMatcher' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/RegexBasedMatcher.php',
+        'libphonenumber\\RegionCode' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/RegionCode.php',
+        'libphonenumber\\ShortNumberCost' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/ShortNumberCost.php',
+        'libphonenumber\\ShortNumberInfo' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/ShortNumberInfo.php',
+        'libphonenumber\\ShortNumbersRegionCodeSet' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/ShortNumbersRegionCodeSet.php',
+        'libphonenumber\\ValidationResult' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/ValidationResult.php',
+        'libphonenumber\\geocoding\\PhoneNumberOfflineGeocoder' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/geocoding/PhoneNumberOfflineGeocoder.php',
+        'libphonenumber\\prefixmapper\\MappingFileProvider' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/prefixmapper/MappingFileProvider.php',
+        'libphonenumber\\prefixmapper\\PhonePrefixMap' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/prefixmapper/PhonePrefixMap.php',
+        'libphonenumber\\prefixmapper\\PrefixFileReader' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/prefixmapper/PrefixFileReader.php',
+        'libphonenumber\\prefixmapper\\PrefixTimeZonesMap' => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src/prefixmapper/PrefixTimeZonesMap.php',
         'voku\\helper\\ASCII' => __DIR__ . '/..' . '/voku/portable-ascii/src/voku/helper/ASCII.php',
     );
 

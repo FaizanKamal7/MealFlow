@@ -31,7 +31,7 @@ use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
+use Propaganistas\LaravelPhone\PhoneNumber;
 use function PHPUnit\Framework\isEmpty;
 
 class DeliveryController extends Controller
@@ -115,46 +115,47 @@ class DeliveryController extends Controller
 
     public function uploadDeliveriesMultiple(Request $request)
     {
-        // dd($request);
-        $validatedData = $request->validate([
-            'kt_docs_repeater_advanced.*.delivery_name' => 'required|string|max:255',
-            'kt_docs_repeater_advanced.*.phone_number' => 'required|string|max:20',
-            'kt_docs_repeater_advanced.*.area' => 'required',
-            'kt_docs_repeater_advanced.*.emirates_with_time' => 'required',
-            'kt_docs_repeater_advanced.*.datepicker' => 'required|date',
-            // 'kt_docs_repeater_advanced.*.company_delivery_id' => 'required|string|max:255',
-            'kt_docs_repeater_advanced.*.delivery_amount' => 'required|numeric',
-            'kt_docs_repeater_advanced.*.signature' => 'required|in:0,1',
-            'kt_docs_repeater_advanced.*.notification' => 'required|in:0,1',
-            'kt_docs_repeater_advanced.*.pickup_address' => 'required|string|max:255',
-            'kt_docs_repeater_advanced.*.delivery_address' => 'required|string|max:255',
-            'kt_docs_repeater_advanced.*.product_type' => 'required',
-            'kt_docs_repeater_advanced.*.notes' => 'required|string|max:255',
-            // 'kt_docs_repeater_advanced.*.google_link_address' => 'required|url',
-        ], [
-            'kt_docs_repeater_advanced.*.delivery_name.required' => 'Delivery name is required',
-            'kt_docs_repeater_advanced.*.phone_number.required' => 'Phone number is required',
-            'kt_docs_repeater_advanced.*.area.required' => 'Area is required',
-            'kt_docs_repeater_advanced.*.emirates_with_time.required' => 'Emirates with time is required',
-            'kt_docs_repeater_advanced.*.datepicker.required' => 'Date is required',
-            // 'kt_docs_repeater_advanced.*.company_delivery_id.required' => 'Company Delivery ID is required',
-            'kt_docs_repeater_advanced.*.delivery_amount.required' => 'Delivery Amount is required',
-            'kt_docs_repeater_advanced.*.signature.required' => 'Signature is required',
-            'kt_docs_repeater_advanced.*.notification.required' => 'Notification is required',
-            'kt_docs_repeater_advanced.*.pickup_address.required' => 'Pickup Address is required',
-            'kt_docs_repeater_advanced.*.delivery_address.required' => 'Delivery Address is required',
-            'kt_docs_repeater_advanced.*.product_type.required' => 'Product Type is required',
-            'kt_docs_repeater_advanced.*.notes.required' => 'Notes are required',
-            // 'kt_docs_repeater_advanced.*.google_link_address.required' => 'Google Link Address is required',
-        ]);
 
+        // $request->validate([
+        //     'kt_docs_repeater_advanced.*.delivery_name' => 'required|string|max:255',
+        //     'kt_docs_repeater_advanced.*.phone_number' => 'required',
+        //     'kt_docs_repeater_advanced.*.area' => 'required',
+        //     'kt_docs_repeater_advanced.*.emirates_with_time' => 'required',
+        //     'kt_docs_repeater_advanced.*.datepicker' => 'required|date',
+        //     // 'kt_docs_repeater_advanced.*.company_delivery_id' => 'required|string|max:255',
+        //     // 'kt_docs_repeater_advanced.*.delivery_amount' => 'required|numeric',
+        //     'kt_docs_repeater_advanced.*.signature' => 'required|in:0,1',
+        //     'kt_docs_repeater_advanced.*.notification' => 'required|in:0,1',
+        //     'kt_docs_repeater_advanced.*.branch_dropdown' => 'required|string|max:255',
+        //     'kt_docs_repeater_advanced.*.delivery_address' => 'required|string|max:255',
+        //     'kt_docs_repeater_advanced.*.product_type' => 'required',
+        //     // 'kt_docs_repeater_advanced.*.notes' => 'string|max:255',
+        //     // 'kt_docs_repeater_advanced.*.google_link_address' => 'required|url',
+        // ], [
+        //     'kt_docs_repeater_advanced.*.delivery_name.required' => 'Delivery name is required',
+        //     'kt_docs_repeater_advanced.*.phone_number.required' => 'Phone number is required',
+        //     'kt_docs_repeater_advanced.*.area.required' => 'Area is required',
+        //     'kt_docs_repeater_advanced.*.emirates_with_time.required' => 'Emirates with time is required',
+        //     'kt_docs_repeater_advanced.*.datepicker.required' => 'Date is required',
+        //     // 'kt_docs_repeater_advanced.*.company_delivery_id.required' => 'Company Delivery ID is required',
+        //     // 'kt_docs_repeater_advanced.*.delivery_amount.required' => 'Delivery Amount is required',
+        //     'kt_docs_repeater_advanced.*.signature.required' => 'Signature is required',
+        //     'kt_docs_repeater_advanced.*.notification.required' => 'Notification is required',
+        //     'kt_docs_repeater_advanced.*.branch_dropdown.required' => 'Pickup Address is required',
+        //     'kt_docs_repeater_advanced.*.delivery_address.required' => 'Delivery Address is required',
+        //     'kt_docs_repeater_advanced.*.product_type.required' => 'Product Type is required',
+        //     // 'kt_docs_repeater_advanced.*.notes.required' => 'Notes are required',
+        //     // 'kt_docs_repeater_advanced.*.google_link_address.required' => 'Google Link Address is required',
+        // ]);
         $repeaterData = $request->input('kt_docs_repeater_advanced.*');
         //form can be multiple, making this like to accept multiform value
         // dd($repeaterData);
         foreach ($repeaterData as $row) {
             // Process the data for each row
             $name = $row['delivery_name'];
-            $phoneNumber = $row['phone_number'];
+            // Country code will be dynamically passed
+            $phone_number = new PhoneNumber($row['phone_number'], 'PK');
+            $phone_number =  $phone_number->formatE164();
             $area = $row['area'];
             $emiratesWithTime = $row['emirates_with_time'];
             $delivery_date = $row['datepicker'];
@@ -162,19 +163,18 @@ class DeliveryController extends Controller
             $deliveryAmount = $row['delivery_amount'];
             $signature = $row['signature'];
             $notification = $row['notification'];
-            $pickupAddress = $row['pickup_address'];
+            $branch_id = $row['branch_dropdown'];
             $deliveryAddress = $row['delivery_address'];
             $productType = $row['product_type'];
             $notes = $row['notes'];
             $businessIdInput = $row['business_id'];
             $googleLinkAddress = !empty($row['google_link_address']) ? $row['google_link_address'] : null;
             $conflicted_deliveries = [];
-            // $city = $area->city;
             // try {
-            // DB::beginTransaction();
+            //     DB::beginTransaction();
             $area = $this->areaRepository->getAreaById($area);
             $city = $area->city;
-            $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($phoneNumber);
+            $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($phone_number);
             // $customer = $customer ?? $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
             $customer_addresses = '';
             $address_matching = null;
@@ -186,22 +186,21 @@ class DeliveryController extends Controller
             } else {
                 $user = $this->userRepository->createUser([
                     'name' => $name,
-                    'email' => $row['email_optional'] ?? '',
-                    'phone' => $phoneNumber ?? '',
+                    'phone' => $phone_number,
                     'password' => Hash::make("1234abcd"),
-                    'isActive' => true
-                ]);
-
+                    'is_active' => true
+                ], false);
                 $customer = $this->customerRepository->create(['user_id' => $user->id]);
                 $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $businessIdInput]);
                 // $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
             }
 
-            $branch = $this->branchRepository->getBusinessBranch(['name' => $pickupAddress]);
             $delivery_type = $this->deliveryTypeRepository->getWhereFirst(['name' => $productType]);
             // $db_delivery_slot = $this->deliverySlotRepository->getDeliverySlotsByTimeAndCity($emiratesWithTime->start_time, $emiratesWithTime->end_time, $city->id);
 
             $finalized_address = '';
+
+
 
             $delivery_data = [
                 'status' => 'UNASSIGN',
@@ -210,12 +209,12 @@ class DeliveryController extends Controller
                 'is_sign_required' => $signature,
                 'is_notification_enabled' => $notification,
                 'note' => $notes,
-                'branch_id' => $branch->id ?? null,
+                'branch_id' => $branch_id ?? null,
                 'delivery_slot_id' => $emiratesWithTime,
                 'delivery_type_id' => null,
                 'delivery_date' => $delivery_date,
                 'customer_id' => $customer->id,
-                'area_id' => $area,
+                'area_id' => $area->id,
                 'city_id' => $city->id,
                 'state_id' => $city->state->id,
                 'country_id' => $city->state->country->id,
@@ -223,55 +222,53 @@ class DeliveryController extends Controller
             ];
 
             $delivery_data['customer_address_id'] = null; // Initialize to null
+            if ($address_matching == null || ($address_matching && $address_matching['status'] == 'MISSING')) {
+
+                // add new and get customer id
+                $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($deliveryAddress);
+
+                $address_data = [
+                    'address' => $deliveryAddress,
+                    'address_type' => "OTHER",
+                    'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
+                    'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
+                    'customer_id' => $customer->id,
+                    'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
+                    'area_id' => $area->id,
+                    'city_id' => $city->id,
+                    'state_id' => $city->state->id,
+                    'country_id' => $city->state->country->id,
+                ];
+                $finalized_address = $this->customerAddressRepository->create($address_data);
+                $delivery_data['customer_address_id'] = $finalized_address->id; // Update based on condition
+                $this->deliveryRepository->create($delivery_data);
+            } elseif ($address_matching['status'] == 'CONFLICT') {
+                $location_info = [
+                    'area_id' => $area->id,
+                    'city_id' => $city->id,
+                    'state_id' => $city->state->id,
+                    'country_id' => $city->state->country->id,
+                ];
+                $delivery_data = array_merge($delivery_data, $location_info);
+                $conflicted_delivery = [
+                    'conflict' => 'Similar address for customer already exists',
+                    'db_customer' => $customer,
+                    'customer_db_address' => $address_matching['customer_db_address'],
+                    'passed_address' => $address_matching['passed_address'],
+                    'passed_delivery_data' => $delivery_data,
+                ];
+                array_push($conflicted_deliveries, $conflicted_delivery);
+                continue;
+            } elseif ($address_matching['status'] == 'MATCHED') {
+                $finalized_address = $address_matching['customer_db_address'];
+                $delivery_data['customer_address_id'] = $finalized_address->id;
+                $this->deliveryRepository->create($delivery_data);
+            } else {
+            }
+
+            $delivery_data['customer_address_id'] = $finalized_address->id;
             $this->deliveryRepository->create($delivery_data);
-            // if ($address_matching == null || ($address_matching && $address_matching['status'] == 'MISSING')) {
 
-            //     // add new and get customer id
-            //     $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($deliveryAddress);
-
-            //     $address_data = [
-            //         'address' => $deliveryAddress,
-            //         'address_type' => "OTHER",
-            //         'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
-            //         'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
-            //         'customer_id' => $customer->id,
-            //         'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
-            //         'area_id' => $area,
-            //         'city_id' => $city->id,
-            //         'state_id' => $city->state->id,
-            //         'country_id' => $city->state->country->id,
-            //     ];
-            //     $finalized_address = $this->customerAddressRepository->create($address_data);
-            //     $delivery_data['customer_address_id'] = $finalized_address->id; // Update based on condition
-            //     $this->deliveryRepository->create($delivery_data);
-
-            // } elseif ($address_matching['status'] == 'CONFLICT') {
-            //     $location_info = [
-            //         'area_id' => $area,
-            //         'city_id' => $city->id,
-            //         'state_id' => $city->state->id,
-            //         'country_id' => $city->state->country->id,
-            //     ];
-            //     $delivery_data = array_merge($delivery_data, $location_info);
-            //     $conflicted_delivery = [
-            //         'conflict' => 'Similar address for customer already exists',
-            //         'db_customer' => $customer,
-            //         'customer_db_address' => $address_matching['customer_db_address'],
-            //         'passed_address' => $address_matching['passed_address'],
-            //         'passed_delivery_data' => $delivery_data,
-            //     ];
-            //     array_push($conflicted_deliveries, $conflicted_delivery);
-            //     continue;
-            // } elseif ($address_matching['status'] == 'MATCHED') {
-            //     $finalized_address = $address_matching['customer_db_address'];
-            //     $delivery_data['customer_address_id'] = $finalized_address->id;
-            //     $this->deliveryRepository->create($delivery_data);
-
-            // } else {
-
-            // }
-
-            // $delivery_data['customer_address_id'] = $finalized_address->id;
 
 
 
@@ -281,51 +278,50 @@ class DeliveryController extends Controller
             // }
         }
 
-        // if (count($conflicted_deliveries) == 0) {
-        //     return redirect()->back()->with('success', 'Valid deliveries uploaded successfully.');
-        // } else {
-        //     return view('deliveryservice::deliveries.conflicted_deliveries', ['conflicted_deliveries' => $conflicted_deliveries]);
-        // }
+        if (count($conflicted_deliveries) == 0) {
+            return redirect()->back()->with('success', 'Valid deliveries uploaded successfully.');
+        } else {
+            return view('deliveryservice::deliveries.conflicted_deliveries', ['conflicted_deliveries' => $conflicted_deliveries]);
+        }
         return $this->unassignedDeliveries();
 
 
-        $name = $request->input('kt_docs_repeater_advanced.0.delivery_name');
-        $phoneNumber = $request->input('kt_docs_repeater_advanced.0.phone_number');
-        $area = $request->input('kt_docs_repeater_advanced.0.area');
-        $emiratesWithTime = $request->input('kt_docs_repeater_advanced.0.emirates_with_time');
-        $datepicker = $request->input('kt_docs_repeater_advanced.0.datepicker');
-        $companyDeliveryId = $request->input('kt_docs_repeater_advanced.0.company_delivery_id');
-        $deliveryAmount = $request->input('kt_docs_repeater_advanced.0.delivery_amount');
-        $signature = $request->input('kt_docs_repeater_advanced.0.signature');
-        $notification = $request->input('kt_docs_repeater_advanced.0.notification');
-        $pickupAddress = $request->input('kt_docs_repeater_advanced.0.pickup_address');
-        $deliveryAddress = $request->input('kt_docs_repeater_advanced.0.delivery_address');
-        $productType = $request->input('kt_docs_repeater_advanced.0.product_type');
-        $notes = $request->input('kt_docs_repeater_advanced.0.notes');
-        $googleLinkAddress = $request->input('kt_docs_repeater_advanced.0.google_link_address');
+        // $name = $request->input('kt_docs_repeater_advanced.0.delivery_name');
+        // $phone_number = $request->input('kt_docs_repeater_advanced.0.phone_number');
+        // $area = $request->input('kt_docs_repeater_advanced.0.area');
+        // $emiratesWithTime = $request->input('kt_docs_repeater_advanced.0.emirates_with_time');
+        // $datepicker = $request->input('kt_docs_repeater_advanced.0.datepicker');
+        // $companyDeliveryId = $request->input('kt_docs_repeater_advanced.0.company_delivery_id');
+        // $deliveryAmount = $request->input('kt_docs_repeater_advanced.0.delivery_amount');
+        // $signature = $request->input('kt_docs_repeater_advanced.0.signature');
+        // $notification = $request->input('kt_docs_repeater_advanced.0.notification');
+        // $pickup_address = $request->input('kt_docs_repeater_advanced.0.pickup_address');
+        // $deliveryAddress = $request->input('kt_docs_repeater_advanced.0.delivery_address');
+        // $productType = $request->input('kt_docs_repeater_advanced.0.product_type');
+        // $notes = $request->input('kt_docs_repeater_advanced.0.notes');
+        // $googleLinkAddress = $request->input('kt_docs_repeater_advanced.0.google_link_address');
 
-        dd(
-            $name,
-            $phoneNumber,
-            $area,
-            $emiratesWithTime,
-            $datepicker,
-            $companyDeliveryId,
-            $deliveryAmount,
-            $signature,
-            $notification,
-            $pickupAddress,
-            $deliveryAddress,
-            $productType,
-            $notes,
-            $googleLinkAddress
-        );
+        // dd(
+        //     $name,
+        //     $phone_number,
+        //     $area,
+        //     $emiratesWithTime,
+        //     $datepicker,
+        //     $companyDeliveryId,
+        //     $deliveryAmount,
+        //     $signature,
+        //     $notification,
+        //     $pickup_address,
+        //     $deliveryAddress,
+        //     $productType,
+        //     $notes,
+        //     $googleLinkAddress
+        // );
+
     }
 
     public function uploadDeliveriesByForm(Request $request)
     {
-
-
         $customers = $request->get("customer");
         $addresses = $request->get("delivery_address");
         $deliverySlots = $request->get("delivery_slot");
@@ -390,7 +386,7 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
@@ -440,7 +436,7 @@ class DeliveryController extends Controller
                                 'phone' => $row['phone'] ?? '',
                                 'password' => Hash::make("1234abcd"),
                                 'isActive' => true
-                            ]);
+                            ], false);
 
                             $customer = $this->customerRepository->create(['user_id' => $user->id]);
                             $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
@@ -700,8 +696,8 @@ class DeliveryController extends Controller
         // - Making all words lower case
         // - replace spaces with underscore "_"
         // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
 
         // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
         // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
@@ -879,7 +875,6 @@ class DeliveryController extends Controller
             'branches' => $branches
         ];
         return response()->json($response);
-
     }
 
     public function printLabel(Request $request)

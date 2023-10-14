@@ -88,7 +88,7 @@ class CustomersController extends Controller
                 'phone' => $phone,
                 'password' => Hash::make($password),
                 'isActive' => true
-            ]);
+            ], false);
 
 
             $customer = $this->customersRepository->create(

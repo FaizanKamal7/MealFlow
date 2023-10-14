@@ -91,10 +91,25 @@ var KTCreateAccount = (function () {
                                     },
                                 },
                             },
-                            phone: {
+                            buisness_name: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Phone Number is required",
+                                        message: "Buisness name is required",
+                                    },
+                                    async: {
+                                        url: "is-unique-vehicle",
+                                        type: "get",
+                                        data: {
+                                            field: "registration_number",
+                                            value: function () {
+                                                return $(
+                                                    '[name="registration_number"]'
+                                                ).val();
+                                            },
+                                        },
+                                        message:
+                                            "Registration number already exists",
+                                        delay: 500,
                                     },
                                 },
                             },
@@ -142,72 +157,60 @@ var KTCreateAccount = (function () {
                         },
                     })
                 ),
-                console.log('a', a)
-            const deliveryNameInput = document.getElementById('asdasd');
-            console.log('adsdasdad', deliveryNameInput)
-
-
-            a.push(
-                FormValidation.formValidation(i, {
-                    fields: {
-                        buisness_name: {
-                            validators: {
-                                notEmpty: {
-                                    message: "Buisness name is required",
-                                },
+                a.push(
+                    FormValidation.formValidation(i, {
+                        fields: {
+                            logo: {
+                                // validators: {
+                                //     notEmpty: { message: "No File Choosen" },
+                                // },
+                            },
+                            phone_no: {
+                                // validators: {
+                                //     notEmpty: {
+                                //         message: "Phone Number is required",
+                                //     },
+                                // },
+                            },
+                            country: {
+                                // validators: {
+                                //     notEmpty: {
+                                //         message: "Country Not Selected",
+                                //     },
+                                // },
+                            },
+                            city: {
+                                // validators: {
+                                //     notEmpty: {
+                                //         message: "City Not Selected",
+                                //     },
+                                // },
+                            },
+                            state: {
+                                // validators: {
+                                //     notEmpty: {
+                                //         message: "State Not Selected",
+                                //     },
+                                // },
+                            },
+                            contact_email: {
+                                // validators: {
+                                //     notEmpty: {
+                                //         message: "Contact Email is Required",
+                                //     },
+                                // },
                             },
                         },
-                        logo: {
-                            // validators: {
-                            //     notEmpty: { message: "No File Choosen" },
-                            // },
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap: new FormValidation.plugins.Bootstrap5({
+                                rowSelector: ".fv-row",
+                                eleInvalidClass: "",
+                                eleValidClass: "",
+                            }),
                         },
-                        phone_no: {
-                            // validators: {
-                            //     notEmpty: {
-                            //         message: "Phone Number is required",
-                            //     },
-                            // },
-                        },
-                        country: {
-                            // validators: {
-                            //     notEmpty: {
-                            //         message: "Country Not Selected",
-                            //     },
-                            // },
-                        },
-                        city: {
-                            // validators: {
-                            //     notEmpty: {
-                            //         message: "City Not Selected",
-                            //     },
-                            // },
-                        },
-                        state: {
-                            // validators: {
-                            //     notEmpty: {
-                            //         message: "State Not Selected",
-                            //     },
-                            // },
-                        },
-                        contact_email: {
-                            // validators: {
-                            //     notEmpty: {
-                            //         message: "Contact Email is Required",
-                            //     },
-                            // },
-                        },
-                    },
-                    plugins: {
-                        trigger: new FormValidation.plugins.Trigger(),
-                        bootstrap: new FormValidation.plugins.Bootstrap5({
-                            rowSelector: ".fv-row",
-                            eleInvalidClass: "",
-                            eleValidClass: "",
-                        }),
-                    },
-                })
-            ),
+                    })
+                ),
                 a.push(
                     FormValidation.formValidation(i, {
                         fields: {
