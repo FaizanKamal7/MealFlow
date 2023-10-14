@@ -16,6 +16,12 @@ class AreaRepository implements AreaInterface
     {
         return Area::all();
     }
+    public function getAreaById($id)
+    {
+        // return Area::where($id)->get();
+        return Area::find($id);
+
+    }
 
     public function getWhere($where)
     {

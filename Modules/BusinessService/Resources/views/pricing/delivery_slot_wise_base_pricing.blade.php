@@ -126,11 +126,11 @@
             {{-- end accordion div --}}
 
             <div class="mt-6">
-                <ul class="pagination ">
+                <ul class="pagination" id="paginationList">
                     <li class="page-item previous"><a id="prevPage" href="#" class="page-link"><i
                                 class="previous"></i></a>
                     </li>
-                    <li class="page-item active"><a href="#" class="page-link">Current</a></li>
+                    <li class="page-item active"><a href="#" class="page-link"></a></li>
                     <li class="page-item next"><a id="nextPage" href="#" class="page-link"><i class="next"></i></a>
                     </li>
                 </ul>
