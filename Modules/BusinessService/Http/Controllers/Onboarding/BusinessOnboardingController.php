@@ -155,7 +155,7 @@ class BusinessOnboardingController extends Controller
                 'phone' =>  $phone,
                 'password' => Hash::make($password),
                 'isActive' => true
-            ]);
+            ], true);
 
 
             // --- Adding data in business table

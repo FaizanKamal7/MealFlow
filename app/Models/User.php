@@ -61,7 +61,6 @@ class User extends Authenticatable
         return $this->hasMany(UserRole::class, "user_id");
     }
 
-
     public function business_users()
     {
         return $this->hasMany(BusinessUser::class);

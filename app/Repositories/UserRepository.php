@@ -13,13 +13,14 @@ use Illuminate\Support\Facades\Hash;
 class UserRepository implements UserInterface
 {
 
-    public function createUser($data)
+    public function createUser($data, $authenticate_user)
     {
-        // return User::create($data);
         // RegisteredUserController->store($data);
         $user = User::create($data);
-        event(new Registered($user));
-        Auth::login($user);
+        if ($authenticate_user) {
+            event(new Registered($user));
+            Auth::login($user);
+        }
         // return redirect(RouteServiceProvider::HOME);
         return $user;
     }

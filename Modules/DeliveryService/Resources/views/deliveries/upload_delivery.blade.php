@@ -21,33 +21,22 @@
                 </div>
                 <div class="d-flex align-items-center business-second">
                     <div class="me-3 w-300px">
-                        <select class="form-select form-select-solid" data-control="select2"
-                            data-placeholder="Select a Business">
+                        <select id="businessSelect" class="form-select form-select-solid" data-control="select2"
+                            data-placeholder="Select a Business" onchange="getBusinessBranches()">
                             <option></option>
                             @foreach ($businesses as $business)
                             <option value={{ $business->id }}> {{ $business->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="d-flex align-items-center business-second">
-                        <div class="me-3 w-300px">
-                            <select id="businessSelect" class="form-select form-select-solid" data-control="select2"
-                                data-placeholder="Select a Business" onchange="getBusinessBranches()">
-                                <option></option>
-                                @foreach ($businesses as $business)
-                                <option value={{ $business->id }}> {{ $business->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="me-3">
-                            <a class="btn text-white activate-btn">+ Add New Delivery</a>
-                        </div>
-                        <div class="me-3">
-                            <a href="#uploadByExcel" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#nixus_modal_upload_excel"><i class="fa fa-file-excel"></i> Upload
-                                By
-                                Excel</a>
-                        </div>
+                    <div class="me-3">
+                        <a class="btn text-white activate-btn">+ Add New Delivery</a>
+                    </div>
+                    <div class="me-3">
+                        <a href="#uploadByExcel" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#nixus_modal_upload_excel"><i class="fa fa-file-excel"></i> Upload
+                            By
+                            Excel</a>
                     </div>
                 </div>
             </div>
@@ -89,7 +78,7 @@
                                             <div class="fv-row col-md-3">
                                                 <label class="form-label upload-label">Name</label>
                                                 <input type="text" class="form-control upload-control mb-2 mb-md-0"
-                                                    placeholder="Sharjah Emirate" name="delivery_name"
+                                                    placeholder="John Doe" name="delivery_name"
                                                     value="{{ old('kt_docs_repeater_advanced.0.delivery_name') }}" />
 
                                                 @if ($errors->has('kt_docs_repeater_advanced.*.delivery_name'))
@@ -102,14 +91,11 @@
                                                 <label class="form-label upload-label">Phone Number</label>
                                                 <input type="number" name="phone_number"
                                                     class="form-control upload-control mb-2 mb-md-0"
-                                                    placeholder="+971 123 456" autocomplete="off"
+                                                    placeholder="+971 12233123" autocomplete="off"
                                                     value="{{ old('kt_docs_repeater_advanced.0.phone_number') }}" />
 
                                                 @if ($errors->has('kt_docs_repeater_advanced.0.phone_number'))
-                                                {{-- @foreach ($errors->get('kt_docs_repeater_advanced.*.phone_number')
-                                                as $error)
-                                                <div class="upload-errors">{{ $error[0] }}</div>
-                                                @endforeach --}}
+
                                                 <div class="upload-errors">
                                                     {{ $errors->first('kt_docs_repeater_advanced.0.phone_number') }}
                                                 </div>
@@ -209,12 +195,12 @@
                                                 <label class="form-label upload-label">Pickup Address</label>
                                                 <select id="business_branches" class="form-select"
                                                     data-kt-repeater="select2" data-placeholder="Select an option"
-                                                    name="pickup_address">
+                                                    name="branch_dropdown">
                                                     <option></option>
                                                 </select>
-                                                @if ($errors->has('kt_docs_repeater_advanced.*.pickup_address'))
+                                                @if ($errors->has('kt_docs_repeater_advanced.*.branch_dropdown'))
                                                 <div class="upload-errors">
-                                                    {{ $errors->first('kt_docs_repeater_advanced.0.pickup_address') }}
+                                                    {{ $errors->first('kt_docs_repeater_advanced.0.branch_dropdown') }}
                                                 </div>
                                                 @endif
                                             </div>
@@ -278,46 +264,48 @@
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
-
-
-                            </div> --}}
+                            </div>
                         </div>
+                        <div class="form-group mt-3 mb-10 add-div">
+                            <a href="javascript:;" data-repeater-create class="btn btn-flex ">
+                                <i class="ki-duotone ki-plus fs-3"></i>
+                                + Add Another
+                            </a>
+                        </div>
+                        <!--end::Form group-->
                     </div>
-                    <div class="form-group mt-3 mb-10 add-div">
-                        <a href="javascript:;" data-repeater-create class="btn btn-flex ">
-                            <i class="ki-duotone ki-plus fs-3"></i>
-                            + Add Another
-                        </a>
-                    </div>
-                    <!--end::Form group-->
-            </div>
-            <hr style="background: radial-gradient(50% 50% at 50% 50%, #432C2C 0%, rgba(80, 28, 28, 0) 100%);">
+                    <hr style="background: radial-gradient(50% 50% at 50% 50%, #432C2C 0%, rgba(80, 28, 28, 0) 100%);">
 
-            <div class="d-flex justify-content-end mt-8">
-                <!--begin::Button-->
-                <button type="reset" data-kt-contacts-type="cancel" class="btn btn-light me-3">Cancel</button>
-                <!--end::Button-->
-                <!--begin::Button-->
-                <button type="submit" id="kt_docs_formvalidation_text_submit" data-kt-contacts-type="submit"
-                    class="btn text-white activate-btn ">
-                    <span class="indicator-label ">Save Deliveries</span>
-                    <span class="indicator-progress">Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                </button>
-                <!--end::Button-->
+                    <div class="d-flex justify-content-end mt-8">
+                        <!--begin::Button-->
+                        <button type="reset" data-kt-contacts-type="cancel" class="btn btn-light me-3">Cancel</button>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button type="submit" id="kt_docs_formvalidation_text_submit" data-kt-contacts-type="submit"
+                            class="btn text-white activate-btn ">
+                            <span class="indicator-label ">Save Deliveries</span>
+                            <span class="indicator-progress">Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                    <!--end::Repeater-->
+                </form>
             </div>
-            <!--end::Repeater-->
-            </form>
+            {{-- extra removed, in txt file, here --}}
         </div>
-        {{-- extra removed, in txt file, here --}}
+
     </div>
 
-</div>
-<!--end::Container-->
+
+    <!--end::Container-->
 </div>
 <!--end::Post-->
 <!--begin::Modal - Upload By Excel-->
+{{-- modal div here --}}
 <div class="modal fade" id="nixus_modal_upload_excel" tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -344,7 +332,7 @@
             <!--begin::Modal body-->
             <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                 <!--begin:Form-->
-                {{-- <form id="nixus_modal_upload_excel_form" class="form" action="#">--}}
+                {{-- <form id="nixus_modal_upload_excel_form" class="form" action="#"> --}}
                     <!--begin::Heading-->
                     <div class="mb-13 text-center">
                         <!--begin::Title-->
@@ -370,15 +358,6 @@
                                     <i class="fa fa-file-download fs-4 text-white"></i>
                                 </button>
                             </label>
-                            <!--end::Label-->
-                            <!--begin::Input group-->
-                            {{-- <div class="input-group mb-5">
-                                <input type="text" class="form-control form-control-solid"
-                                    placeholder="Enter total deliveries" name="total_deliveries"
-                                    aria-describedby="basic-addon2" />
-
-                            </div> --}}
-                            <!--end::Input group-->
                         </div>
                         <!--end::Input group-->
                     </form>
@@ -390,7 +369,7 @@
                             data-placeholder="Select a Business" name="business_id">
                             <option></option>
                             @foreach ($businesses as $business)
-                            <option value={{$business->id}}> {{$business->name}}</option>
+                            <option value={{ $business->id }}> {{ $business->name }}</option>
                             @endforeach
                         </select>
                         <div class="mb-2">
@@ -420,131 +399,24 @@
                     </form>
 
                     {{--
-                </form>--}}
+                </form> --}}
                 {{--
-                <!--end:Form-->--}}
+                <!--end:Form--> --}}
             </div>
             <!--end::Modal body-->
         </div>
-
-
-        <!--end::Container-->
+        <!--end::Modal content-->
     </div>
-    <!--end::Post-->
-    <!--begin::Modal - Upload By Excel-->
-    {{-- modal div here --}}
-    <div class="modal fade" id="nixus_modal_upload_excel" tabindex="-1" aria-hidden="true">
-        <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-650px">
-            <!--begin::Modal content-->
-            <div class="modal-content rounded">
-                <!--begin::Modal header-->
-                <div class="modal-header pb-0 border-0 justify-content-end">
-                    <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                        <span class="svg-icon svg-icon-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                    transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                                    fill="currentColor" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                    </div>
-                    <!--end::Close-->
-                </div>
-                <!--begin::Modal header-->
-                <!--begin::Modal body-->
-                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                    <!--begin:Form-->
-                    {{-- <form id="nixus_modal_upload_excel_form" class="form" action="#"> --}}
-                        <!--begin::Heading-->
-                        <div class="mb-13 text-center">
-                            <!--begin::Title-->
-                            <h1 class="mb-3">Upload By Excel</h1>
-                            <!--end::Title-->
-                            <!--begin::Description-->
-                            <div class="text-muted fw-bold fs-5">Please first download prefilled template by providing
-                                no.
-                                of deliveries you want to upload.
-                            </div>
-                            <!--end::Description-->
-                        </div>
-                        <!--end::Heading-->
-                        <form method="get" action="{{ route('generate_delivery_template') }}">
-                            <!--begin::Input group-->
-                            <div class="d-flex flex-column mb-8 fv-row">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">Download Sample Deliveries Sheet</span>
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                        title="Specify total deliveries you want to upload."></i>
-                                    <button type="submit" class="input-group-text btn-primary px-2" id="basic-addon2">
-                                        <i class="fa fa-file-download fs-4 text-white"></i>
-                                    </button>
-                                </label>
-                            </div>
-                            <!--end::Input group-->
-                        </form>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Upload By Excel-->
+@endsection
 
-                        <form method="post" action="{{ route('upload_deliveries_by_excel') }}"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <select class="form-select form-select-solid mb-5" data-control="select2"
-                                data-placeholder="Select a Business" name="business_id">
-                                <option></option>
-                                @foreach ($businesses as $business)
-                                <option value={{ $business->id }}> {{ $business->name }}</option>
-                                @endforeach
-                            </select>
-                            <div class="mb-2">
-                                <label for="" class="form-label">Select date </label>
-                                <input name="delivery_date" class="form-control form-control-solid"
-                                    placeholder="Pick date" id="kt_datepicker_3" />
-                            </div>
-                            <!--begin::Input group-->
-                            <div class="d-flex flex-column mb-8 fv-row">
-                                <label class="required fs-6 fw-bold mb-2">Excel File</label>
-                                <input type="file" class="form-control form-control-solid"
-                                    placeholder="Select excel file" name="excel_file" />
+@section('extra_scripts')
+{{-- <script src="assets/plugins/global/plugins.bundle.js"></script> --}}
 
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Actions-->
-                            <div class="text-center">
-                                <button type="reset" id="nixus_modal_upload_excel_cancel" class="btn btn-light me-3"
-                                    data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" id="nixus_modal_upload_excel_submit" class="btn btn-primary">
-                                    <span class="indicator-label">Submit</span>
-                                    <span class="indicator-progress">Please wait...
-                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                </button>
-                            </div>
-                            <!--end::Actions-->
-                        </form>
-
-                        {{--
-                    </form> --}}
-                    {{--
-                    <!--end:Form--> --}}
-                </div>
-                <!--end::Modal body-->
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - Upload By Excel-->
-    @endsection
-
-    @section('extra_scripts')
-    {{-- <script src="assets/plugins/global/plugins.bundle.js"></script> --}}
-
-    <script>
-        $('#kt_docs_repeater_advanced').repeater({
+<script>
+    $('#kt_docs_repeater_advanced').repeater({
             initEmpty: false,
 
             defaultValues: {
@@ -594,14 +466,14 @@
         function getBusinessBranches() {
 
             var businessId = document.getElementById("businessSelect").value;
-            var branchDropdown = document.getElementById("business_branches");
+            var branch_dropdown = document.getElementById("business_branches");
             const businessIdInput = document.getElementById('businessId');
             // setting hidden field value to business which is selected
             businessIdInput.value = businessId;
             console.log(businessId)
 
             // Clear current options
-            branchDropdown.innerHTML = '';
+            branch_dropdown.innerHTML = '';
             // Make AJAX request to fetch states
             if (businessId) {
                 const url = `/admin/deliveries/get-business-branches/${businessId}`
@@ -617,7 +489,7 @@
                             var option = document.createElement("option");
                             option.value = branch.id;
                             option.text = '(' + branch.name + ') ' + branch.address;
-                            branchDropdown.appendChild(option);
+                            branch_dropdown.appendChild(option);
                         });
                     },
                     error: function(error) {
@@ -626,10 +498,10 @@
                 });
             }
         }
-    </script>
+</script>
 
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
             function reInitializeDataValidation() {
                 $(".fv-plugins-message-container.invalid-feedback").remove();
 
@@ -639,5 +511,5 @@
                 dateFormat: "Y-m-d",
             });
         });
-    </script>
-    @endsection
+</script>
+@endsection
