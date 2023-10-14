@@ -62,26 +62,38 @@
 
                 <div class="d-flex mt-2 align-items-center justify-content-between unassigned-second-div">
 
+
                     <div class="d-flex align-items-center detail-div">
                         <div class="me-3">
-                            <select class="form-select" data-control="select2" data-placeholder="Select Partner">
+                            <select id="partnerSelect" class="form-select" data-control="select2"
+                                data-placeholder="Select Partner" data-allow-clear="true">
                                 <option></option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
+                                @foreach ($partners as $partner)
+                                <option value="{{ $partner->name }}">{{ $partner->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="me-3">
-                            <select class="form-select" data-control="select2" data-placeholder="Select Emirate">
+                            <select id="emirateSelect" class="form-select" data-control="select2"
+                                data-placeholder="Select Emirate" data-allow-clear="true">
                                 <option></option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
+                                @foreach ($emirate as $city)
+                                <option value="{{ $city->name }}">
+                                    {{ $city->name }}
+                                </option>
+                                @endforeach
                             </select>
                         </div>
+
                         <div class="">
-                            <select class="form-select" data-control="select2" data-placeholder="Select Time Slot">
+                            <select id="timeSlotSelect" class="form-select" data-control="select2"
+                                data-placeholder="Select Time Slot" data-allow-clear="true">
                                 <option></option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
+                                @foreach ($time_slot as $slot)
+                                <option value="{{ $slot['start_time'] }}-{{ $slot['end_time'] }}">
+                                    {{ $slot['start_time'] }} - {{ $slot['end_time'] }}
+                                </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="">
@@ -105,23 +117,24 @@
                     </div>
                     <div class="d-flex align-items-center assign-div">
                         <div class="me-3">
-                            <button id="assignButton" onclick="assignDeliveries()" class="btn csv-btn">Assign
+                            <button id="assignButton" onclick="assignDeliveries()" class="btn csv-btn other-btn">Assign
                                 Driver</button>
                         </div>
                         <div class="me-3">
-                            <a id="autoAssignButton" class="btn csv-btn">Auto-Assign</a>
+                            <a id="autoAssignButton" class="btn csv-btn other-btn">Auto-Assign</a>
                         </div>
                         <div class="me-3">
-                            <a class="btn csv-btn">Reschedule</a>
+                            <a class="btn csv-btn other-btn">Reschedule</a>
                         </div>
                         <div class="me-3">
                             <a class="btn csv-btn cancel" onclick="uncheckAllCheckboxes()">Cancel</a>
                         </div>
                         <div class="me-3">
-                            <a class="btn csv-btn">Delete</a>
+                            <a class="btn csv-btn cancel ">Delete</a>
                         </div>
                         <div class="">
-                            <a class="btn csv-btn" href="#" onclick="printSelectedLabels()">Print Label with
+                            <a class="btn csv-btn other-btn" href="#" onclick="printSelectedLabels()">Print Label
+                                with
                                 Logo</a>
                         </div>
 
@@ -197,13 +210,13 @@
                                 <td>
                                     <div class="w-150px">
                                         {{ $delivery->deliverySlot->city->name }}
-                                        {{ $delivery->deliverySlot->start_time }}-{{
-                                        $delivery->deliverySlot->end_time }}
+                                        {{ $delivery->deliverySlot->start_time }}-{{ $delivery->deliverySlot->end_time
+                                        }}
                                     </div>
                                 </td>
                                 <td>
                                     <div class="w-150px">
-                                        {{ $delivery->branch->business->name ?? "Null" }}
+                                        {{ $delivery->branch->business->name ?? 'Null' }}
                                     </div>
                                 </td>
                                 <td>

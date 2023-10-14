@@ -155,21 +155,6 @@ var KTCreateAccount = (function () {
                                 notEmpty: {
                                     message: "Buisness name is required",
                                 },
-                                async: {
-                                    url: "is-unique-vehicle",
-                                    type: "get",
-                                    data: {
-                                        field: "registration_number",
-                                        value: function () {
-                                            return $(
-                                                '[name="registration_number"]'
-                                            ).val();
-                                        },
-                                    },
-                                    message:
-                                        "Registration number already exists",
-                                    delay: 500,
-                                },
                             },
                         },
                         logo: {
@@ -393,7 +378,6 @@ $("#email_address").keyup(function () {
 
 // config.js
 
-
 function fetchDeliverySlotsOfCity() {
     fetchAreasWithMultiSelectOption();
     var cityID = document.getElementById("city").value;
@@ -484,7 +468,6 @@ function fetchAreasWithMultiSelectOption() {
 }
 
 function fetchAddressAreas() {
-
     var cityID = document.getElementById("address_city").value;
 
     var areaDropdown = document.getElementById("address_area");
@@ -572,8 +555,7 @@ function fetchAddressStates() {
             data: { country_id: countryId },
             success: function (response) {
                 var states = response;
-                console.log("states");
-                console.log(states);
+                console.log("states", states);
                 // Populate states dropdown
                 // Loop through the response data and create an option element for each item
                 states.forEach((item) => {
