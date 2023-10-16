@@ -43,6 +43,7 @@ class EmptyBagCollection extends Model
     {
         return $this->belongsTo(Delivery::class, 'delivery_id');
     }
+
     public function collectionDelivery()
     {
         return $this->belongsTo(Delivery::class, 'empty_bag_collection_delivery_id');

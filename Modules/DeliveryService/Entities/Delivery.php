@@ -97,6 +97,22 @@ class Delivery extends Model
         return $this->hasMany(DeliveryTimeline::class);
     }
 
+    public function bagTimelines()
+    {
+        return $this->hasMany(BagTimeline::class);
+    }
+
+    // Customize JSON Serialization to make sure below relationships are included whenever Customer is converted to an array or JSON
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['branch'] = $this->branch->toArray();
+        $array['customer'] = $this->customer->toArray();
+
+        return $array;
+    }
+
+
     protected static function newFactory()
     {
         return \Modules\DeliveryService\Database\factories\DeliveryFactory::new();

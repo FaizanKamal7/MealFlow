@@ -2,6 +2,7 @@
 
 namespace Modules\DeliveryService\Http\Controllers\Bags;
 
+use App\Enum\EmptyBagCollectionStatusEnum;
 use App\Http\Helper\Helper;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
@@ -18,6 +19,7 @@ use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
 use App\Interfaces\DeliverySlotInterface;
 use App\Interfaces\UserInterface;
+use App\Models\DeliverySlot;
 use Modules\BusinessService\Interfaces\BranchInterface;
 use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
@@ -26,10 +28,12 @@ use Modules\BusinessService\Interfaces\CustomerAddressInterface;
 use Modules\BusinessService\Interfaces\CustomerInterface;
 use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
+use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTimelineInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 use PHPUnit\TextUI\Help;
@@ -51,14 +55,15 @@ class BagsController extends Controller
     private $driverAreaRepository;
     private $deliveryBatchRepository;
     private $deliveryTimelineRepository;
-
-    private BagsInterface $bagsRepository;
-    private BusinessInterface $businessRepository;
-    private BagStatusInterface $bagStatusRepository;
-    private DeliveryInterface $deliveryRepository;
-    private DriverRepository $driverRepository;
-    private PickupBatchInterface $pickupBatchRepository;
-    private PickupBatchInterface $pickupBatchBranchRepository;
+    private $deliveryBagsRepository;
+    private $bagsRepository;
+    private $businessRepository;
+    private $bagStatusRepository;
+    private $deliveryRepository;
+    private $driverRepository;
+    private $pickupBatchRepository;
+    private $pickupBatchBranchRepository;
+    private $emptyBagCollectionRepository;
 
 
     /**
@@ -85,6 +90,8 @@ class BagsController extends Controller
         DriverAreaInterface $driverAreaRepository,
         DeliveryBatchInterface $deliveryBatchRepository,
         DeliveryTimelineInterface $deliveryTimelineRepository,
+        DeliveryBagInterface $deliveryBagsRepository,
+        EmptyBagCollectionInterface $emptyBagCollectionRepository,
         Helper $helper,
 
     ) {
@@ -111,6 +118,8 @@ class BagsController extends Controller
         $this->driverRepository = $driverRepository;
         $this->deliveryBatchRepository = $deliveryBatchRepository;
         $this->deliveryTimelineRepository = $deliveryTimelineRepository;
+        $this->deliveryBagsRepository = $deliveryBagsRepository;
+        $this->emptyBagCollectionRepository = $emptyBagCollectionRepository;
         $this->helper = $helper;
     }
 
@@ -314,6 +323,8 @@ class BagsController extends Controller
 
         $businesses = $this->businessRepository->getActiveBusinesses();
         $areas = $this->areaRepository->getAllAreas();
+        $customers = $this->customerRepository->get();
+
         $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
         $product_type = $this->BusinessCategoryRepository->getBusinessCategory();
         usort($time_slot, function ($a, $b) {
@@ -326,13 +337,16 @@ class BagsController extends Controller
             'areas' => $areas,
             'time_slot' => $time_slot,
             'product_type' => $product_type,
+            'customers' => $customers,
+
             // 'business' => $business
         ];
-        return view('deliveryservice::bags.bags_collection', $data);
+        return view('deliveryservice::bags.bags_collection.upload_bags_collection', $data);
     }
 
     public function storeBagsCollection(Request $request)
     {
+
 
         // $request->validate([
         //     'kt_docs_repeater_advanced.*.delivery_name' => 'required|string|max:255',
@@ -536,5 +550,24 @@ class BagsController extends Controller
         //     $googleLinkAddress
         // );
 
+    }
+
+    public function unassignedBagsCollection(Request $request)
+    {
+        $empty_bags_collection = $this->emptyBagCollectionRepository->getBagCollectionWhere('status', EmptyBagCollectionStatusEnum::UNASSIGNED->value);
+
+        $drivers = $this->driverRepository->getDrivers();
+        $c = [
+            'empty_bags_collection' => $empty_bags_collection,
+            'drivers' => $drivers,
+        ];
+        return view('deliveryservice::bags.bags_collection.unasssigned_bag_collection.blade', $data);
+    }
+
+    public function getCustomerEmptyBagCollection($customer_id)
+    {
+        $customer_empty_bags = $this->deliveryBagsRepository->getCustomerDeliveryBags($customer_id);
+
+        return response()->json($customer_empty_bags);
     }
 }

@@ -70,11 +70,10 @@ Route::prefix('admin/deliveries')->group(function () {
         Route::get('/', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "viewAllBags"])->name("view_all_bags");
         Route::POST('/bags', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "viewBusinessBag"])->name("view_business_bags");
         Route::get('{bag_id}/timeline', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "bagTimeline"])->name("view_bag_timeline");
-
         Route::get('/add', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "addBag"])->name("add_new_bag");
         Route::post('/add', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "storeBag"])->name("store_new_bag");
-
         Route::get('/update{bag_id}', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "updateBagStatus"])->name("update_bag_status");
+        Route::get('/customer-empty-bags/{customer_id}', [BagsController::class, "getCustomerEmptyBagCollection"])->name("get-customer-empty-bag-collection");
 
         Route::group(['prefix' => 'pickups/'], function () {
             Route::get('/unassigned-bags-pickup', [BagsController::class, "unassignedBagsPickup"])->name("unassigned_bags_pickup");
@@ -89,7 +88,10 @@ Route::prefix('admin/deliveries')->group(function () {
             Route::get('/unassigned-bags-collection', [BagsController::class, "unassignedBagsCollection"])->name("unassigned_bags_collection");
             Route::POST('/assign-bag-collection-to-driver', [BagsController::class, "assignBagsCollection"])->name("assign_bag_collection_to_driver");
             Route::get('/assigned-bags-collection', [BagsController::class, "assignedBagsCollection"])->name("assigned_bags_collection");
-            Route::get('/completed-bags-collection', [BagsController::class, "assignedBagsCollection"])->name("assigned_bags_collection");
+            Route::get('/completed-bags-collection', [BagsController::class, "completedBagsCollection"])->name("completed_bags_collection");
+            Route::get('/cancelled-bags-collection', [BagsController::class, "cancelledBagsCollection"])->name("cancelled_bags_collection");
+            Route::get('/deleted-bags-collection', [BagsController::class, "deletedBagsCollection"])->name("deleted_bags_collection");
+
 
 
             // Route::GET('/driver-bag-collection', [BagsController::class, "assignBagsCollection"])->name("assign_bag_collection_to_driver");

@@ -55,7 +55,7 @@
                                     <div
                                         class="form-group d-flex align-items-center justify-content-between upload-delivery-header">
                                         <h4 class="delivery-heading upload-label">
-                                            Delivery
+                                            Bag Collection
                                         </h4>
                                         <div class="remove-btn">
                                             <a href="javascript:;" data-repeater-delete
@@ -75,29 +75,22 @@
 
                                     <div id="upload_delivery_repeater_form" class="main-div-form">
                                         <div class="fv-row form-group row mb-10 mt-6">
-                                            <div class="fv-row col-md-3">
-                                                <label class="form-label upload-label">Name</label>
-                                                <input type="text" class="form-control upload-control mb-2 mb-md-0"
-                                                    placeholder="John Doe" name="delivery_name"
-                                                    value="{{ old('kt_docs_repeater_advanced.0.delivery_name') }}" />
-
-                                                @if ($errors->has('kt_docs_repeater_advanced.*.delivery_name'))
-                                                <div class="upload-errors">
-                                                    {{ $errors->first('kt_docs_repeater_advanced.0.delivery_name') }}
-                                                </div>
-                                                @endif
-                                            </div>
-                                            <div class="fv-row col-md-3">
-                                                <label class="form-label upload-label">Phone Number</label>
-                                                <input type="number" name="phone_number"
-                                                    class="form-control upload-control mb-2 mb-md-0"
-                                                    placeholder="+971 12233123" autocomplete="off"
-                                                    value="{{ old('kt_docs_repeater_advanced.0.phone_number') }}" />
-
-                                                @if ($errors->has('kt_docs_repeater_advanced.0.phone_number'))
-
-                                                <div class="upload-errors">
-                                                    {{ $errors->first('kt_docs_repeater_advanced.0.phone_number') }}
+                                            <div class="col-md-6">
+                                                <label class="form-label upload-label">Customer*</label>
+                                                <select class="form-select" data-kt-repeater="select2"
+                                                    data-placeholder="Select customer" id="customer" name="customer"
+                                                    onchange="updateFormForCustomer()">
+                                                    <option></option>
+                                                    @foreach ($customers as $customer)
+                                                    <option value="{{ $customer}}"
+                                                        data-object="{{ json_encode($customer) }}">
+                                                        {{ $customer->user->name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('kt_docs_repeater_advanced.*.area'))
+                                                <div class=" upload-errors">
+                                                    {{ $errors->first('kt_docs_repeater_advanced.0.area') }}
                                                 </div>
                                                 @endif
                                             </div>
@@ -138,6 +131,27 @@
                                             </div>
                                         </div>
                                         <div class="form-group row mb-10">
+                                            <div class="col-md-6">
+                                                <label class="form-label upload-label">Address</label>
+                                                <select class="form-select" data-kt-repeater="select2"
+                                                    data-placeholder="Select an option" id="addresses" name="addresses">
+                                                    <!-- Options will go here -->
+
+                                                </select>
+
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label upload-label">Phone</label>
+                                                <input type="text" class="form-control upload-control mb-2 mb-md-0"
+                                                    placeholder="Phone" id="phone" name="phone" autocomplete="off"
+                                                    value="" />
+                                                @if ($errors->has('kt_docs_repeater_advanced.*.phone'))
+                                                <div class="upload-errors">
+                                                    {{ $errors->first('kt_docs_repeater_advanced.0.phone') }}
+                                                </div>
+                                                @endif
+
+                                            </div>
                                             <div class="col-md-3">
                                                 <label class="form-label upload-label">Date</label>
                                                 <input class="form-control upload-control" data-kt-repeater="datepicker"
@@ -148,47 +162,7 @@
                                                 </div>
                                                 @endif
                                             </div>
-                                            <div class="col-md-3">
-                                                <label class="form-label upload-label">Delivery Amount</label>
-                                                <input type="text" class="form-control upload-control mb-2 mb-md-0"
-                                                    placeholder="AED" name="delivery_amount" autocomplete="off"
-                                                    value="{{ old('kt_docs_repeater_advanced.0.delivery_amount') }}" />
 
-                                                @if ($errors->has('kt_docs_repeater_advanced.*.delivery_amount'))
-                                                <div class="upload-errors">
-                                                    {{ $errors->first('kt_docs_repeater_advanced.0.delivery_amount') }}
-                                                </div>
-                                                @endif
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="form-label upload-label">Signature</label>
-                                                <select class="form-select" data-kt-repeater="select2"
-                                                    data-placeholder="Select" name="signature">
-                                                    <option></option>
-                                                    <option value="1">Yes</option>
-                                                    <option value="0">No</option>
-                                                </select>
-                                                @if ($errors->has('kt_docs_repeater_advanced.*.signature'))
-                                                <div class="upload-errors">
-                                                    {{ $errors->first('kt_docs_repeater_advanced.0.signature') }}
-                                                </div>
-                                                @endif
-
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="form-label upload-label">Notification *</label>
-                                                <select class="form-select" data-kt-repeater="select2"
-                                                    data-placeholder="Select" name="notification">
-                                                    <option></option>
-                                                    <option value="1">Yes</option>
-                                                    <option value="0">No</option>
-                                                </select>
-                                                @if ($errors->has('kt_docs_repeater_advanced.*.notification'))
-                                                <div class="upload-errors">
-                                                    {{ $errors->first('kt_docs_repeater_advanced.0.notification') }}
-                                                </div>
-                                                @endif
-                                            </div>
                                         </div>
                                         <div class="form-group row mb-10">
                                             <div class="col-md-5">
@@ -204,16 +178,17 @@
                                                 </div>
                                                 @endif
                                             </div>
-                                            <div class="col-md-5">
-                                                <label class="form-label upload-label">Delivery Address</label>
-                                                <input type="text" class="form-control upload-control mb-2 mb-md-0"
-                                                    placeholder="Delivery Address" name="delivery_address"
-                                                    autocomplete="off"
-                                                    value="{{ old('kt_docs_repeater_advanced.0.delivery_address') }}" />
-
-                                                @if ($errors->has('kt_docs_repeater_advanced.*.delivery_address'))
+                                            <div class="col-md-3">
+                                                <label class="form-label upload-label">Notification *</label>
+                                                <select class="form-select" data-kt-repeater="select2"
+                                                    data-placeholder="Select" name="notification">
+                                                    <option></option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                                @if ($errors->has('kt_docs_repeater_advanced.*.notification'))
                                                 <div class="upload-errors">
-                                                    {{ $errors->first('kt_docs_repeater_advanced.0.delivery_address') }}
+                                                    {{ $errors->first('kt_docs_repeater_advanced.0.notification') }}
                                                 </div>
                                                 @endif
                                             </div>
@@ -235,33 +210,40 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="form-group row mb-10">
-                                            <div class="col-md-6">
-                                                <label class="form-label upload-label">Notes</label>
-                                                <input type="text" class="form-control upload-control mb-2 mb-md-0"
-                                                    placeholder="Additonal Notes" name="notes" autocomplete="off"
-                                                    value="{{ old('kt_docs_repeater_advanced.0.notes') }}" />
+                                        <div class="form-group row mb-10" id="empty_bags_section" style="display: none">
+                                            <!--begin::Alert-->
+                                            <div class="alert alert-warning d-flex align-items-center p-5">
+                                                <!--begin::Icon-->
+                                                <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span
+                                                        class="path1"></span><span class="path2"></span></i>
+                                                <!--end::Icon-->
 
-                                                @if ($errors->has('kt_docs_repeater_advanced.*.notes'))
-                                                <div class="upload-errors">
-                                                    {{ $errors->first('kt_docs_repeater_advanced.0.notes') }}
-                                                </div>
-                                                @endif
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label upload-label">Google Link Address</label>
-                                                <input type="text" class="form-control upload-control mb-2 mb-md-0"
-                                                    placeholder="https://www.google.com/" name="google_link_address"
-                                                    autocomplete="off"
-                                                    value="{{ old('kt_docs_repeater_advanced.0.google_link_address') }}" />
+                                                <!--begin::Wrapper-->
+                                                <div class="d-flex flex-column">
+                                                    <!--begin::Title-->
+                                                    <h4 class="mb-1 text-dark">Warning: Customer Empty Bags</h4>
+                                                    <!--end::Title-->
+                                                    <!--begin::Title-->
+                                                    <span>This customer currently have following
+                                                        empty bags and they are already in unassigned section.<br>
+                                                        You don't need to upload them again</span>
+                                                    <!--end::Title-->
 
-                                                @if ($errors->has('kt_docs_repeater_advanced.*.google_link_address'))
-                                                <div class="upload-errors">
-                                                    {{ $errors->first('kt_docs_repeater_advanced.0.google_link_address')
-                                                    }}
+
+
+                                                    <!--begin::Content-->
+                                                    <span>
+                                                        {{-- Populating with cusomters empty bags --}}
+                                                        <b>
+                                                            <div class="col-md-12" id="customer_empty_bags"> </div>
+                                                        </b>
+                                                    </span>
+                                                    <!--end::Content-->
                                                 </div>
-                                                @endif
+                                                <!--end::Wrapper-->
                                             </div>
+                                            <!--end::Alert-->
+
                                         </div>
                                     </div>
 
@@ -462,6 +444,73 @@
                 });
             }
         });
+
+        function updateFormForCustomer() {
+            const customerSelect = document.getElementById("customer");
+            const selected_customer = JSON.parse(customerSelect.selectedOptions[0].getAttribute('data-object'));
+
+            // --- P O P U L A T E   only specific customer's addresses
+            const addressSelect = document.getElementById("addresses");
+            addressSelect.innerHTML = '<option></option>'; // Clear and add empty option
+            
+            if (selected_customer.customerAddresses) {
+                selected_customer.customerAddresses.forEach(address => {
+                    const option = new Option(address.address, address.id);
+                    addressSelect.add(option);
+                });
+            }
+
+            // --- P O P U L A T E   phone of specific customer
+            document.getElementById("phone").value = selected_customer.user.phone;
+
+
+
+            // --- P O P U L A T E   customer's empty bags
+            var empty_bags_div = document.getElementById("customer_empty_bags");
+            var empty_bags_section_div = document.getElementById("empty_bags_section");
+            
+
+            const url = `/admin/deliveries/bag/customer-empty-bags/`+ selected_customer.id;
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                success: function(empty_delivery_bags) {
+                    if (empty_delivery_bags) {
+                        empty_bags_section_div.style.display = "block";
+                        var empty_bags_div = document.getElementById("customer_empty_bags");
+                        empty_delivery_bags.forEach(empty_delivery_bag => {
+                            var bag_div = document.createElement('p');
+                            
+                            if (empty_delivery_bag.delivery && empty_delivery_bag.delivery.id) {
+                                bag_div.textContent = 'Bag id: '+ empty_delivery_bag.delivery.id + ' | Partner: '+empty_delivery_bag.delivery.branch.business.name;
+                            } else {
+                                bag_div.textContent = 'No delivery ID';
+                            }
+                            
+                            empty_bags_div.appendChild(bag_div);
+                        });
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                },
+            });
+            // Loop to add 5 <p> elements
+            // for (var i = 0; i < 5; i++) {
+            //     // Create a new <p> element
+            //     var newParagraph = document.createElement("p");
+                
+            //     // Add text to the <p> element
+            //     newParagraph.innerHTML = "This is paragraph " + (i + 1);
+                
+            //     // Add the <p> element to the <div>
+            //     myDiv.appendChild(newParagraph);
+            // }
+        }
+
+        
+
 
         function getBusinessBranches() {
 

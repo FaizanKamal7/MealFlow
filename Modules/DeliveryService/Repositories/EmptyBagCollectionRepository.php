@@ -11,6 +11,18 @@ use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
 
 class EmptyBagCollectionRepository implements EmptyBagCollectionInterface
 {
+
+    public function getBagCollection()
+    {
+        return EmptyBagCollection::with('delivery')->with('customer')->with('branch')->get();
+    }
+
+    public function getBagCollectionWhere($where)
+    {
+        return EmptyBagCollection::with('delivery')->with('customer')->with('branch')->where($where)->get();
+    }
+
+
     public function createBagCollection($data)
     {
         return EmptyBagCollection::create($data);
