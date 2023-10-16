@@ -30,7 +30,7 @@
                         </select>
                     </div>
                     <div class="me-3">
-                        <a class="btn text-white activate-btn">+ Add New Delivery</a>
+                        <a class="btn text-white activate-btn" href="{{ route('test') }}">+ Add New Delivery</a>
                     </div>
                     <div class="me-3">
                         <a href="#uploadByExcel" class="btn btn-success" data-bs-toggle="modal"
