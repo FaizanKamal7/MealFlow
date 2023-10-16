@@ -4,6 +4,7 @@ namespace Modules\DeliveryService\Http\Controllers\APIControllers\V1\Deliveries;
 
 use App\Enum\BusinessWalletTransactionTypeEnum;
 use App\Enum\DeliveryBatchStatusEnum;
+use App\Enum\EmptyBagCollectionStatusEnum;
 use App\Enum\InvoiceItemTypeEnum;
 use App\Enum\PickupBatchStatusEnum;
 use App\Enum\ServiceTypeEnum;
@@ -32,6 +33,7 @@ use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
 use Modules\BusinessService\Interfaces\RangePricingInterface;
 use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Entities\DeliveryBag;
+use Modules\DeliveryService\Entities\EmptyBagCollection;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
 use Modules\DeliveryService\Http\Requests\PickupBatchRequest;
 use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
@@ -39,6 +41,7 @@ use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryImagesInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
 use Modules\DeliveryService\Repositories\PickupBatchRepository;
 use Modules\DeliveryService\Rules\DeliveryBatchStatusRule;
 use Modules\DeliveryService\Rules\PickupBatchStatusRule;
@@ -75,6 +78,7 @@ class DeliveryController extends Controller
     private $invoiceItemRepository;
     private $businessWalletRepository;
     private $businessWalletTransactionRepository;
+    private $emptyBagcollectionRepository;
 
 
 
@@ -105,6 +109,7 @@ class DeliveryController extends Controller
         InvoiceItemInterface $invoiceItemRepository,
         BusinessWalletInterface $businessWalletRepository,
         BusinessWalletTransactionInterface $businessWalletTransactionRepository,
+        EmptyBagCollectionInterface $emptyBagcollectionRepository,
 
     ) {
         $this->customerRepository = $customerRepository;
@@ -130,6 +135,8 @@ class DeliveryController extends Controller
         $this->invoiceItemRepository = $invoiceItemRepository;
         $this->businessWalletRepository = $businessWalletRepository;
         $this->businessWalletTransactionRepository = $businessWalletTransactionRepository;
+        $this->emptyBagcollectionRepository = $emptyBagcollectionRepository;
+
 
 
 
@@ -706,13 +713,27 @@ class DeliveryController extends Controller
                 $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $address_img_url, 'image_type' => DeliveryImageTypeEnum::ADDRESS_IMG]);
             }
 
+            // As bag is delivered, it need to be collected, hence adding it in empty bag collections 
+            $delivery_bag = $this->deliveryBagRepository->getDeliveryBag($delivery->id);
+            $this->emptyBagcollectionRepository->createBagCollection(
+                [
+                    'status' => EmptyBagCollectionStatusEnum::UNASSIGNED->value,
+                    'bag_id' => $delivery_bag->bag_id,
+                    'delivery_id' => $delivery->id,
+                    'customer_id' => $delivery->customer_id,
+                    'customer_address_id' => $delivery->customer_address_id,
+                ]
+            );
+            
             $data =  $this->deliveryRepository->updateDelivery($delivery_id, [
                 'status' => 'DELIVERED',
                 'empty_bag_count' => $empty_bag_count,
             ]);
 
+
+
             if (!$data) {
-                return $this->error($data, "Something went wrong please contact support,Delivery not completed");
+                return $this->error($data, "Something went wrong please contact support, Delivery not completed");
             }
 
             DB::commit();

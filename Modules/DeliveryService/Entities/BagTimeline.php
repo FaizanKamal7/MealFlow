@@ -31,4 +31,9 @@ class BagTimeline extends Model
     {
         return $this->belongsTo(Bag::class);
     }
+
+    public function delivery()
+    {
+        return $this->belongsTo(Delivery::class, 'delivery_id');
+    }
 }

@@ -39,6 +39,17 @@ class Customer extends Model
     }
 
 
+    // Customize JSON Serialization to make sure below relationships are included whenever Customer is converted to an array or JSON
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['customerAddresses'] = $this->customerAddresses->toArray();
+        $array['secondaryNumbers'] = $this->secondaryNumbers->toArray();
+        $array['businessCustomers'] = $this->businessCustomers->toArray();
+
+        return $array;
+    }
+
     protected static function newFactory()
     {
         return \Modules\BusinessService\Database\factories\CustomerFactory::new();
