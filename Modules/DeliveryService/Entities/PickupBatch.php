@@ -2,7 +2,7 @@
 
 namespace Modules\DeliveryService\Entities;
 
-use App\Enum\PickupBatchStatusEnum;
+use App\Enum\BatchStatusEnum;
 use App\Http\Helper\Helper;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
@@ -130,7 +130,7 @@ class PickupBatch extends Model
                 $id = $attributes['id'];
                 $status = $attributes['status'];
 
-                if ($status == PickupBatchStatusEnum::ENDED) {
+                if ($status == BatchStatusEnum::ENDED) {
 
                     // foreach ($variable as $key => $value) {
                     //     # code...

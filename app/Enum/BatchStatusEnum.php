@@ -3,7 +3,7 @@
 namespace App\Enum;
 
 
-enum DeliveryBatchStatusEnum: string
+enum BatchStatusEnum: string
 {
     case ASSIGNED = 'assigned';
     case STARTED = 'started';
