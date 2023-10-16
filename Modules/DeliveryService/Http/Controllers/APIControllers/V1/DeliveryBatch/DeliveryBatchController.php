@@ -2,7 +2,7 @@
 
 namespace Modules\DeliveryService\Http\Controllers\APIControllers\V1\DeliveryBatch;
 
-use App\Enum\DeliveryBatchStatusEnum;
+use App\Enum\BatchStatusEnum;
 use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
@@ -111,14 +111,14 @@ class DeliveryBatchController extends Controller
             $vehicle_id = $request->get('vehicle_id');
             $data = [];
 
-            if ($status == DeliveryBatchStatusEnum::STARTED->value) {
+            if ($status == BatchStatusEnum::STARTED->value) {
                 $data = [
                     "batch_start_time" => date("Y-m-d H:i:s"),
                     "batch_start_map_coordinates" => $map_coordinates,
                     "status" => $status,
                     "vehicle_id" => $vehicle_id,
                 ];
-            } elseif ($status == DeliveryBatchStatusEnum::ENDED->value) {
+            } elseif ($status == BatchStatusEnum::ENDED->value) {
                 $data = [
                     "batch_end_time" => date("Y-m-d H:i:s"),
                     "batch_end_map_coordinates" => $map_coordinates,

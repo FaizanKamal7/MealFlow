@@ -33,6 +33,7 @@ use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTimelineInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Interfaces\EmptyBagCollectionBatchInterface;
 use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
@@ -64,6 +65,8 @@ class BagsController extends Controller
     private $pickupBatchRepository;
     private $pickupBatchBranchRepository;
     private $emptyBagCollectionRepository;
+    private $emptyBagCollectionBatchRepository;
+
 
 
     /**
@@ -92,6 +95,8 @@ class BagsController extends Controller
         DeliveryTimelineInterface $deliveryTimelineRepository,
         DeliveryBagInterface $deliveryBagsRepository,
         EmptyBagCollectionInterface $emptyBagCollectionRepository,
+        EmptyBagCollectionBatchInterface $emptyBagCollectionBatchRepository,
+
         Helper $helper,
 
     ) {
@@ -120,6 +125,8 @@ class BagsController extends Controller
         $this->deliveryTimelineRepository = $deliveryTimelineRepository;
         $this->deliveryBagsRepository = $deliveryBagsRepository;
         $this->emptyBagCollectionRepository = $emptyBagCollectionRepository;
+        $this->emptyBagCollectionBatchRepository = $emptyBagCollectionBatchRepository;
+
         $this->helper = $helper;
     }
 
@@ -552,17 +559,68 @@ class BagsController extends Controller
 
     }
 
-    public function unassignedBagsCollection(Request $request)
+    public function unassignedBagsCollection()
     {
-        $empty_bags_collection = $this->emptyBagCollectionRepository->getBagCollectionWhere('status', EmptyBagCollectionStatusEnum::UNASSIGNED->value);
-
+        $empty_bags_collection = $this->emptyBagCollectionRepository->getBagCollectionWhere(['status' => EmptyBagCollectionStatusEnum::UNASSIGNED->value]);
+        $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
+        $businesses = $this->businessRepository->getActiveBusinesses();
+        $emirate = $this->cityRepository->getActiveCities();
         $drivers = $this->driverRepository->getDrivers();
-        $c = [
-            'empty_bags_collection' => $empty_bags_collection,
+
+        $data = [
             'drivers' => $drivers,
+            'partners' => $businesses,
+            'time_slot' => $time_slot,
+            'emirate' => $emirate,
+            'empty_bags_collection' => $empty_bags_collection,
+
         ];
-        return view('deliveryservice::bags.bags_collection.unasssigned_bag_collection.blade', $data);
+
+        return view('deliveryservice::bags.bags_collection.unasssigned_bag_collection', $data);
     }
+
+
+
+    public function assignBagsCollection(Request $request)
+    {
+        try {
+            // --------------- GETTING DELIVERIES AND DRIVER TO ASSIGN-------------
+            $driver_id = $request->get("driver_id");
+            // $deliveries = explode(',', $request->get("selected_delivery_ids"));
+            $empty_bag_collections = $request->get("selected_empty_bag_collection_ids");
+
+            // -------------------- CREATING NEW BATCH FOR DELIVERY BASED ON DRIVER id-----------
+            $batch = $this->emptyBagCollectionBatchRepository->getActiveDeliveryBatchByDriver($driver_id);
+
+            // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
+            $this->emptyBagCollectionRepository->assignCollectionBatch($batch->id, $empty_bag_collections);
+
+            return $this->unassignedBagsCollection();
+        } catch (Exception $exception) {
+            dd($exception);
+        }
+    }
+
+    public function assignedBagsCollection()
+    {
+        $empty_bags_collection = $this->emptyBagCollectionRepository->getBagCollectionWhere(['status' => EmptyBagCollectionStatusEnum::ASSIGNED->value]);
+        $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
+        $businesses = $this->businessRepository->getActiveBusinesses();
+        $emirate = $this->cityRepository->getActiveCities();
+        $drivers = $this->driverRepository->getDrivers();
+
+        $data = [
+            'drivers' => $drivers,
+            'partners' => $businesses,
+            'time_slot' => $time_slot,
+            'emirate' => $emirate,
+            'empty_bags_collection' => $empty_bags_collection,
+
+        ];
+
+        return view('deliveryservice::bags.bags_collection.assigned_bags_collection', $data);
+    }
+
 
     public function getCustomerEmptyBagCollection($customer_id)
     {

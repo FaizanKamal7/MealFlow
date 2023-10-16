@@ -14,18 +14,33 @@ class EmptyBagCollectionRepository implements EmptyBagCollectionInterface
 
     public function getBagCollection()
     {
-        return EmptyBagCollection::with('delivery')->with('customer')->with('branch')->get();
+        return EmptyBagCollection::with('delivery')->with('customer')->get();
     }
 
     public function getBagCollectionWhere($where)
     {
-        return EmptyBagCollection::with('delivery')->with('customer')->with('branch')->where($where)->get();
+        return EmptyBagCollection::with('delivery')->with('customer')->where($where)->get();
     }
 
 
     public function createBagCollection($data)
     {
         return EmptyBagCollection::create($data);
+    }
+
+    public function assignCollectionBatch($batch_id, $empty_bags)
+    {
+        EmptyBagCollection::whereIn('id', $empty_bags)->each(function ($empty_bag) use ($batch_id) {
+            $empty_bag->update([
+                'empty_bag_collection_batch_id' => $batch_id,
+                'status' => EmptyBagCollectionStatusEnum::ASSIGNED->value,
+            ]);
+        });
+        // ---- Below query is fast but avoiding below as it wont triggger laravel event observer 
+        // Delivery::whereIn('id', $deliveries)->update([
+        //     'delivery_batch_id' => $batch_id,
+        //     'status' => DeliveryStatusEnum::ASSIGNED->value,
+        // ]);
     }
 
     public function updateBagsTimelineOnDeliveryBatchCompletion($delivery_ids, $vehicle_id)

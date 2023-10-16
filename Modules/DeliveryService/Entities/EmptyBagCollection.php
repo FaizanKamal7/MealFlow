@@ -21,9 +21,13 @@ class EmptyBagCollection extends Model
     use HasUuids;
 
     protected $fillable = [
+        "status",
+        "collection_date",
         "customer_id",
+        "customer_address_id",
         "bag_id",
         "delivery_id",
+        "delivery_slot_id",
         "empty_bag_collection_batch_id",
         "empty_bag_collection_delivery_id",
 
@@ -43,6 +47,17 @@ class EmptyBagCollection extends Model
     {
         return $this->belongsTo(Delivery::class, 'delivery_id');
     }
+
+    public function deliverySlot()
+    {
+        return $this->belongsTo(DeliverySlot::class, 'delivery_slot_id');
+    }
+
+    public function customerAddress()
+    {
+        return $this->belongsTo(CustomerAddress::class, 'customer_address_id');
+    }
+
 
     public function collectionDelivery()
     {
@@ -121,9 +136,10 @@ class EmptyBagCollection extends Model
                 $attributes = $model->getAttributes();
                 $helper = new Helper();
                 $action_by = auth()->id();
-                $bag_id = $attributes['id'];
+                $bag_id = $attributes['bag_id'];
                 $delivery_id = $attributes['delivery_id'] ? $attributes['delivery_id'] : null;
-                $status = $attributes['empty_bag_collection_delivery_id'] ? 'Collected from customer' : 'Unassigned for collection ';
+                $empty_bag_status = $attributes['status'];
+                $status = $attributes['empty_bag_collection_delivery_id'] ? BagStatusEnum::COLLECTED_FROM_CUSTOMER->value : $empty_bag_status;
                 $vehicle_id = $model->getOriginal('vehicle_id');
                 $description = "status updated";
                 // TODO STATUS THING

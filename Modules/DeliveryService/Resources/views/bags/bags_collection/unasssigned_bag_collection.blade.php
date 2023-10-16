@@ -58,7 +58,7 @@
 
                 </div>
 
-                <input type="hidden" name="selected_delivery_ids">
+                <input type="hidden" name="selected_empty_bag_collection_ids">
 
                 <div class="d-flex mt-2 align-items-center justify-content-between unassigned-second-div">
 
@@ -117,7 +117,8 @@
                     </div>
                     <div class="d-flex align-items-center assign-div">
                         <div class="me-3">
-                            <button id="assignButton" onclick="assignDeliveries()" class="btn csv-btn other-btn">Assign
+                            <button id="assignButton" onclick="assignBagCollections()"
+                                class="btn csv-btn other-btn">Assign
                                 Driver</button>
                         </div>
                         <div class="me-3">
@@ -144,120 +145,79 @@
                     <table id="unassigned_table" class="table table-striped table-row-bordered gy-5 gs-7">
                         <thead>
                             <tr class="fw-bold fs-6 text-gray-800">
-                                <th class=""><input class="form-check-input" type="checkbox" value="">
-                                </th>
-                                <th class="w-150px">Order ID</th>
-                                <th class="w-150px">Suggested Driver</th>
-                                <th class="w-100px">Plan ID</th>
-                                <th class="w-150px">Customers</th>
-                                <th class="w-150px">Delivery Address</th>
-                                <th class="w-100px">Notes</th>
-                                <th class="w-150px">Time Slot</th>
-                                <th class="w-150px">Partner</th>
-                                <th class="w-100px">Created At</th>
-                                <th class="w-150px">Uplaoded By</th>
-                                <th class="w-100px">Pickup Location</th>
-                                <th class="w-100px">Product Type</th>
-                                <th>Notification</th>
-                                <th>Payment</th>
-                                {{-- <th>Company Delivery Id</th> --}}
-                                <th class="w-100px">Google Link</th>
-                                <th class="min-w-1px">Action</th>
+                                <th class=""><input class="form-check-input" type="checkbox" value=""></th>
+                                <th class="w-150px">ID</th>
+                                <th class="w-150px">Bag ID</th>
+                                <th class="w-150px">Customer</th>
+                                <th class="w-100px">Partner</th>
+                                <th class="w-150px">Time slot</th>
+                                <th class="w-100px">Address</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach ($deliveries as $delivery)
+                            @foreach ($empty_bags_collection as $empty_bag)
                             <tr class="">
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="{{ $delivery->id }}"
-                                            id="checkbox-{{ $delivery->id }}">
+                                        <input class="form-check-input" type="checkbox" value="{{ $empty_bag->id }}"
+                                            id="checkbox-{{ $empty_bag->id }}">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="w-150px">
-                                        <b>{{ $delivery->id }}</b>
+                                        <b>{{ $empty_bag->id }}</b>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="w-150px">
-                                        @foreach ($delivery->suggested_drivers as $driver)
-                                        {{ $driver->employee->first_name }}<br>
-                                        @endforeach
+                                        {{ $empty_bag->bag_id}}
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        {{ $empty_bag->customer->user->name }} <br>
+                                        {{ $empty_bag->customer->user->phone ?? ''}}
+
                                     </div>
                                 </td>
                                 <td>
                                     <div class="w-100px">
-                                        {{ $delivery->id }}
+                                        {{ $empty_bag->delivery->branch->business->name ?? '' }}
                                     </div>
                                 </td>
                                 <td>
                                     <div class="w-150px">
-                                        {{ $delivery->customer->user->name }}
+                                        @if ($empty_bag->customerAddress)
+                                        {{$empty_bag->customerAddress->city->name ?? ''}} ({{
+                                        $empty_bag->delivery->deliverySlot->start_time ?? '' }} - {{
+                                        $empty_bag->delivery->deliverySlot->end_time ?? '' }})
+                                        @else
+                                        NA
+                                        @endif
+
                                     </div>
                                 </td>
                                 <td>
                                     <div class="w-150px">
-                                        {{ $delivery->customerAddress->address }}
+                                        {{ $empty_bag->customerAddress->address ?? '' }}
                                     </div>
                                 </td>
                                 <td>
                                     <div class="w-200px">
-                                        {{ $delivery->note }}
+                                        {{ $empty_bag->note }}
                                     </div>
                                 </td>
                                 <td>
                                     <div class="w-150px">
-                                        {{ $delivery->deliverySlot->city->name }}
-                                        {{ $delivery->deliverySlot->start_time }}-{{ $delivery->deliverySlot->end_time
-                                        }}
+                                        {{ $empty_bag->deliverySlot->city->name ?? ''}}
+                                        {{ $empty_bag->deliverySlot->start_time ?? ''}}-{{
+                                        $empty_bag->deliverySlot->end_time
+                                        ?? ''}}
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="w-150px">
-                                        {{ $delivery->branch->business->name ?? 'Null' }}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w-150px">
-                                        {{ $delivery->created_at }}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w-150px">
-                                        Uploaded By
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w-150px">
-                                        {{ $delivery->branch->address }}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w-100px">
-                                        Food
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w-100px">
-                                        {{ $delivery->is_notification_enabled ? 'Yes' : 'No' }}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="w-100px">
-                                        {{ $delivery->payment_status ? 'Yes' : 'No' }}
-                                    </div>
-                                </td>
-                                {{-- <td>
-                                    <div class="w-150px">
-                                        {{ $delivery->id }}
-                                    </div>
-                                </td> --}}
-                                <td>
-                                    <div class="w-150px">
-                                        https://www.google.co.uk/ </div>
-                                </td>
+
                                 <td>
                                     <div class="d-flex align-items-center justify-content-between">
                                         <span class="table-icon" onclick="">
@@ -285,7 +245,7 @@
 
 @section('extra_scripts')
 {{-- js file for all the functionality --}}
-<script src="{{ asset('static/js/custom/apps/ecommerce/customers/deliveries/unassigned_deliveries.js') }}"></script>
+<script src="{{ asset('static/js/custom/apps/ecommerce/customers/deliveries/unassigned_bag_collection.js') }}"></script>
 <script src="{{ asset('static/plugins/custom/documentation/general/datatables/datatables.bundle.js') }}"></script>
 <script src="{{ asset('static/js/custom/documentation/general/datatables/subtable.js') }}"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>

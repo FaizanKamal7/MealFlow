@@ -2,7 +2,7 @@
 
 namespace Modules\DeliveryService\Rules;
 
-use App\Enum\DeliveryBatchStatusEnum;
+use App\Enum\BatchStatusEnum;
 use Illuminate\Contracts\Validation\Rule;
 
 class DeliveryBatchStatusRule implements Rule
@@ -27,9 +27,9 @@ class DeliveryBatchStatusRule implements Rule
     public function passes($attribute, $value)
     {
         $allowedPickupBatchStatus = [
-            DeliveryBatchStatusEnum::ASSIGNED->value,
-            DeliveryBatchStatusEnum::STARTED->value,
-            DeliveryBatchStatusEnum::ENDED->value,
+            BatchStatusEnum::ASSIGNED->value,
+            BatchStatusEnum::STARTED->value,
+            BatchStatusEnum::ENDED->value,
         ];
         return in_array($value, $allowedPickupBatchStatus);
     }

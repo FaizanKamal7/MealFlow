@@ -3,10 +3,10 @@
 namespace Modules\DeliveryService\Http\Controllers\APIControllers\V1\Deliveries;
 
 use App\Enum\BusinessWalletTransactionTypeEnum;
-use App\Enum\DeliveryBatchStatusEnum;
+use App\Enum\BatchStatusEnum;
 use App\Enum\EmptyBagCollectionStatusEnum;
 use App\Enum\InvoiceItemTypeEnum;
-use App\Enum\PickupBatchStatusEnum;
+use App\Enum\BatchStatusEnum;
 use App\Enum\ServiceTypeEnum;
 use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
@@ -724,7 +724,7 @@ class DeliveryController extends Controller
                     'customer_address_id' => $delivery->customer_address_id,
                 ]
             );
-            
+
             $data =  $this->deliveryRepository->updateDelivery($delivery_id, [
                 'status' => 'DELIVERED',
                 'empty_bag_count' => $empty_bag_count,
@@ -931,7 +931,7 @@ class DeliveryController extends Controller
             $vehicle_id = $request->get('vehicle_id');
 
 
-            $data = $status == PickupBatchStatusEnum::STARTED->value ? [
+            $data = $status == BatchStatusEnum::STARTED->value ? [
                 "batch_start_time" => date("Y-m-d H:i:s"),
                 "batch_start_map_coordinates" => $map_coordinates,
                 "status" => $status,
