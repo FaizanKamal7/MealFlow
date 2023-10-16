@@ -3,10 +3,7 @@
 namespace Modules\DeliveryService\Http\Controllers\Deliveries;
 
 use App\Http\Helper\Helper;
-use App\Interfaces\AreaInterface;
-use App\Interfaces\CityInterface;
-use App\Interfaces\DeliverySlotInterface;
-use App\Interfaces\UserInterface;
+
 use App\Models\DeliverySlot;
 use Exception;
 use Illuminate\Http\Request;
@@ -16,6 +13,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\BusinessService\Entities\CustomerAddress;
+use App\Interfaces\AreaInterface;
+use App\Interfaces\CityInterface;
+use App\Interfaces\DeliverySlotInterface;
+use App\Interfaces\UserInterface;
 use Modules\BusinessService\Interfaces\BranchInterface;
 use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
@@ -107,6 +108,10 @@ class DeliveryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+    public function test()
+    {
+        dd("hello");
+    }
 
     public function viewUnassignedDeliveries()
     {
@@ -354,7 +359,6 @@ class DeliveryController extends Controller
 
     public function uploadDeliveriesByExcel(Request $request)
     {
-
 
         $businesses = $this->businessRepository->getActiveBusinesses();
 

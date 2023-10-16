@@ -11,7 +11,6 @@
 |
 */
 
-use Modules\DeliveryService\Http\Controllers\APIControllers\V1\Deliveries\DeliveryController as DeliveriesDeliveryController;
 use Modules\DeliveryService\Http\Controllers\Bags\BagsController;
 use Modules\DeliveryService\Http\Controllers\Customers\CustomersController;
 use Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController;
@@ -23,6 +22,8 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('/upload/bulk', 'DeliveryServiceController@bulkAddView')->name("bulk_delivery_add_view");
     Route::post('/upload/save', 'DeliveryServiceController@uploadFile')->name("upload_file");
     Route::get('/', 'DeliveryServiceController@index');
+    Route::get('/test', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "test"])->name("test");
+
 
 
 
@@ -74,10 +75,24 @@ Route::prefix('admin/deliveries')->group(function () {
         Route::post('/add', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "storeBag"])->name("store_new_bag");
 
         Route::get('/update{bag_id}', [Modules\DeliveryService\Http\Controllers\Bags\BagsController::class, "updateBagStatus"])->name("update_bag_status");
-        Route::get('/unassigned-bags-pickup', [BagsController::class, "unassignedBagsPickup"])->name("unassigned_bags_pickup");
-        Route::POST('/assign-bag-pickup-to-driver', [BagsController::class, "assignBagsPickup"])->name("assign_bag_pickup_to_driver");
-        Route::get('/assigned-bags-pickup', [BagsController::class, "assignedBagsPickup"])->name("assigned_bags_pickup");
 
-        // Route::GET('/driver-bag-pickup', [BagsController::class, "assignBagsPickup"])->name("assign_bag_pickup_to_driver");
+        Route::group(['prefix' => 'pickups/'], function () {
+            Route::get('/unassigned-bags-pickup', [BagsController::class, "unassignedBagsPickup"])->name("unassigned_bags_pickup");
+            Route::POST('/assign-bag-pickup-to-driver', [BagsController::class, "assignBagsPickup"])->name("assign_bag_pickup_to_driver");
+            Route::get('/assigned-bags-pickup', [BagsController::class, "assignedBagsPickup"])->name("assigned_bags_pickup");
+
+            // Route::GET('/driver-bag-pickup', [BagsController::class, "assignBagsPickup"])->name("assign_bag_pickup_to_driver");
+        });
+        Route::group(['prefix' => 'collections/'], function () {
+            Route::get('/upload-bags-collection', [BagsController::class, "uploadBagsCollection"])->name("upload_bags_collection");
+            Route::POST('/store-bags-collection', [BagsController::class, "storeBagsCollection"])->name("store_bags_collection");
+            Route::get('/unassigned-bags-collection', [BagsController::class, "unassignedBagsCollection"])->name("unassigned_bags_collection");
+            Route::POST('/assign-bag-collection-to-driver', [BagsController::class, "assignBagsCollection"])->name("assign_bag_collection_to_driver");
+            Route::get('/assigned-bags-collection', [BagsController::class, "assignedBagsCollection"])->name("assigned_bags_collection");
+            Route::get('/completed-bags-collection', [BagsController::class, "assignedBagsCollection"])->name("assigned_bags_collection");
+
+
+            // Route::GET('/driver-bag-collection', [BagsController::class, "assignBagsCollection"])->name("assign_bag_collection_to_driver");
+        });
     });
 });

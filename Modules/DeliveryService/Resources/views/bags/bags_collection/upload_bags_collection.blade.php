@@ -1,5 +1,5 @@
 @extends('layouts.admin_master')
-@section('title', 'Upload Deliveries')
+@section('title', 'Upload Bags Collection')
 
 @section('extra_style')
 @endsection
@@ -12,7 +12,7 @@
         <div class="container">
             <div class="d-flex mt-2 align-items-center pricing-header justify-content-between">
                 <div class="activate-service">
-                    <h1 class="fs-lg-2x ">Upload Deliveries</h1>
+                    <h1 class="fs-lg-2x ">Upload Bags Collection</h1>
                 </div>
             </div>
             <div class="mt-2 d-flex align-items-center justify-content-between print-div unassigned-second-div">
@@ -30,7 +30,7 @@
                         </select>
                     </div>
                     <div class="me-3">
-                        <a class="btn text-white activate-btn">+ Add New Delivery</a>
+                        <a class="btn text-white activate-btn" href="{{ route('test') }}">+ Add New Delivery</a>
                     </div>
                     <div class="me-3">
                         <a href="#uploadByExcel" class="btn btn-success" data-bs-toggle="modal"
