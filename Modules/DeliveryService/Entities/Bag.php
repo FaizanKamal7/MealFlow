@@ -32,6 +32,8 @@ class Bag extends Model
     protected $delivery_id;
     protected $vehicle_id;
 
+
+
     /**
      * Summary of newFactory
      * @return mixed

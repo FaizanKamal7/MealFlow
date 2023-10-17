@@ -140,7 +140,7 @@
                             <td> <img src="{{ asset($bag->qr_code) }}" width="100px" alt="image" /></td>
                             <!--end::Name=-->
                             <!--begin::Name=-->
-                            <td><a href="{{route('view_bag_timeline',['bag_id'=>$bag->id])}}"> {{$bag->id}}</a></td>
+                            <td><a href="{{route('view_bag_timeline',['bag_id'=>$bag->id])}}">{{$bag->id}}</a></td>
                             <!--end::Name=-->
                             <!--begin::Name=-->
                             <td>{{$bag->business->name}}</td>
