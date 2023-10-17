@@ -496,17 +496,7 @@
                     console.log(error);
                 },
             });
-            // Loop to add 5 <p> elements
-            // for (var i = 0; i < 5; i++) {
-            //     // Create a new <p> element
-            //     var newParagraph = document.createElement("p");
-                
-            //     // Add text to the <p> element
-            //     newParagraph.innerHTML = "This is paragraph " + (i + 1);
-                
-            //     // Add the <p> element to the <div>
-            //     myDiv.appendChild(newParagraph);
-            // }
+           
         }
 
         

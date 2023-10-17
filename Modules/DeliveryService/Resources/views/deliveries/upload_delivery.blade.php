@@ -2,6 +2,8 @@
 @section('title', 'Upload Deliveries')
 
 @section('extra_style')
+<link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.19/css/intlTelInput.css" />
+
 @endsection
 @section('main_content')
 
@@ -89,15 +91,16 @@
                                             </div>
                                             <div class="fv-row col-md-3">
                                                 <label class="form-label upload-label">Phone Number</label>
-                                                <input type="number" name="phone_number"
+                                                <input type="number" name="phone" id="phone"
                                                     class="form-control upload-control mb-2 mb-md-0"
-                                                    placeholder="+971 12233123" autocomplete="off"
-                                                    value="{{ old('kt_docs_repeater_advanced.0.phone_number') }}" />
+                                                    placeholder="0512233123" autocomplete="off"
+                                                    value="{{ old('kt_docs_repeater_advanced.0.phone') }}" />
 
-                                                @if ($errors->has('kt_docs_repeater_advanced.0.phone_number'))
+
+                                                @if ($errors->has('kt_docs_repeater_advanced.0.phone'))
 
                                                 <div class="upload-errors">
-                                                    {{ $errors->first('kt_docs_repeater_advanced.0.phone_number') }}
+                                                    {{ $errors->first('kt_docs_repeater_advanced.0.phone') }}
                                                 </div>
                                                 @endif
                                             </div>
@@ -376,6 +379,7 @@
                             <label for="" class="form-label">Select date </label>
                             <input name="delivery_date" class="form-control form-control-solid" placeholder="Pick date"
                                 id="kt_datepicker_3" />
+
                         </div>
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
@@ -414,8 +418,16 @@
 
 @section('extra_scripts')
 {{-- <script src="assets/plugins/global/plugins.bundle.js"></script> --}}
+<script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 
 <script>
+    var input = document.querySelector("#phone");
+    window.intlTelInput(input, {
+        separateDialCode: true,
+        excludeCountries: ["in", "il"],
+        preferredCountries: ["ae", "pk", "sa"]
+    });
+
     $('#kt_docs_repeater_advanced').repeater({
             initEmpty: false,
 
