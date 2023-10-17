@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        // ---- Adding Locations
         $this->call(CountriesSeeder::class);
         $this->call(StatesSeeder::class);
         $this->call(CitiesTableChunkOneSeeder::class);
