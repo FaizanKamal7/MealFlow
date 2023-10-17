@@ -147,6 +147,7 @@
                                 <th class=""><input class="form-check-input" type="checkbox" value="">
                                 </th>
                                 <th class="w-150px">Order ID</th>
+                                <th class="w-150px">Status</th>
                                 <th class="w-150px">Suggested Driver</th>
                                 <th class="w-100px">Plan ID</th>
                                 <th class="w-150px">Customers</th>
@@ -178,6 +179,11 @@
                                 <td>
                                     <div class="w-150px">
                                         <b>{{ $delivery->id }}</b>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="w-150px">
+                                        <span class="badge badge-secondary">{{ $delivery->status }}</span>
                                     </div>
                                 </td>
                                 <td>

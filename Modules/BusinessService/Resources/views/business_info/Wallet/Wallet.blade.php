@@ -18,383 +18,56 @@
                 <!--begin::Row-->
                 <div class="row g-5 g-xl-10">
                     <!--begin::Col-->
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <!--begin::Card widget 11-->
                         <div class="card card-flush h-xl-100" style="background-color: #F6E5CA">
                             <!--begin::Header-->
                             <div class="card-header flex-nowrap pt-5">
                                 <!--begin::Title-->
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder fs-4 text-gray-800">Bitcoin</span>
-                                    <span class="mt-1 fw-bold fs-7" style="color:">36,668 USD for 1 BTC</span>
+                                    <span class="card-label fw-bolder fs-4 text-gray-800">Wallet</span>
                                 </h3>
                                 <!--end::Title-->
-                                <!--begin::Toolbar-->
-                                <div class="card-toolbar">
-                                    <!--begin::Menu-->
-                                    <button class="btn btn-icon justify-content-end" data-kt-menu-trigger="click"
-                                        data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true" style="color:">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
-                                        <span class="svg-icon svg-icon-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="4"
-                                                    fill="currentColor" />
-                                                <rect x="11" y="11" width="2.6" height="2.6" rx="1.3"
-                                                    fill="currentColor" />
-                                                <rect x="15" y="11" width="2.6" height="2.6" rx="1.3"
-                                                    fill="currentColor" />
-                                                <rect x="7" y="11" width="2.6" height="2.6" rx="1.3"
-                                                    fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </button>
-                                    <!--begin::Menu 2-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px"
-                                        data-kt-menu="true">
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Quick Actions
-                                            </div>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu separator-->
-                                        <div class="separator mb-3 opacity-75"></div>
-                                        <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">New Ticket</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">New Customer</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                            data-kt-menu-placement="right-start">
-                                            <!--begin::Menu item-->
-                                            <a href="#" class="menu-link px-3">
-                                                <span class="menu-title">New Group</span>
-                                                <span class="menu-arrow"></span>
-                                            </a>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu sub-->
-                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Admin Group</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Staff Group</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Member Group</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                            </div>
-                                            <!--end::Menu sub-->
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">New Contact</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu separator-->
-                                        <div class="separator mt-3 opacity-75"></div>
-                                        <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content px-3 py-3">
-                                                <a class="btn btn-primary btn-sm px-4" href="#">Generate
-                                                    Reports</a>
-                                            </div>
-                                        </div>
-                                        <!--end::Menu item-->
-                                    </div>
-                                    <!--end::Menu 2-->
-                                    <!--end::Menu-->
-                                </div>
-                                <!--end::Toolbar-->
+
                             </div>
                             <!--end::Header-->
                             <!--begin::Body-->
                             <div class="card-body text-center pt-5">
-                                <!--begin::Image-->
-                                <img src="{{ asset('static/media/svg/shapes/bitcoin.svg') }}" class="h-125px mb-5"
-                                    alt="" />
-                                <!--end::Image-->
                                 <!--begin::Section-->
                                 <div class="text-start">
-                                    <span class="d-block fw-bolder fs-1 text-gray-800">0.44554576 BTC</span>
-                                    <span class="mt-1 fw-bold fs-3" style="color:">19,335,45 USD</span>
+                                    <span class="mt-1 fw-bold fs-3" style="color:">Your Current Balance</span>
+                                    <span class="d-block fw-bolder fs-1 text-gray-800">0.00 AED</span>
+
                                 </div>
                                 <!--end::Section-->
+                                <!--begin::Alert-->
+                                <div class="alert alert-danger d-flex align-items-center p-5">
+                                    <!--begin::Icon-->
+                                    <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span
+                                            class="path1"></span><span class="path2"></span></i>
+                                    <!--end::Icon-->
+
+                                    <!--begin::Wrapper-->
+                                    <div class="d-flex flex-column">
+                                        <!--begin::Title-->
+                                        <h4 class="mb-1 text-dark">Low Balance</h4>
+                                        <!--end::Title-->
+
+                                        <!--begin::Content-->
+                                        <span>You have to TOP-UP some balance to start deliveries</span>
+                                        <!--end::Content-->
+                                    </div>
+                                    <!--end::Wrapper-->
+                                </div>
+                                <!--end::Alert-->
+
                             </div>
                             <!--end::Body-->
                         </div>
                         <!--end::Card widget 11-->
                     </div>
                     <!--end::Col-->
-                    <!--begin::Col-->
-                    <div class="col-md-4">
-                        <!--begin::Card widget 11-->
-                        <div class="card card-flush h-xl-100" style="background-color: #F3D6EF">
-                            <!--begin::Header-->
-                            <div class="card-header flex-nowrap pt-5">
-                                <!--begin::Title-->
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder fs-4 text-gray-800">Etherium</span>
-                                    <span class="mt-1 fw-bold fs-7" style="color:">325,035 USD for 1 ETH</span>
-                                </h3>
-                                <!--end::Title-->
-                                <!--begin::Toolbar-->
-                                <div class="card-toolbar">
-                                    <!--begin::Menu-->
-                                    <button class="btn btn-icon justify-content-end" data-kt-menu-trigger="click"
-                                        data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true" style="color:">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
-                                        <span class="svg-icon svg-icon-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="4"
-                                                    fill="currentColor" />
-                                                <rect x="11" y="11" width="2.6" height="2.6" rx="1.3"
-                                                    fill="currentColor" />
-                                                <rect x="15" y="11" width="2.6" height="2.6" rx="1.3"
-                                                    fill="currentColor" />
-                                                <rect x="7" y="11" width="2.6" height="2.6" rx="1.3"
-                                                    fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </button>
-                                    <!--begin::Menu 2-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px"
-                                        data-kt-menu="true">
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Quick Actions
-                                            </div>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu separator-->
-                                        <div class="separator mb-3 opacity-75"></div>
-                                        <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">New Ticket</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">New Customer</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                            data-kt-menu-placement="right-start">
-                                            <!--begin::Menu item-->
-                                            <a href="#" class="menu-link px-3">
-                                                <span class="menu-title">New Group</span>
-                                                <span class="menu-arrow"></span>
-                                            </a>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu sub-->
-                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Admin Group</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Staff Group</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Member Group</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                            </div>
-                                            <!--end::Menu sub-->
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">New Contact</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu separator-->
-                                        <div class="separator mt-3 opacity-75"></div>
-                                        <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content px-3 py-3">
-                                                <a class="btn btn-primary btn-sm px-4" href="#">Generate
-                                                    Reports</a>
-                                            </div>
-                                        </div>
-                                        <!--end::Menu item-->
-                                    </div>
-                                    <!--end::Menu 2-->
-                                    <!--end::Menu-->
-                                </div>
-                                <!--end::Toolbar-->
-                            </div>
-                            <!--end::Header-->
-                            <!--begin::Body-->
-                            <div class="card-body text-center pt-5">
-                                <!--begin::Image-->
-                                <img src="{{ asset('static/media/svg/shapes/ethereum.svg') }}" class="h-125px mb-5"
-                                    alt="" />
-                                <!--end::Image-->
-                                <!--begin::Section-->
-                                <div class="text-start">
-                                    <span class="d-block fw-bolder fs-1 text-gray-800">29.33460000 ETH</span>
-                                    <span class="mt-1 fw-bold fs-3" style="color:">7,336,00 USD</span>
-                                </div>
-                                <!--end::Section-->
-                            </div>
-                            <!--end::Body-->
-                        </div>
-                        <!--end::Card widget 11-->
-                    </div>
-                    <!--end::Col-->
-                    <!--begin::Col-->
-                    <div class="col-md-4">
-                        <!--begin::Card widget 11-->
-                        <div class="card card-flush h-xl-100" style="background-color: #BFDDE3">
-                            <!--begin::Header-->
-                            <div class="card-header flex-nowrap pt-5">
-                                <!--begin::Title-->
-                                <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder fs-4 text-gray-800">Dogecoin</span>
-                                    <span class="mt-1 fw-bold fs-7" style="color:">0.12,045 USD for 1 DOGE</span>
-                                </h3>
-                                <!--end::Title-->
-                                <!--begin::Toolbar-->
-                                <div class="card-toolbar">
-                                    <!--begin::Menu-->
-                                    <button class="btn btn-icon justify-content-end" data-kt-menu-trigger="click"
-                                        data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true" style="color:">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
-                                        <span class="svg-icon svg-icon-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="4"
-                                                    fill="currentColor" />
-                                                <rect x="11" y="11" width="2.6" height="2.6" rx="1.3"
-                                                    fill="currentColor" />
-                                                <rect x="15" y="11" width="2.6" height="2.6" rx="1.3"
-                                                    fill="currentColor" />
-                                                <rect x="7" y="11" width="2.6" height="2.6" rx="1.3"
-                                                    fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </button>
-                                    <!--begin::Menu 2-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px"
-                                        data-kt-menu="true">
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Quick Actions
-                                            </div>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu separator-->
-                                        <div class="separator mb-3 opacity-75"></div>
-                                        <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">New Ticket</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">New Customer</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                            data-kt-menu-placement="right-start">
-                                            <!--begin::Menu item-->
-                                            <a href="#" class="menu-link px-3">
-                                                <span class="menu-title">New Group</span>
-                                                <span class="menu-arrow"></span>
-                                            </a>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu sub-->
-                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Admin Group</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Staff Group</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Member Group</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                            </div>
-                                            <!--end::Menu sub-->
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">New Contact</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu separator-->
-                                        <div class="separator mt-3 opacity-75"></div>
-                                        <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content px-3 py-3">
-                                                <a class="btn btn-primary btn-sm px-4" href="#">Generate
-                                                    Reports</a>
-                                            </div>
-                                        </div>
-                                        <!--end::Menu item-->
-                                    </div>
-                                    <!--end::Menu 2-->
-                                    <!--end::Menu-->
-                                </div>
-                                <!--end::Toolbar-->
-                            </div>
-                            <!--end::Header-->
-                            <!--begin::Body-->
-                            <div class="card-body text-center pt-5">
-                                <!--begin::Image-->
-                                <img src="{{ asset('static/media/svg/shapes/dogecoin.svg') }}" class="h-125px mb-5"
-                                    alt="" />
-                                <!--end::Image-->
-                                <!--begin::Section-->
-                                <div class="text-start">
-                                    <span class="d-block fw-bolder fs-1 text-gray-800">4703.7589 DOGE</span>
-                                    <span class="mt-1 fw-bold fs-3" style="color:">503,005,56 USD</span>
-                                </div>
-                                <!--end::Section-->
-                            </div>
-                            <!--end::Body-->
-                        </div>
-                        <!--end::Card widget 11-->
-                    </div>
-                    <!--end::Col-->
+
                 </div>
                 <!--end::Row-->
             </div>

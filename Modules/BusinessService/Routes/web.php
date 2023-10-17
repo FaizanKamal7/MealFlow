@@ -18,7 +18,6 @@ use Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingContro
 use Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController;
 use Modules\FinanceService\Http\Controllers\WalletController;
 use Modules\FinanceService\Http\Controllers\WalletCreditController;
-use Modules\BusinessService\Http\Middleware\BusinessCheck;
 
 
 
