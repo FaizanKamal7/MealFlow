@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('note')->nullable();
             $table->foreign('delivery_id')->on('deliveries')->references('id')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

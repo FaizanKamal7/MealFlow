@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('drivers', function (Blueprint $table) {
-            $table->uuids("id")->primary();
+            $table->uuid("id")->primary();
             $table->string('license_number')->unique();
             $table->boolean('is_available')->default(true);
             $table->string('license_document')->nullable();
