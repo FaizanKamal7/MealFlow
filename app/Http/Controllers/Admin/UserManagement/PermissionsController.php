@@ -35,11 +35,10 @@ class PermissionsController extends Controller
     public function viewPermissions()
     {
         try {
-            abort_if(Gate::denies('view_permissions'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // abort_if(Gate::denies('view_permissions'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $permissions = $this->permissionRepository->getPermissions();
             $application_models = $this->applicationModelRepository->getApplicationModels();
             return view('admin.permissions.permissions', ["permissions" => $permissions, "application_models" => $application_models]);
-
         } catch (Exception $exception) {
             Log::error($exception);
             return abort(500);
@@ -50,7 +49,6 @@ class PermissionsController extends Controller
     public function storePermissions(Request $request)
     {
         try {
-            abort_if(Gate::denies('add_permission'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $is_active = false;
             if ($request->get("permission_status") == "on") {
                 $is_active = true;
@@ -61,7 +59,6 @@ class PermissionsController extends Controller
             Log::error($exception);
             return redirect()->route("permissions_view")->with("error", "Something went wrong! Contact Support");
         }
-
     }
 
 
@@ -69,7 +66,6 @@ class PermissionsController extends Controller
     {
 
         try {
-            abort_if(Gate::denies('update_permission'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $is_active = false;
             if ($request->get("permission_status_update") == "on") {
                 $is_active = true;
@@ -81,13 +77,11 @@ class PermissionsController extends Controller
 
             return redirect()->route("permissions_view")->with("error", "Something went wrong! Contact Support");
         }
-
     }
 
     public function deletePermission(Request $request, $permission_id)
     {
         try {
-            abort_if(Gate::denies('delete_permission'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $permission = Permission::where("id", $permission_id)->first();
             if ($permission !== null) {
                 $this->permissionRepository->deletePermission(id: $permission_id);
@@ -97,20 +91,17 @@ class PermissionsController extends Controller
             Log::error($exception);
             return redirect()->route("permissions_view")->with("error", "Something went wrong! Contact Support");
         }
-
     }
 
 
     public function fetchSinglePermission(Request $request)
     {
         try {
-            abort_if(Gate::denies('view_permissions'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $permission = $this->permissionRepository->getPermission(id: $request->get("permission_id"));
             return response()->json(['permission' => $permission]);
         } catch (Exception $exception) {
             Log::error($exception);
             return response()->json(['permission' => null], 404);
         }
-
     }
 }

@@ -103,8 +103,7 @@
                     <span class="menu-arrow"></span>
 
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
-                    @can('view_permissions')
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('permissions_view') }}">
                             <span class="menu-bullet">
@@ -113,9 +112,7 @@
                             <span class="menu-title">Permissions</span>
                         </a>
                     </div>
-                    @endcan
 
-                    @can('view_role')
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('roles_view') }}">
                             <span class="menu-bullet">
@@ -124,9 +121,7 @@
                             <span class="menu-title">Roles</span>
                         </a>
                     </div>
-                    @endcan
 
-                    @can('view_users')
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('users_view') }}">
                             <span class="menu-bullet">
@@ -135,7 +130,7 @@
                             <span class="menu-title">Users</span>
                         </a>
                     </div>
-                    @endcan
+
 
                 </div>
             </div>
@@ -377,7 +372,7 @@
 
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                        <a class="menu-link" href="{{ route('assigned_bags_pickup') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -388,7 +383,7 @@
 
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                        <a class="menu-link" href="{{ route('completed_bags_pickup') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -502,7 +497,7 @@
                     <span class="menu-arrow"></span>
 
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-bullet">
@@ -812,13 +807,12 @@
             </div>
             {{-- <div class="separator"></div> --}}
 
-            {{-- <div class="menu-item">
+            <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
                     <span class="menu-section text-dark text-uppercase fs-8 ls-1">HRM</span>
                 </div>
             </div>
-            <div class="separator"></div> --}}
-            @can('view_hr')
+            <div class="separator"></div>
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
@@ -837,7 +831,7 @@
                     <span class="menu-title mx-5">HR Management</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
 
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
@@ -848,7 +842,6 @@
                             <span class="menu-arrow"></span>
                         </span>
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
-                            @can('add_department')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_departments') }}">
                                     <span class="menu-bullet">
@@ -857,9 +850,7 @@
                                     <span class="menu-title">Departments</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_designation')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_designations') }}">
                                     <span class="menu-bullet">
@@ -868,9 +859,7 @@
                                     <span class="menu-title">Designations</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_events')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_events') }}">
                                     <span class="menu-bullet">
@@ -879,9 +868,7 @@
                                     <span class="menu-title">Events</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_award')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_awards') }}">
                                     <span class="menu-bullet">
@@ -890,9 +877,7 @@
                                     <span class="menu-title">Awards</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_appreciation')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_appreciations') }}">
                                     <span class="menu-bullet">
@@ -901,9 +886,7 @@
                                     <span class="menu-title">Appreciations</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_taxes')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_taxes') }}">
                                     <span class="menu-bullet">
@@ -912,7 +895,6 @@
                                     <span class="menu-title">Taxes</span>
                                 </a>
                             </div>
-                            @endcan
 
 
 
@@ -930,7 +912,6 @@
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
 
 
-                            @can('view_employee')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_employees') }}">
                                     <span class="menu-bullet">
@@ -939,9 +920,8 @@
                                     <span class="menu-title">Employees</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_employee')
+
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_salaries') }}">
                                     <span class="menu-bullet">
@@ -950,9 +930,7 @@
                                     <span class="menu-title">Employee Salaries</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_timesheet')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_timesheets') }}">
                                     <span class="menu-bullet">
@@ -961,9 +939,7 @@
                                     <span class="menu-title">Timesheets</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_overtime')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_overtimes') }}">
                                     <span class="menu-bullet">
@@ -972,9 +948,7 @@
                                     <span class="menu-title">Overtimes</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_deduction')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_deductions') }}">
                                     <span class="menu-bullet">
@@ -983,9 +957,7 @@
                                     <span class="menu-title">Deductions</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_expense_reclaim')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_expense_reclaims') }}">
                                     <span class="menu-bullet">
@@ -994,13 +966,11 @@
                                     <span class="menu-title">Expense Reclaims</span>
                                 </a>
                             </div>
-                            @endcan
 
 
                         </div>
                     </div>
 
-                    @can('view_team')
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('hr_teams') }}">
                             <span class="menu-bullet">
@@ -1009,7 +979,6 @@
                             <span class="menu-title mx-5">Teams</span>
                         </a>
                     </div>
-                    @endcan
 
 
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -1022,7 +991,6 @@
                         </span>
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
 
-                            @can('view_attendence')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_attendance') }}">
                                     <span class="menu-bullet">
@@ -1031,9 +999,7 @@
                                     <span class="menu-title">Attendance</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_leave_application')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_leave_applications') }}">
                                     <span class="menu-bullet">
@@ -1042,9 +1008,7 @@
                                     <span class="menu-title">Leave Applications</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_leave_type')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_leave_types') }}">
                                     <span class="menu-bullet">
@@ -1053,9 +1017,7 @@
                                     <span class="menu-title">Leave Types</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_leave_policy')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('leave_policy') }}">
                                     <span class="menu-bullet">
@@ -1064,14 +1026,12 @@
                                     <span class="menu-title">Leave Policies</span>
                                 </a>
                             </div>
-                            @endcan
 
                         </div>
                     </div>
 
                 </div>
             </div>
-            @endcan
 
             <div class="separator"></div>
 

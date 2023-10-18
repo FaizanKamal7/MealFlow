@@ -2,10 +2,13 @@
 
 namespace Modules\BusinessService\Http\Controllers\Onboarding;
 
+use App\Enum\BusinessStatusEnum;
+use App\Enum\RoleNamesEnum;
 use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
 use App\Interfaces\CountryInterface;
+use App\Interfaces\RoleInterface;
 use App\Interfaces\StateInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
@@ -42,6 +45,8 @@ class BusinessOnboardingController extends Controller
     private AreaInterface $areaRepository;
     private BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository;
     private BusinessWalletInterface $businessWalletRepository;
+    private RoleInterface $roleRepository;
+
 
     private Helper $helper;
 
@@ -63,6 +68,7 @@ class BusinessOnboardingController extends Controller
         AreaInterface $areaRepository,
         BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository,
         BusinessWalletInterface $businessWalletRepository,
+        RoleInterface $roleRepository,
         Helper $helper
 
 
@@ -81,6 +87,7 @@ class BusinessOnboardingController extends Controller
         $this->areaRepository = $areaRepository;
         $this->branchCoverageDeliverySlotRepository = $branchCoverageDeliverySlotRepository;
         $this->businessWalletRepository = $businessWalletRepository;
+        $this->roleRepository = $roleRepository;
         $this->helper = $helper;
     }
 
@@ -156,6 +163,10 @@ class BusinessOnboardingController extends Controller
                 'password' => Hash::make($password),
                 'isActive' => true
             ], true);
+            // TODO
+            $role = $this->roleRepository->getRoleByName(RoleNamesEnum::BUSINESS_ADMIN->value);
+            $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role);
+
 
 
             // --- Adding data in business table
@@ -170,7 +181,7 @@ class BusinessOnboardingController extends Controller
                 card_cvv: $card_cvv,
                 business_category_id: $business_category_id,
                 admin: $user->id,
-                status: "NEW_REQUEST",
+                status: BusinessStatusEnum::NEW_REQUEST->value,
 
             );
 

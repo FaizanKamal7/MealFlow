@@ -91,25 +91,10 @@ var KTCreateAccount = (function () {
                                     },
                                 },
                             },
-                            buisness_name: {
+                            phone: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Buisness name is required",
-                                    },
-                                    async: {
-                                        url: "is-unique-vehicle",
-                                        type: "get",
-                                        data: {
-                                            field: "registration_number",
-                                            value: function () {
-                                                return $(
-                                                    '[name="registration_number"]'
-                                                ).val();
-                                            },
-                                        },
-                                        message:
-                                            "Registration number already exists",
-                                        delay: 500,
+                                        message: "Phone Number is required",
                                     },
                                 },
                             },
@@ -165,7 +150,14 @@ var KTCreateAccount = (function () {
                                 //     notEmpty: { message: "No File Choosen" },
                                 // },
                             },
-                            phone_no: {
+                            buisness_name: {
+                                validators: {
+                                    notEmpty: {
+                                        message: "Buisness name is required",
+                                    },
+                                },
+                            },
+                            business_phone: {
                                 // validators: {
                                 //     notEmpty: {
                                 //         message: "Phone Number is required",
