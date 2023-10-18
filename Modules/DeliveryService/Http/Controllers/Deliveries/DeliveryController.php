@@ -823,9 +823,7 @@ class DeliveryController extends Controller
         // dd($deliveries);
         foreach ($deliveries as $delivery) {
             $customerAddress = $delivery->customerAddress;
-            if (condition) {
-                # code...
-            }
+
             // Step 1: Find a driver that matches the delivery area and has duty timing eligilable for that slot
             $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
             $delivery->setAttribute('suggested_drivers', $drivers);

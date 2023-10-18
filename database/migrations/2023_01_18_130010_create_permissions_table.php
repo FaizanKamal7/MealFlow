@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string("codename");
             $table->boolean("is_active")->default(true);
             $table->uuid("model_id");
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+            $table->softDeletes();
+
 
             $table->foreign("model_id")->references("id")->on("application_models")->onDelete("cascade");
         });

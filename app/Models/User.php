@@ -31,6 +31,7 @@ class User extends Authenticatable
         'is_active',
         'is_superuser',
         'last_login',
+        'remeber_token',
     ];
     /**
      * The attributes that should be hidden for serialization.

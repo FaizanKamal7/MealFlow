@@ -18,6 +18,7 @@ return new class extends Migration
             $table->uuid("role_id");
             $table->uuid("user_id");
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign("role_id")->references("id")->on("roles")->onDelete("cascade");
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");

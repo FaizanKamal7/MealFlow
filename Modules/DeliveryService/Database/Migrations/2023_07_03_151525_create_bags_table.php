@@ -28,9 +28,10 @@ return new class extends Migration
             $table->string("weight")->nullable();
             $table->string("dimensions")->nullable();
 
-             $table->foreign("business_id")->references("id")->on("businesses")->onDelete("set null");
+            $table->foreign("business_id")->references("id")->on("businesses")->onDelete("set null");
 
-         
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }
