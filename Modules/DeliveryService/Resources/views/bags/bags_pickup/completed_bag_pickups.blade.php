@@ -1,5 +1,5 @@
 @extends('layouts.admin_master')
-@section('title', 'Upload Deliveries')
+@section('title', 'Completed Pickups')
 
 @section('extra_style')
 @endsection
@@ -20,7 +20,7 @@
                         <!--begin::Card title-->
                         <div class="card-title">
                             <!--begin::Search-->
-                            Unassigned Bags Pickup
+                            Completed Bags Pickup
                             <!--end::Search-->
                         </div>
                         <!--end::Card title-->
@@ -80,7 +80,7 @@
                                             <input type="checkbox" name="delivery_ids[]" value="{{ $delivery->id }}">
                                         </td>
                                         <td>{{$delivery->id}}</td>
-                                        <td>{{$delivery->branch->business->name ?? $delivery->branch->name }}</td>
+                                        <td>{{$delivery->branch->name }}</td>
                                         <td> {{$delivery->customerAddress->area->name}}
                                             ({{$delivery->deliverySlot->start_time}} -
                                             {{$delivery->deliverySlot->end_time}})</td>

@@ -30,6 +30,9 @@ class RolesTableSeeder extends Seeder
 
             array('id' => '9959f101-265e-47cd-8d70-2920aa972838', 'role_name' => 'Business Admin', 'description' => NULL, 'is_active' => '1', 'created_at' => '2023-06-07 05:29:05', 'updated_at' => '2023-06-07 05:35:21'),
             array('id' => '991dc542-0a4f-4e7a-8b86-a5fd891bsbd5', 'role_name' => 'Business Manager', 'description' => NULL, 'is_active' => '1', 'created_at' => '2023-05-08 07:37:05', 'updated_at' => '2023-05-08 07:37:05'),
+
+            array('id' => '991dc542-0a4f-4e7a-8b86-a5fd891b45sf', 'role_name' => 'Customer', 'description' => NULL, 'is_active' => '1', 'created_at' => '2023-05-08 07:37:05', 'updated_at' => '2023-05-08 07:37:05'),
+
         ));
     }
 }

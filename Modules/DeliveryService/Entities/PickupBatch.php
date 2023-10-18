@@ -7,6 +7,7 @@ use App\Http\Helper\Helper;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Request;
 
 class PickupBatch extends Model
 {

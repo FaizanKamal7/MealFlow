@@ -79,6 +79,8 @@ Route::prefix('admin/deliveries')->group(function () {
             Route::get('/unassigned-bags-pickup', [BagsController::class, "unassignedBagsPickup"])->name("unassigned_bags_pickup");
             Route::POST('/assign-bag-pickup-to-driver', [BagsController::class, "assignBagsPickup"])->name("assign_bag_pickup_to_driver");
             Route::get('/assigned-bags-pickup', [BagsController::class, "assignedBagsPickup"])->name("assigned_bags_pickup");
+            Route::get('/completed-bags-pickup', [BagsController::class, "completedBagsPickup"])->name("completed_bags_pickup");
+
 
             // Route::GET('/driver-bag-pickup', [BagsController::class, "assignBagsPickup"])->name("assign_bag_pickup_to_driver");
         });

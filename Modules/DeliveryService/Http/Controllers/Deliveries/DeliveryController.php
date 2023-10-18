@@ -3,6 +3,7 @@
 namespace Modules\DeliveryService\Http\Controllers\Deliveries;
 
 use App\Enum\DeliveryStatusEnum;
+use App\Enum\RoleNamesEnum;
 use App\Http\Helper\Helper;
 
 use App\Models\DeliverySlot;
@@ -17,7 +18,9 @@ use Modules\BusinessService\Entities\CustomerAddress;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
 use App\Interfaces\DeliverySlotInterface;
+use App\Interfaces\RoleInterface;
 use App\Interfaces\UserInterface;
+use App\Interfaces\UserRoleInterface;
 use Modules\BusinessService\Interfaces\BranchInterface;
 use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
@@ -56,6 +59,8 @@ class DeliveryController extends Controller
     private $driverRepository;
     private $deliveryBatchRepository;
     private $deliveryTimelineRepository;
+    private $roleRepository;
+    private $userRoleRepository;
 
     public function __construct(
         CustomerInterface $customerRepository,
@@ -75,8 +80,8 @@ class DeliveryController extends Controller
         DriverInterface $driverRepository,
         DeliveryBatchInterface $deliveryBatchRepository,
         DeliveryTimelineInterface $deliveryTimelineRepository,
-
-
+        RoleInterface $roleRepository,
+        UserRoleInterface $userRoleRepository,
         Helper $helper,
     ) {
         $this->customerRepository = $customerRepository;
@@ -96,6 +101,8 @@ class DeliveryController extends Controller
         $this->driverRepository = $driverRepository;
         $this->deliveryBatchRepository = $deliveryBatchRepository;
         $this->deliveryTimelineRepository = $deliveryTimelineRepository;
+        $this->roleRepository =  $roleRepository;
+        $this->userRoleRepository = $userRoleRepository;
         $this->helper = $helper;
     }
     /**
@@ -122,37 +129,37 @@ class DeliveryController extends Controller
     public function uploadDeliveriesMultiple(Request $request)
     {
 
-        // $request->validate([
-        //     'kt_docs_repeater_advanced.*.delivery_name' => 'required|string|max:255',
-        //     'kt_docs_repeater_advanced.*.phone_number' => 'required',
-        //     'kt_docs_repeater_advanced.*.area' => 'required',
-        //     'kt_docs_repeater_advanced.*.emirates_with_time' => 'required',
-        //     'kt_docs_repeater_advanced.*.datepicker' => 'required|date',
-        //     // 'kt_docs_repeater_advanced.*.company_delivery_id' => 'required|string|max:255',
-        //     // 'kt_docs_repeater_advanced.*.delivery_amount' => 'required|numeric',
-        //     'kt_docs_repeater_advanced.*.signature' => 'required|in:0,1',
-        //     'kt_docs_repeater_advanced.*.notification' => 'required|in:0,1',
-        //     'kt_docs_repeater_advanced.*.branch_dropdown' => 'required|string|max:255',
-        //     'kt_docs_repeater_advanced.*.delivery_address' => 'required|string|max:255',
-        //     'kt_docs_repeater_advanced.*.product_type' => 'required',
-        //     // 'kt_docs_repeater_advanced.*.notes' => 'string|max:255',
-        //     // 'kt_docs_repeater_advanced.*.google_link_address' => 'required|url',
-        // ], [
-        //     'kt_docs_repeater_advanced.*.delivery_name.required' => 'Delivery name is required',
-        //     'kt_docs_repeater_advanced.*.phone_number.required' => 'Phone number is required',
-        //     'kt_docs_repeater_advanced.*.area.required' => 'Area is required',
-        //     'kt_docs_repeater_advanced.*.emirates_with_time.required' => 'Emirates with time is required',
-        //     'kt_docs_repeater_advanced.*.datepicker.required' => 'Date is required',
-        //     // 'kt_docs_repeater_advanced.*.company_delivery_id.required' => 'Company Delivery ID is required',
-        //     // 'kt_docs_repeater_advanced.*.delivery_amount.required' => 'Delivery Amount is required',
-        //     'kt_docs_repeater_advanced.*.signature.required' => 'Signature is required',
-        //     'kt_docs_repeater_advanced.*.notification.required' => 'Notification is required',
-        //     'kt_docs_repeater_advanced.*.branch_dropdown.required' => 'Pickup Address is required',
-        //     'kt_docs_repeater_advanced.*.delivery_address.required' => 'Delivery Address is required',
-        //     'kt_docs_repeater_advanced.*.product_type.required' => 'Product Type is required',
-        //     // 'kt_docs_repeater_advanced.*.notes.required' => 'Notes are required',
-        //     // 'kt_docs_repeater_advanced.*.google_link_address.required' => 'Google Link Address is required',
-        // ]);
+        $request->validate([
+            'kt_docs_repeater_advanced.*.delivery_name' => 'required|string|max:255',
+            'kt_docs_repeater_advanced.*.phone_number' => 'required',
+            'kt_docs_repeater_advanced.*.area' => 'required',
+            'kt_docs_repeater_advanced.*.emirates_with_time' => 'required',
+            'kt_docs_repeater_advanced.*.datepicker' => 'required|date',
+            // 'kt_docs_repeater_advanced.*.company_delivery_id' => 'required|string|max:255',
+            // 'kt_docs_repeater_advanced.*.delivery_amount' => 'required|numeric',
+            'kt_docs_repeater_advanced.*.signature' => 'required|in:0,1',
+            'kt_docs_repeater_advanced.*.notification' => 'required|in:0,1',
+            'kt_docs_repeater_advanced.*.branch_dropdown' => 'required|string|max:255',
+            'kt_docs_repeater_advanced.*.delivery_address' => 'required|string|max:255',
+            'kt_docs_repeater_advanced.*.product_type' => 'required',
+            // 'kt_docs_repeater_advanced.*.notes' => 'string|max:255',
+            // 'kt_docs_repeater_advanced.*.google_link_address' => 'required|url',
+        ], [
+            'kt_docs_repeater_advanced.*.delivery_name.required' => 'Delivery name is required',
+            'kt_docs_repeater_advanced.*.phone_number.required' => 'Phone number is required',
+            'kt_docs_repeater_advanced.*.area.required' => 'Area is required',
+            'kt_docs_repeater_advanced.*.emirates_with_time.required' => 'Emirates with time is required',
+            'kt_docs_repeater_advanced.*.datepicker.required' => 'Date is required',
+            // 'kt_docs_repeater_advanced.*.company_delivery_id.required' => 'Company Delivery ID is required',
+            // 'kt_docs_repeater_advanced.*.delivery_amount.required' => 'Delivery Amount is required',
+            'kt_docs_repeater_advanced.*.signature.required' => 'Signature is required',
+            'kt_docs_repeater_advanced.*.notification.required' => 'Notification is required',
+            'kt_docs_repeater_advanced.*.branch_dropdown.required' => 'Pickup Address is required',
+            'kt_docs_repeater_advanced.*.delivery_address.required' => 'Delivery Address is required',
+            'kt_docs_repeater_advanced.*.product_type.required' => 'Product Type is required',
+            // 'kt_docs_repeater_advanced.*.notes.required' => 'Notes are required',
+            // 'kt_docs_repeater_advanced.*.google_link_address.required' => 'Google Link Address is required',
+        ]);
         $repeaterData = $request->input('kt_docs_repeater_advanced.*');
         //form can be multiple, making this like to accept multiform value
         // dd($repeaterData);
@@ -197,7 +204,11 @@ class DeliveryController extends Controller
                         'password' => Hash::make("1234abcd"),
                         'is_active' => true
                     ], false);
+                    $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
+                    $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id);
+
                     $customer = $this->customerRepository->create(['user_id' => $user->id]);
+
                     $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $businessIdInput]);
                     // $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
                 }
@@ -210,7 +221,7 @@ class DeliveryController extends Controller
 
 
                 $delivery_data = [
-                    'status' => 'UNASSIGN',
+                    'status' => DeliveryStatusEnum::UNASSIGNED->value,
                     'is_recurring' => false,
                     'payment_status' => false,
                     'is_sign_required' => $signature,
@@ -420,7 +431,9 @@ class DeliveryController extends Controller
                         // ---- 3. Get all the addresses ($customer_address) of the db customer of selected city
                         $sheet_address = $row['address'];
                         $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($row['phone']);
-                        $customer = $customer ?? $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
+                        if (!$customer && ($row['email_optional'] != '' || $row['email_optional'] != null)) {
+                            $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
+                        }
                         $customer_addresses = '';
                         $address_matching = null;
 
@@ -432,9 +445,9 @@ class DeliveryController extends Controller
                         } else {
                             $user = $this->userRepository->createUser([
                                 'name' => $row['full_name'],
-                                'email' => $row['email_optional'] ?? '',
-                                'phone' => $row['phone'] ?? '',
-                                'password' => Hash::make("1234abcd"),
+                                'email' => $row['email_optional'] ?? null,
+                                'phone' => $row['phone'] ?? null,
+                                'password' => Hash::make("Aced732nokia501@"),
                                 'isActive' => true
                             ], false);
 
@@ -460,7 +473,7 @@ class DeliveryController extends Controller
                         $finalized_address = '';
 
                         $delivery_data = [
-                            'status' => 'UNASSIGN',
+                            'status' => DeliveryStatusEnum::UNASSIGNED->value,
                             'is_recurring' => false,
                             'payment_status' => false,
                             'is_sign_required' => false,
@@ -813,7 +826,7 @@ class DeliveryController extends Controller
     {
         $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
         $businesses = $this->businessRepository->getActiveBusinesses();
-        $deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
+        $deliveries = $this->deliveryRepository->getDeliveriesByStatus(DeliveryStatusEnum::UNASSIGNED->value);
         $emirate = $this->cityRepository->getActiveCities();
         // Sort the time slots based on start_time
         usort($time_slot, function ($a, $b) {
@@ -927,7 +940,7 @@ class DeliveryController extends Controller
 
 
             // $drivers = $this->driverRepository->getDetailDrivers();
-            // $db_deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
+            // $db_deliveries = $this->deliveryRepository->getDeliveriesByStatus(DeliveryStatusEnum::UNASSIGNED->value);
             // $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
             // return view('deliveryservice::deliveries.unassigned_deliveries', $data);
             return $this->unassignedDeliveries();

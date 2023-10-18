@@ -85,9 +85,14 @@ class DeliveryRepository implements DeliveryInterface
 
     public function assignPickupBatch($batch_id, $deliveries)
     {
-        Delivery::whereIn('id', $deliveries)->update([
-            'pickup_batch_id' => $batch_id,
-        ]);
+        // Delivery::whereIn('id', $deliveries)->update([
+        //     'pickup_batch_id' => $batch_id,
+        // ]);
+        Delivery::whereIn('id', $deliveries)->each(function ($delivery) use ($batch_id) {
+            $delivery->update([
+                'pickup_batch_id' => $batch_id,
+            ]);
+        });
     }
 
 
@@ -105,6 +110,12 @@ class DeliveryRepository implements DeliveryInterface
     public function getPickupUnassignedDeliveries($start_date, $end_date)
     {
         return Delivery::whereNull('pickup_batch_id')->get();
+    }
+
+
+    public function getCompletedPickupDeliveries($start_date, $end_date)
+    {
+        return Delivery::whereNotNull('pickup_batch_id')->get();
     }
 
     public function updateDeliveryQR($delivery_id, $data)

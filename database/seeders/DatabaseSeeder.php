@@ -86,6 +86,16 @@ class DatabaseSeeder extends Seeder
         $this->command->warn(PHP_EOL . 'Importing delivery slots...');
         $this->call(DeliverySlotSeeder::class);
         $this->command->info('Delivery Slots added.');
+
+        // ------ Adding Business Category 
+        $this->command->warn(PHP_EOL . 'Importing business categories...');
+        $this->call(BusinessCategorySeeder::class);
+        $this->command->info('Business categories added.');
+
+        // ------ Adding Business Category 
+        $this->command->warn(PHP_EOL . 'Importing departments...');
+        $this->call(DepartmentTableSeeder::class);
+        $this->command->info('Departments added.');
     }
 
     protected function withProgressBar(int $amount, Closure $createCollectionOfOne): Collection

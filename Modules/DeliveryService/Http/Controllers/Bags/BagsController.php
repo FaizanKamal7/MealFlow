@@ -251,18 +251,30 @@ class BagsController extends Controller
     public function unassignedBagsPickup()
     {
         $start_date = '2023-09-24';
-        $end_date = '2023-10-25';
+        $end_date = '2023-12-25';
         $deliveries = $this->deliveryRepository->getPickupUnassignedDeliveries($start_date, $end_date);
         $drivers = $this->driverRepository->getDetailDrivers();
         $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
-        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', $data);
+        return view('deliveryservice::bags.bags_pickup.unassigned_bag_pickups', $data);
+    }
+
+    public function completedBagsPickup()
+    {
+
+
+        $start_date = '2023-09-24';
+        $end_date = '2023-12-25';
+        $deliveries = $this->deliveryRepository->getCompletedPickupDeliveries($start_date, $end_date);
+        $drivers = $this->driverRepository->getDetailDrivers();
+        $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
+        return view('deliveryservice::bags.bags_pickup.completed_bag_pickups', $data);
     }
 
 
     public function assignBagsPickup(Request $request)
     {
         $start_date = '2023-09-24';
-        $end_date = '2023-09-25';
+        $end_date = '2023-12-25';
 
         try {
             // --------------- GETTING DELIVERIES AND DRIVER TO ASSIGN-------------
@@ -274,11 +286,12 @@ class BagsController extends Controller
             // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
             $this->deliveryRepository->assignPickupBatch($batch->id, $deliveries);
 
+
             // Pickup batch branches will be populated from driver app data 
             $drivers = $this->driverRepository->getDetailDrivers();
             $db_deliveries = $this->deliveryRepository->getPickupUnassignedDeliveries($start_date, $end_date);
             $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
-            return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', $data)->with("success", "Pickup assigned successfully");
+            return view('deliveryservice::bags.bags_pickup.unassigned_bag_pickups', $data)->with("success", "Pickup assigned successfully");
         } catch (Exception $exception) {
             dd($exception);
         }
@@ -287,11 +300,11 @@ class BagsController extends Controller
     public function assignedBagsPickup()
     {
         $start_date = '2023-09-24';
-        $end_date = '2023-09-25';
+        $end_date = '2023-12-25';
         $deliveries = $this->deliveryRepository->getPickupAssignedDeliveries($start_date, $end_date);
         $drivers = $this->driverRepository->getDetailDrivers();
         $data = ['deliveries' => $deliveries, 'drivers' => $drivers];
-        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', $data);
+        return view('deliveryservice::bags.bags_pickup.assigned_bag_pickups', $data);
     }
 
     public function driverBagsPickup(Request $request)
@@ -314,12 +327,12 @@ class BagsController extends Controller
             $drivers = $this->driverRepository->getDetailDrivers();
             $db_deliveries = $this->deliveryRepository->getPickupUnassignedDeliveries($start_date, $end_date);
             $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
-            return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', $data);
+            return view('deliveryservice::bags.bags_pickup.unassigned_bag_pickups', $data);
         } catch (Exception $exception) {
             dd($exception);
         }
 
-        return view('deliveryservice::bags.bags_pickup.unasssigned_bag_pickups', ['deliveries' => $deliveries, 'drivers' => $drivers]);
+        return view('deliveryservice::bags.bags_pickup.unassigned_bag_pickups', ['deliveries' => $deliveries, 'drivers' => $drivers]);
     }
 
     // ==============================================================================================
