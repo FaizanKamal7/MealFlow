@@ -154,6 +154,7 @@ class BusinessOnboardingController extends Controller
         // dd($area_coverage_list);
 
         try {
+            DB::beginTransaction();
             // --- Adding data in users table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $user = $this->userRepository->createUser([
@@ -165,7 +166,7 @@ class BusinessOnboardingController extends Controller
             ], true);
             // TODO
             $role = $this->roleRepository->getRoleByName(RoleNamesEnum::BUSINESS_ADMIN->value);
-            $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role);
+            $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role->id);
 
 
 
@@ -239,11 +240,11 @@ class BusinessOnboardingController extends Controller
             }
             //  Sign in the newly onboarded customer
             $this->signInBusinessAdminUponRegistration($request->get("email"), $request->get("password"), $user->id);
-
-
+            DB::commit();
             return redirect()->route("business_home")->with("success", "Business added successfully");
         } catch (Exception $exception) {
             Log::error($exception);
+            DB::rollback();
             return redirect()->route("business_home")->with("error", "Something went wrong! Contact support");
         }
     }
