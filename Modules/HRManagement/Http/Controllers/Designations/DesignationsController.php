@@ -29,13 +29,12 @@ class DesignationsController extends Controller
      */
     public function viewDesignations()
     {
-        abort_if(Gate::denies('view_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        try{
+        // abort_if(Gate::denies('view_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
 
             $designations = $this->designationRepository->getDesignations();
-            return view('hrmanagement::designations.designations', ["designations"=>$designations]);
-        }
-        catch (Exception $exception){
+            return view('hrmanagement::designations.designations', ["designations" => $designations]);
+        } catch (Exception $exception) {
             Log::error($exception);
             return view('hrmanagement::designations.designations')->with('error', "Something went wrong");
         }
@@ -47,12 +46,12 @@ class DesignationsController extends Controller
      */
     public function storeDesignation(Request $request)
     {
-        abort_if(Gate::denies('add_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('add_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $name = $request->get("designation_name");
             $this->designationRepository->createDesignation($name);
             return redirect()->route("hr_designations")->with("success", "Designation added successfully");
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("hr_designations")->with("error", "Something went wrong! Contact support");
         }
@@ -66,14 +65,13 @@ class DesignationsController extends Controller
      */
     public function editDesignation($id)
     {
-        abort_if(Gate::denies('edit_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('edit_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $designation = $this->designationRepository->getDesignation($id);
-            return response()->json(["designation"=>$designation], 200);
-        }
-        catch (Exception $exception){
+            return response()->json(["designation" => $designation], 200);
+        } catch (Exception $exception) {
             Log::error($exception);
-            return response()->json(["designation"=>null], 404);
+            return response()->json(["designation" => null], 404);
         }
     }
 
@@ -85,14 +83,13 @@ class DesignationsController extends Controller
      */
     public function updateDesignation(Request $request)
     {
-        abort_if(Gate::denies('update_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('update_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $name = $request->get("designation_name");
             $id = $request->get("id");
             $this->designationRepository->updateDesignation(id: $id, name: $name);
             return redirect()->route("hr_designations")->with("success", "Designation updated successfully");
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("hr_designations")->with("error", "Something went wrong! Contact support");
         }
@@ -106,12 +103,11 @@ class DesignationsController extends Controller
      */
     public function destroyDesignation($id)
     {
-        abort_if(Gate::denies('delete_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('delete_designation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $this->designationRepository->deleteDesignation($id);
             return redirect()->route("hr_designations")->with("success", "Designation deleted successfully");
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("hr_designations")->with("error", "Something went wrong! Contact support");
         }
