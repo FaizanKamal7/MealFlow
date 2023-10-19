@@ -184,111 +184,111 @@ class DeliveryController extends Controller
             $businessIdInput = $row['business_id'];
             $googleLinkAddress = !empty($row['google_link_address']) ? $row['google_link_address'] : null;
             $conflicted_deliveries = [];
-            try {
-                DB::beginTransaction();
-                $area = $this->areaRepository->getAreaById($area);
-                $city = $area->city;
-                $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($phone_number);
-                // $customer = $customer ?? $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
-                $customer_addresses = '';
-                $address_matching = null;
-                // --- If customer phone already exist in priamry list 
-                if ($customer) {
-                    // $customer_with_sec_phon =  $this->customerRepository->customerWithMatchingPhoneNoInSecondaryNumbers($row['phone']); // Will need for dealing with secondary numbers
-                    $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
-                    $address_matching = $this->addressDBStatus($deliveryAddress, $customer_addresses);
-                } else {
-                    $user = $this->userRepository->createUser([
-                        'name' => $name,
-                        'phone' => $phone_number,
-                        'password' => Hash::make("1234abcd"),
-                        'is_active' => true
-                    ], false);
-                    $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
-                    $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id);
+            // try {
+            //     DB::beginTransaction();
+            $area = $this->areaRepository->getAreaById($area);
+            $city = $area->city;
+            $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($phone_number);
+            // $customer = $customer ?? $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
+            $customer_addresses = '';
+            $address_matching = null;
+            // --- If customer phone already exist in priamry list 
+            if ($customer) {
+                // $customer_with_sec_phon =  $this->customerRepository->customerWithMatchingPhoneNoInSecondaryNumbers($row['phone']); // Will need for dealing with secondary numbers
+                $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
+                $address_matching = $this->addressDBStatus($deliveryAddress, $customer_addresses);
+            } else {
+                $user = $this->userRepository->createUser([
+                    'name' => $name,
+                    'phone' => $phone_number,
+                    'password' => Hash::make("1234abcd"),
+                    'is_active' => true
+                ], false);
+                $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
+                $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id);
 
-                    $customer = $this->customerRepository->create(['user_id' => $user->id]);
+                $customer = $this->customerRepository->create(['user_id' => $user->id]);
 
-                    $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $businessIdInput]);
-                    // $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
-                }
+                $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $businessIdInput]);
+                // $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
+            }
 
-                $delivery_type = $this->deliveryTypeRepository->getWhereFirst(['name' => $productType]);
-                // $db_delivery_slot = $this->deliverySlotRepository->getDeliverySlotsByTimeAndCity($emiratesWithTime->start_time, $emiratesWithTime->end_time, $city->id);
+            $delivery_type = $this->deliveryTypeRepository->getWhereFirst(['name' => $productType]);
+            // $db_delivery_slot = $this->deliverySlotRepository->getDeliverySlotsByTimeAndCity($emiratesWithTime->start_time, $emiratesWithTime->end_time, $city->id);
 
-                $finalized_address = '';
+            $finalized_address = '';
 
 
 
-                $delivery_data = [
-                    'status' => DeliveryStatusEnum::UNASSIGNED->value,
-                    'is_recurring' => false,
-                    'payment_status' => false,
-                    'is_sign_required' => $signature,
-                    'is_notification_enabled' => $notification,
-                    'note' => $notes,
-                    'branch_id' => $branch_id ?? null,
-                    'delivery_slot_id' => $emiratesWithTime,
-                    'delivery_type_id' => null,
-                    'delivery_date' => $delivery_date,
+            $delivery_data = [
+                'status' => DeliveryStatusEnum::UNASSIGNED->value,
+                'is_recurring' => false,
+                'payment_status' => false,
+                'is_sign_required' => $signature,
+                'is_notification_enabled' => $notification,
+                'note' => $notes,
+                'branch_id' => $branch_id ?? null,
+                'delivery_slot_id' => $emiratesWithTime,
+                'delivery_type_id' => null,
+                'delivery_date' => $delivery_date,
+                'customer_id' => $customer->id,
+                'area_id' => $area->id,
+                'city_id' => $city->id,
+                'state_id' => $city->state->id,
+                'country_id' => $city->state->country->id,
+
+            ];
+
+            $delivery_data['customer_address_id'] = null; // Initialize to null
+            if ($address_matching == null || ($address_matching && $address_matching['status'] == 'MISSING')) {
+
+                // add new and get customer id
+                $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($deliveryAddress);
+
+                $address_data = [
+                    'address' => $deliveryAddress,
+                    'address_type' => "OTHER",
+                    'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
+                    'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
                     'customer_id' => $customer->id,
+                    'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
                     'area_id' => $area->id,
                     'city_id' => $city->id,
                     'state_id' => $city->state->id,
                     'country_id' => $city->state->country->id,
-
                 ];
-
-                $delivery_data['customer_address_id'] = null; // Initialize to null
-                if ($address_matching == null || ($address_matching && $address_matching['status'] == 'MISSING')) {
-
-                    // add new and get customer id
-                    $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($deliveryAddress);
-
-                    $address_data = [
-                        'address' => $deliveryAddress,
-                        'address_type' => "OTHER",
-                        'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
-                        'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
-                        'customer_id' => $customer->id,
-                        'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
-                        'area_id' => $area->id,
-                        'city_id' => $city->id,
-                        'state_id' => $city->state->id,
-                        'country_id' => $city->state->country->id,
-                    ];
-                    $finalized_address = $this->customerAddressRepository->create($address_data);
-                    $delivery_data['customer_address_id'] = $finalized_address->id; // Update based on condition
-                    $this->deliveryRepository->create($delivery_data);
-                } elseif ($address_matching['status'] == 'CONFLICT') {
-                    $location_info = [
-                        'area_id' => $area->id,
-                        'city_id' => $city->id,
-                        'state_id' => $city->state->id,
-                        'country_id' => $city->state->country->id,
-                    ];
-                    $delivery_data = array_merge($delivery_data, $location_info);
-                    $conflicted_delivery = [
-                        'conflict' => 'Similar address for customer already exists',
-                        'db_customer' => $customer,
-                        'customer_db_address' => $address_matching['customer_db_address'],
-                        'passed_address' => $address_matching['passed_address'],
-                        'passed_delivery_data' => $delivery_data,
-                    ];
-                    array_push($conflicted_deliveries, $conflicted_delivery);
-                    continue;
-                } elseif ($address_matching['status'] == 'MATCHED') {
-                    $finalized_address = $address_matching['customer_db_address'];
-                    $delivery_data['customer_address_id'] = $finalized_address->id;
-                    $this->deliveryRepository->create($delivery_data);
-                } else {
-                }
+                $finalized_address = $this->customerAddressRepository->create($address_data);
+                $delivery_data['customer_address_id'] = $finalized_address->id; // Update based on condition
+                $this->deliveryRepository->create($delivery_data);
+            } elseif ($address_matching['status'] == 'CONFLICT') {
+                $location_info = [
+                    'area_id' => $area->id,
+                    'city_id' => $city->id,
+                    'state_id' => $city->state->id,
+                    'country_id' => $city->state->country->id,
+                ];
+                $delivery_data = array_merge($delivery_data, $location_info);
+                $conflicted_delivery = [
+                    'conflict' => 'Similar address for customer already exists',
+                    'db_customer' => $customer,
+                    'customer_db_address' => $address_matching['customer_db_address'],
+                    'passed_address' => $address_matching['passed_address'],
+                    'passed_delivery_data' => $delivery_data,
+                ];
+                array_push($conflicted_deliveries, $conflicted_delivery);
+                continue;
+            } elseif ($address_matching['status'] == 'MATCHED') {
+                $finalized_address = $address_matching['customer_db_address'];
                 $delivery_data['customer_address_id'] = $finalized_address->id;
                 $this->deliveryRepository->create($delivery_data);
-            } catch (Exception $e) {
-                DB::rollback();
-                return 'Delivery Data upload failed: ' . $e->getMessage();
+            } else {
             }
+            $delivery_data['customer_address_id'] = $finalized_address->id;
+            $this->deliveryRepository->create($delivery_data);
+            // } catch (Exception $e) {
+            //     DB::rollback();
+            //     return 'Delivery Data upload failed: ' . $e->getMessage();
+            // }
         }
 
         if (count($conflicted_deliveries) == 0) {
@@ -402,170 +402,170 @@ class DeliveryController extends Controller
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
         foreach ($chunks as $key => $chunk) {
-            try {
-                DB::beginTransaction();
+            // try {
+            //     DB::beginTransaction();
 
-                if ($this->headersMatch($header, $expected_headers)) {
-                    foreach ($chunk as $chunk_item_id => $row) {
-                        $row = array_combine($header, $row);
-                        // $chunks[$key][$chunk_item_id] = $row;
-                        // $chunk[$chunk_item_id] = $row;
-
-
-                        $sheet_area_with_city = $row['area_with_city_select_option'];
-                        $city_name = '';
-                        $area_name = '';
-                        $new_address_coordinates = [];
+            if ($this->headersMatch($header, $expected_headers)) {
+                foreach ($chunk as $chunk_item_id => $row) {
+                    $row = array_combine($header, $row);
+                    // $chunks[$key][$chunk_item_id] = $row;
+                    // $chunk[$chunk_item_id] = $row;
 
 
-                        $openingParenthesisPos = strpos($sheet_area_with_city, '(');
-
-                        // ---- 2. Get the sheet area name with city and extract DB ID
-                        if ($openingParenthesisPos !== false) {
-                            $city_name = substr($sheet_area_with_city, 0, $openingParenthesisPos);
-                            $area_name = substr($sheet_area_with_city, $openingParenthesisPos + 1, -1);
-                        }
-                        $city = $this->cityRepository->searchCityFirst($this->helper->removeExtraSpacesFromString($city_name));
-                        $area = $this->areaRepository->searchAreaFirst($this->helper->removeExtraSpacesFromString($area_name));
-
-                        // ---- 3. Get all the addresses ($customer_address) of the db customer of selected city
-                        $sheet_address = $row['address'];
-                        $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($row['phone']);
-                        if (!$customer && ($row['email_optional'] != '' || $row['email_optional'] != null)) {
-                            $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
-                        }
-                        $customer_addresses = '';
-                        $address_matching = null;
-
-                        // --- If customer phone already exist in priamry list 
-                        if ($customer) {
-                            // $customer_with_sec_phon =  $this->customerRepository->customerWithMatchingPhoneNoInSecondaryNumbers($row['phone']); // Will need for dealing with secondary numbers
-                            $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
-                            $address_matching = $this->addressDBStatus($sheet_address, $customer_addresses);
-                        } else {
-                            $user = $this->userRepository->createUser([
-                                'name' => $row['full_name'],
-                                'email' => $row['email_optional'] ?? null,
-                                'phone' => $row['phone'] ?? null,
-                                'password' => Hash::make("Aced732nokia501@"),
-                                'isActive' => true
-                            ], false);
-
-                            $customer = $this->customerRepository->create(['user_id' => $user->id]);
-                            $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
-                        }
-
-                        // --- Get DB Branch
-
-                        $branch = $this->branchRepository->getBusinessBranch(['name' => $row['pickup_point']]);
-                        $delivery_type = $this->deliveryTypeRepository->getWhereFirst(['name' => $row['product_type_optional']]);
-
-                        $delivery_slot = $this->helper->extractDeliverySlotFromCityWithTime($row['city_with_time_select_option']);
-                        // echo ('<pre> delivery_slot below' . $row['city_with_time_select_option'] . ' <pre>');
-                        // echo ('<pre> ' . var_dump($delivery_slot->start_time) . ' <pre>');
-                        // echo ('<pre> ' . var_dump($delivery_slot->end_time) . ' <pre>');
-                        // echo ('<pre> ' . var_dump($city->id) . ' <pre>');
-
-                        $db_delivery_slot = $this->deliverySlotRepository->getDeliverySlotsByTimeAndCity($delivery_slot->start_time, $delivery_slot->end_time, $city->id);
+                    $sheet_area_with_city = $row['area_with_city_select_option'];
+                    $city_name = '';
+                    $area_name = '';
+                    $new_address_coordinates = [];
 
 
+                    $openingParenthesisPos = strpos($sheet_area_with_city, '(');
 
-                        $finalized_address = '';
+                    // ---- 2. Get the sheet area name with city and extract DB ID
+                    if ($openingParenthesisPos !== false) {
+                        $city_name = substr($sheet_area_with_city, 0, $openingParenthesisPos);
+                        $area_name = substr($sheet_area_with_city, $openingParenthesisPos + 1, -1);
+                    }
+                    $city = $this->cityRepository->searchCityFirst($this->helper->removeExtraSpacesFromString($city_name));
+                    $area = $this->areaRepository->searchAreaFirst($this->helper->removeExtraSpacesFromString($area_name));
 
-                        $delivery_data = [
-                            'status' => DeliveryStatusEnum::UNASSIGNED->value,
-                            'is_recurring' => false,
-                            'payment_status' => false,
-                            'is_sign_required' => false,
-                            'is_notification_enabled' => $row['notification_select_option'] == 'Yes' ? 1 : 0,
-                            'note' => $row['notes'],
-                            'branch_id' => $branch->id ?? null,
-                            'delivery_slot_id' => $db_delivery_slot->id ?? null,
-                            'delivery_type_id' => null,
-                            'delivery_date' => $delivery_date,
+                    // ---- 3. Get all the addresses ($customer_address) of the db customer of selected city
+                    $sheet_address = $row['address'];
+                    $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($row['phone']);
+                    if (!$customer && ($row['email_optional'] != '' || $row['email_optional'] != null)) {
+                        $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
+                    }
+                    $customer_addresses = '';
+                    $address_matching = null;
+
+                    // --- If customer phone already exist in priamry list 
+                    if ($customer) {
+                        // $customer_with_sec_phon =  $this->customerRepository->customerWithMatchingPhoneNoInSecondaryNumbers($row['phone']); // Will need for dealing with secondary numbers
+                        $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
+                        $address_matching = $this->addressDBStatus($sheet_address, $customer_addresses);
+                    } else {
+                        $user = $this->userRepository->createUser([
+                            'name' => $row['full_name'],
+                            'email' => $row['email_optional'] ?? null,
+                            'phone' => $row['phone'] ?? null,
+                            'password' => Hash::make("Aced732nokia501@"),
+                            'isActive' => true
+                        ], false);
+
+                        $customer = $this->customerRepository->create(['user_id' => $user->id]);
+                        $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
+                    }
+
+                    // --- Get DB Branch
+
+                    $branch = $this->branchRepository->getBusinessBranch(['name' => $row['pickup_point']]);
+                    $delivery_type = $this->deliveryTypeRepository->getWhereFirst(['name' => $row['product_type_optional']]);
+
+                    $delivery_slot = $this->helper->extractDeliverySlotFromCityWithTime($row['city_with_time_select_option']);
+                    // echo ('<pre> delivery_slot below' . $row['city_with_time_select_option'] . ' <pre>');
+                    // echo ('<pre> ' . var_dump($delivery_slot->start_time) . ' <pre>');
+                    // echo ('<pre> ' . var_dump($delivery_slot->end_time) . ' <pre>');
+                    // echo ('<pre> ' . var_dump($city->id) . ' <pre>');
+
+                    $db_delivery_slot = $this->deliverySlotRepository->getDeliverySlotsByTimeAndCity($delivery_slot->start_time, $delivery_slot->end_time, $city->id);
+
+
+
+                    $finalized_address = '';
+
+                    $delivery_data = [
+                        'status' => DeliveryStatusEnum::UNASSIGNED->value,
+                        'is_recurring' => false,
+                        'payment_status' => false,
+                        'is_sign_required' => false,
+                        'is_notification_enabled' => $row['notification_select_option'] == 'Yes' ? 1 : 0,
+                        'note' => $row['notes'],
+                        'branch_id' => $branch->id ?? null,
+                        'delivery_slot_id' => $db_delivery_slot->id ?? null,
+                        'delivery_type_id' => null,
+                        'delivery_date' => $delivery_date,
+                        'customer_id' => $customer->id,
+                        'area_id' => $area->id,
+                        'city_id' => $city->id,
+                        'state_id' => $city->state->id,
+                        'country_id' => $city->state->country->id,
+
+                    ];
+
+                    if ($address_matching == null || ($address_matching && $address_matching['status'] == 'MISSING')) {
+
+                        // add new and get customer id
+                        $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($sheet_address);
+
+                        $address_data = [
+                            'address' => $sheet_address,
+                            'address_type' => "OTHER",
+                            'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
+                            'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
                             'customer_id' => $customer->id,
+                            'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
                             'area_id' => $area->id,
                             'city_id' => $city->id,
                             'state_id' => $city->state->id,
                             'country_id' => $city->state->country->id,
-
                         ];
-
-                        if ($address_matching == null || ($address_matching && $address_matching['status'] == 'MISSING')) {
-
-                            // add new and get customer id
-                            $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($sheet_address);
-
-                            $address_data = [
-                                'address' => $sheet_address,
-                                'address_type' => "OTHER",
-                                'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
-                                'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
-                                'customer_id' => $customer->id,
-                                'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
-                                'area_id' => $area->id,
-                                'city_id' => $city->id,
-                                'state_id' => $city->state->id,
-                                'country_id' => $city->state->country->id,
-                            ];
-                            $finalized_address = $this->customerAddressRepository->create($address_data);
-                        } elseif ($address_matching['status'] == 'CONFLICT') {
-                            $location_info = [
-                                'area_id' => $area->id,
-                                'city_id' => $city->id,
-                                'state_id' => $city->state->id,
-                                'country_id' => $city->state->country->id,
-                            ];
-                            $delivery_data = array_merge($delivery_data, $location_info);
-                            $conflicted_delivery = [
-                                'conflict' => 'Similar address for customer already exists',
-                                'db_customer' => $customer,
-                                'customer_db_address' => $address_matching['customer_db_address'],
-                                'passed_address' => $address_matching['passed_address'],
-                                'passed_delivery_data' => $delivery_data,
-                            ];
-                            array_push($conflicted_deliveries, $conflicted_delivery);
-                            continue;
-                        } elseif ($address_matching['status'] == 'MATCHED') {
-                            $finalized_address = $address_matching['customer_db_address'];
-                        }
-                        $delivery_data['customer_address_id'] = $finalized_address->id ?? null;
-                        // echo ('<pre> ENTERING.... Record no: ' . var_dump($key . ' ' . $chunk_item_id) . '<pre>');
-                        // echo ('<pre>' . print_r($delivery_data) . '<pre>');
-
-
-                        $this->deliveryRepository->create($delivery_data);
-                        // TODO: upload deliveries in chunks
-                        // $chunks[$key][$chunk_item_id] = $delivery_data;
-                        // $chunk[$chunk_item_id] = $delivery_data;
-                        // echo ('<pre>' . print_r($chunks[$key][$chunk_item_id]) . '<pre>');
-
-
-
-                        // ---- * TODO: Deal with secondary numbers
-                        // 0) --- Check if sheet phone is in users DB table (primary number) 
-                        // 1) --- If 0.1 true, check if DB name match with sheet name 
-                        //      1.1) --- If 1 true, customer uniquily identified ( S U C C E S S )
-                        //      1.2) --- If 1 false, check sheet number is in customers secondary numbers DB table 
-                        //          1.2.1) --- If 1.2 true, then check corresponding customer DB name matches with users DB table 
-                        //              1.2.1.1) --- If 1.2.1 true, then get uniquily identified customer ( S U C C E S S )
-                        //              1.2.1.2) --- If 1.2.1 false, then fetch the addresses of DB customer and check if it match sheet address
-                        //                  1.2.1.2.1) --- If 1.2.1.2 true, then get uniquily identified customer ( S U C C E S S ) 
-                        //                  1.2.1.2.2) --- If 1.2.1.2 false, address match is above 50% and less then 95$ then give the option for manual review ( R E V I E W )
-                        //                  1.2.1.2.2) --- If 1.2.1.2 false, address match is less then 50% then add new addreess ( S U C C E S S ) 
-                        //          1.2.2) --- If 1.2 false, then add new customer ( S U C C E S S )
-                        // 1) --- If 0.1 true, check if DB name match with sheet name 
+                        $finalized_address = $this->customerAddressRepository->create($address_data);
+                    } elseif ($address_matching['status'] == 'CONFLICT') {
+                        $location_info = [
+                            'area_id' => $area->id,
+                            'city_id' => $city->id,
+                            'state_id' => $city->state->id,
+                            'country_id' => $city->state->country->id,
+                        ];
+                        $delivery_data = array_merge($delivery_data, $location_info);
+                        $conflicted_delivery = [
+                            'conflict' => 'Similar address for customer already exists',
+                            'db_customer' => $customer,
+                            'customer_db_address' => $address_matching['customer_db_address'],
+                            'passed_address' => $address_matching['passed_address'],
+                            'passed_delivery_data' => $delivery_data,
+                        ];
+                        array_push($conflicted_deliveries, $conflicted_delivery);
+                        continue;
+                    } elseif ($address_matching['status'] == 'MATCHED') {
+                        $finalized_address = $address_matching['customer_db_address'];
                     }
-                } else {
-                    return redirect()->back()->with('error', 'Uploading file is not following excpected excel format.');
+                    $delivery_data['customer_address_id'] = $finalized_address->id ?? null;
+                    // echo ('<pre> ENTERING.... Record no: ' . var_dump($key . ' ' . $chunk_item_id) . '<pre>');
+                    // echo ('<pre>' . print_r($delivery_data) . '<pre>');
+
+
+                    $this->deliveryRepository->create($delivery_data);
+                    // TODO: upload deliveries in chunks
+                    // $chunks[$key][$chunk_item_id] = $delivery_data;
+                    // $chunk[$chunk_item_id] = $delivery_data;
+                    // echo ('<pre>' . print_r($chunks[$key][$chunk_item_id]) . '<pre>');
+
+
+
+                    // ---- * TODO: Deal with secondary numbers
+                    // 0) --- Check if sheet phone is in users DB table (primary number) 
+                    // 1) --- If 0.1 true, check if DB name match with sheet name 
+                    //      1.1) --- If 1 true, customer uniquily identified ( S U C C E S S )
+                    //      1.2) --- If 1 false, check sheet number is in customers secondary numbers DB table 
+                    //          1.2.1) --- If 1.2 true, then check corresponding customer DB name matches with users DB table 
+                    //              1.2.1.1) --- If 1.2.1 true, then get uniquily identified customer ( S U C C E S S )
+                    //              1.2.1.2) --- If 1.2.1 false, then fetch the addresses of DB customer and check if it match sheet address
+                    //                  1.2.1.2.1) --- If 1.2.1.2 true, then get uniquily identified customer ( S U C C E S S ) 
+                    //                  1.2.1.2.2) --- If 1.2.1.2 false, address match is above 50% and less then 95$ then give the option for manual review ( R E V I E W )
+                    //                  1.2.1.2.2) --- If 1.2.1.2 false, address match is less then 50% then add new addreess ( S U C C E S S ) 
+                    //          1.2.2) --- If 1.2 false, then add new customer ( S U C C E S S )
+                    // 1) --- If 0.1 true, check if DB name match with sheet name 
                 }
-                // TODO: upload deliveries via JOB
-                // $batch->add(new UploadDeliveriesCSVJob($chunk));
-                DB::commit();
-            } catch (Exception $e) {
-                DB::rollback();
-                return 'Data upload failed: ' . $e->getMessage();
+            } else {
+                return redirect()->back()->with('error', 'Uploading file is not following excpected excel format.');
             }
+            // TODO: upload deliveries via JOB
+            // $batch->add(new UploadDeliveriesCSVJob($chunk));
+            //     DB::commit();
+            // } catch (Exception $e) {
+            //     DB::rollback();
+            //     return 'Data upload failed: ' . $e->getMessage();
+            // }
         }
 
         if (count($conflicted_deliveries) == 0) {
@@ -824,6 +824,7 @@ class DeliveryController extends Controller
     // }
     function unassignedDeliveries()
     {
+
         $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
         $businesses = $this->businessRepository->getActiveBusinesses();
         $deliveries = $this->deliveryRepository->getDeliveriesByStatus(DeliveryStatusEnum::UNASSIGNED->value);
@@ -833,7 +834,6 @@ class DeliveryController extends Controller
             return strcmp($a['start_time'], $b['start_time']);
         });
 
-        // dd($deliveries);
         foreach ($deliveries as $delivery) {
             $customerAddress = $delivery->customerAddress;
 
@@ -863,6 +863,8 @@ class DeliveryController extends Controller
             'time_slot' => $time_slot,
             'emirate' => $emirate
         ];
+
+
         return view('deliveryservice::deliveries.unassigned_deliveries', $data);
     }
 
@@ -936,14 +938,7 @@ class DeliveryController extends Controller
 
             // ---------------------ASSIGNING DELIVERIES TO BATCH -------------------------
             $this->deliveryRepository->assignDeliveryBatch($batch->id, $deliveries);
-
-
-
-            // $drivers = $this->driverRepository->getDetailDrivers();
-            // $db_deliveries = $this->deliveryRepository->getDeliveriesByStatus(DeliveryStatusEnum::UNASSIGNED->value);
-            // $data = ['deliveries' => $db_deliveries, 'drivers' => $drivers];
-            // return view('deliveryservice::deliveries.unassigned_deliveries', $data);
-            return $this->unassignedDeliveries();
+            return response()->json(['success' => 'Deliveries Assigned Successfully', 'redirect_url' => route('unassigned_deliveries')]);
         } catch (Exception $exception) {
             dd($exception);
         }
