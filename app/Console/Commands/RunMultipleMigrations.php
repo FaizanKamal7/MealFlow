@@ -18,7 +18,7 @@ class RunMultipleMigrations extends Command
      *
      * @var string
      */
-    protected $description = 'Run migrations from multiple folders in desired sequence ';
+    protected $description = 'Run migrations from multiple folders in specific sequence ';
 
 
     public function __construct()
