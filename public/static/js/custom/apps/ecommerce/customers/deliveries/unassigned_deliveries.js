@@ -313,9 +313,13 @@ function assignDeliveries() {
         },
         data: { selected_delivery_ids: selectedDeliveryIds, driver_id: driver_id },
         success: function (response) {
-            if (response.redirect) {
-                // Pass the selected deliveries as a parameter when redirecting
-                window.location.href = response.redirect + '?deliveries=' + selectedDeliveries.join(',');
+            console.log(response);
+            if (response.success) {
+                // Show the success message right away
+                toastr.success(response.success);
+
+                // Now do the redirect
+                window.location.href = response.redirect_url;
             }
         },
         error: function (error) {
