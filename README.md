@@ -73,4 +73,3 @@ Feel free to contribute and submit issues if you find any.
 Happy coding! 😄
 ```
 
-You can copy-paste this into your README.md file in your GitHub repository. It uses GitHub-flavored Markdown for better formatting and readability.
