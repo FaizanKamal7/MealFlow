@@ -29,6 +29,7 @@ cd yourprojectname
 Now you have to download the packages the project needs to work:
 ```bash
 composer install
+php artisan config:clear
 ```
 
 ### 4️⃣ Set Up Environment
