@@ -1,5 +1,3 @@
-Certainly! GitHub Markdown is very similar to what I've written above, but I'll format it to look even better when you put it on GitHub.
-
 ```markdown
 # My Laravel Project - How to Run
 
