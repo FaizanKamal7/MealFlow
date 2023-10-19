@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
 
         // ------ Adding Business Category 
         $this->command->warn(PHP_EOL . 'Importing business categories...');
-        $this->call(BusinessCategorySeeder::class);
+        $this->call(BusinessCategoryTableSeeder::class);
         $this->command->info('Business categories added.');
 
         // ------ Adding Business Category 
