@@ -291,7 +291,39 @@ document.querySelector("form").addEventListener("submit", function (e) {
 
 
 function assignDeliveries() {
-     alert('success');
+       const checkboxes = document.querySelectorAll('input.form-check-input[type="checkbox"]');
+    const selectedDeliveryIds = [];
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            selectedDeliveryIds.push(checkbox.value);
+        }
+    });
+    const driver_id = document.getElementById("driverSelect").value;
+    var url = "/admin/deliveries/assigning_process/";
+    $.ajax({
+        url: url,
+        type: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Use the meta tag value
+        },
+        data: { selected_delivery_ids: selectedDeliveryIds, driver_id: driver_id },
+        success: function (response) {
+            console.log("Below is success");
+            console.log(response.success);
+            if (response.success) {
+                // Show the success message right away
+                toastr.success(response.success);
+
+                // Now do the redirect
+                window.location.href = response.redirect_url;
+            }
+        },
+        error: function (error) {
+            console.log("Below is error");
+            console.log(error);
+        }
+
+    });
 
 }
 
