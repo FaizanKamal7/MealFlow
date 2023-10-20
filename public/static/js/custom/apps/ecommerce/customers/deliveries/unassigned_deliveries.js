@@ -323,6 +323,7 @@ function assignDeliveries() {
             }
         },
         error: function (error) {
+            console.log("Below is error");
             console.log(error);
         }
     });
