@@ -318,9 +318,9 @@ function assignDeliveries() {
                 window.location.href = response.redirect_url;
             }
         },
-        error: function (error) {
+        error: function (xhr, status, error) {
             console.log("Below is error");
-            console.log(error);
+            console.log(xhr.responseText);
         }
 
     });
