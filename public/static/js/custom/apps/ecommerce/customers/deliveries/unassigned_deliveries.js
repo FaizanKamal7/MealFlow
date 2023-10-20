@@ -313,7 +313,8 @@ function assignDeliveries() {
         },
         data: { selected_delivery_ids: selectedDeliveryIds, driver_id: driver_id },
         success: function (response) {
-            console.log(response);
+            console.log("Below is success");
+            console.log(response.success);
             if (response.success) {
                 // Show the success message right away
                 toastr.success(response.success);
