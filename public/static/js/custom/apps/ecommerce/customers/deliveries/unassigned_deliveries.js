@@ -313,19 +313,10 @@ function assignDeliveries() {
         },
         data: { selected_delivery_ids: selectedDeliveryIds, driver_id: driver_id },
         success: function (response) {
-            console.log("Below is success");
-            console.log(response.success);
-            if (response.success) {
-                // Show the success message right away
-                toastr.success(response.success);
-
-                // Now do the redirect
-                window.location.href = response.redirect_url;
-            }
+            alert('success');
         },
         error: function (error) {
-            console.log("Below is error");
-            console.log(error);
+            alert('error');
         }
     });
 
