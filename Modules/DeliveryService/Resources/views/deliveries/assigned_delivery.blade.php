@@ -16,7 +16,7 @@
                 <!--begin::Card header-->
                 <div class="d-flex mt-2 align-items-center pricing-header justify-content-between">
                     <div class="activate-service">
-                        <h1 class="fs-lg-2x ">Assigned Deliveries</h1>
+                        <h1 class="fs-lg-2x ">Assigsned Deliveries</h1>
                     </div>
                     <!--begin::Card title-->
                     <div class="card-title d-flex align-items-center">
@@ -97,7 +97,7 @@
 
                     <div class="align-items-center justify-content-between mt-3 select-option-div unassigned-second-div"
                         style="display: none;">
-                        <div class="driver-div">
+                        {{-- <div class="driver-div">
                             <select id="driverSelect" name="driver_id" class="form-select" data-control="select2"
                                 data-placeholder="Select Driver" data-allow-clear="true"
                                 onchange="handleDriverSelection()">
@@ -106,14 +106,9 @@
                                 <option value="{{ $driver->id }}">{{ $driver->employee->first_name }}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="d-flex align-items-center assign-div">
-                            <div class="me-3">
-                                <button id="assignButton" type="submit" class="btn csv-btn">Assign Driver</button>
-                            </div>
-                            <div class="me-3">
-                                <a id="autoAssignButton" class="btn csv-btn">Auto-Assign</a>
-                            </div>
+
                             <div class="me-3">
                                 <a class="btn csv-btn">Reschedule</a>
                             </div>

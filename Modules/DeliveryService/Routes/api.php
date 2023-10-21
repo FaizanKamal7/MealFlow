@@ -23,11 +23,13 @@ Route::group(['prefix' => 'deliveryservice/'], function () {
     Route::prefix('driver/')->group(function () {
         Route::GET('deliveries', [DeliveryController::class, "getDriverDeliveries"]);
     });
+
     Route::prefix('deliverybatch/')->group(function () {
         // Route::POST('start-batch', [DeliveryBatchController::class, "startDeliveryBatch"]);
         // Route::POST('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
         Route::POST('update-delivery-batch-progress', [DeliveryBatchController::class, "updateDeliveryBatchpProgress"]);
     });
+
     Route::prefix('deliveries/')->group(function () {
         Route::POST('complete-delivery', [DeliveryController::class, "completeDelivery"]);
         Route::POST('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
@@ -46,6 +48,7 @@ Route::group(['prefix' => 'deliveryservice/'], function () {
         Route::group(['prefix' => 'collection/'], function () {
             Route::POST('create', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
             Route::POST('create-delivery-bag-collection', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
+            Route::POST('update-bag-collection-batch-progress', [EmptyBagCollectionController::class, "updateBagCollectionBatchpProgress"]);
         });
 
         Route::group(['prefix' => 'pickup/'], function () {

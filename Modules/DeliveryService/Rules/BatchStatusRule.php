@@ -6,7 +6,7 @@ use App\Enum\BatchStatusEnum;
 use Illuminate\Contracts\Validation\Rule;
 use Modules\DeliveryService\Entities\PickupBatch;
 
-class PickupBatchStatusRule implements Rule
+class BatchStatusRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -27,12 +27,12 @@ class PickupBatchStatusRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $allowedPickupBatchStatus = [
+        $allowedBatchStatus = [
             BatchStatusEnum::ASSIGNED->value,
             BatchStatusEnum::STARTED->value,
             BatchStatusEnum::ENDED->value,
         ];
-        return in_array($value, $allowedPickupBatchStatus);
+        return in_array($value, $allowedBatchStatus);
     }
 
     /**

@@ -89,8 +89,8 @@ class EmptyBagCollection extends Model
             $action_by = auth()->id();
             $bag_id = $attributes['bag_id'];
             $delivery_id = $attributes['delivery_id'] ? $attributes['delivery_id'] : null;
-            $status = $attributes['empty_bag_collection_delivery_id'] ? BagStatusEnum::COLLECTED_FROM_CUSTOMER->value : EmptyBagCollectionStatusEnum::UNASSIGNED;
-            $vehicle_id = $attributes['empty_bag_collection_delivery_id'] ? Delivery::find($attributes['empty_bag_collection_delivery_id'])->delivery_batch->vehicle_id : null;
+            $status = isset($attributes['empty_bag_collection_delivery_id']) ? BagStatusEnum::COLLECTED_FROM_CUSTOMER->value : BagStatusEnum::DELIVERED;
+            $vehicle_id = isset($attributes['empty_bag_collection_delivery_id']) ? Delivery::find($attributes['empty_bag_collection_delivery_id'])->delivery_batch->vehicle_id : null;
             $description = "New bag collection added";
 
             $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
@@ -139,7 +139,7 @@ class EmptyBagCollection extends Model
                 $bag_id = $attributes['bag_id'];
                 $delivery_id = $attributes['delivery_id'] ? $attributes['delivery_id'] : null;
                 $empty_bag_status = $attributes['status'];
-                $status = $attributes['empty_bag_collection_delivery_id'] ? BagStatusEnum::COLLECTED_FROM_CUSTOMER->value : $empty_bag_status;
+                $status = isset($attributes['empty_bag_collection_delivery_id']) ? BagStatusEnum::COLLECTED_FROM_CUSTOMER->value : $empty_bag_status;
                 $vehicle_id = $model->getOriginal('vehicle_id');
                 $description = "status updated";
                 // TODO STATUS THING
