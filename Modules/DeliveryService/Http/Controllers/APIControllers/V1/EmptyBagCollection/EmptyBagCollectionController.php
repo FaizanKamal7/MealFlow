@@ -17,7 +17,7 @@ use Modules\DeliveryService\Interfaces\BagsInterface;
 use Modules\DeliveryService\Interfaces\BagStatusInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
-
+use Modules\DeliveryService\Rules\BatchStatusRule;
 
 class EmptyBagCollectionController extends Controller
 {
@@ -115,64 +115,51 @@ class EmptyBagCollectionController extends Controller
             return $this->error($exception, "Exception while creating  bag collection Please contact support", 500);
         }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
+    public function updateBagCollectionBatchpProgress(Request $request)
     {
-        return view('deliveryservice::create');
-    }
+        try {
+            $validator = Validator::make($request->all(), [
+                'status' => ['required', new BatchStatusRule()],
+                'map_coordinates' => ['required'],
+                'pickup_batch_id' => ['required', 'exists:pickup_batches,id'],
+                'vehicle_id' => ['required', 'exists:vehicles,id'],
+            ]);
+            DB::beginTransaction();
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            // Check if validation fails
+            if ($validator->fails()) {
+                return $this->error($validator->errors(), "Validation Failed", 422);
+            }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('deliveryservice::show');
-    }
+            $status = $request->get('status');
+            $map_coordinates = $request->get('map_coordinates');
+            $pickup_batch_id = $request->get('pickup_batch_id');
+            $vehicle_id = $request->get('vehicle_id');
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('deliveryservice::edit');
-    }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            $data = $status == BatchStatusEnum::STARTED->value ? [
+                "batch_start_time" => date("Y-m-d H:i:s"),
+                "batch_start_map_coordinates" => $map_coordinates,
+                "status" => $status,
+                "vehicle_id" => $vehicle_id,
+            ] : [
+                "batch_end_time" => date("Y-m-d H:i:s"),
+                "batch_end_map_coordinates" => $map_coordinates,
+                "status" => $status,
+                "vehicle_id" => $vehicle_id,
+            ];
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+            $result =  $this->emptyBagCollectionBatchRepository->updateBagCollectionBatch($pickup_batch_id, $data);
+
+            if (!$result) {
+                return $this->error($result, "Error: Pickup Batch Not Updated");
+            }
+
+            DB::commit();
+            return $this->success($result, "Pickup Batch updated successfully");
+        } catch (Exception $exception) {
+            DB::rollback();
+            return $this->error($exception, "Something went wrong please contact support");
+        }
     }
 }

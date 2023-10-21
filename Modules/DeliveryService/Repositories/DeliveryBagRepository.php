@@ -16,9 +16,9 @@ class DeliveryBagRepository implements DeliveryBagInterface
         return DeliveryBag::updateOrCreate($data);
     }
 
-    public function getDeliveryBag($delivery_id)
+    public function getDeliveryBagOfDelivery($delivery_id)
     {
-        return DeliveryBag::where('delivery_id', $delivery_id)->last();
+        return DeliveryBag::where('delivery_id', $delivery_id)->latest()->first();
     }
 
     public function isDeliveryReccordExist($delivery_id)
@@ -28,9 +28,7 @@ class DeliveryBagRepository implements DeliveryBagInterface
 
     public function getLastDeliveryBagInfo($bag_id)
     {
-        return DeliveryBag::where('bag_id', '=', $bag_id)
-            ->orderBy('created_at', 'desc')
-            ->first();
+        return DeliveryBag::where('bag_id', $bag_id)->latest()->first();
     }
 
     public function getCustomerDeliveryBags($customer_id)

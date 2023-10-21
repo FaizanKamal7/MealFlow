@@ -291,20 +291,15 @@ document.querySelector("form").addEventListener("submit", function (e) {
 
 
 function assignDeliveries() {
-    // Get all checkboxes
     const checkboxes = document.querySelectorAll('input.form-check-input[type="checkbox"]');
-    // Initialize an array to store selected values
     const selectedDeliveryIds = [];
-    // Loop through checkboxes and add the selected values to the array
     checkboxes.forEach((checkbox) => {
         if (checkbox.checked) {
             selectedDeliveryIds.push(checkbox.value);
         }
     });
     const driver_id = document.getElementById("driverSelect").value;
-
     var url = "/admin/deliveries/assigning_process/";
-
     $.ajax({
         url: url,
         type: "POST",
@@ -313,7 +308,8 @@ function assignDeliveries() {
         },
         data: { selected_delivery_ids: selectedDeliveryIds, driver_id: driver_id },
         success: function (response) {
-            console.log(response);
+            console.log("Below is success");
+            console.log(response.success);
             if (response.success) {
                 // Show the success message right away
                 toastr.success(response.success);
@@ -322,10 +318,11 @@ function assignDeliveries() {
                 window.location.href = response.redirect_url;
             }
         },
-        error: function (error) {
-            console.log(error);
+        error: function (xhr, status, error) {
+            console.log("Below is error");
+            console.log(xhr.responseText);
         }
-    });
 
+    });
 }
 

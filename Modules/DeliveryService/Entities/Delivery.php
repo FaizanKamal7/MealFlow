@@ -204,7 +204,7 @@ class Delivery extends Model
                     $action_by = auth()->id();
                     $delivery_id = $attributes['id'];
                     $status = $model->getAttributes('status');
-                    $vehicle_id = Delivery::find($delivery_id)->deliveryBatch ? Delivery::find($delivery_id)->deliveryBatch->vehicle->id : null;
+                    $vehicle_id = isset(Delivery::find($delivery_id)->deliveryBatch->vehicle) ? Delivery::find($delivery_id)->deliveryBatch->vehicle->id : null;
 
                     $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED->value, $action_by, $vehicle_id, $description);
 
@@ -214,7 +214,7 @@ class Delivery extends Model
                         $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED->value, $action_by, $vehicle_id, $description);
                         $description = "Delivery assigned to the driver";
                     } elseif ($status == DeliveryStatusEnum::DELIVERED->value) {
-                        $description = "Delivery Bag Delivered at customer's location";
+                        $description = "Delivery Bag delivered at customer's location";
                         $bag = DeliveryBag::where('delivery_id', $delivery_id)->last();
                         $helper->bagTimeline($bag->id, $delivery_id, BagStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
                         $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);

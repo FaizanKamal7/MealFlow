@@ -2,6 +2,7 @@
 
 namespace App\Http\Helper;
 
+use App\Enum\EmptyBagCollectionStatusEnum;
 use App\Models\ActivityLogs;
 use App\Models\Area;
 use App\Models\City;
@@ -14,6 +15,7 @@ use Modules\DeliveryService\Entities\DeliveryTimeline;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
+use Modules\DeliveryService\Entities\EmptyBagCollection;
 use Modules\FinanceService\Entities\BusinessWalletTransaction;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -57,7 +59,7 @@ class Helper
             'description' => $description,
         ]);
     }
-    
+
     public function deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description)
     {
         DeliveryTimeline::create([
@@ -353,5 +355,32 @@ class Helper
         } else {
             echo $title . " is not an array.";
         }
+    }
+
+    function getEmptyCollectionBatchBags($empty_bag_collection_batch_id)
+    {
+        return EmptyBagCollection::where(
+            [
+                "empty_bag_collection_batch_id" => $empty_bag_collection_batch_id,
+                "status" => EmptyBagCollectionStatusEnum::COMPLETED->value
+            ]
+        )->get();
+    }
+
+    function getDeliveryBatchDeliveries($delivery_batch_id)
+    {
+        return Delivery::where(['delivery_batch_id' => $delivery_batch_id])->get();
+    }
+
+    function getDeliveryBatchBagCollection($delivery_batch_id)
+    {
+        $delivery_batch_deliveries = $this->getDeliveryBatchDeliveries($delivery_batch_id);
+        $delivery_ids = collect($delivery_batch_deliveries)->pluck('id');
+        return EmptyBagCollection::whereIn('delivery_id', $delivery_ids)->get();
+    }
+
+    function getDelivery($delivery_id)
+    {
+        return Delivery::find($delivery_id);
     }
 }
