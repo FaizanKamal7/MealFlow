@@ -92,6 +92,13 @@ class DeliveryController extends Controller
 
         $this->helper = $helper;
     }
+
+    public function viewMealPlan(){
+
+        return view('deliveryservice::planner.plan_delivery');
+    }
+
+
     /**
      * Display a listing of the resource.
      */

@@ -23,7 +23,9 @@ class WalletController extends Controller
     {
 
         // $business = view()->shared('business');
-        $business = $this->businessWalletRepository->getBusinessWallet('9a4d6006-93e5-49bd-a1c7-8469baf982e7');
+        // 9a4d6006-93e5-49bd-a1c7-8469baf982e7
+        // to  be change
+        $business = $this->businessWalletRepository->getBusinessWallet('9a3bc069-581f-4e69-954f-468d6932c15e');
         $data = ['wallet' => $business->wallet];
         return view('businessservice::business_info.wallet.Wallet', $data);
     }
