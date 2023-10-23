@@ -2,12 +2,9 @@
 
 namespace Modules\DeliveryService\Entities;
 
-<<<<<<< Updated upstream
-=======
 use App\Enum\BagStatusEnum;
 use App\Enum\BatchStatusEnum;
 use App\Enum\DeliveryStatusEnum;
->>>>>>> Stashed changes
 use App\Http\Helper\Helper;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -121,8 +118,6 @@ class DeliveryBatch extends Model
                     method: $method
                 );
             }
-<<<<<<< Updated upstream
-=======
 
             if ($model->isDirty('status')) {
                 $attributes = $model->getAttributes();
@@ -150,7 +145,6 @@ class DeliveryBatch extends Model
                     }
                 }
             }
->>>>>>> Stashed changes
         });
 
         static::deleting(function ($model) {
