@@ -105,6 +105,13 @@ class DeliveryController extends Controller
         $this->userRoleRepository = $userRoleRepository;
         $this->helper = $helper;
     }
+
+    public function viewMealPlan(){
+
+        return view('deliveryservice::planner.plan_delivery');
+    }
+
+
     /**
      * Display a listing of the resource.
      */
