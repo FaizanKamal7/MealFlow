@@ -89,8 +89,22 @@ class EmptyBagCollection extends Model
             $action_by = auth()->id();
             $bag_id = $attributes['bag_id'];
             $delivery_id = $attributes['delivery_id'] ? $attributes['delivery_id'] : null;
+<<<<<<< Updated upstream
             $status = $attributes['empty_bag_collection_delivery_id'] ? BagStatusEnum::COLLECTED_FROM_CUSTOMER->value : EmptyBagCollectionStatusEnum::UNASSIGNED;
             $vehicle_id = $attributes['empty_bag_collection_delivery_id'] ? Delivery::find($attributes['empty_bag_collection_delivery_id'])->delivery_batch->vehicle_id : null;
+=======
+            $empty_bag_status = $attributes['status'];
+            $status = isset($attributes['empty_bag_collection_delivery_id']) ||  isset($attributes['empty_bag_collection_batch_id']) ? BagStatusEnum::COLLECTED_FROM_CUSTOMER->value : $empty_bag_status;
+            $vehicle_id = null;
+            if (isset($attributes['empty_bag_collection_delivery_id'])) {
+                $delivery = Delivery::find($attributes['empty_bag_collection_delivery_id']);
+                $vehicle_id = $delivery->deliveryBatch->vehicle_id ?? null;
+            } elseif (isset($attributes['empty_bag_collection_batch_id'])) {
+                $delivery_batch = EmptyBagCollectionBatch::find($attributes['empty_bag_collection_batch_id']);
+                $vehicle_id = $delivery_batch->vehicle_id  ?? null;
+            } else {
+            }
+>>>>>>> Stashed changes
             $description = "New bag collection added";
 
             $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
@@ -139,8 +153,22 @@ class EmptyBagCollection extends Model
                 $bag_id = $attributes['bag_id'];
                 $delivery_id = $attributes['delivery_id'] ? $attributes['delivery_id'] : null;
                 $empty_bag_status = $attributes['status'];
+<<<<<<< Updated upstream
                 $status = $attributes['empty_bag_collection_delivery_id'] ? BagStatusEnum::COLLECTED_FROM_CUSTOMER->value : $empty_bag_status;
                 $vehicle_id = $model->getOriginal('vehicle_id');
+=======
+                $status = isset($attributes['empty_bag_collection_delivery_id']) ||  isset($attributes['empty_bag_collection_batch_id']) ? BagStatusEnum::COLLECTED_FROM_CUSTOMER->value : $empty_bag_status;
+                $vehicle_id = null;
+                if (isset($attributes['empty_bag_collection_delivery_id'])) {
+                    $delivery = Delivery::find($attributes['empty_bag_collection_delivery_id']);
+                    $vehicle_id = $delivery->deliveryBatch->vehicle_id ?? null;
+                } elseif (isset($attributes['empty_bag_collection_batch_id'])) {
+                    $delivery_batch = EmptyBagCollectionBatch::find($attributes['empty_bag_collection_batch_id']);
+                    $vehicle_id = $delivery_batch->vehicle_id  ?? null;
+                } else {
+                }
+
+>>>>>>> Stashed changes
                 $description = "status updated";
                 // TODO STATUS THING
                 $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
