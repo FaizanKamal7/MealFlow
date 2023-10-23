@@ -24,6 +24,7 @@ use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
+use Modules\DeliveryService\Rules\BatchStatusRule;
 use Modules\DeliveryService\Rules\DeliveryBatchStatusRule;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
@@ -93,7 +94,7 @@ class DeliveryBatchController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'status' => ['required', new DeliveryBatchStatusRule()],
+                'status' => ['required', new BatchStatusRule()],
                 'map_coordinates' => ['required'],
                 'delivery_batch_id' => ['required', 'exists:delivery_batches,id'],
                 'vehicle_id' => ['required', 'exists:vehicles,id'],
@@ -126,14 +127,12 @@ class DeliveryBatchController extends Controller
                     "vehicle_id" => $vehicle_id,
                 ];
 
-                // Change status of all the collected bags with completed_batch to "Arrived at warehouse"
+                // Change status of all the collected bags with completed_batch to "Arrived empty at warehouse"
 
-                $completed_batch_deliveries = $this->deliveryRepository->getAllBatchDeliveries($delivery_batch_id);
-                $delivery_ids = collect($completed_batch_deliveries)->pluck('id')->toArray();
-                $this->emptyBagCollectionRepository->updateBagsTimelineOnDeliveryBatchCompletion($delivery_ids, $vehicle_id);
+                // $completed_batch_deliveries = $this->deliveryRepository->getAllBatchDeliveries($delivery_batch_id);
+                // $delivery_ids = collect($completed_batch_deliveries)->pluck('id')->toArray();
+                // $this->emptyBagCollectionRepository->updateBagsTimelineOnDeliveryBatchCompletion($delivery_ids, $vehicle_id);
             }
-
-
 
             $result =  $this->deliveryBatchRepository->updateDeliveryBatch($delivery_batch_id, $data);
 
@@ -145,7 +144,7 @@ class DeliveryBatchController extends Controller
             return $this->success($result, "Delivery Batch updated successfully");
         } catch (Exception $exception) {
             DB::rollback();
-            return $this->error($exception, "Something went wrong please contact support");
+            return $this->error($exception, "Error: " . $exception->getMessage() . ". Contact Support");
         }
     }
 }
