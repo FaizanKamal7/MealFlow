@@ -74,3 +74,16 @@ span.top_clr {
 .wallet-title {
     color: white !important;
 }
+
+tbody tr {
+    height: 62px !important;
+}
+
+.credit-header {
+    padding: 10px;
+    border-radius: calc(0.625rem - 1px) calc(0.625rem - 1px) 0 0;
+}
+.credit_table {
+    height: 300px !important;
+    overflow: auto;
+}

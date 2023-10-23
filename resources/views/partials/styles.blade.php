@@ -22,7 +22,7 @@
 <link href="{{ asset('static/css/unassigned_delivery.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('static/css/upload_delivery.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('static/css/wallet.css') }}" rel="stylesheet" type="text/css" />
-
+<link href="{{ asset('static/css/view_bags.css') }}" rel="stylesheet" type="text/css" />
 
 
 <!--end::Global Stylesheets Bundle-->
