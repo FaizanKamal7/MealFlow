@@ -14,6 +14,8 @@ use Modules\DeliveryService\Entities\DeliveryTimeline;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
+use Modules\DeliveryService\Entities\Delivery;
+use Modules\DeliveryService\Entities\EmptyBagCollection;
 use Modules\FinanceService\Entities\BusinessWalletTransaction;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -57,6 +59,7 @@ class Helper
             'description' => $description,
         ]);
     }
+
     public function deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description)
     {
         DeliveryTimeline::create([

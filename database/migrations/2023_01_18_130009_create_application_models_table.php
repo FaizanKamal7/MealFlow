@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("model_name");
             $table->uuid("app_id");
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign("app_id")->references("id")->on("applications")->onDelete("cascade");
         });

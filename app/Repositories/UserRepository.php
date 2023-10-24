@@ -2,16 +2,27 @@
 
 namespace App\Repositories;
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Interfaces\UserInterface;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserInterface
 {
 
-    public function createUser($data)
+    public function createUser($data, $authenticate_user)
     {
-        return User::create($data);
+        // RegisteredUserController->store($data);
+        $user = User::create($data);
+        if ($authenticate_user) {
+            event(new Registered($user));
+            Auth::login($user);
+        }
+        // return redirect(RouteServiceProvider::HOME);
+        return $user;
     }
 
     public function editUser($id, $name, $email, $password = null, $isActive = true, $isSuperUser = false)

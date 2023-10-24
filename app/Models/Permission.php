@@ -10,6 +10,7 @@ class Permission extends Model
 {
     use HasFactory;
     use HasUuids;
+
     protected $fillable = [
         "model_id",
         "name",
@@ -17,11 +18,13 @@ class Permission extends Model
         "is_active"
     ];
 
-    public function appModel(){
+    public function appModel()
+    {
         return $this->belongsTo(ApplicationModel::class, "model_id");
     }
 
-    public function permissionRoles(){
+    public function permissionRoles()
+    {
         return $this->hasMany(RolePermission::class, "permission_id");
     }
 }

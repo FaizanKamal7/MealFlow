@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('item_type'); // DELIVERY SLOT PRICING, RANGE_PRICING
-            $table->string('item_info')->nullable(); // JSON
+            $table->longText('item_info')->nullable(); // JSON
             $table->uuidMorphs('service'); // This creates 'service_type' and 'service_id' columns
             $table->decimal('amount', 8, 2);
             $table->uuid('invoice_id')->nullable();

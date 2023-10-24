@@ -21,13 +21,13 @@ var KTCreateAccount = (function () {
                 (r = new KTStepper(t)).on("kt.stepper.changed", function (e) {
                     4 === r.getCurrentStepIndex()
                         ? (o.classList.remove("d-none"),
-                          o.classList.add("d-inline-block"),
-                          s.classList.add("d-none"))
+                            o.classList.add("d-inline-block"),
+                            s.classList.add("d-none"))
                         : 5 === r.getCurrentStepIndex()
-                        ? (o.classList.add("d-none"), s.classList.add("d-none"))
-                        : (o.classList.remove("d-inline-block"),
-                          o.classList.remove("d-none"),
-                          s.classList.remove("d-none"));
+                            ? (o.classList.add("d-none"), s.classList.add("d-none"))
+                            : (o.classList.remove("d-inline-block"),
+                                o.classList.remove("d-none"),
+                                s.classList.remove("d-none"));
                 }),
                 // console.log('form', i)
                 r.on("kt.stepper.next", function (e) {
@@ -35,21 +35,21 @@ var KTCreateAccount = (function () {
                     var t = a[e.getCurrentStepIndex() - 1];
                     t
                         ? t.validate().then(function (t) {
-                              console.log("validated!"),
-                                  "Valid" == t
-                                      ? (e.goNext(), KTUtil.scrollTop())
-                                      : Swal.fire({
-                                            text: "Sorry, looks like there are some errors detected, please try again.",
-                                            icon: "error",
-                                            buttonsStyling: !1,
-                                            confirmButtonText: "Ok, got it!",
-                                            customClass: {
-                                                confirmButton: "btn btn-light",
-                                            },
-                                        }).then(function () {
-                                            KTUtil.scrollTop();
-                                        });
-                          })
+                            console.log("validated!"),
+                                "Valid" == t
+                                    ? (e.goNext(), KTUtil.scrollTop())
+                                    : Swal.fire({
+                                        text: "Sorry, looks like there are some errors detected, please try again.",
+                                        icon: "error",
+                                        buttonsStyling: !1,
+                                        confirmButtonText: "Ok, got it!",
+                                        customClass: {
+                                            confirmButton: "btn btn-light",
+                                        },
+                                    }).then(function () {
+                                        KTUtil.scrollTop();
+                                    });
+                        })
                         : (e.goNext(), KTUtil.scrollTop());
                 }),
                 r.on("kt.stepper.previous", function (e) {
@@ -91,25 +91,10 @@ var KTCreateAccount = (function () {
                                     },
                                 },
                             },
-                            buisness_name: {
+                            phone: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Buisness name is required",
-                                    },
-                                    async: {
-                                        url: "is-unique-vehicle",
-                                        type: "get",
-                                        data: {
-                                            field: "registration_number",
-                                            value: function () {
-                                                return $(
-                                                    '[name="registration_number"]'
-                                                ).val();
-                                            },
-                                        },
-                                        message:
-                                            "Registration number already exists",
-                                        delay: 500,
+                                        message: "Phone Number is required",
                                     },
                                 },
                             },
@@ -165,7 +150,14 @@ var KTCreateAccount = (function () {
                                 //     notEmpty: { message: "No File Choosen" },
                                 // },
                             },
-                            phone_no: {
+                            buisness_name: {
+                                validators: {
+                                    notEmpty: {
+                                        message: "Buisness name is required",
+                                    },
+                                },
+                            },
+                            business_phone: {
                                 // validators: {
                                 //     notEmpty: {
                                 //         message: "Phone Number is required",
@@ -292,42 +284,42 @@ var KTCreateAccount = (function () {
                         console.log("validated!"),
                             "Valid" == t
                                 ? (e.preventDefault(),
-                                  //   (o.disabled = !0),
-                                  //   o.setAttribute("data-kt-indicator", "on"),
-                                  //   setTimeout(function () {
-                                  //         e.submit(),
-                                  //       o.removeAttribute("data-kt-indicator"),
-                                  //           (o.disabled = !1),
-                                  //           r.goNext();
-                                  //   }, 2e3))
+                                    //   (o.disabled = !0),
+                                    //   o.setAttribute("data-kt-indicator", "on"),
+                                    //   setTimeout(function () {
+                                    //         e.submit(),
+                                    //       o.removeAttribute("data-kt-indicator"),
+                                    //           (o.disabled = !1),
+                                    //           r.goNext();
+                                    //   }, 2e3))
 
-                                  // Get the form element by its ID
+                                    // Get the form element by its ID
 
-                                  (o.disabled = true),
-                                  o.setAttribute("data-kt-indicator", "on"),
-                                  setTimeout(function () {
-                                      // Submit the form programmatically
-                                      var form = document.getElementById(
-                                          "kt_create_account_form"
-                                      );
+                                    (o.disabled = true),
+                                    o.setAttribute("data-kt-indicator", "on"),
+                                    setTimeout(function () {
+                                        // Submit the form programmatically
+                                        var form = document.getElementById(
+                                            "kt_create_account_form"
+                                        );
 
-                                      form.submit();
+                                        form.submit();
 
-                                      o.removeAttribute("data-kt-indicator");
-                                      o.disabled = false;
-                                      r.goNext();
-                                  }, 2e3))
+                                        o.removeAttribute("data-kt-indicator");
+                                        o.disabled = false;
+                                        r.goNext();
+                                    }, 2e3))
                                 : Swal.fire({
-                                      text: "Sorry, looks like there are some errors detected, please try again.",
-                                      icon: "error",
-                                      buttonsStyling: !1,
-                                      confirmButtonText: "Ok, got it!",
-                                      customClass: {
-                                          confirmButton: "btn btn-light",
-                                      },
-                                  }).then(function () {
-                                      KTUtil.scrollTop();
-                                  });
+                                    text: "Sorry, looks like there are some errors detected, please try again.",
+                                    icon: "error",
+                                    buttonsStyling: !1,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn btn-light",
+                                    },
+                                }).then(function () {
+                                    KTUtil.scrollTop();
+                                });
                     });
                 }),
                 $(i.querySelector('[name="card_expiry_month"]')).on(

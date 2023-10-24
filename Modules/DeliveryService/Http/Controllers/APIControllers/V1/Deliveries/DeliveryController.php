@@ -2,6 +2,11 @@
 
 namespace Modules\DeliveryService\Http\Controllers\APIControllers\V1\Deliveries;
 
+use App\Enum\BusinessWalletTransactionTypeEnum;
+use App\Enum\EmptyBagCollectionStatusEnum;
+use App\Enum\InvoiceItemTypeEnum;
+use App\Enum\BatchStatusEnum;
+use App\Enum\ServiceTypeEnum;
 use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
@@ -27,14 +32,20 @@ use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
 use Modules\BusinessService\Interfaces\RangePricingInterface;
 use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Entities\DeliveryBag;
+use Modules\DeliveryService\Entities\EmptyBagCollection;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
+use Modules\DeliveryService\Http\Requests\PickupBatchRequest;
 use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryImagesInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
-use Modules\DeliveryService\Repositories\DeliveryBagRepository;
+use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
 use Modules\DeliveryService\Repositories\PickupBatchRepository;
+use Modules\DeliveryService\Rules\DeliveryBatchStatusRule;
+use Modules\DeliveryService\Rules\PickupBatchStatusRule;
+use Modules\FinanceService\Interfaces\BusinessWalletInterface;
+use Modules\FinanceService\Interfaces\BusinessWalletTransactionInterface;
 use Modules\FinanceService\Interfaces\InvoiceItemInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
@@ -64,6 +75,10 @@ class DeliveryController extends Controller
     private $rangePricingRepository;
     private $deliverySlotPricingRepository;
     private $invoiceItemRepository;
+    private $businessWalletRepository;
+    private $businessWalletTransactionRepository;
+    private $emptyBagcollectionRepository;
+
 
 
 
@@ -91,7 +106,9 @@ class DeliveryController extends Controller
         RangePricingInterface $rangePricingRepository,
         DeliverySlotPricingInterface $deliverySlotPricingRepository,
         InvoiceItemInterface $invoiceItemRepository,
-
+        BusinessWalletInterface $businessWalletRepository,
+        BusinessWalletTransactionInterface $businessWalletTransactionRepository,
+        EmptyBagCollectionInterface $emptyBagcollectionRepository,
 
     ) {
         $this->customerRepository = $customerRepository;
@@ -115,6 +132,12 @@ class DeliveryController extends Controller
         $this->rangePricingRepository = $rangePricingRepository;
         $this->deliverySlotPricingRepository = $deliverySlotPricingRepository;
         $this->invoiceItemRepository = $invoiceItemRepository;
+        $this->businessWalletRepository = $businessWalletRepository;
+        $this->businessWalletTransactionRepository = $businessWalletTransactionRepository;
+        $this->emptyBagcollectionRepository = $emptyBagcollectionRepository;
+
+
+
 
         $this->helper = new Helper();
     }
@@ -235,13 +258,14 @@ class DeliveryController extends Controller
                             $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
                             $address_matching = $this->addressDBStatus($sheet_address, $customer_addresses);
                         } else {
+                            var_dump("inside else");
                             $user = $this->userRepository->createUser([
                                 'name' => $row['full_name'],
                                 'email' => $row['email_optional'] ?? '',
                                 'phone' => $row['phone'] ?? '',
                                 'password' => Hash::make("1234abcd"),
                                 'isActive' => true
-                            ]);
+                            ], false);
 
                             $customer = $this->customerRepository->create(['user_id' => $user->id]);
                             $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
@@ -618,21 +642,21 @@ class DeliveryController extends Controller
     {
         try {
             // Check if $validator = Validator::make($request->all(), [
-            $validator = Validator::make($request->all(), [
-                'delivery_id' => ['required', 'exists:deliveries,id'],
-                'open_bag_img' => ['required', 'image'],
-                'close_bag_img' => ['required', 'image'],
-                'delivered_bag_img' => ['required', 'image'],
-                'delivery_img' => ['image'],
-                'signature_img' => ['image'],
-                'address_img' => ['image'],
-                'empty_bag_count' => [],
-            ]);
+            // $validator = Validator::make($request->all(), [
+            //     'delivery_id' => ['required', 'exists:deliveries,id'],
+            //     'open_bag_img' => ['required', 'image'],
+            //     'close_bag_img' => ['required', 'image'],
+            //     'delivered_bag_img' => ['required', 'image'],
+            //     'delivery_img' => ['image'],
+            //     'signature_img' => ['image'],
+            //     'address_img' => ['image'],
+            //     'empty_bag_count' => [],
+            // ]);
 
-            // Check if validation fails
-            if ($validator->fails()) {
-                return $this->error($validator->errors(), "validation failed", 422);
-            }
+            // // Check if validation fails
+            // if ($validator->fails()) {
+            //     return $this->error($validator->errors(), "validation failed", 422);
+            // }
 
             $delivery_id = $request->post('delivery_id');
             $open_bag_img = $request->file('open_bag_img');
@@ -646,44 +670,69 @@ class DeliveryController extends Controller
 
             $date = date('Y-m-d');
             $delivery_count =  $this->deliveryRepository->getDeliveredCountOfDays($delivery->branch_id, $date,  $date);
-            $range_price =  $this->rangePricingRepository->getRangePriceOfDelivery($delivery_count, $delivery->customerAddress->city_id,  $delivery->branch->business_id);
-            $delivery_slot_price =  $this->deliverySlotPricingRepository->getDeliverySlotPriceOfDelivery($delivery->delivery_slot_id, $delivery->customerAddress->city_id,  $delivery->branch->business_id);
+            $range_price =  $this->rangePricingRepository->getRangePriceOfDelivery($delivery_count, $delivery->customerAddress->city_id,  $delivery->branch->business_id)->delivery_price;
+            $delivery_slot_price =  $this->deliverySlotPricingRepository->getDeliverySlotPriceOfDelivery($delivery->delivery_slot_id, $delivery->customerAddress->city_id,  $delivery->branch->business_id)->delivery_price;
             $amount_to_deduct = min($delivery_slot_price, $range_price);
-            // $invoice_item = $this->i
+            $invoice_item = $this->invoiceItemRepository->createInvoiceItem(
+                $amount_to_deduct == $delivery_slot_price ?  InvoiceItemTypeEnum::DELIVERY_SLOT_PRICING : InvoiceItemTypeEnum::RANGE_PRICING,
+                $amount_to_deduct,
+                $delivery,
+                $delivery,
+            );
+
+            $business_wallet = $this->businessWalletRepository->getBusinessWallet($delivery->branch->business_id);
+            $this->businessWalletRepository->update($business_wallet->id, ['balance' => $business_wallet->balance - $amount_to_deduct]);
+            $this->businessWalletTransactionRepository->createBusinessWalletTransactions($amount_to_deduct, BusinessWalletTransactionTypeEnum::DEBIT, $business_wallet->id, $invoice_item->id);
+
 
             DB::beginTransaction();
 
             if ($open_bag_img) {
                 $open_bag_img_url = $this->helper->storeFile($open_bag_img, "DeliveryServce", "Deliveries");
-                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $open_bag_img_url, 'image_type' => 'open_bag_img']);
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $open_bag_img_url, 'image_type' => DeliveryImageTypeEnum::OPEN_BAG_IMG]);
             }
             if ($close_bag_img) {
                 $close_bag_img_url = $this->helper->storeFile($close_bag_img, "DeliveryServce", "Deliveries");
-                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $close_bag_img_url, 'image_type' => 'close_bag_img']);
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $close_bag_img_url, 'image_type' => DeliveryImageTypeEnum::CLOSE_BAG_IMG]);
             }
             if ($delivered_bag_img) {
                 $delivered_bag_img_url = $this->helper->storeFile($delivered_bag_img, "DeliveryServce", "Deliveries");
-                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $delivered_bag_img_url, 'image_type' => 'delivered_bag_img']);
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $delivered_bag_img_url, 'image_type' => DeliveryImageTypeEnum::DELIVERED_BAG_IMG]);
             }
             if ($delivery_img) {
                 $delivery_img_url = $this->helper->storeFile($delivery_img, "DeliveryServce", "Deliveries");
-                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $delivery_img_url, 'image_type' => 'delivery_img']);
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $delivery_img_url, 'image_type' => DeliveryImageTypeEnum::DELIVERY_IMG]);
             }
             if ($signature_img) {
                 $signature_img_url = $this->helper->storeFile($signature_img, "DeliveryServce", "Deliveries");
-                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $signature_img_url, 'image_type' => 'signature_img']);
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $signature_img_url, 'image_type' => DeliveryImageTypeEnum::SIGNATURE_IMG]);
             }
             if ($address_img) {
                 $address_img_url = $this->helper->storeFile($address_img, "DeliveryServce", "Deliveries");
-                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $address_img_url, 'image_type' => 'address_img']);
+                $this->deliveryImagesRepository->create(['delivery_id' => $delivery_id, 'image_url' => $address_img_url, 'image_type' => DeliveryImageTypeEnum::ADDRESS_IMG]);
             }
+
+            // As bag is delivered, it need to be collected, hence adding it in empty bag collections 
+            $delivery_bag = $this->deliveryBagRepository->getDeliveryBag($delivery->id);
+            $this->emptyBagcollectionRepository->createBagCollection(
+                [
+                    'status' => EmptyBagCollectionStatusEnum::UNASSIGNED->value,
+                    'bag_id' => $delivery_bag->bag_id,
+                    'delivery_id' => $delivery->id,
+                    'customer_id' => $delivery->customer_id,
+                    'customer_address_id' => $delivery->customer_address_id,
+                ]
+            );
 
             $data =  $this->deliveryRepository->updateDelivery($delivery_id, [
                 'status' => 'DELIVERED',
                 'empty_bag_count' => $empty_bag_count,
             ]);
+
+
+
             if (!$data) {
-                return $this->error($data, "Something went wrong please contact support,Delivery not completed");
+                return $this->error($data, "Something went wrong please contact support, Delivery not completed");
             }
 
             DB::commit();
@@ -734,6 +783,7 @@ class DeliveryController extends Controller
                 if (!$found) {
                     $exist = $this->deliveryBagRepository->isDeliveryReccordExist($delivery->id);
                     $grouped_deliveries[] = [
+                        'pickup_batch_id' => $batch->id,
                         'branch_id' => $delivery->branch_id,
                         'branch_name' => $delivery->branch->name, // You can populate branch name here if available
                         'assigned_pickups' => 1, // Initialize with 1 for the first record
@@ -789,10 +839,8 @@ class DeliveryController extends Controller
             if (!$db_deliveries) {
                 return $this->error($db_deliveries, "Something went wrong please contact support. No bag pickups for driver");
             }
-
             return $this->success($db_deliveries, "Drivers assigned pickup bags recieved successfully");
         } catch (Exception $exception) {
-            dd($exception);
             return $this->error($exception, "Something went wrong please contact support");
         }
     }
@@ -845,10 +893,7 @@ class DeliveryController extends Controller
             ];
 
             // --- Link bag with delivery
-            $result =  $this->deliveryBagRepository->create([
-                "delivery_id" => $delivery_id,
-                "bag_id" => $bag_id
-            ]);
+            $result =  $this->deliveryBagRepository->create($data);
 
             if (!$result) {
                 return $this->error($result, "Something went wrong. Bag did not link");
@@ -856,6 +901,55 @@ class DeliveryController extends Controller
 
             DB::commit();
             return $this->success($result, "Bag linked successfully");
+        } catch (Exception $exception) {
+            dd($exception);
+            DB::rollback();
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
+
+    public function updatePickupBatchpProgress(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'status' => ['required', new PickupBatchStatusRule()],
+                'map_coordinates' => ['required'],
+                'pickup_batch_id' => ['required', 'exists:pickup_batches,id'],
+                'vehicle_id' => ['required', 'exists:vehicles,id'],
+            ]);
+            DB::beginTransaction();
+
+            // Check if validation fails
+            if ($validator->fails()) {
+                return $this->error($validator->errors(), "Validation Failed", 422);
+            }
+
+            $status = $request->get('status');
+            $map_coordinates = $request->get('map_coordinates');
+            $pickup_batch_id = $request->get('pickup_batch_id');
+            $vehicle_id = $request->get('vehicle_id');
+
+
+            $data = $status == BatchStatusEnum::STARTED->value ? [
+                "batch_start_time" => date("Y-m-d H:i:s"),
+                "batch_start_map_coordinates" => $map_coordinates,
+                "status" => $status,
+                "vehicle_id" => $vehicle_id,
+            ] : [
+                "batch_end_time" => date("Y-m-d H:i:s"),
+                "batch_end_map_coordinates" => $map_coordinates,
+                "status" => $status,
+                "vehicle_id" => $vehicle_id,
+            ];
+
+            $result =  $this->pickupBatchRepository->updatePickupBatch($pickup_batch_id, $data);
+
+            if (!$result) {
+                return $this->error($result, "Error: Pickup Batch Not Updated");
+            }
+
+            DB::commit();
+            return $this->success($result, "Pickup Batch updated successfully");
         } catch (Exception $exception) {
             DB::rollback();
             return $this->error($exception, "Something went wrong please contact support");

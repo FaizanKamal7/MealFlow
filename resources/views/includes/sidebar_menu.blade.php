@@ -103,39 +103,34 @@
                     <span class="menu-arrow"></span>
 
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
-                    @can('view_permissions')
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('permissions_view') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Permissions</span>
-                            </a>
-                        </div>
-                    @endcan
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('permissions_view') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Permissions</span>
+                        </a>
+                    </div>
 
-                    @can('view_role')
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('roles_view') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Roles</span>
-                            </a>
-                        </div>
-                    @endcan
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('roles_view') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Roles</span>
+                        </a>
+                    </div>
 
-                    @can('view_users')
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('users_view') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Users</span>
-                            </a>
-                        </div>
-                    @endcan
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('users_view') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Users</span>
+                        </a>
+                    </div>
+
 
                 </div>
             </div>
@@ -280,11 +275,64 @@
 
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('upload_deliveries') }}">
+                        <a class="menu-link" href="{{ route('upload_bags_collection') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Upload Deliveries</span>
+                            <span class="menu-title">Upload Bag Collection</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Unassigned Bag Collections</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('assigned_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Assigned Bag Collections</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('completed_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Completed Bag Collections</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('cancelled_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Cancelled Bag Collections</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('deleted_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Deleted Bag Collections</span>
                         </a>
                     </div>
                 </div>
@@ -324,7 +372,7 @@
 
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                        <a class="menu-link" href="{{ route('assigned_bags_pickup') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -335,7 +383,7 @@
 
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                        <a class="menu-link" href="{{ route('completed_bags_pickup') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -449,7 +497,7 @@
                     <span class="menu-arrow"></span>
 
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-bullet">
@@ -727,8 +775,7 @@
                                 <path
                                     d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
                                     fill="currentColor" />
-                                <rect opacity="0.3" x="8" y="3" width="8" height="8"
-                                    rx="4" fill="currentColor" />
+                                <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
                             </svg>
                         </span>
                         <!--end::Svg Icon-->
@@ -760,267 +807,231 @@
             </div>
             {{-- <div class="separator"></div> --}}
 
-            {{-- <div class="menu-item">
+            <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
                     <span class="menu-section text-dark text-uppercase fs-8 ls-1">HRM</span>
                 </div>
             </div>
-            <div class="separator"></div> --}}
-            @can('view_hr')
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/communication/come013.svg-->
-                            <span class="svg-icon side-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
-                                        fill="currentColor"></path>
-                                    <rect opacity="0.3" x="8" y="3" width="8" height="8"
-                                        rx="4" fill="currentColor"></rect>
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
+            <div class="separator"></div>
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <!--begin::Svg Icon | path: icons/duotune/communication/come013.svg-->
+                        <span class="svg-icon side-icon svg-icon-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <path
+                                    d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
+                                    fill="currentColor"></path>
+                                <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor"></rect>
+                            </svg>
                         </span>
-                        <span class="menu-title mx-5">HR Management</span>
-                        <span class="menu-arrow"></span>
+                        <!--end::Svg Icon-->
                     </span>
-                    <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                    <span class="menu-title mx-5">HR Management</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
 
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                            <span class="menu-link">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">HR Setup</span>
-                                <span class="menu-arrow"></span>
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
                             </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                @can('add_department')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_departments') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Departments</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_designation')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_designations') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Designations</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_events')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_events') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Events</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_award')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_awards') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Awards</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_appreciation')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_appreciations') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Appreciations</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_taxes')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_taxes') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Taxes</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-
-
-                            </div>
-                        </div>
-
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                            <span class="menu-link">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title mx-5">Employees</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-
-
-                                @can('view_employee')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_employees') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Employees</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_employee')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_salaries') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Employee Salaries</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_timesheet')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_timesheets') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Timesheets</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_overtime')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_overtimes') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Overtimes</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_deduction')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_deductions') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Deductions</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_expense_reclaim')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_expense_reclaims') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Expense Reclaims</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-
-                            </div>
-                        </div>
-
-                        @can('view_team')
+                            <span class="menu-title">HR Setup</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion menu-active-bg">
                             <div class="menu-item">
-                                <a class="menu-link" href="{{ route('hr_teams') }}">
+                                <a class="menu-link" href="{{ route('hr_departments') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title mx-5">Teams</span>
+                                    <span class="menu-title">Departments</span>
                                 </a>
                             </div>
-                        @endcan
 
-
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                            <span class="menu-link">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Time Off</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-
-                                @can('view_attendence')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_attendance') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Attendance</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_leave_application')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_leave_applications') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Leave Applications</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_leave_type')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('hr_leave_types') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Leave Types</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('view_leave_policy')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('leave_policy') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Leave Policies</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_designations') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Designations</span>
+                                </a>
                             </div>
-                        </div>
 
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_events') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Events</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_awards') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Awards</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_appreciations') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Appreciations</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_taxes') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Taxes</span>
+                                </a>
+                            </div>
+
+
+
+                        </div>
                     </div>
+
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title mx-5">Employees</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion menu-active-bg">
+
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_employees') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Employees</span>
+                                </a>
+                            </div>
+
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_salaries') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Employee Salaries</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_timesheets') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Timesheets</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_overtimes') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Overtimes</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_deductions') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Deductions</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_expense_reclaims') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Expense Reclaims</span>
+                                </a>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('hr_teams') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title mx-5">Teams</span>
+                        </a>
+                    </div>
+
+
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Time Off</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion menu-active-bg">
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_attendance') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Attendance</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_leave_applications') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Leave Applications</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hr_leave_types') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Leave Types</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('leave_policy') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Leave Policies</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
-            @endcan
+            </div>
 
             <div class="separator"></div>
 
@@ -1124,12 +1135,13 @@
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     {{-- <span class="menu-icon"> --}}
-                    <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
-                    <span class="svg-icon side-icon svg-icon-2">
-                        <x-iconsax-bol-picture-frame />
-                    </span>
-                    <!--end::Svg Icon-->
-                    {{-- </span> --}}
+                        <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
+                        <span class="svg-icon side-icon svg-icon-2">
+                            <x-iconsax-bol-picture-frame />
+                        </span>
+                        <!--end::Svg Icon-->
+                        {{--
+                    </span> --}}
                     <span class="menu-title mx-5">Locations</span>
                     <span class="menu-arrow"></span>
 
@@ -1276,8 +1288,7 @@
         </div>
         <div class="d-flex justify-content-center">
             <a href="https://www.nixus.tech/" class="btn btn-custom btn-warning w-100" data-bs-toggle="tooltip"
-                data-bs-trigger="hover" data-bs-dismiss-="click" title="visit Nixus.com"
-                style="border: 0.5px solid rgba(0, 83, 138, 0.12);
+                data-bs-trigger="hover" data-bs-dismiss-="click" title="visit Nixus.com" style="border: 0.5px solid rgba(0, 83, 138, 0.12);
                 box-shadow: 0px 4px 24px 0px rgba(0, 83, 138, 0.3) !important;
                 background: rgba(0, 66, 110, 1);
                 border-radius: 6px;

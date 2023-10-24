@@ -9,14 +9,13 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Modules\BusinessService\Entities\Business;
 use Modules\BusinessService\Entities\BusinessUser;
 use Modules\BusinessService\Entities\Customer;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
     use HasUuids;
 
     /**
@@ -32,6 +31,7 @@ class User extends Authenticatable
         'is_active',
         'is_superuser',
         'last_login',
+        'remeber_token',
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -61,7 +61,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserRole::class, "user_id");
     }
-
 
     public function business_users()
     {

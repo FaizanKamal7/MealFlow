@@ -2,6 +2,9 @@
 
 namespace Modules\FinanceService\Entities;
 
+use Illuminate\Support\Facades\Request;
+
+use App\Http\Helper\Helper;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,7 +34,7 @@ class BusinessWalletTransaction extends Model
         return $this->belongsTo(BusinessCard::class);
     }
 
-    public function wallet()
+    public function businessWallet()
     {
         return $this->belongsTo(BusinessWallet::class);
     }

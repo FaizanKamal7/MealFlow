@@ -188,9 +188,9 @@
                 <ul class="navbar-nav action">
                     <li class="nav-item ml-3">
                         @if(Auth::check())
-                            <a href= "/core/" target="_blank" class="btn ml-lg-auto primary-button">Try Now. Its FREE</a> 
+                            <a href= "/dashboard/" target="_blank" class="btn ml-lg-auto primary-button">Try Now. Its FREE</a> 
                         @else
-                            <a href= "/accounts/login/" target="_blank" class="btn ml-lg-auto primary-button">Try Now. Its FREE</a> 
+                            <a href= "/login/" target="_blank" class="btn ml-lg-auto primary-button">Try Now. Its FREE</a> 
                         @endif
                         <!-- 
                                 Suggestion: Replace the purchase button above with a contact button.
