@@ -63,6 +63,20 @@ class Branch extends Model
     }
 
 
+    // Customize JSON Serialization to make sure below relationships are included whenever Customer is converted to an array or JSON
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['business'] = $this->business->toArray();
+        $array['area'] = $this->area->toArray();
+        $array['city'] = $this->city->toArray();
+        $array['state'] = $this->state->toArray();
+
+        return $array;
+    }
+
+
+
     protected static function newFactory()
     {
         return \Modules\BusinessService\Database\factories\BranchFactory::new();

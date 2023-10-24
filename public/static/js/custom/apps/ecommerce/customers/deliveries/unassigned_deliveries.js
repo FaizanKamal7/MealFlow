@@ -293,7 +293,6 @@ document.querySelector("form").addEventListener("submit", function (e) {
 function assignDeliveries() {
     // Get all checkboxes
     const checkboxes = document.querySelectorAll('input.form-check-input[type="checkbox"]');
-    console.log('checkbox', checkboxes)
     // Initialize an array to store selected values
     const selectedDeliveryIds = [];
     // Loop through checkboxes and add the selected values to the array
@@ -303,16 +302,14 @@ function assignDeliveries() {
         }
     });
     const driver_id = document.getElementById("driverSelect").value;
-    console.log("selectedDeliveryIds");
-    console.log(selectedDeliveryIds + "=---==-" + driver_id);
 
-    var url = "{{ route('assigned_delivery_to_driver') }}";
+    var url = "/admin/deliveries/assigning_process/";
 
     $.ajax({
         url: url,
         type: "POST",
         headers: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Use the meta tag value
         },
         data: { selected_delivery_ids: selectedDeliveryIds, driver_id: driver_id },
         success: function (response) {

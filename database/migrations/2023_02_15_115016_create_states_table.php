@@ -21,15 +21,15 @@ return new class extends Migration
             $table->string('iso2');
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->boolean('flag')->default(0);
+            $table->boolean('flag')->default(false);
             $table->text('wikiDataId')->nullable();
-            $table->boolean('active_status');
+            $table->boolean('active_status')->default(false);
             $table->uuid('country_id');
             $table->softDeletes();
 
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->timestamps();;
-                });
+        });
     }
 
     /**

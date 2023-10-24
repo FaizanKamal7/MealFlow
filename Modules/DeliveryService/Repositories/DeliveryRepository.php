@@ -2,6 +2,7 @@
 
 namespace Modules\DeliveryService\Repositories;
 
+use App\Enum\DeliveryStatusEnum;
 use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Entities\PickupBatch;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
@@ -69,17 +70,29 @@ class DeliveryRepository implements DeliveryInterface
 
     public function assignDeliveryBatch($batch_id, $deliveries)
     {
-        Delivery::whereIn('id', $deliveries)->update([
-            'delivery_batch_id' => $batch_id,
-            'status' => 'ASSIGNED',
-        ]);
+        Delivery::whereIn('id', $deliveries)->each(function ($delivery) use ($batch_id) {
+            $delivery->update([
+                'delivery_batch_id' => $batch_id,
+                'status' => DeliveryStatusEnum::ASSIGNED->value,
+            ]);
+        });
+        // ---- Below query is fast but avoiding below as it wont triggger laravel event observer 
+        // Delivery::whereIn('id', $deliveries)->update([
+        //     'delivery_batch_id' => $batch_id,
+        //     'status' => DeliveryStatusEnum::ASSIGNED->value,
+        // ]);
     }
 
     public function assignPickupBatch($batch_id, $deliveries)
     {
-        Delivery::whereIn('id', $deliveries)->update([
-            'pickup_batch_id' => $batch_id,
-        ]);
+        // Delivery::whereIn('id', $deliveries)->update([
+        //     'pickup_batch_id' => $batch_id,
+        // ]);
+        Delivery::whereIn('id', $deliveries)->each(function ($delivery) use ($batch_id) {
+            $delivery->update([
+                'pickup_batch_id' => $batch_id,
+            ]);
+        });
     }
 
 
@@ -97,6 +110,12 @@ class DeliveryRepository implements DeliveryInterface
     public function getPickupUnassignedDeliveries($start_date, $end_date)
     {
         return Delivery::whereNull('pickup_batch_id')->get();
+    }
+
+
+    public function getCompletedPickupDeliveries($start_date, $end_date)
+    {
+        return Delivery::whereNotNull('pickup_batch_id')->get();
     }
 
     public function updateDeliveryQR($delivery_id, $data)
@@ -218,5 +237,9 @@ class DeliveryRepository implements DeliveryInterface
             ->get();
     }
 
-    
+
+    public function getAllBatchDeliveries($delivery_batch_id)
+    {
+        return Delivery::where('delivery_batch_id', $delivery_batch_id)->get();
+    }
 }

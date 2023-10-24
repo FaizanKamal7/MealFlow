@@ -3,6 +3,7 @@
 namespace Modules\HRManagement\Entities;
 
 use App\Http\Helper\Helper;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,68 +43,88 @@ class Employees extends Model
         "leave_policy_id",
     ];
 
-    public function employeeDepartments(){
+    public function employeeDepartments()
+    {
         return $this->hasMany(EmployeeDepartments::class, "employee_id");
     }
 
-    public function employeeSalary(){
+    public function employeeSalary()
+    {
         return $this->hasOne(EmployeeSalary::class, "employee_id");
     }
 
-    public function employeeMedia(){
+    public function employeeMedia()
+    {
         return $this->hasMany(EmployeeMedia::class, "employee_id");
     }
 
-    public function employeeBank(){
+    public function employeeBank()
+    {
         return $this->hasOne(Banks::class, "employee_id");
     }
 
-    public function employeeAppreciation(){
+    public function employeeAppreciation()
+    {
         return $this->hasMany(Appreciation::class, "employee_id");
     }
 
-    public function employeeAttendance(){
+    public function employeeAttendance()
+    {
         return $this->hasMany(Attendance::class, "employee_id");
     }
 
-    public function employeeDeductions(){
+    public function employeeDeductions()
+    {
         return $this->hasMany(Deductions::class, "employee_id");
     }
 
-    public function employeePayroll(){
+    public function employeePayroll()
+    {
         return $this->hasMany(Payroll::class, "employee_id");
     }
-    public function employeeTimesheets(){
+    public function employeeTimesheets()
+    {
         return $this->hasMany(Timesheets::class, "employee_id");
     }
 
-    public function employeeExpenseReclaims(){
+    public function employeeExpenseReclaims()
+    {
         return $this->hasMany(ExpenseReclaims::class, "employee_id");
     }
 
-    public function employeeTeams(){
+    public function employeeTeams()
+    {
         return $this->hasMany(TeamMembers::class, "employee_id");
     }
 
-    public function employeeLeaveApplications(){
+    public function employeeLeaveApplications()
+    {
         return $this->hasMany(LeaveApplications::class, "employee_id");
     }
 
-    public function designation(){
+    public function designation()
+    {
         return $this->belongsTo(Designations::class);
     }
 
-    public function leavePolicy(){
+    public function leavePolicy()
+    {
         return $this->belongsTo(LeavePolicy::class);
     }
 
-    public function assignedLeads(){
+    public function assignedLeads()
+    {
         return $this->hasMany(Leads::class, "staff_id");
     }
 
-    public function drivers(){
-        return $this->hasMany(Driver::class);
+    public function driver()
+    {
+        return $this->hasOne(Driver::class);
+    }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
     protected static function newFactory()
     {
@@ -130,10 +151,21 @@ class Employees extends Model
             $record_type = get_class($model);
             $method = Request::method();
 
-            $helper->logActivity(userId:$user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
-                method: $method);
+            $helper->logActivity(
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
+                method: $method
+            );
         });
 
         static::updating(function ($model) {
@@ -149,16 +181,27 @@ class Employees extends Model
                 $description = "Record has been updated";
                 $ip_address = Request::ip();
                 $user_agent = Request::header('user-agent');
-                $old_values = json_encode( json_encode($model->getOriginal()));
+                $old_values = json_encode(json_encode($model->getOriginal()));
                 $new_values = json_encode($model->getAttributes());
                 $record_id = $model->id;
                 $record_type = get_class($model);
                 $method = Request::method();
 
-                $helper->logActivity(userId:$user_id, moduleName: $module_name, action: $action, subject: $subject,
-                    url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                    oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
-                    method: $method);
+                $helper->logActivity(
+                    userId: $user_id,
+                    moduleName: $module_name,
+                    action: $action,
+                    subject: $subject,
+                    url: $url,
+                    description: $description,
+                    ipAddress: $ip_address,
+                    userAgent: $user_agent,
+                    oldValues: $old_values,
+                    newValues: $new_values,
+                    recordId: $record_id,
+                    recordType: $record_type,
+                    method: $method
+                );
             }
         });
 
@@ -177,33 +220,43 @@ class Employees extends Model
             $record_id = $model->id;
             $record_type = get_class($model);
             $method = Request::method();
-            $helper->logActivity(userId:$user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
-                method: $method);
-
+            $helper->logActivity(
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
+                method: $method
+            );
         });
 
-//        static::retrieved(function ($model) {
-//            $helper = new Helper();
-//            $user_id = auth()->id();
-//            $module_name = "HRM";
-//            $action = "Retrieved";
-//            $subject = "Record Retrieved";
-//            $url = Request::fullUrl();
-//            $description = "Record has been retrieved";
-//            $ip_address = Request::ip();
-//            $user_agent = Request::header('user-agent');
-//            $old_values =  json_encode($model->getOriginal());
-//            $new_values = json_encode($model->getAttributes());
-//            $record_id = $model->id;
-//            $record_type = get_class($model);
-//            $method = Request::method();
-//
-//            $helper->logActivity(userId:$user_id, moduleName: $module_name, action: $action, subject: $subject,
-//                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-//                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
-//                method: $method);
-//        });
+        //        static::retrieved(function ($model) {
+        //            $helper = new Helper();
+        //            $user_id = auth()->id();
+        //            $module_name = "HRM";
+        //            $action = "Retrieved";
+        //            $subject = "Record Retrieved";
+        //            $url = Request::fullUrl();
+        //            $description = "Record has been retrieved";
+        //            $ip_address = Request::ip();
+        //            $user_agent = Request::header('user-agent');
+        //            $old_values =  json_encode($model->getOriginal());
+        //            $new_values = json_encode($model->getAttributes());
+        //            $record_id = $model->id;
+        //            $record_type = get_class($model);
+        //            $method = Request::method();
+        //
+        //            $helper->logActivity(userId:$user_id, moduleName: $module_name, action: $action, subject: $subject,
+        //                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
+        //                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+        //                method: $method);
+        //        });
     }
 }

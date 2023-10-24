@@ -12,3 +12,4 @@ yarn-error.log
 /.vscode
 .env
 composer.lock
+node_modules

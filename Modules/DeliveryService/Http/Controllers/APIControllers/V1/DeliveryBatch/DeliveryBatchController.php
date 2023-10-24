@@ -2,6 +2,7 @@
 
 namespace Modules\DeliveryService\Http\Controllers\APIControllers\V1\DeliveryBatch;
 
+use App\Enum\BatchStatusEnum;
 use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
@@ -11,6 +12,7 @@ use App\Traits\HttpResponses;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Modules\BusinessService\Interfaces\BranchInterface;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
@@ -21,6 +23,9 @@ use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
+use Modules\DeliveryService\Rules\BatchStatusRule;
+use Modules\DeliveryService\Rules\DeliveryBatchStatusRule;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 
@@ -44,6 +49,7 @@ class DeliveryBatchController extends Controller
     private $driverAreaRepository;
     private $driverRepository;
     private $deliveryBatchRepository;
+    private $emptyBagCollectionRepository;
     use HttpResponses;
 
     public function __construct(
@@ -62,7 +68,7 @@ class DeliveryBatchController extends Controller
         DriverAreaInterface $driverAreaRepository,
         DriverInterface $driverRepository,
         DeliveryBatchInterface $deliveryBatchRepository,
-
+        EmptyBagCollectionInterface $emptyBagCollectionRepository,
         Helper $helper,
     ) {
         $this->customerRepository = $customerRepository;
@@ -80,82 +86,65 @@ class DeliveryBatchController extends Controller
         $this->driverAreaRepository = $driverAreaRepository;
         $this->driverRepository = $driverRepository;
         $this->deliveryBatchRepository = $deliveryBatchRepository;
-
+        $this->emptyBagCollectionRepository = $emptyBagCollectionRepository;
         $this->helper = $helper;
     }
 
-    public function startDeliveryBatch(Request $request)
+    public function updateDeliveryBatchpProgress(Request $request)
     {
-
         try {
-            // Validate the request data
             $validator = Validator::make($request->all(), [
-                'batch_id' => ['required','exists:delivery_batches,id'],
-                'start_time' => ['required', 'date'],
-                'vehicle_id' => ['required','exists:vehicles,id'],
+                'status' => ['required', new BatchStatusRule()],
                 'map_coordinates' => ['required'],
+                'delivery_batch_id' => ['required', 'exists:delivery_batches,id'],
+                'vehicle_id' => ['required', 'exists:vehicles,id'],
             ]);
+            DB::beginTransaction();
 
             // Check if validation fails
             if ($validator->fails()) {
-                return $this->error($validator->errors(), "validation failed", 422);
+                return $this->error($validator->errors(), "Validation Failed", 422);
             }
 
-            $batch_id = $request->post('batch_id');
-            $start_time = $request->post('start_time');
-            $vehicle_id = $request->post('vehicle_id');
-
-            $start_coordinates = $request->post('map_coordinates');
-            
-            $data = ['batch_start_time' => $start_time, 'vehicle_id' => $vehicle_id,'status'=>'Pending', 'batch_arrival_map_coordinates' => $start_coordinates];
-            $update = $this->deliveryBatchRepository->updateDeliveryBatch($batch_id, $data);
-
-            if (!$update) {
-                return $this->error($update, "error occured contact support", 500);
-            }
-
-            return $this->success($update, "Batch Started successfully");
-
-        } catch (Exception $exception) {
-            return $this->error($exception, "error occured contact support", 500);
-
-        }
-    }
-
-    public function endDeliveryBatch(Request $request)
-    {
-
-        try {
-            // Validate the request data
-            $validator = Validator::make($request->all(), [
-                'batch_id' => ['required'],
-                'end_time' => ['required', 'date'],
-                'map_coordinates' => ['required'],
-            ]);
-
-            // Check if validation fails
-            if ($validator->fails()) {
-                return $this->error($validator->errors(), "validation failed", 422);
-            }
-
-            $batch_id = $request->get('batch_id');
-            $end_time = $request->get('end_time');
+            $status = $request->get('status');
+            $map_coordinates = $request->get('map_coordinates');
+            $delivery_batch_id = $request->get('delivery_batch_id');
             $vehicle_id = $request->get('vehicle_id');
-            $end_coordinates = $request->get('map_coordinates');
+            $data = [];
 
-            $data = ['batch_end_time' => $end_time, 'vehicle_id' => $vehicle_id,'status'=>'Completed', 'batch_end_map_coordinates' => $end_coordinates];
-            $update = $this->deliveryBatchRepository->updateDeliveryBatch($batch_id, $data);
+            if ($status == BatchStatusEnum::STARTED->value) {
+                $data = [
+                    "batch_start_time" => date("Y-m-d H:i:s"),
+                    "batch_start_map_coordinates" => $map_coordinates,
+                    "status" => $status,
+                    "vehicle_id" => $vehicle_id,
+                ];
+            } elseif ($status == BatchStatusEnum::ENDED->value) {
+                $data = [
+                    "batch_end_time" => date("Y-m-d H:i:s"),
+                    "batch_end_map_coordinates" => $map_coordinates,
+                    "status" => $status,
+                    "vehicle_id" => $vehicle_id,
+                ];
 
-            if (!$update) {
-                return $this->error($update, "error occured contact support", 500);
+                // Change status of all the collected bags with completed_batch to "Arrived empty at warehouse"
+
+                // $completed_batch_deliveries = $this->deliveryRepository->getAllBatchDeliveries($delivery_batch_id);
+                // $delivery_ids = collect($completed_batch_deliveries)->pluck('id')->toArray();
+                // $this->emptyBagCollectionRepository->updateBagsTimelineOnDeliveryBatchCompletion($delivery_ids, $vehicle_id);
             }
 
-            return $this->success($update, "Batch Completed successfully");
+            $result =  $this->deliveryBatchRepository->updateDeliveryBatch($delivery_batch_id, $data);
 
+            if (!$result) {
+                return $this->error($result, "Error: Pickup Batch Not Updated");
+            }
+
+            DB::commit();
+            return $this->success($result, "Delivery Batch updated successfully");
         } catch (Exception $exception) {
-            return $this->error($exception, "error occured contact support", 500);
-
+            DB::rollback();
+            return $this->error($exception, "Error: " . $exception->getMessage() . ". Contact Support");
         }
     }
-
 }

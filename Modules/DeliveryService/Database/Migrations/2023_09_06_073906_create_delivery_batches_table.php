@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->dateTime("batch_start_time")->nullable();
             $table->dateTime("batch_end_time")->nullable();
-            $table->string("batch_arrival_map_coordinates")->nullable();
+            $table->string("batch_start_map_coordinates")->nullable();
             $table->string("batch_end_map_coordinates")->nullable();
             $table->string("status")->nullable();
             $table->uuid("driver_id")->nullable();
