@@ -22,6 +22,8 @@ class BusinessWalletTransaction extends Model
         'transaction_date',
         'note',
         'type',
+        'status',
+        'info',
         'payment_method_id',
         'wallet_id',
         'invoice_item_id',
@@ -36,7 +38,7 @@ class BusinessWalletTransaction extends Model
 
     public function businessWallet()
     {
-        return $this->belongsTo(BusinessWallet::class);
+        return $this->belongsTo(BusinessWallet::class, 'wallet_id');
     }
 
     public function paymentMethod()

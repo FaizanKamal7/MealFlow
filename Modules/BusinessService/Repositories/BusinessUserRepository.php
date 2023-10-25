@@ -23,8 +23,13 @@ class BusinessUserRepository implements BusinessUserInterface
         return $business_user;
     }
 
-    public function getBusinessUser()
+    public function get()
     {
         return BusinessUser::all();
+    }
+
+    public function getBusinessUser($user_id)
+    {
+        return BusinessUser::where("user_id", $user_id)->first();
     }
 }

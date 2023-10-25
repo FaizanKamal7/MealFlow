@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enum\ServiceTypeEnum;
+use App\Interfaces\ApplicationInterface;
 use App\Interfaces\ApplicationModelInterface;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
@@ -16,6 +17,7 @@ use App\Interfaces\UserInterface;
 use App\Interfaces\UserPermissionInterface;
 use App\Interfaces\UserRoleInterface;
 use App\Repositories\ApplicationModelRepository;
+use App\Repositories\ApplicationRepository;
 use App\Repositories\AreaRepository;
 use App\Repositories\CityRepository;
 use App\Repositories\CountryRepository;
@@ -85,6 +87,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CustomerSecondaryNumberInterface::class, CustomerSecondaryNumberRepository::class);
         $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
         $this->app->bind(InvoiceItemInterface::class, InvoiceItemRepository::class);
+        $this->app->bind(ApplicationInterface::class, ApplicationRepository::class);
     }
 
     /**
