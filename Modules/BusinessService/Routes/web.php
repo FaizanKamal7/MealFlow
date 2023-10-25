@@ -17,7 +17,7 @@ use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsControl
 use Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController;
 use Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController;
 use Modules\FinanceService\Http\Controllers\WalletController;
-use Modules\FinanceService\Http\Controllers\WalletCreditController;
+use Modules\FinanceService\Http\Controllers\WalletTransactionController;
 
 
 
@@ -69,14 +69,14 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix' => 'wallet/'], function () {
             Route::get("", [WalletController::class, "viewWallet"])->name("viewWallet");
             Route::group(['prefix' => 'credit/'], function () {
-                Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
-                Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
+                Route::POST("store", [WalletTransactionController::class, "store"])->name("storeCredit");
+                Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletTransactionController::class, "paymentSuccess"])->name("PaymentSuccess");
+                Route::POST("store-bank-transfer", [WalletTransactionController::class, "storeBankTransferDetails"])->name("upload_bank_transfer_details");
+                Route::get("pending-transactions", [WalletTransactionController::class, "pendingTransactionsView"])->name("pending_transactions");
+                Route::POST("approve-pending-transaction", [WalletTransactionController::class, "approvePendingTransaction"])->name("approve_pending_transaction");
+            
             });
 
-            Route::group(['prefix' => 'credit/'], function () {
-                Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
-                Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
-            });
 
             Route::group(['prefix' => 'business-settings/'], function () {
             });

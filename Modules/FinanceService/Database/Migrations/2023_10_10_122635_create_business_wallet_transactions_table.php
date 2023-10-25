@@ -19,6 +19,8 @@ return new class extends Migration
             $table->decimal("amount", 4, 2);
             $table->dateTime("transaction_date");
             $table->string("note")->nullable();
+            $table->string("info")->nullable();
+            $table->string("status");
             $table->string("type");
 
             $table->uuid("payment_method_id")->nullable();

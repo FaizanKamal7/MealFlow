@@ -131,8 +131,62 @@
                         </a>
                     </div>
 
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('applications_view') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Applications</span>
+                        </a>
+                    </div>
+
 
                 </div>
+            </div>
+            <div class="separator"></div>
+
+
+            <div class="menu-item">
+                <div class="menu-content pt-5 pb-2">
+                    <span class="menu-section text-dark text-uppercase fs-8 ls-1">MEAL
+                        PLANNER</span>
+                </div>
+            </div>
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
+                    <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
+                        <x-iconsax-bol-buliding />
+                    </span>
+                    <!--end::Svg Icon-->
+                    <span class="menu-title mx-5">Add Customer to Planner</span>
+                    {{-- <span class="menu-arrow"></span> --}}
+                </span>
+
+            </div>
+
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <a href="{{ route('view_plan_delivery') }}">
+                    <span class="menu-link">
+                        <span class="svg-icon side-icon svg-icon-muted svg-icon-1x">
+                            <x-iconsax-bol-convert-3d-cube />
+                        </span>
+                        <!--end::Svg Icon-->
+                        <span class="menu-title mx-5">Plan Delivery Days</span>
+                    </span>
+                </a>
+            </div>
+
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
+                    <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
+                        <x-iconsax-bul-shop />
+                    </span>
+                    <!--end::Svg Icon-->
+                    <span class="menu-title mx-5">Meal Plan Tracker</span>
+                    {{-- <span class="menu-arrow"></span> --}}
+                </span>
             </div>
             <div class="separator"></div>
 
@@ -738,7 +792,6 @@
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('business_new_requests') }}">
                             <span class="menu-bullet">
@@ -747,8 +800,16 @@
                             <span class="menu-title">New Businesses Requests</span>
                         </a>
                     </div>
-
-
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('pending_transactions') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Pending Business Transactions</span>
+                        </a>
+                    </div>
                 </div>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
 

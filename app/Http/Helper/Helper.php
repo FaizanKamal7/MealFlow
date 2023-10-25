@@ -29,6 +29,7 @@ class Helper
         $file->move($module . "/" . $directory . "/", $file_url);
         return $file_url;
     }
+    
     public function logActivity($userId, $moduleName, $action, $subject, $url, $description, $ipAddress, $userAgent, $oldValues, $newValues, $recordId, $recordType, $method)
     {
         ActivityLogs::create([

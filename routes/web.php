@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\LocationManagement\City\CityController;
 use App\Http\Controllers\Admin\LocationManagement\LocationController;
 use App\Http\Controllers\Admin\LocationManagement\State\StateController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\UserManagement\ApplicationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,15 @@ Route::middleware('auth')->group(function () {
         Route::get('fleets/details', function () {
             return view('fleets.fleet_details');
         })->name("fleet_details");
+
+
+        Route::group(['prefix' => 'applications/'], function () {
+            Route::get("/", [ApplicationController::class, "viewApplication"])->name("applications_view");
+            Route::post("add/new", [ApplicationController::class, "storeApplication"])->name("application_store");
+            Route::get("{app_id}/edit", [ApplicationController::class, "editApplication"])->name("application_edit");
+            Route::post("update", [ApplicationController::class, "updateApplication"])->name("application_update");
+            Route::get("{app_id}/delete", [ApplicationController::class, "deleteApplication"])->name("application_delete");
+        });
 
         Route::group(['prefix' => 'permissions/'], function () {
             Route::get("/", [\App\Http\Controllers\Admin\UserManagement\PermissionsController::class, "viewPermissions"])->name("permissions_view");

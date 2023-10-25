@@ -16,11 +16,13 @@ class ApplicationModel extends Model
         "is_active"
     ];
 
-    public function application(){
+    public function application()
+    {
         return $this->belongsTo(Application::class, "app_id");
     }
 
-    public function permissions(){
+    public function permissions()
+    {
         return $this->hasMany(Permission::class, "model_id");
     }
 }
