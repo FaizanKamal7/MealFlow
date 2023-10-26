@@ -5394,7 +5394,7 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'Modules\\FinanceService\\Http\\Controllers\\InvoiceController' => __DIR__ . '/../..' . '/Modules/FinanceService/Http/Controllers/InvoiceController.php',
         'Modules\\FinanceService\\Http\\Controllers\\WalletCardController' => __DIR__ . '/../..' . '/Modules/FinanceService/Http/Controllers/WalletCardController.php',
         'Modules\\FinanceService\\Http\\Controllers\\WalletController' => __DIR__ . '/../..' . '/Modules/FinanceService/Http/Controllers/WalletController.php',
-        'Modules\\FinanceService\\Http\\Controllers\\WalletCreditController' => __DIR__ . '/../..' . '/Modules/FinanceService/Http/Controllers/WalletCreditController.php',
+        'Modules\\FinanceService\\Http\\Controllers\\WalletTransactionController' => __DIR__ . '/../..' . '/Modules/FinanceService/Http/Controllers/WalletTransactionController.php',
         'Modules\\FinanceService\\Interfaces\\BusinessCardInterface' => __DIR__ . '/../..' . '/Modules/FinanceService/Interfaces/BusinessCardInterface.php',
         'Modules\\FinanceService\\Interfaces\\BusinessWalletInterface' => __DIR__ . '/../..' . '/Modules/FinanceService/Interfaces/BusinessWalletInterface.php',
         'Modules\\FinanceService\\Interfaces\\BusinessWalletTransactionInterface' => __DIR__ . '/../..' . '/Modules/FinanceService/Interfaces/BusinessWalletTransactionInterface.php',

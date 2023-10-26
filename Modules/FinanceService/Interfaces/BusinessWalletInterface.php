@@ -10,4 +10,5 @@ interface BusinessWalletInterface
     public function debitWallet($business_id, $amount_to_deduct);
     public function getBusinessWallet($id);
     public function update($business_id, $data);
+    public function creditWallet($business_id, $amount_to_add);
 }

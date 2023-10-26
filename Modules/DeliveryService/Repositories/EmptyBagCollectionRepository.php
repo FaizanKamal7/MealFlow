@@ -49,14 +49,19 @@ class EmptyBagCollectionRepository implements EmptyBagCollectionInterface
         EmptyBagCollection::where('status', EmptyBagCollectionStatusEnum::COMPLETED->value)
             ->whereIn('delivery_id', $delivery_ids)
             ->get()->map(function ($emptyBagCollection) use ($helper, $vehicle_id) {
-                $helper->bagTimeline(
-                    $emptyBagCollection->bag_id,
-                    $emptyBagCollection->delivery_id,
-                    BagStatusEnum::RECEIVED_EMPTY_IN_WAREHOUSE->value,
-                    $emptyBagCollection->empty_bag_collection_batch_id ? $emptyBagCollection->deliveryBatch->driver_id : $emptyBagCollection->delivery->deliveryBatch->driver_id,
-                    $vehicle_id,
-                    "Delivery Batch completed. Empty Bag is headed towards warehouse",
-                );
+                var_dump($emptyBagCollection->bag_id);
+                var_dump($emptyBagCollection->delivery_id);
+                var_dump($emptyBagCollection->empty_bag_collection_batch_id ? $emptyBagCollection->deliveryBatch->driver->employee->user->id : $emptyBagCollection->delivery->deliveryBatch->driver->employee->user->id,);
+                var_dump($vehicle_id);
+                dd();
+                // $helper->bagTimeline(
+                //     $emptyBagCollection->bag_id,
+                //     $emptyBagCollection->delivery_id,
+                //     BagStatusEnum::RECEIVED_EMPTY_IN_WAREHOUSE->value,
+                //     $emptyBagCollection->empty_bag_collection_batch_id ? $emptyBagCollection->deliveryBatch->driver->employee->user_id : $emptyBagCollection->delivery->deliveryBatch->driver->employee->user_id,
+                //     $vehicle_id,
+                //     "Delivery Batch completed. Empty Bag is headed towards warehouse",
+                // );
             });
     }
 }

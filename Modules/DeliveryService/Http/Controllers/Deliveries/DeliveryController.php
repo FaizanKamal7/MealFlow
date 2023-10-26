@@ -105,6 +105,8 @@ class DeliveryController extends Controller
         $this->userRoleRepository = $userRoleRepository;
         $this->helper = $helper;
     }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -942,5 +944,11 @@ class DeliveryController extends Controller
         } catch (Exception $exception) {
             dd($exception);
         }
+    }
+
+    public function viewMealPlan()
+    {
+        $businesses = $this->businessRepository->getActiveBusinesses();
+        return view('deliveryservice::planner.plan_delivery', ['businesses' => $businesses]);
     }
 }

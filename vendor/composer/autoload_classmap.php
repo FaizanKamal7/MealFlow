@@ -4690,7 +4690,7 @@ return array(
     'Modules\\FinanceService\\Http\\Controllers\\InvoiceController' => $baseDir . '/Modules/FinanceService/Http/Controllers/InvoiceController.php',
     'Modules\\FinanceService\\Http\\Controllers\\WalletCardController' => $baseDir . '/Modules/FinanceService/Http/Controllers/WalletCardController.php',
     'Modules\\FinanceService\\Http\\Controllers\\WalletController' => $baseDir . '/Modules/FinanceService/Http/Controllers/WalletController.php',
-    'Modules\\FinanceService\\Http\\Controllers\\WalletCreditController' => $baseDir . '/Modules/FinanceService/Http/Controllers/WalletCreditController.php',
+    'Modules\\FinanceService\\Http\\Controllers\\WalletTransactionController' => $baseDir . '/Modules/FinanceService/Http/Controllers/WalletTransactionController.php',
     'Modules\\FinanceService\\Interfaces\\BusinessCardInterface' => $baseDir . '/Modules/FinanceService/Interfaces/BusinessCardInterface.php',
     'Modules\\FinanceService\\Interfaces\\BusinessWalletInterface' => $baseDir . '/Modules/FinanceService/Interfaces/BusinessWalletInterface.php',
     'Modules\\FinanceService\\Interfaces\\BusinessWalletTransactionInterface' => $baseDir . '/Modules/FinanceService/Interfaces/BusinessWalletTransactionInterface.php',

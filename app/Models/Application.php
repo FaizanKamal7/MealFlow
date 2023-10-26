@@ -25,6 +25,15 @@ class Application extends Model
 
     public function models()
     {
-        return $this->hasMany(ApplicationModel::class);
+        return $this->hasMany(ApplicationModel::class, 'app_id');
+    }
+
+    // Customize JSON Serialization to make sure below relationships are included whenever Customer is converted to an array or JSON
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['models'] = $this->models->toArray();
+
+        return $array;
     }
 }
