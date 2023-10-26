@@ -70,7 +70,7 @@
                         Add Model
                     </button>
                     <!--end::Button-->
-                    {{-- @endcan --}}
+                    @endcan
                 </div>
                 <!--end::Card toolbar-->
             </div>
@@ -217,7 +217,7 @@
                                     <!--end::Svg Icon-->
                                 </a> --}}
                                 <!--end::Delete-->
-                                @endcan
+                                {{-- @endcan --}}
                             </td>
                             <!--end::Action=-->
                         </tr>
@@ -478,8 +478,8 @@
         </div> --}}
         {{--
         <!--end::Modal - Update role-->
-        @endcan
-        <!--end::Modals--> --}}
+        {{-- @endcan --}}
+        <!--end::Modals-->
     </div>
     <!--end::Container-->
 </div>
