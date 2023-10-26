@@ -117,7 +117,7 @@
 
                                 @can("delete_permission")
                                 <!--begin::Delete-->
-                                <a href="{{ route(" permissions_delete", ["permission_id"=>$permission->id]) }}"
+                                <a href="{{ route('permissions_delete', ['permission_id'=>$permission->id]) }}"
                                     class="btn btn-icon btn-active-light-primary w-30px h-30px"
                                     data-kt-permissions-table-filter="delete_row">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
@@ -188,8 +188,8 @@
                     <!--begin::Modal body-->
                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         <!--begin::Form-->
-                        <form id="kt_modal_add_permission_form" method="post" class="form" action="{{ route("
-                            permissions_store") }}">
+                        <form id="kt_modal_add_permission_form" method="post" class="form"
+                            action="{{ route('permissions_store') }}">
                             @csrf
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
@@ -350,8 +350,8 @@
                         <!--end::Notice-->
                         <!--end::Notice-->
                         <!--begin::Form-->
-                        <form id="kt_modal_update_permission_form" method="post" class="form" action="{{ route("
-                            permissions_update") }}">
+                        <form id="kt_modal_update_permission_form" method="post" class="form"
+                            action="{{ route('permissions_update') }}">
                             @csrf
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
