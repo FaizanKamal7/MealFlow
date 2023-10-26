@@ -1268,8 +1268,8 @@
                     <!--begin::Modal body-->
                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         <!--begin::Form-->
-                        <form id="kt_modal_update_role_form" class="form" method="post" action="{{ route("
-                            user_update_role") }}">
+                        <form id="kt_modal_update_role_form" class="form" method="post"
+                            action="{{ route('user_update_role') }}">
                             <!--begin::Notice-->
                             <!--begin::Notice-->
                             @csrf

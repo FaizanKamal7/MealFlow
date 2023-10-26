@@ -41,7 +41,7 @@
                         {{-- @can("add_appreciation") --}}
 
                         <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                            <a href="{{ route(" hr_appreciations_add") }}" class="btn btn-primary">New Appreciation</a>
+                            <a href="{{ route('hr_appreciations_add') }}" class="btn btn-primary">New Appreciation</a>
                         </div>
 
                         {{-- @endcan --}}

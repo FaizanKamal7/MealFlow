@@ -100,8 +100,8 @@
                                 <!--begin::Modal body-->
                                 <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                     <!--begin::Form-->
-                                    <form id="kt_modal_add_user_form" class="form" method="post" action="{{ route("
-                                        user_store") }}">
+                                    <form id="kt_modal_add_user_form" class="form" method="post"
+                                        action="{{ route('user_store') }}">
                                         @csrf
                                         <!--begin::Scroll-->
                                         <div class="d-flex flex-column scroll-y me-n7 pe-7"
@@ -297,7 +297,7 @@
                                     {{-- @can("edit_user") --}}
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="{{ route(" user_view_details", ["user_id"=>$user->id]) }}"
+                                        <a href="{{ route('user_view_details', [" user_id"=>$user->id]) }}"
                                             class="menu-link px-3">Edit</a>
                                     </div>
                                     <!--end::Menu item-->
@@ -305,7 +305,7 @@
                                     {{-- @can("delete_user") --}}
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="{{ route(" user_delete", ["user_id"=>$user->id]) }}"
+                                        <a href="{{ route('user_delete', [" user_id"=>$user->id]) }}"
                                             class="menu-link px-3">Delete</a>
                                     </div>
                                     <!--end::Menu item-->

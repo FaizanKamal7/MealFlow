@@ -38,7 +38,7 @@
                         <!--start::Card Tool Bar-->
                         {{-- @can("add_employee") --}}
                         <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                            <a href="{{ route(" hr_employees_add") }}" class="btn btn-primary">New Employee</a>
+                            <a href="{{ route('hr_employees_add') }}" class="btn btn-primary">New Employee</a>
                         </div>
                         {{-- @endcan --}}
                         <!--end::Card Tool Bar-->
