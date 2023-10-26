@@ -50,4 +50,9 @@ class ApplicationRepository implements ApplicationInterface
     {
         return Application::where(["id" => $id])->delete();
     }
+
+    public function getApplicationModels($application_id)
+    {
+        return Application::with('models')->find($application_id);
+    }
 }

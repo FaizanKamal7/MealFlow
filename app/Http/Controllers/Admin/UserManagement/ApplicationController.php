@@ -59,6 +59,7 @@ class ApplicationController extends Controller
         // }
     }
 
+
     public function editApplication($app_id)
     {
         // try {
@@ -66,8 +67,33 @@ class ApplicationController extends Controller
         //     abort_if(Gate::denies('update_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $role = $this->applicationRepository->getApplication(id: $app_id);
-        $app_models = $this->applicationModelRepository->getApplicationModels();
+        $app_models = $this->applicationModelRepository->getAllApplicationModels();
+
         return view("admin.roles.edit_role", ["role" => $role, "app_models" => $app_models]);
+        // } catch (Exception $exception) {
+        //     Log::error($exception);
+        //     return redirect()->route("roles_view")->with("error", "Something went wrong! Contact Support");
+        // }
+    }
+    public function getModels($app_id)
+    {
+        $application = $this->applicationRepository->getApplicationModels($app_id);
+        return response()->json(['models' => $application->models]);
+    }
+
+    public function storeApplicationModel(Request $request)
+    {
+        foreach ($request->get('kt_docs_repeater_basic') as $key => $value) {
+
+            $this->applicationModelRepository->createApplicationModel(model_name: $value['model_name'], app_id: $request->input('selected_application'));
+        }
+
+        // try {
+        //     abort_if(Gate::denies('add_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return redirect()->route('applications_view')->with('success', 'Application model added successfully');
+
+        // return redirect()->route("applications_view")->with("success", "Application added successfully");
         // } catch (Exception $exception) {
         //     Log::error($exception);
         //     return redirect()->route("roles_view")->with("error", "Something went wrong! Contact Support");

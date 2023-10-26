@@ -49,7 +49,10 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'applications/'], function () {
             Route::get("/", [ApplicationController::class, "viewApplication"])->name("applications_view");
             Route::post("add/new", [ApplicationController::class, "storeApplication"])->name("application_store");
-            Route::get("{app_id}/edit", [ApplicationController::class, "editApplication"])->name("application_edit");
+            Route::post("add/new-model", [ApplicationController::class, "storeApplicationModel"])->name("application_model_store");
+            Route::get("{c}/edit", [ApplicationController::class,  "editApplication"])->name("application_edit");
+
+            Route::get("/get-models/{app_id}", [ApplicationController::class, "getModels"])->name("get_models");
             Route::post("update", [ApplicationController::class, "updateApplication"])->name("application_update");
             Route::get("{app_id}/delete", [ApplicationController::class, "deleteApplication"])->name("application_delete");
         });

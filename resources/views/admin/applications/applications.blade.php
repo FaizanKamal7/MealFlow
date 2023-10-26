@@ -2,7 +2,7 @@
 @section('title', 'Applications')
 
 @section('extra_style')
-<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
+<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 @endsection
 @section('main_content')
 <!--begin::Post-->
@@ -54,6 +54,21 @@
                         <!--end::Svg Icon-->
                         Add Application
                     </button>
+                    <button type="button" class="btn btn-light-primary" data-bs-toggle="modal"
+                        data-bs-target="#modal_add_models">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
+                        <span class="svg-icon svg-icon-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor" />
+                                <rect x="10.8891" y="17.8033" width="12" height="2" rx="1"
+                                    transform="rotate(-90 10.8891 17.8033)" fill="currentColor" />
+                                <rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                        Add Model
+                    </button>
                     <!--end::Button-->
                     {{-- @endcan --}}
                 </div>
@@ -96,7 +111,7 @@
                             <!--end::App Modals-->
 
                             <!--begin::Created Date-->
-                            <td>20 Dec 2022, 11:30 am</td>
+                            <td>{{$application->created_at}}</td>
                             <!--end::Created Date-->
                             <!--begin::Action=-->
                             <td class="text-end">
@@ -119,90 +134,7 @@
                                     <!--end::Svg Icon-->
                                 </button>
                                 <!--end::Update-->
-                                <div class="modal fade" id="kt_modal_application" tabindex="-1" aria-hidden="true">
-                                    <!--begin::Modal dialog-->
-                                    <div class="modal-dialog modal-dialog-centered mw-950px">
-                                        <!--begin::Modal content-->
-                                        <div class="modal-content">
-                                            <!--begin::Modal header-->
-                                            <div class="modal-header">
-                                                <!--begin::Modal title-->
-                                                <h2 class="fw-bolder">Add an Application</h2>
-                                                <!--end::Modal title-->
-                                                <!--begin::Close-->
-                                                <div class="btn btn-icon btn-sm btn-active-icon-primary"
-                                                    data-kt-roles-modal-action="close">
-                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                                    <span class="svg-icon svg-icon-1">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none">
-                                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
-                                                                rx="1" transform="rotate(-45 6 17.3137)"
-                                                                fill="currentColor" />
-                                                            <rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                                                transform="rotate(45 7.41422 6)" fill="currentColor" />
-                                                        </svg>
-                                                    </span>
-                                                    <!--end::Svg Icon-->
-                                                </div>
-                                                <!--end::Close-->
-                                            </div>
-                                            <!--end::Modal header-->
-                                            <!--begin::Modal body-->
-                                            <div class="modal-body scroll-y mx-lg-5 my-7">
-                                                <!--begin::Form-->
-                                                <form id="kt_modal_add_application" class="form" method="post"
-                                                    action="{{ route('application_store') }}">
-                                                    @csrf
-                                                    <!--begin::Scroll-->
-                                                    <div class="d-flex flex-column scroll-y me-n7 pe-7"
-                                                        id="kt_modal_add_role_scroll" data-kt-scroll="true"
-                                                        data-kt-scroll-activate="{default: false, lg: true}"
-                                                        data-kt-scroll-max-height="auto"
-                                                        data-kt-scroll-dependencies="#kt_modal_add_role_header"
-                                                        data-kt-scroll-wrappers="#kt_modal_add_role_scroll"
-                                                        data-kt-scroll-offset="300px">
-                                                        <!--begin::Input group-->
-                                                        <div class="fv-row mb-10">
-                                                            <!--begin::Label-->
-                                                            <label class="fs-5 fw-bolder form-label mb-2">
-                                                                <span class="required">Application name</span>
-                                                            </label>
-                                                            <!--end::Label-->
-                                                            <!--begin::Input-->
-                                                            <input class="form-control form-control-solid"
-                                                                placeholder="Enter a Application name"
-                                                                name="app_name" />
-                                                            <!--end::Input-->
-                                                        </div>
-                                                        <!--end::Input group-->
 
-                                                    </div>
-                                                    <!--end::Scroll-->
-                                                    <!--begin::Actions-->
-                                                    <div class="text-center pt-15">
-                                                        <button type="reset" class="btn btn-light me-3"
-                                                            data-kt-roles-modal-action="cancel">
-                                                            Discard
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary"
-                                                            data-kt-roles-modal-action="submit">
-                                                            <span class="indicator-label">Submit</span>
-                                                            <span class="indicator-progress">Please wait...
-                                                                <span
-                                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                        </button>
-                                                    </div>
-                                                    <!--end::Actions-->
-                                                </form>
-                                                <!--end::Form-->
-                                            </div>
-                                            <!--end::Modal body-->
-                                        </div>
-                                        <!--end::Modal content-->
-                                    </div>
-                                    <!--end::Modal dialog-->
-                                </div>
                                 {{-- @endcan --}}
 
                                 <!--start::Update Modal-->
@@ -236,18 +168,25 @@
                                             </div>
                                             <!--end::Modal header-->
 
-                                            <select multiple data-role="tagsinput">
-                                                <option value="Amsterdam">Amsterdam</option>
-                                                <option value="Washington">Washington</option>
-                                                <option value="Sydney">Sydney</option>
-                                                <option value="Beijing">Beijing</option>
-                                                <option value="Cairo">Cairo</option>
-                                            </select {{-- @foreach ($application->models as $model)
-                                            <select multiple data-role="tagsinput">
-                                                <option value={{$model->id}}>{{$model->name}}</option>
+                                            <select class="form-select form-select-solid" multiple
+                                                data-role="tagsinput">
 
+                                                @foreach ($application->models as $model)
+
+                                                <option value={{$model->model_name}}>
+                                                    <span class="badge badge-secondary">{{$model->model_name}},
+                                                    </span>
+                                                </option>
+
+
+                                                @endforeach
                                             </select>
-                                            @endforeach --}}
+                                            @if (isset($application->models))
+                                            @foreach($application->models as $model)
+                                            <a href="#" class="badge badge-light-primary fs-7 m-1">{{
+                                                $model->model_name}}</a>
+                                            @endforeach
+                                            @endif
                                         </div>
                                         <!--end::Modal content-->
                                     </div>
@@ -376,6 +315,130 @@
         <!--end::Modal - Add role-->
         {{-- @endcan --}}
 
+        <div class="modal fade" id="modal_add_models" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-950px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bolder">Add application models</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-roles-modal-action="close">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                            <span class="svg-icon svg-icon-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                        transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                    <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                        transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body scroll-y mx-lg-5 my-7">
+                        <!--begin::Form-->
+                        <form id="kt_modal_add_application" class="form" method="post"
+                            action="{{ route('application_model_store') }}">
+                            @csrf
+                            <!--begin::Scroll-->
+                            <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_role_scroll"
+                                data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                                data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_role_header"
+                                data-kt-scroll-wrappers="#kt_modal_add_role_scroll" data-kt-scroll-offset="300px">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="fs-5 fw-bolder form-label mb-2">
+                                        <span class="required">Application name</span>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <select class="form-select form-select-solid" data-control="select2"
+                                        name="selected_application" id="application_id"
+                                        data-placeholder="Select an option" onchange="updateModels()">
+                                        <option></option>
+                                        @foreach ($applications as $application)
+                                        <option value={{$application->id}}>{{$application->app_name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Repeater-->
+                                <div id="kt_docs_repeater_basic">
+                                    <!--begin::Form group-->
+                                    <div class="form-group">
+                                        <div data-repeater-list="kt_docs_repeater_basic">
+                                            <div data-repeater-item>
+                                                <div class="form-group row">
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Name:</label>
+
+                                                        <input type="text" name="model_name" id="model_id"
+                                                            class="form-control mb-2 mb-md-0"
+                                                            placeholder="Enter full name" />
+
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <a href="javascript:;" data-repeater-delete
+                                                            class="btn btn-sm btn-light-danger mt-3 mt-md-8">
+                                                            <i class="ki-duotone ki-trash fs-5"><span
+                                                                    class="path1"></span><span
+                                                                    class="path2"></span><span
+                                                                    class="path3"></span><span
+                                                                    class="path4"></span><span class="path5"></span></i>
+                                                            Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end::Form group-->
+
+                                    <!--begin::Form group-->
+                                    <div class="form-group mt-5">
+                                        <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
+                                            <i class="ki-duotone ki-plus fs-3"></i>
+                                            Add
+                                        </a>
+                                    </div>
+                                    <!--end::Form group-->
+                                </div>
+                                <!--end::Repeater-->
+                            </div>
+                            <!--end::Scroll-->
+                            <!--begin::Actions-->
+                            <div class="text-center pt-15">
+                                <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel">
+                                    Discard
+                                </button>
+                                <button type="submit" class="btn btn-primary" data-kt-roles-modal-action="submit">
+                                    <span class="indicator-label">Submit</span>
+                                    <span class="indicator-progress">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div>
+                            <!--end::Actions-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+        </div>
+
 
         {{-- @can("update_role") --}}
         <!--begin::Modal - Update role-->
@@ -429,5 +492,77 @@
 <script src="{{ asset('static/js/custom/apps/user-management/roles/list/update-role.js')}}"></script>
 <script src="{{ asset('static/js/custom/bootstrap-tagsinput.js')}}"></script>
 
+<script>
+    $('#kt_docs_repeater_basic').repeater({
+        initEmpty: false,
+
+        defaultValues: {
+            'text-input': 'foo'
+        },
+
+        show: function () {
+            $(this).slideDown();
+        },
+
+        hide: function (deleteElement) {
+            $(this).slideUp(deleteElement);
+        }
+    });
+    function updateModels() {
+        var selectedApplicationId = $('#application_id').val();
+
+        // Get the selected application's models using Laravel relationships and JSON serialization
+        $.ajax({
+            url: '/core/applications/get-models/' + selectedApplicationId, // Replace with your actual route
+            method: 'GET',
+            success: function (data) {
+                var models = data.models;
+                var repeaterContainer = $('[data-repeater-list="kt_docs_repeater_basic"]');
+
+                repeaterContainer.empty();
+
+                models.forEach(function (model) {
+                    // Create a new repeater item
+                    var newItem = $('<div data-repeater-item></div>');
+
+                    // Set the HTML content of the repeater item
+                    newItem.html(`
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <label class="form-label">Name:</label>
+                                <input type="text" name="model_name" class="form-control mb-2 mb-md-0" placeholder="Enter full name" value="${model.model_name}" />
+                            </div>
+                            <div class="col-md-4">
+                                <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3 mt-md-8">
+                                    <i class="ki-duotone ki-trash fs-5"></i>Delete
+                                </a>
+                            </div>
+                        </div>
+                    `);
+
+                    // Append the new item to the repeater container
+                    repeaterContainer.append(newItem);
+
+                    // Initialize the repeater for the new item
+                    newItem.repeater({
+                        show: function () {
+                            $(this).slideDown();
+                        },
+                        hide: function (deleteElement) {
+                            $(this).slideUp(deleteElement);
+                        }
+                    });
+                });
+            },
+            error: function (error) {
+                console.error('Error fetching data: ', error);
+            }
+        });
+    }
+
+
+
+
+</script>
 
 @endsection
