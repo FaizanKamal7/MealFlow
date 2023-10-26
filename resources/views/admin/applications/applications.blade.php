@@ -70,7 +70,7 @@
                         Add Model
                     </button>
                     <!--end::Button-->
-                    @endcan
+                    {{-- @endcan --}}
                 </div>
                 <!--end::Card toolbar-->
             </div>
@@ -194,7 +194,7 @@
                                 </div>
                                 <!--end::Update Modal-->
 
-                                @can("delete_role")
+                                {{-- @can("delete_role") --}}
                                 <!--begin::Delete-->
                                 {{-- <a href="{{ route('role_delete', ['app_id'=>$application->id]) }}"
                                     class="btn btn-icon btn-active-light-primary w-30px h-30px"

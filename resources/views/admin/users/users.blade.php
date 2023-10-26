@@ -36,7 +36,7 @@
                 <div class="card-toolbar">
                     <!--begin::Toolbar-->
                     <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                        @can('add_user')
+                        {{-- @can('add_user') --}}
                         <!--begin::Add user-->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#kt_modal_add_user">
@@ -52,7 +52,7 @@
                             <!--end::Svg Icon-->Add User
                         </button>
                         <!--end::Add user-->
-                        @endcan
+                        {{-- @endcan --}}
                     </div>
                     <!--end::Toolbar-->
                     <!--begin::Group actions-->
