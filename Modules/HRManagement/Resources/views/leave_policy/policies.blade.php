@@ -217,7 +217,7 @@
         </div>
     </div>
 </div>
-@endcan
+{{-- @endcan --}}
 <!--end::Modal-->
 @endsection
 

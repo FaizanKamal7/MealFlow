@@ -36,7 +36,7 @@
                         </div>
                         <!--end::Card title-->
                         <!--start::Card Tool Bar-->
-                        @can("add_employee")
+                        {{-- @can("add_employee") --}}
                         <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                             <a href="{{ route(" hr_employees_add") }}" class="btn btn-primary">New Employee</a>
                         </div>
@@ -136,7 +136,7 @@
                                             </span>
                                             <!--end::Svg Icon-->
                                         </a>
-                                        @endcan
+                                        {{-- @endcan --}}
 
                                         {{-- @can("delete_employee") --}}
                                         <button id="delete_employee_btn_{{$employee->id}}"
@@ -160,7 +160,7 @@
                                             </span>
                                             <!--end::Svg Icon-->
                                         </button>
-                                        @endcan
+                                        {{-- @endcan --}}
                                         <!--end::Update-->
                                         <!--begin::edit-->
 
