@@ -12,17 +12,16 @@
         <!--begin::Aside-->
         <div class="d-flex flex-column flex-lg-row-auto w-xl-500px positon-xl-relative rounded-lg side-div">
             <!--begin::Wrapper-->
-            <div class="d-flex flex-column position-xl-fixed w-xl-500px ">
+            <div class="d-flex flex-column positiongin-xl-fixed w-xl-500px ">
                 <!--begin::Content-->
                 <div class="d-flex flex-row-fluid flex-column p-10">
-                    <!--begin::Logo-->
-                    <a href="#" class="pb-9">
-                        <img alt="Logo" src="{{ asset('static/media\logos\logo_white_verticle.png') }}"
-                            class="h-90px" />
-                    </a>
+
                     <!--end::Logo-->
                     <div class="welcome mt-xxl-16">
-
+                        <!--begin::Logo-->
+                        <a href="#" class="pb-9">
+                            <img alt="Logo" src="{{ asset('static/media\logos\logo_.png') }}" class="h-90px" />
+                        </a>
                         <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #00426e">Welcome to NIXUS</h1>
                         <!--end::Title-->
                         <!--begin::Description-->

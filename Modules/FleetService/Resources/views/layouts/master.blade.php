@@ -35,7 +35,7 @@
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <!--begin::Logo-->
                     <a href="#">
-                        <img alt="Logo" src="{{ asset('static/media\logos\logo_dark_horizontal.png') }}" class="h-55px logo" />
+                        <img alt="Logo" src="{{ asset('static/media\logos\logo_.png') }}" class="h-25px logo" />
 
                     </a>
                     <!--end::Logo-->

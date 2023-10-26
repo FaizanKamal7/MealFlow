@@ -1,15 +1,15 @@
 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
     <!--begin::Logo-->
     <a href="#">
-        <img alt="Logo" src="{{ asset('static/media/logo_dark_horizontal.png') }}" class="h-80px logo" />
+        <img alt="Logo" src="{{ asset('static/media/logo_.png') }}" class="h-50px logo" />
     </a>
     <!--end::Logo-->
     <!--begin::Aside toggler-->
-    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle" data-kt-toggle="true"
-        data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize">
+    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
+        data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
+        data-kt-toggle-name="aside-minimize">
         <!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg') }}-->
-        <span class="svg-icon svg-icon-1 rotate-180"
-            style="    background: #00426E;
+        <span class="svg-icon svg-icon-1 rotate-180" style="background: #00426E;
         color: white !important;
         border-radius: 100%;">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -24,5 +24,5 @@
         </span>
         <!--end::Svg Icon-->
     </div>
-        <!--end::Aside toggler-->
+    <!--end::Aside toggler-->
 </div>
