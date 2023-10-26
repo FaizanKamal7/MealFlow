@@ -5,15 +5,19 @@ namespace Modules\FinanceService\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\BusinessService\Interfaces\BusinessUserInterface;
 use Modules\FinanceService\Interfaces\BusinessWalletInterface;
 
 class WalletController extends Controller
 {
-    private BusinessWalletInterface $businessWalletRepository;
+    private $businessWalletRepository;
+    private $businessUserRepository;
 
-    public function __construct(BusinessWalletInterface $businessWalletRepository)
+
+    public function __construct(BusinessWalletInterface $businessWalletRepository, BusinessUserInterface $businessUserRepository)
     {
         $this->businessWalletRepository = $businessWalletRepository;
+        $this->businessUserRepository = $businessUserRepository;
     }
     /**
      * Display a listing of the resource.
@@ -21,9 +25,12 @@ class WalletController extends Controller
      */
     public function viewWallet()
     {
+        // TODO: Uncomment below after implementation of Gaurd
+        // $business_user = $this->businessUserRepository->getBusinessUser(auth()->user()->id);
+        // $business = $this->businessWalletRepository->getBusinessWallet($business_user->business_id);
 
-        // $business = view()->shared('business');
-        $business = $this->businessWalletRepository->getBusinessWallet('9a4d6006-93e5-49bd-a1c7-8469baf982e7');
+
+        $business = $this->businessWalletRepository->getBusinessWallet('9a67ee94-b544-482e-9545-3e22f9382899');
         $data = ['wallet' => $business->wallet];
         return view('businessservice::business_info.wallet.Wallet', $data);
     }

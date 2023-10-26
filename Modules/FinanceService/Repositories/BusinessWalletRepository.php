@@ -42,4 +42,12 @@ class BusinessWalletRepository implements BusinessWalletInterface
         BusinessWallet::find($db_wallet->id)->update(['balance' => $new_balance]);
         // BusinessWallet::where('business_id', $business_id)->update(['balance' => \DB::raw("balance - $amount_to_deduct")]); // Not firing even listner
     }
+
+    public function creditWallet($business_id, $amount_to_add)
+    {
+        $db_wallet = BusinessWallet::where('business_id', $business_id)->first();
+        $new_balance = $db_wallet->balance + $amount_to_add;
+        BusinessWallet::find($db_wallet->id)->update(['balance' => $new_balance]);
+        // BusinessWallet::where('business_id', $business_id)->update(['balance' => \DB::raw("balance - $amount_to_deduct")]); // Not firing even listner
+    }
 }

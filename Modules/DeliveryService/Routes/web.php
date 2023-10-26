@@ -96,4 +96,8 @@ Route::prefix('admin/deliveries')->group(function () {
             // Route::GET('/driver-bag-collection', [BagsController::class, "assignBagsCollection"])->name("assign_bag_collection_to_driver");
         });
     });
+
+    Route::group(['prefix' => 'meal/'], function () {
+        Route::get('view_plan', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewMealPlan"])->name("view_plan_delivery");
+    });
 });

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPermissionRequest;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
+use App\Interfaces\ApplicationInterface;
 use App\Interfaces\ApplicationModelInterface;
 use App\Interfaces\PermissionInterface;
 use App\Models\ApplicationModel;
@@ -21,15 +22,18 @@ class PermissionsController extends Controller
 {
     private PermissionInterface $permissionRepository;
     private ApplicationModelInterface $applicationModelRepository;
+    private ApplicationInterface $applicationRepository;
+
 
     /**
      * @param PermissionInterface $permissionRepository
      * @param ApplicationModelInterface $applicationModelRepository
      */
-    public function __construct(PermissionInterface $permissionRepository, ApplicationModelInterface $applicationModelRepository)
+    public function __construct(PermissionInterface $permissionRepository, ApplicationModelInterface $applicationModelRepository, ApplicationInterface $applicationRepository)
     {
         $this->permissionRepository = $permissionRepository;
         $this->applicationModelRepository = $applicationModelRepository;
+        $this->applicationRepository = $applicationRepository;
     }
 
     public function viewPermissions()
@@ -37,8 +41,10 @@ class PermissionsController extends Controller
         try {
             // abort_if(Gate::denies('view_permissions'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $permissions = $this->permissionRepository->getPermissions();
-            $application_models = $this->applicationModelRepository->getApplicationModels();
-            return view('admin.permissions.permissions', ["permissions" => $permissions, "application_models" => $application_models]);
+            $application_models = $this->applicationModelRepository->getAllApplicationModels();
+            $applications = $this->applicationRepository->getApplications();
+
+            return view('admin.permissions.permissions', ["permissions" => $permissions, "application_models" => $application_models, "applications" => $applications]);
         } catch (Exception $exception) {
             Log::error($exception);
             return abort(500);

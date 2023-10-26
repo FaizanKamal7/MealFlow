@@ -108,11 +108,11 @@ class EmptyBagCollectionController extends Controller
             $created =  $this->emptyBagCollectionRepository->createBagCollection($data);
 
             if (!$created) {
-                return $this->error($created, "Error occured  while creating  bag collection Please contact support", 500);
+                return $this->error($created, "Error occured while creating  bag collection Please contact support", 500);
             }
             return $this->success($created, "Bag Collected successfully");
         } catch (Exception $exception) {
-            return $this->error($exception, "Exception while creating  bag collection Please contact support", 500);
+            return $this->error($exception, "Error: " . $exception->getMessage(), 500);
         }
     }
     public function updateBagCollectionBatchpProgress(Request $request)
