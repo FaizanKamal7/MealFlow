@@ -40,13 +40,12 @@ class RolesController extends Controller
         try {
             abort_if(Gate::denies('view_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $roles = $this->roleRepository->getRoles();
-            $app_models = $this->applicationModelRepository->getApplicationModels();
+            $app_models = $this->applicationModelRepository->getAllApplicationModels();
             return view("admin.roles.roles", ["roles" => $roles, "app_models" => $app_models]);
         } catch (Exception $exception) {
             Log::error($exception);
             return abort(500);
         }
-
     }
 
     public function storeRole(Request $request)
@@ -67,7 +66,6 @@ class RolesController extends Controller
             Log::error($exception);
             return redirect()->route("roles_view")->with("error", "Something went wrong! Contact Support");
         }
-
     }
 
     public function editRole($role_id)
@@ -77,13 +75,12 @@ class RolesController extends Controller
             abort_if(Gate::denies('update_role'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             $role = $this->roleRepository->getRole(id: $role_id);
-            $app_models = $this->applicationModelRepository->getApplicationModels();
+            $app_models = $this->applicationModelRepository->getAllApplicationModels();
             return view("admin.roles.edit_role", ["role" => $role, "app_models" => $app_models]);
         } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("roles_view")->with("error", "Something went wrong! Contact Support");
         }
-
     }
 
     public function updateRole(Request $request)
@@ -102,7 +99,7 @@ class RolesController extends Controller
 
             $assigned_permissions = [];
             foreach ($role_permissions as $permission) {
-                $assigned_permissions [] = $permission->permission_id;
+                $assigned_permissions[] = $permission->permission_id;
             }
             $permissions_to_add = array_diff($permissions, $assigned_permissions);
             $permissions_to_revoke = array_diff($assigned_permissions, $permissions);
@@ -116,7 +113,6 @@ class RolesController extends Controller
                 foreach ($permissions_to_revoke as $permission) {
                     $this->rolePermissionRepository->deleteRolePermission($permission);
                 }
-
             }
 
 
@@ -125,7 +121,6 @@ class RolesController extends Controller
             Log::error($exception);
             return redirect()->route("roles_view")->with("error", "Something went wrong! Contact Support");
         }
-
     }
 
     public function deleteRole(Request $request, $role_id)
@@ -139,6 +134,5 @@ class RolesController extends Controller
             Log::error($exception);
             return redirect()->route("roles_view")->with("error", "Something went wrong! Contact Support");
         }
-
     }
 }

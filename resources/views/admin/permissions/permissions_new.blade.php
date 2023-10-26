@@ -117,7 +117,7 @@
 
                                 @can("delete_permission")
                                 <!--begin::Delete-->
-                                <a href="{{ route(" permissions_delete", ["permission_id"=>$permission->id]) }}"
+                                <a href="{{ route('permissions_delete', ['permission_id'=>$permission->id]) }}"
                                     class="btn btn-icon btn-active-light-primary w-30px h-30px"
                                     data-kt-permissions-table-filter="delete_row">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
@@ -188,9 +188,28 @@
                     <!--begin::Modal body-->
                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         <!--begin::Form-->
-                        <form id="kt_modal_add_permission_form" method="post" class="form" action="{{ route("
-                            permissions_store") }}">
+                        <form id="kt_modal_add_permission_form" method="post" class="form"
+                            action="{{ route('permissions_store') }}">
                             @csrf
+                            <div class="fv-row mb-7">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold form-label mb-2">
+                                    <span class="required">Application</span>
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="popover"
+                                        data-bs-trigger="hover" data-bs-html="true"
+                                        data-bs-content="Permission names is required to be unique."></i>
+                                </label>
+                                <!--end::Label-->
+                                <!--end::Label-->
+                                <select class="form-select form-select-solid" data-control="select2"
+                                    data-placeholder="Select a application" name="application" id="application"
+                                    onchange="getModels()">
+                                    <option></option>
+                                    @foreach($applications as $application)
+                                    <option value="{{ $application->id }}">{{ $application->app_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
@@ -201,13 +220,13 @@
                                         data-bs-content="Permission names is required to be unique."></i>
                                 </label>
                                 <!--end::Label-->
-                                <select class="form-select" data-control="select2" data-placeholder="Select an option"
-                                    name="application_model">
-                                    <option></option>
-                                    @foreach($application_models as $model)
-                                    <option value="{{ $model->id }}">{{ $model->model_name }}</option>
-                                    @endforeach
+
+                                <select id="model" class="form-select form-select-lg form-select-solid"
+                                    data-control="select2" data-placeholder="Choose Model" name="model"
+                                    data-allow-clear="true" multiple="multiple">
                                 </select>
+                                <input type="hidden" id="models" name="models" />
+
                             </div>
                             <!--end::Input group-->
 
@@ -350,8 +369,8 @@
                         <!--end::Notice-->
                         <!--end::Notice-->
                         <!--begin::Form-->
-                        <form id="kt_modal_update_permission_form" method="post" class="form" action="{{ route("
-                            permissions_update") }}">
+                        <form id="kt_modal_update_permission_form" method="post" class="form"
+                            action="{{ route('permissions_update') }}">
                             @csrf
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
@@ -364,11 +383,12 @@
                                 </label>
                                 <!--end::Label-->
                                 <!--end::Label-->
-                                <select class="form-select" data-control="select2" data-placeholder="Select an option"
-                                    name="application_model_update">
+                                <select class="form-select" data-control="select2"
+                                    data-placeholder="Select a application" name="application" id="application"
+                                    onchange="getModels()">
                                     <option></option>
-                                    @foreach($application_models as $model)
-                                    <option value="{{ $model->id }}">{{ $model->model_name }}</option>
+                                    @foreach($application_models as $application)
+                                    <option value="{{ $application->id }}">{{ $application->model_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -464,37 +484,83 @@
 <script>
     var target = document.querySelector("#kt_post");
 
-        var blockUI = new KTBlockUI(target, {
-            message: '<div class="blockui-message"><span class="spinner-border text-primary"></span> Loading...</div>',
-        });
+    var blockUI = new KTBlockUI(target, {
+        message: '<div class="blockui-message"><span class="spinner-border text-primary"></span> Loading...</div>',
+    });
 
 
-        var _token = $("input[name='_token']").val();
-        function edit_permission(permission_id) {
+    var _token = $("input[name='_token']").val();
+    function edit_permission(permission_id) {
 
-            blockUI.block();
-            $.ajax({
-                url: "{{ route('fetch_permission') }}",
-                type: "POST",
-                data: {
-                    _token: _token,
-                    permission_id: permission_id
-                },
-                success: function (data) {
-                    if ($.isEmptyObject(data.error)) {
+        blockUI.block();
+        $.ajax({
+            url: "{{ route('fetch_permission') }}",
+            type: "POST",
+            data: {
+                _token: _token,
+                permission_id: permission_id
+            },
+            success: function (data) {
+                if ($.isEmptyObject(data.error)) {
 
-                        $("#permission_name_update").val(data.permission.name);
-                        $("#permission_codename_update").val(data.permission.codename);
-                        $("#permission_id").val(data.permission.id);
-                        if (data.permission.is_active) {
-                            $("#kt_permissions_status_update").attr("checked", 'checked');
-                        }
-                        blockUI.release();
-                    } else {
-                        blockUI.release();
+                    $("#permission_name_update").val(data.permission.name);
+                    $("#permission_codename_update").val(data.permission.codename);
+                    $("#permission_id").val(data.permission.id);
+                    if (data.permission.is_active) {
+                        $("#kt_permissions_status_update").attr("checked", 'checked');
                     }
+                    blockUI.release();
+                } else {
+                    blockUI.release();
                 }
+            }
+        });
+    }
+
+
+    function getModels() {
+        console.log("inside model");
+        var application_id = document.getElementById("application").value;
+        console.log(application_id);
+
+        var model_dropdown = document.getElementById("model");
+        // Clear current options
+        model_dropdown.innerHTML = '<option value="">Select Model</option>';
+
+        // Make AJAX request to fetch city
+        if (application_id) {
+            url: '/core/applications/get-models/' + application_id, 
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                data: { app_id: application_id },
+
+                success: function (response) {
+                    // Keep track of the iterations
+                    var iteration = 0;
+                    // Populate city dropdown
+                    // Loop through the response data and create an option element for each item
+                    response.forEach((item) => {
+                        // If it's the first iteration, append the "Select All" option
+                        if (iteration === 0) {
+                            const allOption = document.createElement("option");
+                            allOption.value = "all";
+                            allOption.text = "Select All";
+                            model_dropdown.appendChild(allOption);
+                        }
+                        const option = document.createElement("option");
+                        option.value = item.id; // Set the value attribute
+                        option.text = item.name; // Set the displayed text
+                        model_dropdown.appendChild(option); // Add the option to the dropdown
+                        iteration++; // Increase the counter
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                },
             });
         }
+    }
 </script>
 @endsection

@@ -10,4 +10,5 @@ interface ApplicationInterface
     public function getApplication($id);
     public function deleteApplication($id);
     public function getApplicationByName($name);
+    public function getApplicationModels($application_id);
 }
