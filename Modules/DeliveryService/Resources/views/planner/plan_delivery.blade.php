@@ -1,5 +1,5 @@
 @extends('layouts.admin_master')
-@section('title', 'Add Meal Plan')
+@section('title', 'View Meal Plan')
 
 @section('extra_style')
     <link rel="stylesheet" href="{{ asset('static/css/plan_delivery.css') }}" type="text/css">
@@ -15,10 +15,19 @@
                         <h1 class="fs-lg-2x ">Add Plan / Schedule</h1>
                     </div>
                     <!--begin::Card title-->
-                    <div class="">
-                        <a class="btn text-white activate-btn" style="height: 38px !important ">+Add New Plan</a>
-                    </div>
                     <!--end::Card title-->
+                    <form id="yourForm" action="{{ route('add_plan_delivery') }}" method="post">
+                        @csrf
+                        <div class="">
+                            <button id='addDeliveryBtn' type="submit" class="btn text-white activate-btn"
+                                style="height: 38px !important; pointer-events: none; background:rgb(92 120 139)">+Add
+                                New
+                                Plan</button>
+                        </div>
+                        <input type="hidden" name="partner" id="partnerInput">
+                        <input type="hidden" name="customer" id="customerInput">
+                    </form>
+
 
                 </div>
                 <div class="mt-2 d-flex align-items-center justify-content-between print-div unassigned-second-div">
@@ -30,29 +39,28 @@
                             <select id="partnerSelect" class="form-select form-select-solid" data-control="select2"
                                 data-placeholder="Select a Partner">
                                 <option></option>
-                                <option value="1">option 1</option>
-                                <option value="2">option 2</option>
+                                @foreach ($partners as $partner)
+                                    <option value={{ $partner->id }}>
+                                        {{ $partner->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="me-3">
                             <select id="customerSelect" class="form-select form-select-solid" data-control="select2"
                                 data-placeholder="Select a Customer">
                                 <option></option>
-                                <option value="1">option 1</option>
-                                <option value="2">option 2</option>
-                            </select>
-                        </div>
-                        <div class="me-3 ">
-                            <select id="clientCodeSelect" class="form-select form-select-solid" data-control="select2"
-                                data-placeholder="Search by Client Code">
-                                <option></option>
-                                <option value="1">option 1</option>
-                                <option value="2">option 2</option>
+                                @foreach ($business_customers as $i)
+                                    <option value={{ $i->id }}>
+                                        {{ $i->customer->user->name }}
+
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="me-3">
                             <a onclick="check()" class="btn text-white activate-btn" id="getRecordBtn"
-                                style="pointer-events: none">Get
+                                style="pointer-events: none; background:rgb(92 120 139)">Get
                                 Record</a>
                         </div>
                     </div>
@@ -304,18 +312,32 @@
 @section('extra_scripts')
 
     <script>
+        // Attach an event handler to the form's submit event
+        document.getElementById('yourForm').addEventListener('submit', function(event) {
+            // Get the selected values from the <select> elements
+            var partnerValue = document.getElementById('partnerSelect').value;
+            var customerValue = document.getElementById('customerSelect').value;
+
+            // Set the values in the hidden input fields
+            document.getElementById('partnerInput').value = partnerValue;
+            document.getElementById('customerInput').value = customerValue;
+        });
+
         function check() {
             console.log('check')
         }
+
         $(document).ready(function() {
             $('#partnerSelect, #customerSelect, #clientCodeSelect').on('change', function() {
                 // Check if all select elements have a selected option with a value
-                if ($('#partnerSelect').val() && $('#customerSelect').val() && $('#clientCodeSelect')
-                    .val()) {
+                if ($('#partnerSelect').val() && $('#customerSelect').val()) {
                     // If all are selected, enable the "Get Record" button
-                    $('#getRecordBtn').removeAttr('style'); // Remove the style attribute
+                    $('#getRecordBtn').removeAttr('style');
+                    $('#addDeliveryBtn').removeAttr('style'); // Remove the style attribute
                 } else {
                     $('#getRecordBtn').css('pointer-events', 'none'); // Add or set pointer-events: none
+                    $('#addDeliveryBtn').css('pointer-events', 'none'); // Add or set pointer-events: none
+
                 }
             });
 

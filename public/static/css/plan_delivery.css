@@ -11,6 +11,7 @@
 .cell {
     display: table-cell;
     border: none;
+    text-align: center;
 }
 
 .table-row.bottom-row {
@@ -116,4 +117,57 @@
     font-weight: 600;
     background: rgba(231, 248, 239, 1);
     text-align: center;
+}
+
+/* add meal plan css */
+.form-generate-div {
+    padding: 0rem 1rem !important;
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.8) 0.78%,
+        rgba(255, 255, 255, 0.56) 100%
+    );
+    border-radius: 4px;
+    border: 3px solid;
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+}
+
+.delievry-no {
+    background: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    padding: 10px;
+    display: flex;
+    margin-top: 3%;
+    /* border: 0.5px solid; */
+    /* border-image-source: linear-gradient(120.29deg, #B3E1FF 0%, #A1D3F3 54.03%, #8FC5E8 98.79%); */
+}
+
+.delievry-no h6 {
+    margin: 0 0 0px 20px;
+}
+
+.form-element-div {
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.8) 0.78%,
+        rgba(255, 255, 255, 0.56) 100%
+    );
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    padding: 20px 20px;
+}
+
+.meal-control {
+    border: 0.5px solid rgba(179, 225, 255, 1);
 }

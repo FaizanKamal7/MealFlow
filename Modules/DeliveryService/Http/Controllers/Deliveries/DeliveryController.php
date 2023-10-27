@@ -101,15 +101,55 @@ class DeliveryController extends Controller
         $this->driverRepository = $driverRepository;
         $this->deliveryBatchRepository = $deliveryBatchRepository;
         $this->deliveryTimelineRepository = $deliveryTimelineRepository;
-        $this->roleRepository =  $roleRepository;
+        $this->roleRepository = $roleRepository;
         $this->userRoleRepository = $userRoleRepository;
         $this->helper = $helper;
     }
 
-    public function viewMealPlan(){
+    public function viewMealPlan()
+    {
+        $partner = $this->businessRepository->getActiveBusinesses();
+        $business_customers = $this->businessCustomerRepository->get();
+        $data = [
+            'partners' => $partner,
+            'business_customers' => $business_customers,
+        ];
 
-        return view('deliveryservice::planner.plan_delivery');
+        return view('deliveryservice::planner.plan_delivery', $data);
     }
+
+    public function addMealPlan(Request $request)
+    {
+        $partner = $request->input('partner');
+        $c_id = $request->input('customer');
+        $business_customer = $this->businessCustomerRepository->getOneBusinessCustomer($c_id);
+        $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
+        $product_type = $this->BusinessCategoryRepository->getBusinessCategory();
+        $customer_addr = $this->customerAddressRepository->getCustomerAddresses($business_customer->customer_id);
+        dd($customer_addr);
+
+        usort($time_slot, function ($a, $b) {
+            return strcmp($a['start_time'], $b['start_time']);
+        });
+        $time_slot = DeliverySlot::hydrate($time_slot);
+        $data = [
+            'time_slot' => $time_slot,
+            'product_type' => $product_type,
+            'business_customer' => $business_customer
+        ];
+
+        return view('deliveryservice::planner.add_plan_delivery', $data);
+    }
+    public function uploadMealPlan(Request $request)
+    {
+        $deliveryAddresses = $request->input('delivery_address');
+        // $date = $deliveryAddresses[0]; // Replace $index with the desired index from your loop
+
+        dd($deliveryAddresses, $request);
+
+        return view('deliveryservice::planner.add_plan_delivery');
+    }
+
 
 
     /**
@@ -404,7 +444,7 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
@@ -716,8 +756,8 @@ class DeliveryController extends Controller
         // - Making all words lower case
         // - replace spaces with underscore "_"
         // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+        $actual_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
 
         // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
         // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
