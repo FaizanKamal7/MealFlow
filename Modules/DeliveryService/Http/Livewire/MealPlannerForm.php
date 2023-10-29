@@ -12,10 +12,13 @@ class MealPlannerForm extends Component
     public $included_dates;
     public $time_slot;
 
+    public $customer_addresses;
+
+
 
     public function render()
     {
-        return view('deliveryservice::livewire.meal-planner-form')->with('time_slot', $this->time_slot);
+        return view('deliveryservice::livewire.meal-planner-form');
 
     }
 }

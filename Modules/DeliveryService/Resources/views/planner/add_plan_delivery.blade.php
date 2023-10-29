@@ -76,19 +76,19 @@
                         </div>
                         <div class="table-row bottom-row">
                             <div class="cell customer_name">
-                                <h5 class="fw-bolder">{{$business_customer->customer->user->name}}</h5>
+                                <h5 class="fw-bolder">{{ $business_customer->customer->user->name }}</h5>
                             </div>
                             <div class="cell">
                                 <p class="fw-bolder">FR-2820</p>
                             </div>
                             <div class="cell">
-                                <p class="fw-bolder">{{$business_customer->customer->user->phone}}</p>
+                                <p class="fw-bolder">{{ $business_customer->customer->user->phone }}</p>
                             </div>
                             <div class="cell">
                                 <p class="fw-bolder">Freshly</p>
                             </div>
                             <div class="cell">
-                                <p class="fw-bolder">{{$business_customer->customer->user->email}}</p>
+                                <p class="fw-bolder">{{ $business_customer->customer->user->email }}</p>
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                     </div>
                 </div>
                 <div id="meal-planner-form-id" style="display: none">
-                    @livewire('deliveryservice::meal-planner-form', ['time_slot' => $time_slot])
+                    @livewire('deliveryservice::meal-planner-form', ['time_slot' => $time_slot, 'customer_addresses' => $customer_addresses])
                 </div>
             </div>
         </div>

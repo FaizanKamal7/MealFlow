@@ -126,7 +126,7 @@ class DeliveryController extends Controller
         $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
         $product_type = $this->BusinessCategoryRepository->getBusinessCategory();
         $customer_addr = $this->customerAddressRepository->getCustomerAddresses($business_customer->customer_id);
-        dd($customer_addr);
+        // dd($customer_addr);
 
         usort($time_slot, function ($a, $b) {
             return strcmp($a['start_time'], $b['start_time']);
@@ -135,7 +135,8 @@ class DeliveryController extends Controller
         $data = [
             'time_slot' => $time_slot,
             'product_type' => $product_type,
-            'business_customer' => $business_customer
+            'business_customer' => $business_customer,
+            'customer_addresses' => $customer_addr
         ];
 
         return view('deliveryservice::planner.add_plan_delivery', $data);
