@@ -23,19 +23,23 @@ class BusinessRepository implements BusinessInterface
         $card_cvv,
         $business_category_id,
         $admin,
-        $status
+        $status,
+        $trade_licence_file,
+        $state_legal_id,
+        $trn_number,
+        $trn_file
     ) {
         $business = Business::create([
             "name" => $name,
             "logo" => $logo,
-            "card_name" => $card_name,
-            "card_number" => $card_number,
-            "card_expiry_month" => $card_expiry_month,
-            "card_expiry_year" => $card_expiry_year,
-            "card_cvv" => $card_cvv,
             "business_category_id" => $business_category_id,
             "admin_id" => $admin,
-            "status" => $status
+            "status" => $status,
+            "trade_licence_file" => $trade_licence_file,
+            "trn_file" => $trn_file,
+            "trn_number" => $trn_number,
+            "state_legal_id" => $state_legal_id,
+
         ]);
         // $business->save();
         return $business;

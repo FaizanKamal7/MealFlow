@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class DeliverySlotPricing extends Model
+class  DeliverySlotPricing extends Model
 {
     use HasFactory;
     use HasUuids;

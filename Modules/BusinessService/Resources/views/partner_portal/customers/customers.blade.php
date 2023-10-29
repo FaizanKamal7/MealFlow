@@ -110,8 +110,7 @@
                             <th class="min-w-125px">Customer Name</th>
                             <th class="min-w-125px">Email</th>
                             <th class="min-w-125px">Phone</th>
-                            <th class="min-w-100px">Status</th>
-                            <th class="min-w-200px">Address</th>
+                            <th class="min-w-200px">Addresses</th>
                             <th class="text-end min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -136,26 +135,25 @@
                             <!--end::Name=-->
                             <!--begin::Email=-->
                             <td>
-                                <p>{{$customer->user->email}}</p>
+                                <p>{{$customer->user->phone}}<br>{{$customer->user->email}}</p>
                             </td>
                             <!--end::Email=-->
                             <!--begin::Phone=-->
                             <td>
-                                <p>{{$customer->user->phone}}</p>
+                                {{$customer->businessCustomers[0]->business->name}}
                             </td>
                             <!--end::Phone=-->
-                            <!--begin::Status=-->
-                            <td>
-                                <!--begin::Badges-->
-                                <div class="badge badge-light-danger">Locked</div>
-                                <!--end::Badges-->
-                            </td>
-                            <!--end::Status=-->
+
                             <!--begin::IP Address=-->
                             <td>
-                                @foreach ($customer->customerAddresses as $address)
+                                @foreach ($customer->customerAddresses as $key => $address)
+                                @if ($key > 0)
+                                <hr>
+                                @endif
                                 <a href="https://www.google.com/maps?q={{$address->latitude }},{{$address->longitude }}"
                                     target="_blank">{{$address->address}}</a>
+                                <div class="badge badge-light-danger">{{$address->address_status}}
+                                </div>
                                 <br>
                                 @endforeach
                             </td>

@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\Admin\LocationManagement\Area;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
 use App\Interfaces\CountryInterface;
 use App\Interfaces\StateInterface;
-use App\Models\Area;
-use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Collection;
 
 
 class AreaController extends Controller
@@ -21,14 +19,16 @@ class AreaController extends Controller
     private CityInterface $cityRepository;
     private StateInterface $stateRepository;
     private CountryInterface $countryRepository;
+    private $helper;
 
 
-    public function __construct(AreaInterface $areaRepository, CityInterface $cityRepository, StateInterface $stateRepository, CountryInterface $countryRepository)
+    public function __construct(AreaInterface $areaRepository, CityInterface $cityRepository, StateInterface $stateRepository, CountryInterface $countryRepository, Helper $helper)
     {
         $this->areaRepository = $areaRepository;
         $this->cityRepository = $cityRepository;
         $this->stateRepository = $stateRepository;
         $this->countryRepository = $countryRepository;
+        $this->helper = $helper;
     }
 
     /**
@@ -50,12 +50,8 @@ class AreaController extends Controller
 
     public function extractAreasOfCityFromAPI($city_id, $city_name)
     {
-        if ($city_id) {
-            $city = $this->cityRepository->get($city_id);
-        } else {
-            // $city is not provided
-        }
-        $city_name = $replacedText = str_replace(' ', '%20', $city_name);
+        $city = $this->cityRepository->get($city_id);
+        $city_name = str_replace(' ', '%20', $city_name);
         $user_name = "faizankamal_";
         $maxRows = 200;
         $featureCode_1 = 'PPLX';
@@ -83,8 +79,12 @@ class AreaController extends Controller
         $responce = json_encode($responce);
         $areas_array = json_decode($responce, true);
 
+
         // Removed elements with duplicated names
-        $areas_unique_name_array = $this->removeArrayDuplicatesWithProperty($areas_array['totalResultsCount'] != 0 ? $areas_array['geoname'] : '', 'name');
+        $areas_unique_name_array = $this->helper->removeArrayDuplicatesWithProperty(
+            array: $areas_array['totalResultsCount'] != 0 ? $areas_array['geoname'] : '',
+            property_name: 'name'
+        );
 
         // Re-index the array if needed
         $api_areas_object = (object) $areas_unique_name_array;
@@ -131,31 +131,15 @@ class AreaController extends Controller
                     'coordinates' => $coordinates,
                 ];
 
-            $this->areaRepository->updateOrInsertAreaIfAttributeExist("name", $city->name, $single_area);
+            $this->areaRepository->updateOrInsertAreaIfAttributeExist(
+                attribute: "name",
+                value: $city->name,
+                data: $single_area
+            );
         }
         $this->cityRepository->update($city_id, ['active_status' => true]);
         $this->stateRepository->update($city->state_id, ['active_status' => true]);
         $this->countryRepository->update($city->state->country_id, ['active_status' => true]);
         return redirect()->route('activate_locations_view')->with('success', 'Areas activated successfully');
-    }
-    // TODO: Transfer below function in Helper class
-    public function removeArrayDuplicatesWithProperty($array = [], $property_name = '')
-    {
-        if (is_string($array) && $array === "") {
-            $array = [];
-        }
-        // Count the occurrences of each name
-        $nameCount = array_count_values(array_column($array, $property_name));
-
-        // Filter the array by removing elements with repeated names
-        $response_array = array_filter($array, function ($item) use ($property_name, $nameCount) {
-            if (is_array($item) && isset($item[$property_name])) {
-                return $nameCount[$item[$property_name]] == 1;
-            } elseif (is_object($item) && isset($item->{$property_name})) {
-                return $nameCount[$item->{$property_name}] == 1;
-            }
-        });
-        // Re-index the array
-        return array_values($response_array);
     }
 }

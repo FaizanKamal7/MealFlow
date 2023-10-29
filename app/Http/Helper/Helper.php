@@ -31,6 +31,11 @@ class Helper
         return $file_url;
     }
 
+    public function convertTo12HourFormat($time)
+    {
+        return date("g:i A", strtotime($time));
+    }
+
     public function logActivity($userId, $moduleName, $action, $subject, $url, $description, $ipAddress, $userAgent, $oldValues, $newValues, $recordId, $recordType, $method)
     {
         ActivityLogs::create([
@@ -267,7 +272,6 @@ class Helper
 
     function convertStringAddressToCoordinates($address)
     {
-        return null; // will remove it once API is acrivated
         $api_key = Config::get('services.google.key');
         $maxAttempts = 5; // Set a maximum number of attempts
         for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
@@ -384,5 +388,24 @@ class Helper
     function getDelivery($delivery_id)
     {
         return Delivery::find($delivery_id);
+    }
+
+    public function removeArrayDuplicatesWithProperty($array = [], $property_name = '')
+    {
+        if (is_string($array) && $array === "") {
+            $array = [];
+        }
+        // Count the occurrences of each name
+        $nameCountArray = array_count_values(array_column($array, $property_name));
+        // Filter the array by removing elements with repeated names
+        $response_array = array_filter($array, function ($item) use ($property_name, $nameCountArray) {
+            if (is_array($item) && isset($item[$property_name])) {
+                return $nameCountArray[$item[$property_name]] == 1;
+            } elseif (is_object($item) && isset($item->{$property_name})) {
+                return $nameCountArray[$item->{$property_name}] == 1;
+            }
+        });
+        // Re-index the array
+        return array_values($response_array);
     }
 }

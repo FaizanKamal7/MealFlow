@@ -17,7 +17,10 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->string('name')->unique();
             $table->string('contract_file')->nullable();
-            $table->string('TRN')->nullable();
+            $table->string('trn_file')->nullable();
+            $table->string('trade_licence_file')->nullable();
+            $table->string('trn_number')->nullable();
+            $table->string('state_legal_id')->nullable();
             $table->string('logo')->nullable();
             $table->string('status');
             $table->boolean('active_status')->default(1)->nullable();
