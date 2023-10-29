@@ -52,9 +52,7 @@ class BusinessInfoController extends Controller
     public function getBusinessBaseDeliverySlotPricing($business)
     {
         $business_branches_coverages = $this->getBusinessCoveragesCities($business);
-        foreach ($business_branches_coverages as $key => $value) {
-            echo "<pre>" . $value .  "</pre>";
-        }
+
         $city_delivery_slot_wise_business_base_price = $business_branches_coverages->map(function ($branch_coverage) {
             $null_pricing = $branch_coverage->city->delivery_slot_pricings()->businessNull()->get();
             return $null_pricing ? $null_pricing : null;

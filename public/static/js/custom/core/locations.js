@@ -283,7 +283,7 @@ $(document).ready(function () {
         var address_map = new google.maps.Map(
             document.getElementById("address_map"),
             {
-                center: { lat: -34.397, lng: 150.644 },
+                center: { lat: 25.1972, lng: 55.2744 },
                 zoom: 8,
             }
         );
@@ -326,7 +326,7 @@ $(document).ready(function () {
         ? console.warn(p + " only loads once. Ignoring:", g)
         : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
 })({
-    key: "AIzaSyC45M9bSvmoPH_wfAcwmxCAWCavsUURp3w",
+    key: "AIzaSyBiBaqUbcNKI8aa_wLCcB4tz-dcnDZ-qbw",
     libraries: "places",
     v: "weekly",
 });

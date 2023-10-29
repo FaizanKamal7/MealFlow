@@ -3,6 +3,7 @@
 namespace Modules\BusinessService\Http\Controllers\Onboarding;
 
 use App\Enum\BusinessStatusEnum;
+use App\Enum\ModulesTitleEnum;
 use App\Enum\RoleNamesEnum;
 use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
@@ -130,6 +131,10 @@ class BusinessOnboardingController extends Controller
         $latitude = $request->latitude;
         $longitude = $request->longitude;
         $area_coverage_list = $request->area_coverage_list;
+        $state_legal_id = $request->state_legal_id;
+        $trn_file = $request->trn_file;
+        $trn_number = $request->trn_number;
+        $trade_licence_file = $request->trade_licence_file;
         $cities = $this->helper->extractCitiesFromCoveragesSelection($area_coverage_list);
 
 
@@ -173,6 +178,9 @@ class BusinessOnboardingController extends Controller
 
             // --- Adding data in business table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $trade_licence_file_path =  $this->helper->storeFile($trade_licence_file, ModulesTitleEnum::BUSINESS_SERVICE->value, "Businesses");
+            $trn_file_path =  $this->helper->storeFile($trn_file, ModulesTitleEnum::BUSINESS_SERVICE->value, "Businesses");
+
             $business = $this->businessRepository->createBusiness(
                 name: $buisness_name,
                 logo: $logo,
@@ -184,6 +192,11 @@ class BusinessOnboardingController extends Controller
                 business_category_id: $business_category_id,
                 admin: $user->id,
                 status: BusinessStatusEnum::NEW_REQUEST->value,
+                state_legal_id: $state_legal_id,
+                trn_number: $trn_number,
+                trn_file: $trn_file_path,
+                trade_licence_file: $trade_licence_file_path,
+
 
             );
 

@@ -16,6 +16,8 @@ class BusinessRequest extends FormRequest
         return [
             'buisness_name' => ['required', 'unique:businesses,name'],
             'email' => ['required', 'unique:users'],
+            'phone' => ['required', 'unique:users'],
+            
 
 
         ];

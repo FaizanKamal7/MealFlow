@@ -36,7 +36,7 @@
                     </div>
                     <div class="me-3">
                         <a href="#uploadByExcel" class="btn btn-success" data-bs-toggle="modal"
-                            data-bs-target="#nixus_modal_upload_excel"><i class="fa fa-file-excel"></i> Upload
+                            data-bs-target="#excel_upload_modal"><i class="fa fa-file-excel"></i> Upload
                             By
                             Excel</a>
                     </div>
@@ -309,7 +309,7 @@
 <!--end::Post-->
 <!--begin::Modal - Upload By Excel-->
 {{-- modal div here --}}
-<div class="modal fade" id="nixus_modal_upload_excel" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="excel_upload_modal" tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <!--begin::Modal content-->
@@ -335,7 +335,7 @@
             <!--begin::Modal body-->
             <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                 <!--begin:Form-->
-                {{-- <form id="nixus_modal_upload_excel_form" class="form" action="#"> --}}
+                {{-- <form id="excel_upload_modal_form" class="form" action="#"> --}}
                     <!--begin::Heading-->
                     <div class="mb-13 text-center">
                         <!--begin::Title-->
@@ -349,21 +349,19 @@
                         <!--end::Description-->
                     </div>
                     <!--end::Heading-->
-                    <form method="get" action="{{ route('generate_delivery_template') }}">
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">Download Sample Deliveries Sheet</span>
-                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                    title="Specify total deliveries you want to upload."></i>
-                                <button type="submit" class="input-group-text btn-primary px-2" id="basic-addon2">
-                                    <i class="fa fa-file-download fs-4 text-white"></i>
-                                </button>
-                            </label>
-                        </div>
-                        <!--end::Input group-->
-                    </form>
+                    <!--begin::Input group-->
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <!--begin::Label-->
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <span class="required"> <a href="{{ route('generate_delivery_template') }}">
+                                    Download Sample Deliveries Sheet</a> </span>
+                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                title="Specify total deliveries you want to upload."></i>
+
+                        </label>
+                    </div>
+                    <!--end::Input group-->
+
 
                     <form method="post" action="{{ route('upload_deliveries_by_excel') }}"
                         enctype="multipart/form-data">
@@ -375,25 +373,32 @@
                             <option value={{ $business->id }}> {{ $business->name }}</option>
                             @endforeach
                         </select>
+                        @error('business_id')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                         <div class="mb-2">
                             <label for="" class="form-label">Select date </label>
                             <input name="delivery_date" class="form-control form-control-solid" placeholder="Pick date"
                                 id="kt_datepicker_3" />
-
+                            @error('delivery_date')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <label class="required fs-6 fw-bold mb-2">Excel File</label>
                             <input type="file" class="form-control form-control-solid" placeholder="Select excel file"
                                 name="excel_file" />
-
+                            @error('excel_file')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <!--end::Input group-->
                         <!--begin::Actions-->
                         <div class="text-center">
-                            <button type="reset" id="nixus_modal_upload_excel_cancel" class="btn btn-light me-3"
+                            <button type="reset" id="excel_upload_modal_cancel" class="btn btn-light me-3"
                                 data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" id="nixus_modal_upload_excel_submit" class="btn btn-primary">
+                            <button type="submit" id="excel_upload_modal_submit" class="btn btn-primary">
                                 <span class="indicator-label">Submit</span>
                                 <span class="indicator-progress">Please wait...
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -514,14 +519,35 @@
 
 <script>
     $(document).ready(function() {
-            function reInitializeDataValidation() {
-                $(".fv-plugins-message-container.invalid-feedback").remove();
+        function removeValidationMessage() {
+        // Remove any validation error messages
+        $(".fv-plugins-message-container.invalid-feedback").remove();
+        }
+        // Calculate tomorrow's date
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
 
-            }
-            $("#kt_datepicker_3").flatpickr({
-                enableTime: false,
-                dateFormat: "Y-m-d",
-            });
+
+        // Initialize the date picker
+        $("#kt_datepicker_3").flatpickr({
+            enableTime: false, // Disable time selection
+            dateFormat: "Y-m-d", // Set the date format to Year-Month-Day
+            minDate: "today", // Minimum selectable date is tomorrow
+            maxDate: new Date().fp_incr(+30), // Disable dates before today
+            defaultDate: tomorrow,
+            onClose: removeValidationMessage // Remove validation messages when the date picker is closed
         });
+    });
 </script>
+
+
+@if ($errors->any())
+<script>
+    $(document).ready(function() {
+        // Show the modal when there are validation errors
+        $('#excel_upload_modal').modal('show');
+
+    });
+</script>
+@endif
 @endsection

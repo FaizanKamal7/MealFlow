@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Interfaces\AreaInterface;
 use App\Models\Area;
+use Illuminate\Support\Str;
+
 
 class AreaRepository implements AreaInterface
 {
@@ -20,7 +22,6 @@ class AreaRepository implements AreaInterface
     {
         // return Area::where($id)->get();
         return Area::find($id);
-
     }
 
     public function getWhere($where)
@@ -40,7 +41,9 @@ class AreaRepository implements AreaInterface
 
     public function updateOrInsertAreaIfAttributeExist($attribute, $value, $data)
     {
-        // Make sure that attribute exist  
+        $uuid = Str::uuid()->toString();
+        $data['id'] = $uuid;
+
         return Area::updateOrInsert(
             [$attribute => $value],
             $data

@@ -1,4 +1,4 @@
-@extends('businessservice::layouts.master')
+@extends('layouts.admin_master')
 @section('title', 'Partner Dashboard')
 
 @section('extra_style')
