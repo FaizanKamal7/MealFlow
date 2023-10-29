@@ -48,8 +48,11 @@
                             <select id="delivery_address_{{ $i }}" class="form-select meal-control"
                                 placeholder="Current Address" name="delivery_address[]">
                                 <option></option>
-                                <option value="type1">Type 1</option>
-                                <option value="type2">Type 2</option>
+                                @foreach ($customer_addresses as $address)
+                                    <option value="{{ $address->id }}">
+                                        {{ $address->address }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-4">
@@ -57,12 +60,17 @@
                             <select id="emirates_and_area{{ $i }}" class="form-select meal-control"
                                 data-control="select2" data-placeholder="Dubai" name="emirates_and_area[]">
                                 <option></option>
-                                @foreach ($time_slot as $slot)
+                                {{-- @foreach ($time_slot as $slot)
                                     <option value="{{ $slot->id }}">
                                         {{ $slot->city->name }} ({{ $slot['start_time'] }} -
                                         {{ $slot['end_time'] }})
                                     </option>
-                                @endforeach
+                                @endforeach --}}
+                                @foreach ($customer_addresses as $address)
+                                <option value="{{ $address->id }}">
+                                    {{ $address->city->name }} ({{  $address->area->name  }})
+                                </option>
+                            @endforeach
                             </select>
                         </div>
                         <div class="col-md-4">
