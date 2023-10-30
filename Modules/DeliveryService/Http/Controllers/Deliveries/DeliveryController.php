@@ -2,6 +2,8 @@
 
 namespace Modules\DeliveryService\Http\Controllers\Deliveries;
 
+use App\Enum\AddressStatusEnum;
+use App\Enum\AddressTypeEnum;
 use App\Enum\DeliveryStatusEnum;
 use App\Enum\RoleNamesEnum;
 use App\Http\Helper\Helper;
@@ -253,7 +255,7 @@ class DeliveryController extends Controller
                         'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
                         'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
                         'customer_id' => $customer->id,
-                        'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
+                        'address_status' => $new_address_coordinates ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
                         'area_id' => $area->id,
                         'city_id' => $city->id,
                         'state_id' => $city->state->id,
@@ -334,31 +336,6 @@ class DeliveryController extends Controller
 
     }
 
-    public function uploadDeliveriesByForm(Request $request)
-    {
-        $customers = $request->get("customer");
-        $addresses = $request->get("delivery_address");
-        $deliverySlots = $request->get("delivery_slot");
-        $itemTypes = $request->get("item_type");
-        $instructions = $request->get("special_instructions");
-        $notes = $request->get("notes");
-        $codAmounts = $request->get("cod_amount");
-
-        $totalRecords = count($customers);
-        for ($i = 0; $i < $totalRecords; $i++) {
-            $customer = $customers[$i];
-            $address = $addresses[$i];
-            $deliverySlot = $deliverySlots[$i];
-            $itemType = $itemTypes[$i];
-            $instruction = $instructions[$i];
-            $note = $notes[$i];
-            $codAmount = $codAmounts[$i];
-
-            //TODO:: store data into database
-
-        }
-        return redirect()->route("upload_deliveries")->with("success", "Deliveries uploaded successfully");
-    }
 
     public function generateAndDownloadDeliveryTemplate(Request $request)
     {
@@ -500,11 +477,11 @@ class DeliveryController extends Controller
 
                             $address_data = [
                                 'address' => $sheet_address,
-                                'address_type' => "OTHER",
+                                'address_type' => AddressTypeEnum::DEFAULT->value,
                                 'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
                                 'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
                                 'customer_id' => $customer->id,
-                                'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
+                                'address_status' => $new_address_coordinates ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
                                 'area_id' => $area->id,
                                 'city_id' => $city->id,
                                 'state_id' => $city->state->id,
@@ -616,7 +593,7 @@ class DeliveryController extends Controller
                     'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
                     'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
                     'customer_id' => $decoded_delivery_data->customer_id,
-                    'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
+                    'address_status' => $new_address_coordinates ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
                     'area_id' => $decoded_delivery_data->area_id,
                     'city_id' => $decoded_delivery_data->city_id,
                     'state_id' => $decoded_delivery_data->state_id,

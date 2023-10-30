@@ -18,6 +18,7 @@ class CustomerRepository implements CustomerInterface
         return Customer::with('user')->with('customerAddresses')->get();
     }
 
+
     public function create($data)
     {
         return Customer::create($data);

@@ -74,7 +74,6 @@ Route::middleware(['auth'])->group(function () {
                 Route::POST("store-bank-transfer", [WalletTransactionController::class, "storeBankTransferDetails"])->name("upload_bank_transfer_details");
                 Route::get("pending-transactions", [WalletTransactionController::class, "pendingTransactionsView"])->name("pending_transactions");
                 Route::POST("approve-pending-transaction", [WalletTransactionController::class, "approvePendingTransaction"])->name("approve_pending_transaction");
-            
             });
 
 

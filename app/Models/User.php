@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\BusinessService\Entities\Business;
+use Modules\BusinessService\Entities\BusinessCustomer;
 use Modules\BusinessService\Entities\BusinessUser;
 use Modules\BusinessService\Entities\Customer;
 
@@ -82,3 +83,6 @@ class User extends Authenticatable
         return $this->business()->exists();
     }
 }
+
+
+// Pa$$w0rd!

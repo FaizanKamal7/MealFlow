@@ -34,7 +34,7 @@
                 <!--end::Card title-->
                 <!--begin::Card toolbar-->
                 <div class="card-toolbar">
-                    @can("add_role")
+                    {{-- @can("add_role") --}}
                     <!--begin::Button-->
                     <button type="button" class="btn btn-light-primary" data-bs-toggle="modal"
                         data-bs-target="#kt_modal_add_role">
@@ -51,7 +51,7 @@
                         <!--end::Svg Icon-->Add Role
                     </button>
                     <!--end::Button-->
-                    @endcan
+                    {{-- @endcan --}}
                 </div>
                 <!--end::Card toolbar-->
             </div>
@@ -105,7 +105,7 @@
                             <!--end::Created Date-->
                             <!--begin::Action=-->
                             <td class="text-end">
-                                @can("update_role")
+                                {{-- @can("update_role") --}}
                                 <!--begin::Update-->
                                 <a href="{{ route('role_edit', ['role_id'=>$role->id]) }}"
                                     class="btn btn-icon btn-active-light-primary w-30px h-30px me-3">
@@ -124,9 +124,9 @@
                                     <!--end::Svg Icon-->
                                 </a>
                                 <!--end::Update-->
-                                @endcan
+                                {{-- @endcan --}}
 
-                                @can("delete_role")
+                                {{-- @can("delete_role") --}}
                                 <!--begin::Delete-->
                                 <a href="{{ route('role_delete', ['role_id'=>$role->id]) }}"
                                     class="btn btn-icon btn-active-light-primary w-30px h-30px"
@@ -149,7 +149,7 @@
                                     <!--end::Svg Icon-->
                                 </a>
                                 <!--end::Delete-->
-                                @endcan
+                                {{-- @endcan --}}
                             </td>
                             <!--end::Action=-->
                         </tr>
@@ -166,7 +166,7 @@
 
         <!--begin::Modals-->
 
-        @can("add_role")
+        {{-- @can("add_role") --}}
         <!--begin::Modal - Add role-->
         <div class="modal fade" id="kt_modal_add_role" tabindex="-1" aria-hidden="true">
             <!--begin::Modal dialog-->
@@ -312,10 +312,10 @@
             <!--end::Modal dialog-->
         </div>
         <!--end::Modal - Add role-->
-        @endcan
+        {{-- @endcan --}}
 
 
-        @can("update_role")
+        {{-- @can("update_role") --}}
         <!--begin::Modal - Update role-->
         <div class="modal fade" id="kt_modal_update_role" tabindex="-1" aria-hidden="true">
             <!--begin::Modal dialog-->
@@ -781,7 +781,7 @@
             <!--end::Modal dialog-->
         </div>
         <!--end::Modal - Update role-->
-        @endcan
+        {{-- @endcan --}}
         <!--end::Modals-->
     </div>
     <!--end::Container-->

@@ -6,7 +6,7 @@ use App\Enum\RoleNamesEnum;
 use App\Models\User;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
-use App\Repositories\userRoleRepository;
+use App\Repositories\UserRoleRepository;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -77,7 +77,7 @@ class EmployeesController extends Controller
         LeavePolicyInterface $leavePolicy,
         TaxesInterface $taxesRepository,
         UserRepository $userRepository,
-        userRoleRepository $userRoleRepository,
+        UserRoleRepository $userRoleRepository,
         RoleRepository $roleRepository,
 
     ) {
