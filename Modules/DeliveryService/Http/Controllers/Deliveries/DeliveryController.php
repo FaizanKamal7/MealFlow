@@ -122,18 +122,14 @@ class DeliveryController extends Controller
     {
         $partner = $request->input('partner');
         $c_id = $request->input('customer');
+        $partner = $this->businessRepository->getActiveBusinesses(); //to show partners
+        $other_customers = $this->businessCustomerRepository->get(); //for dropdown
         $business_customer = $this->businessCustomerRepository->getOneBusinessCustomer($c_id);
-        $time_slot = $this->deliverySlotRepository->getAllDeliverySlots()->toArray();
         $product_type = $this->BusinessCategoryRepository->getBusinessCategory();
         $customer_addr = $this->customerAddressRepository->getCustomerAddresses($business_customer->customer_id);
-        // dd($customer_addr);
-
-        usort($time_slot, function ($a, $b) {
-            return strcmp($a['start_time'], $b['start_time']);
-        });
-        $time_slot = DeliverySlot::hydrate($time_slot);
         $data = [
-            'time_slot' => $time_slot,
+            'partners' => $partner,
+            'other_customers' => $other_customers,
             'product_type' => $product_type,
             'business_customer' => $business_customer,
             'customer_addresses' => $customer_addr
@@ -144,15 +140,11 @@ class DeliveryController extends Controller
     public function uploadMealPlan(Request $request)
     {
         $deliveryAddresses = $request->input('delivery_address');
-        // $date = $deliveryAddresses[0]; // Replace $index with the desired index from your loop
-
-        dd($deliveryAddresses, $request);
-
-        return view('deliveryservice::planner.add_plan_delivery');
+        // $date = $deliveryAddresses[0]; 
+        // dd($deliveryAddresses, $request);
+        // return view('deliveryservice::planner.add_plan_delivery');
+        return redirect()->route('view_plan_delivery')->with("success", "Meal-Plan uploaded successfully");
     }
-
-
-
     /**
      * Display a listing of the resource.
      */
@@ -794,6 +786,7 @@ class DeliveryController extends Controller
             // 'business' => $business
         ];
         return view('deliveryservice::deliveries.upload_delivery', $data);
+
     }
 
     // function viewAssignedDeliveries()

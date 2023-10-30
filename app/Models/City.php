@@ -42,6 +42,11 @@ class City extends Model
         return $this->hasMany(DeliverySlotPricing::class);
     }
 
+    public function deliverySlot()
+    {
+        return $this->hasMany(DeliverySlot::class);
+    }
+
     public function range_pricings()
     {
         return $this->hasMany(RangePricing::class);

@@ -31,10 +31,10 @@
                             <select id="partnerSelect" class="form-select form-select-solid" data-control="select2"
                                 data-placeholder="Select a Partner">
                                 <option></option>
-                                @foreach ($time_slot as $slot)
-                                    <option value="{{ $slot->id }}">
-                                        {{ $slot->city->name }} ({{ $slot['start_time'] }} -
-                                        {{ $slot['end_time'] }})
+                                <option></option>
+                                @foreach ($partners as $partner)
+                                    <option value={{ $partner->id }}>
+                                        {{ $partner->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -43,8 +43,12 @@
                             <select id="customerSelect" class="form-select form-select-solid" data-control="select2"
                                 data-placeholder="Select a Customer">
                                 <option></option>
-                                <option value="1">option 1</option>
-                                <option value="2">option 2</option>
+                                @foreach ($other_customers as $i)
+                                    <option value={{ $i->id }}>
+                                        {{ $i->customer->user->name }}
+
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="me-3">
@@ -129,7 +133,7 @@
                     </div>
                 </div>
                 <div id="meal-planner-form-id" style="display: none">
-                    @livewire('deliveryservice::meal-planner-form', ['time_slot' => $time_slot, 'customer_addresses' => $customer_addresses])
+                    @livewire('deliveryservice::meal-planner-form', ['customer_addresses' => $customer_addresses, 'product_type' => $product_type])
                 </div>
             </div>
         </div>

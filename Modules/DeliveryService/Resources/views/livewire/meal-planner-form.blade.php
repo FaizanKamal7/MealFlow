@@ -60,17 +60,11 @@
                             <select id="emirates_and_area{{ $i }}" class="form-select meal-control"
                                 data-control="select2" data-placeholder="Dubai" name="emirates_and_area[]">
                                 <option></option>
-                                {{-- @foreach ($time_slot as $slot)
-                                    <option value="{{ $slot->id }}">
-                                        {{ $slot->city->name }} ({{ $slot['start_time'] }} -
-                                        {{ $slot['end_time'] }})
-                                    </option>
-                                @endforeach --}}
                                 @foreach ($customer_addresses as $address)
-                                <option value="{{ $address->id }}">
-                                    {{ $address->city->name }} ({{  $address->area->name  }})
-                                </option>
-                            @endforeach
+                                    <option value="{{ $address->id }}">
+                                        {{ $address->city->name }} ({{ $address->area->name }})
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-4">
@@ -78,14 +72,18 @@
                             <select id="time_slot{{ $i }}" class="form-select meal-control"
                                 data-control="select2" data-placeholder="Dubai (2am -6 am)" name="time_slot[]">
                                 <option></option>
-                                <option value="type1">Type 1</option>
-                                <option value="type2">Type 2</option>
-                                {{-- @foreach ($time_slot as $slot)
-                                        <option value="{{ $slot->id }}">
-                                            {{ $slot->city->name }} ({{ $slot['start_time'] }} -
-                                            {{ $slot['end_time'] }})
-                                        </option>
-                                    @endforeach --}}
+                                @foreach ($address->city->deliverySlot as $slot)
+                                    <option value="{{ $slot->id }}">
+                                        {{ $slot->city->name }} ({{ $slot['start_time'] }} -
+                                        {{ $slot['end_time'] }})
+                                    </option>
+                                @endforeach
+
+                                {{-- @foreach ($customer_addresses as $address)
+                                    <option value="{{ $address->city->delivery_slot_pricings->de }}">
+                                        {{ $address->city->delivery_slot_pricings->start_time }}
+                                    </option>
+                                @endforeach --}}
                             </select>
                         </div>
                     </div>
@@ -95,11 +93,11 @@
                             <select id="product_type{{ $i }}" class="form-select meal-control"
                                 data-control="select2" data-placeholder="Select" name="product_type[]">
                                 <option></option>
-                                {{-- @foreach ($product_type as $type)
+                                @foreach ($product_type as $type)
                                     <option value="{{ $type->id }}">
                                         {{ $type->name }}
                                     </option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-3">

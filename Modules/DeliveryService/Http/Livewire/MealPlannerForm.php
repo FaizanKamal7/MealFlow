@@ -10,9 +10,10 @@ class MealPlannerForm extends Component
     public $expiry_dates;
     public $no_of_days;
     public $included_dates;
-    public $time_slot;
-
+    // public $time_slot;
     public $customer_addresses;
+    public $product_type;
+
 
 
 
