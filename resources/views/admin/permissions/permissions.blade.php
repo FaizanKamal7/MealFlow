@@ -34,7 +34,7 @@
                 <!--end::Card title-->
                 <!--begin::Card toolbar-->
                 <div class="card-toolbar">
-                    @can("add_permission")
+                    {{-- @can("add_permission") --}}
                     <!--begin::Button-->
                     <button type="button" class="btn btn-light-primary" data-bs-toggle="modal"
                         data-bs-target="#kt_modal_add_permission">
@@ -51,7 +51,7 @@
                         <!--end::Svg Icon-->Add Permission
                     </button>
                     <!--end::Button-->
-                    @endcan
+                    {{-- @endcan --}}
                 </div>
                 <!--end::Card toolbar-->
             </div>
@@ -93,7 +93,7 @@
                             <!--end::Created Date-->
                             <!--begin::Action=-->
                             <td class="text-end">
-                                @can("update_permission")
+                                {{-- @can("update_permission") --}}
                                 <!--begin::Update-->
                                 <button class="btn btn-icon btn-active-light-primary w-30px h-30px me-3"
                                     onclick="edit_permission('{{ $permission->id }}')" data-bs-toggle="modal"
@@ -113,11 +113,11 @@
                                     <!--end::Svg Icon-->
                                 </button>
                                 <!--end::Update-->
-                                @endcan
+                                {{-- @endcan --}}
 
-                                @can("delete_permission")
+                                {{-- @can("delete_permission") --}}
                                 <!--begin::Delete-->
-                                <a href="{{ route(" permissions_delete", ["permission_id"=>$permission->id]) }}"
+                                <a href="{{ route('permissions_delete', ['permission_id'=>$permission->id]) }}"
                                     class="btn btn-icon btn-active-light-primary w-30px h-30px"
                                     data-kt-permissions-table-filter="delete_row">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
@@ -138,7 +138,7 @@
                                     <!--end::Svg Icon-->
                                 </a>
                                 <!--end::Delete-->
-                                @endcan
+                                {{-- @endcan --}}
                             </td>
                             <!--end::Action=-->
                         </tr>
@@ -155,7 +155,7 @@
 
 
         <!--begin::Modals-->
-        @can("add_permission")
+        {{-- @can("add_permission") --}}
         <!--begin::Modal - Add permissions-->
         <div class="modal fade" id="kt_modal_add_permission" tabindex="-1" aria-hidden="true">
             <!--begin::Modal dialog-->
@@ -188,8 +188,8 @@
                     <!--begin::Modal body-->
                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         <!--begin::Form-->
-                        <form id="kt_modal_add_permission_form" method="post" class="form" action="{{ route("
-                            permissions_store") }}">
+                        <form id="kt_modal_add_permission_form" method="post" class="form"
+                            action="{{ route('permissions_store') }}">
                             @csrf
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
@@ -205,7 +205,7 @@
                                     name="application_model">
                                     <option></option>
                                     @foreach($application_models as $model)
-                                    <option value="{{ $model->id }}">{{ $model->model_name }}</option>
+                                    <option value="{{ $model->id }}">{{ $model->model_name }}, {{ $model->application->app_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -278,10 +278,10 @@
             <!--end::Modal dialog-->
         </div>
         <!--end::Modal - Add permissions-->
-        @endcan
+        {{-- @endcan --}}
 
 
-        @can("update_permission")
+        {{-- @can("update_permission") --}}
         <!--begin::Modal - Update permissions-->
         <div class="modal fade" id="kt_modal_update_permission" tabindex="-1" aria-hidden="true">
             <!--begin::Modal dialog-->
@@ -350,8 +350,8 @@
                         <!--end::Notice-->
                         <!--end::Notice-->
                         <!--begin::Form-->
-                        <form id="kt_modal_update_permission_form" method="post" class="form" action="{{ route("
-                            permissions_update") }}">
+                        <form id="kt_modal_update_permission_form" method="post" class="form"
+                            action="{{ route('permissions_update') }}">
                             @csrf
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
@@ -443,7 +443,7 @@
             <!--end::Modal dialog-->
         </div>
         <!--end::Modal - Update permissions-->
-        @endcan
+        {{-- @endcan --}}
         <!--end::Modals-->
 
 

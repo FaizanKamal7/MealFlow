@@ -16,6 +16,7 @@
                 </div>
             </div>
 
+            @can('view_all_businesses')
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <a href="{{ route('admin_dashboard') }}">
                     <span class="menu-link">
@@ -31,64 +32,54 @@
                     </span>
                 </a>
             </div>
+            @else
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <a href="{{ route('viewWallet') }}">
+                <a href="{{ route('business_home') }}">
                     <span class="menu-link">
-
                         <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                            <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
                             <span class="svg-icon side-icon svg-icon-2">
-                                <x-iconsax-bol-wallet-3 />
+                                <x-iconsax-bul-element-3 />
                             </span>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-title mx-5">Wallet </span>
+                        <span class="menu-title mx-5">Dashboard</span>
+                        <span class="menu-arrow"></span>
                     </span>
                 </a>
-            </div>
-
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
-                    <span class="menu-icon">
-                        <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
-                        <span class="svg-icon side-icon svg-icon-2">
-                            <x-iconsax-bol-home-trend-up />
-                        </span>
-                        <!--end::Svg Icon-->
-                    </span>
-                    <span class="menu-title mx-5">Business Management</span>
-                    <span class="menu-arrow"></span>
-
-                </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('business_home') }}">
+                        <a class="menu-link" href="{{ route('viewWallet') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Dashboard</span>
+                            <span class="menu-title">Wallet Details</span>
                         </a>
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('permissions_view') }}">
+                        <a class="menu-link" href="{{ route('viewWallet') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Branches</span>
+                            <span class="menu-title">Pricings</span>
                         </a>
                     </div>
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('delivery_slot_wise_base_pricing') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Pricing Info</span>
-                        </a>
-                    </div>
+
+
+
                 </div>
             </div>
+            @endcan
+
+
+
+
+
+
+
+
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
@@ -777,10 +768,11 @@
             <div class="separator"></div>
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
-                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Partners</span>
+                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Users</span>
                 </div>
             </div>
 
+            @can('view_all_businesses')
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
@@ -812,7 +804,6 @@
                     </div>
                 </div>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('get_all_businesses') }}">
                             <span class="menu-bullet">
@@ -821,53 +812,35 @@
                             <span class="menu-title">All Businesses</span>
                         </a>
                     </div>
-
-
                 </div>
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
-
-                </div>
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
-                        <span class="svg-icon side-icon svg-icon-muted svg-icon-2"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <path
-                                    d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
-                                    fill="currentColor" />
-                                <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('view_all_customers') }}">
-                                {{-- <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span> --}}
-                                <span class="menu-title">Customers</span>
-                            </a>
-                        </div>
-
-
-                </div>
-
             </div>
-
+            @endcan
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
                     <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
-                        <x-iconsax-bul-shield-cross />
+                        <x-iconsax-bol-password-check />
                     </span>
                     <!--end::Svg Icon-->
-                    <span class="menu-title mx-5">Cancelled</span>
-
+                    <span class="menu-title mx-5">Customer</span>
+                    <span class="menu-arrow"></span>
                 </span>
-
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('view_all_customers') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">All Customers</span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            {{-- <div class="separator"></div> --}}
 
+
+
+            <div class="separator"></div>
+            @can('view_employee')
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
                     <span class="menu-section text-dark text-uppercase fs-8 ls-1">HRM</span>
@@ -1093,8 +1066,8 @@
 
                 </div>
             </div>
-
             <div class="separator"></div>
+
 
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
@@ -1140,50 +1113,8 @@
             </div>
 
             <div class="separator"></div>
+            @endcan
 
-
-            <div class="menu-item">
-                <div class="menu-content pt-5 pb-2">
-                    <span class="menu-section text-dark text-uppercase fs-8 ls-1">MEAL
-                        PLANNER</span>
-                </div>
-            </div>
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
-                    <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
-                    <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
-                        <x-iconsax-bol-buliding />
-                    </span>
-                    <!--end::Svg Icon-->
-                    <span class="menu-title mx-5">Add Customer to Planner</span>
-                    {{-- <span class="menu-arrow"></span> --}}
-                </span>
-
-            </div>
-
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <a href="{{ route('view_plan_delivery') }}">
-                    <span class="menu-link">
-                        <span class="svg-icon side-icon svg-icon-muted svg-icon-1x">
-                            <x-iconsax-bol-convert-3d-cube />
-                        </span>
-                        <!--end::Svg Icon-->
-                        <span class="menu-title mx-5">Plan Delivery Days</span>
-                    </span>
-                </a>
-            </div>
-
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
-                    <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
-                    <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
-                        <x-iconsax-bul-shop />
-                    </span>
-                    <!--end::Svg Icon-->
-                    <span class="menu-title mx-5">Meal Plan Tracker</span>
-                    {{-- <span class="menu-arrow"></span> --}}
-                </span>
-            </div>
 
             <div class="separator"></div>
 
@@ -1208,6 +1139,9 @@
 
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    @can('update_city')
+
+
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('activate_locations_view') }}">
                             <span class="menu-bullet">
@@ -1216,6 +1150,7 @@
                             <span class="menu-title">Activate Locations</span>
                         </a>
                     </div>
+                    @endcan
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('activated_locations_view') }}">
                             <span class="menu-bullet">
@@ -1224,43 +1159,11 @@
                             <span class="menu-title">Activated Locations</span>
                         </a>
                     </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('business_home') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Active Countries</span>
-                        </a>
-                    </div>
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('permissions_view') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Active States</span>
-                        </a>
-                    </div>
-
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('roles_view') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Active Cities</span>
-                        </a>
-                    </div>
-
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('roles_view') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Active Areas</span>
-                        </a>
-                    </div>
                 </div>
             </div>
+
+            @can('view_range_pricing')
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
@@ -1303,7 +1206,7 @@
                 </div>
             </div>
 
-
+            @endcan
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <a href="{{ route('get_all_delivery_slots') }}">

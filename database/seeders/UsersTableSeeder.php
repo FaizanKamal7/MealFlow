@@ -32,6 +32,7 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2023-10-17 05:01:42',
                 'updated_at' => '2023-10-17 05:01:42',
             ),
+           
         ));
     }
 }

@@ -6,11 +6,7 @@
     /* Style for the vertical separator */
     .vertical-separator {
         border-left: 1px solid;
-
         padding-left: 3%;
-
-
-
     }
 </style>
 

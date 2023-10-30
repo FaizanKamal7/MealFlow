@@ -165,7 +165,7 @@ class BusinessOnboardingController extends Controller
             ], true);
             // TODO
             $role = $this->roleRepository->getRoleByName(RoleNamesEnum::BUSINESS_ADMIN->value);
-            $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role);
+            $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role->id);
 
 
 
