@@ -31,7 +31,7 @@ Route::group(['prefix' => 'businessservice/onboarding/'], function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('businessservice')->group(function () {
-        Route::get("", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
+        // Route::get("/", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
         // Route::get("deliveries/upload", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "uploadDeliveriesByForm"])->name("partner_upload_deliveries");
         // Route::get("deliveries", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "viewAllDeliveries"])->name("partner_all_deliveries");
         Route::get("home/", [DashboardController::class, "dashboard"])->name("business_home");

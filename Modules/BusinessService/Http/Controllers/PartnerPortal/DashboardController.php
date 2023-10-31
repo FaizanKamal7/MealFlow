@@ -14,6 +14,7 @@ class DashboardController extends Controller
      */
     public function dashboard()
     {
+
         return view('businessservice::partner_portal.dashboard');
     }
 
