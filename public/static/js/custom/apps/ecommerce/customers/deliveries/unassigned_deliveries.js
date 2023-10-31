@@ -303,13 +303,18 @@ function assignDeliveries() {
     if (url.startsWith("http://")) {
         url = url.replace("http://", "https://");
     }
+    var csrf_token = "{{ csrf_token() }}";
+
     $.ajax({
         url: url,
         type: "POST",
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Use the meta tag value
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        data: { selected_delivery_ids: selectedDeliveryIds, driver_id: driver_id },
+        data: {
+            selected_delivery_ids: selectedDeliveryIds,
+            driver_id: driver_id
+        },
         success: function (response) {
             console.log("Below is success");
             console.log(response.success);
@@ -324,6 +329,10 @@ function assignDeliveries() {
         error: function (xhr, status, error) {
             console.log("Below is error");
             console.log(xhr);
+            console.log(error);
+            console.log(status);
+            
+            
         }
 
     });
