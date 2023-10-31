@@ -42,13 +42,12 @@ class AppreciationController extends Controller
     public function viewAppreciations(Request $request)
     {
         abort_if(Gate::denies('view_appreciation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        try{
+        try {
             $appreciations = $this->appreciationRepository->getAppreciations();
-            return view('hrmanagement::appreciation.appreciations',["appreciations"=>$appreciations]);
-        }
-        catch (Exception $exception){
+            return view('hrmanagement::appreciation.appreciations', ["appreciations" => $appreciations]);
+        } catch (Exception $exception) {
             Log::error($exception);
-            return view('hrmanagement::appreciation.appreciations',["appreciations"=>$appreciations])->with('error',"Something went wrong");
+            return view('hrmanagement::appreciation.appreciations', ["appreciations" => $appreciations])->with('error', "Something went wrong");
         }
     }
 
@@ -59,14 +58,13 @@ class AppreciationController extends Controller
     public function createAppreciation()
     {
         abort_if(Gate::denies('add_appreciation'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        try{
+        try {
             $employees = $this->employeesRepository->getEmployees();
             $awards = $this->awardsRepository->getAwards();
-            return view('hrmanagement::appreciation.add_appreciation', ["employees"=>$employees, "awards"=>$awards]);
-        }
-        catch (Exception $exception){
+            return view('hrmanagement::appreciation.add_appreciation', ["employees" => $employees, "awards" => $awards]);
+        } catch (Exception $exception) {
             Log::error($exception);
-            return redirect()->route('hr_appreciations')->with('error',"Something went wrong");
+            return redirect()->route('hr_appreciations')->with('error', "Something went wrong");
         }
     }
 
@@ -83,14 +81,12 @@ class AppreciationController extends Controller
             $date = $request->get("date");
             $note = $request->get("note");
             $picture = null;
-            if ($file = $request->file("picture")){
+            if ($file = $request->file("picture")) {
                 $picture = $this->helper->storeFile($file, "appreciations");
             }
-            $this->appreciationRepository->createAppreciation($date,$employee,$note,$picture,$amount,$award);
+            $this->appreciationRepository->createAppreciation($date, $employee, $note, $picture, $amount, $award);
             return redirect()->route("hr_appreciations")->with("success", "Appreciation added successfully");
-
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("hr_appreciations_add")->with("error", "Something went wrong! Contact support");
         }
@@ -108,12 +104,11 @@ class AppreciationController extends Controller
         try {
             $appreciation = $this->appreciationRepository->getAppreciation($id);
             $awards = $this->awardsRepository->getAwards();
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route('hr_appreciations')->with("error", "Something went wrong! Contact support");
         }
-        return view('hrmanagement::appreciation.edit_appreciation', ["appreciation"=>$appreciation, "awards"=>$awards]);
+        return view('hrmanagement::appreciation.edit_appreciation', ["appreciation" => $appreciation, "awards" => $awards]);
     }
 
     /**
@@ -129,28 +124,27 @@ class AppreciationController extends Controller
             $amount = null;
             $date = null;
             $note = null;
-            if ($request->has("award_id")){
+            if ($request->has("award_id")) {
                 $award = $request->get("award_id");
             }
-            if ($request->has("amount")){
+            if ($request->has("amount")) {
                 $amount = $request->get("amount");
             }
-            if ($request->has("date")){
+            if ($request->has("date")) {
                 $date = $request->get("date");
             }
-            if ( $request->has("note")){
+            if ($request->has("note")) {
                 $note = $request->get("note");
             }
 
             $picture = null;
-            if ($file = $request->file("picture")){
+            if ($file = $request->file("picture")) {
                 $picture = $this->helper->storeFile($file, "appreciations");
             }
 
-            $this->appreciationRepository->updateAppreciation(id:$id,date: $date,note: $note,picture: $picture,amount: $amount,awardId: $award);
+            $this->appreciationRepository->updateAppreciation(id: $id, date: $date, note: $note, picture: $picture, amount: $amount, awardId: $award);
             return redirect()->route("hr_appreciations")->with("success", "Appreciation updated successfully");
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("hr_appreciations")->with("error", "Something went wrong! Contact support");
         }
@@ -167,8 +161,7 @@ class AppreciationController extends Controller
         try {
             $this->appreciationRepository->deleteAppreciation($id);
             return redirect()->route("hr_appreciations")->with("success", "Appreciation deleted successfully");
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             Log::error($exception);
             return redirect()->route("hr_appreciations")->with("error", "Something went wrong! Contact support");
         }

@@ -59,11 +59,18 @@
                                 <div class="d-flex flex-column">
                                     <a href="#" class="fw-bold fs-18 px-2 py-1 ms-2 text-hover-primary">
                                         {{ Auth::user()->name }}
-                                        {{-- John Doe --}}
+                                        {{-- @if ( Auth::user()->business_users->count() > 0)
+                                        <b> ({{Auth::user()->business_users[0]->business->name}})</b>
+                                        @endif --}}
+
+
                                     </a>
                                     <div class="fw-bolder d-flex align-items-center fs-5">
+                                        {{-- @foreach ( Auth::user()->userRoles as $user_role->role->role_id)
                                         <span
-                                            class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">admin</span>
+                                            class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{$user_role->id}}</span>
+                                        @endforeach --}}
+
                                     </div>
 
                                 </div>

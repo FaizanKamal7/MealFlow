@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserManagement\ApplicationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +36,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::group(['prefix' => 'core/'], function () {
-        Route::get('/', function () {
+        // Route::get('/', function () {
+        //     return view('dashboards.admin_dashboard');
+        // })->name("admin_dashboard");
+
+        if (Gate::denies('view_all_businesses')) {
+            Route::get("", [DashboardController::class, "dashboard"])->name("partner_dashboard");
+        } else {
             return view('dashboards.admin_dashboard');
-        })->name("admin_dashboard");
+        }
+
+
         Route::get('fleets/', function () {
             return view('dashboards.fleets_dashboard');
         })->name("fleet_dashboard");
@@ -118,7 +127,7 @@ Route::group(['prefix' => 'core/settings/locations/'], function () {
     Route::get("/get-areas", [AreaController::class, "getAreasOfCity"])->name("get_areas_of_city");
 });
 
-Route::get('docusign', [DocusignController::class, 'index'])->name('docusign');
-Route::get('connect-docusign', [DocusignController::class, 'connectDocusign'])->name('connect.docusign');
-Route::get('docusign/callback', [DocusignController::class, 'callback'])->name('docusign.callback');
-Route::get('sign-document', [DocusignController::class, 'signDocument'])->name('docusign.sign');
+// Route::get('docusign', [DocusignController::class, 'index'])->name('docusign');
+// Route::get('connect-docusign', [DocusignController::class, 'connectDocusign'])->name('connect.docusign');
+// Route::get('docusign/callback', [DocusignController::class, 'callback'])->name('docusign.callback');
+// Route::get('sign-document', [DocusignController::class, 'signDocument'])->name('docusign.sign');

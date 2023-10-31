@@ -43,7 +43,7 @@
                     @include('includes.sidebar_menu')
                 @show
                 @section('sidebar_footer')
-                    @include('includes.sidebar_menu')
+                    @include('includes.sidebar_footer')
                 @show
             </div>
             <!--end::Aside-->
