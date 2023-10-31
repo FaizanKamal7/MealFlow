@@ -1,9 +1,10 @@
-@extends('layouts.admin_master')
+@extends('businessservice::layouts.master')
 @section('title', 'Partner Dashboard')
 
 @section('extra_style')
 {{--
-<link href="{{ asset('static/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css/">--}}
+<link href="{{ asset('static/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css/">
+--}}
 @endsection
 @section('main_content')
 <!--begin::Post-->
@@ -194,7 +195,7 @@
                 <div class="card outer-card">
                     <h2> Hello there, Hope You Have
                         Great Day! </h2>
-                    <div class="card mb-10 weather-card ">
+                    <div class="card mb-5 weather-card ">
                         <!--begin::Body-->
                         <div class="card-body d-flex justify-content-between  flex-column ">
 
@@ -258,24 +259,30 @@
                 </div>
                 <br>
                 <!--begin::Engage widget 3-->
-                <div class="card" style="background:#00426E">
+                <div class="card"
+                    style="background:linear-gradient(135deg, rgba(0, 66, 110, 1) 0%, rgba(0, 83, 138, 0.65) 100%),linear-gradient(120.29deg, #B3E1FF 0%, #A1D3F3 54.03%, #8FC5E8 98.79%)">
                     <!--begin::Body-->
-                    <div class="card-body d-flex flex-column pt-13">
+                    <div class="px-4 d-flex flex-column py-5">
                         <!--begin::Heading-->
                         <div class="m-0">
                             <!--begin::Title-->
-                            <h1 class="fw-bold text-white text-center lh-lg mb-9">Your Balance: 150 AED
+                            <h1 class="fw-bold text-white text-center lh-lg">Your Balance: 150 AED
                                 <br />
                             </h1>
                             <!--end::Title-->
-                      
+
+                        </div>
+                        <div class="detail-text">
+                            <h5 class="fw-bold text-white text-center lh-lg mb-4 opacity-75">Looking good. You can do 50 more deliveries with current balance
+                            </h5>
                         </div>
                         <!--end::Heading-->
                         <!--begin::Links-->
                         <div class="text-center">
                             <!--begin::Link-->
                             <a class="btn btn-sm btn-white btn-color-gray-800 me-2"
-                                data-bs-target="#kt_modal_invite_friends" data-bs-toggle="modal">Transactions History</a>
+                                data-bs-target="#kt_modal_invite_friends" data-bs-toggle="modal">Transactions
+                                History</a>
                             <!--end::Link-->
                             <!--begin::Link-->
                             <a class="btn btn-sm bg-white btn-color-white bg-opacity-20" href="#">Wallet</a>
@@ -310,8 +317,8 @@
                             <!--end::Title-->
                             <!--begin::Illustration-->
                             <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center card-rounded-bottom h-200px mh-200px my-5 mb-lg-12"
-                                style="background-image:url('{{ asset(" static/media/svg/illustrations/easy/5.svg")
-                                }}')"></div>
+                                style="background-image:url('{{ asset(' static/media/svg/illustrations/easy/5.svg') }}')">
+                            </div>
                             <!--end::Illustration-->
                         </div>
                         <!--end::Heading-->
@@ -322,7 +329,8 @@
                                 data-bs-target="#kt_modal_invite_friends" data-bs-toggle="modal">New Delivery</a>
                             <!--end::Link-->
                             <!--begin::Link-->
-                            <a class="btn btn-sm bg-white btn-color-white bg-opacity-20" href="#">All Deliveries</a>
+                            <a class="btn btn-sm bg-white btn-color-white bg-opacity-20" href="#">All
+                                Deliveries</a>
                             <!--end::Link-->
                         </div>
                         <!--end::Links-->
@@ -745,7 +753,8 @@
                                                     Flores</a>
                                                 <!--end::Title-->
                                                 <!--begin::Title-->
-                                                <span class="fw-bold text-gray-400">3517 W. Gray St. Utica, Pennsylvania
+                                                <span class="fw-bold text-gray-400">3517 W. Gray St. Utica,
+                                                    Pennsylvania
                                                     57867</span>
                                                 <!--end::Title-->
                                             </div>
@@ -1298,7 +1307,8 @@
                                                     Flores</a>
                                                 <!--end::Title-->
                                                 <!--begin::Title-->
-                                                <span class="fw-bold text-gray-400">3517 W. Gray St. Utica, Pennsylvania
+                                                <span class="fw-bold text-gray-400">3517 W. Gray St. Utica,
+                                                    Pennsylvania
                                                     57867</span>
                                                 <!--end::Title-->
                                             </div>
@@ -1390,7 +1400,8 @@
                                                     Flores</a>
                                                 <!--end::Title-->
                                                 <!--begin::Title-->
-                                                <span class="fw-bold text-gray-400">3517 W. Gray St. Utica, Pennsylvania
+                                                <span class="fw-bold text-gray-400">3517 W. Gray St. Utica,
+                                                    Pennsylvania
                                                     57867</span>
                                                 <!--end::Title-->
                                             </div>
@@ -1483,7 +1494,8 @@
                                                     Flores</a>
                                                 <!--end::Title-->
                                                 <!--begin::Title-->
-                                                <span class="fw-bold text-gray-400">3517 W. Gray St. Utica, Pennsylvania
+                                                <span class="fw-bold text-gray-400">3517 W. Gray St. Utica,
+                                                    Pennsylvania
                                                     57867</span>
                                                 <!--end::Title-->
                                             </div>
@@ -1979,7 +1991,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(" static/media/avatars/300-1.jpg") }}" class=""
+                                                    <img src="{{ asset(' static/media/avatars/300-1.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2019,7 +2031,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(" static/media/avatars/300-2.jpg") }}" class=""
+                                                    <img src="{{ asset(' static/media/avatars/300-2.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2058,7 +2070,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(" static/media/avatars/300-12.jpg") }}" class=""
+                                                    <img src="{{ asset(' static/media/avatars/300-12.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2097,7 +2109,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(" static/media/avatars/300-11.jpg") }}" class=""
+                                                    <img src="{{ asset(' static/media/avatars/300-11.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2136,7 +2148,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(" static/media/avatars/300-13.jpg") }}" class=""
+                                                    <img src="{{ asset(' static/media/avatars/300-13.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2176,7 +2188,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(" static/media/avatars/300-13.jpg") }}" class=""
+                                                    <img src="{{ asset(' static/media/avatars/300-13.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2216,7 +2228,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(" static/media/avatars/300-13.jpg") }}" class=""
+                                                    <img src="{{ asset(' static/media/avatars/300-13.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2275,34 +2287,34 @@
 @endsection
 
 @section('extra_scripts')
-<script src="{{ asset('static/plugins/custom/documentation/general/datatables/datatables.bundle.js')}}"></script>
+<script src="{{ asset('static/plugins/custom/documentation/general/datatables/datatables.bundle.js') }}"></script>
 {{-- <script src="{{ asset('static/js/custom/documentation/general/datatables/subtable.js')}}"></script> --}}
 <script>
     $("#kt_datatable_responsive_2").DataTable({
-	responsive: {
-		details: {
-			type: "column",
-			target: -1
-		}
-	},
-	columnDefs: [
-		{
-			className: "dtr-control dtr-control-last",
-			orderable: false,
-			targets:   -1
-		},
-		{
-			// The `data` parameter refers to the data for the cell (defined by the
-			// `data` option, which defaults to the column being worked with, in
-			// this case `data: 0`.
-			"render": function ( data, type, row ) {
-				var index = KTUtil.getRandomInt(1, 7);
+            responsive: {
+                details: {
+                    type: "column",
+                    target: -1
+                }
+            },
+            columnDefs: [{
+                    className: "dtr-control dtr-control-last",
+                    orderable: false,
+                    targets: -1
+                },
+                {
+                    // The `data` parameter refers to the data for the cell (defined by the
+                    // `data` option, which defaults to the column being worked with, in
+                    // this case `data: 0`.
+                    "render": function(data, type, row) {
+                        var index = KTUtil.getRandomInt(1, 7);
 
-				return data + "<span class=\"ms-2 badge badge-light-" + status[index]["state"] + " fw-bold\">" + status[index]["title"] + "</span>";
-			},
-			"targets": 1
-		}
-	]
-});
+                        return data + "<span class=\"ms-2 badge badge-light-" + status[index]["state"] +
+                            " fw-bold\">" + status[index]["title"] + "</span>";
+                    },
+                    "targets": 1
+                }
+            ]
+        });
 </script>
 @endsection
