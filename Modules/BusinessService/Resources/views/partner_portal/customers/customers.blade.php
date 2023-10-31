@@ -107,17 +107,26 @@
                                         data-kt-check-target="#kt_customers_table .form-check-input" value="1" />
                                 </div>
                             </th>
-                            <th class="min-w-125px">Customer Name</th>
-                            <th class="min-w-125px">Email</th>
-                            <th class="min-w-125px">Phone</th>
-                            <th class="min-w-200px">Addresses</th>
-                            <th class="text-end min-w-70px">Actions</th>
+                            <<<<<<< HEAD <th class="min-w-125px">Customer Name</th>
+                                <th class="min-w-125px">Email</th>
+                                <th class="min-w-125px">Phone</th>
+                                =======
+                                <th class="min-w-125px">Name</th>
+                                <th class="min-w-125px">Contact</th>
+                                <th class="min-w-125px">Partner</th>
+                                <th class="min-w-100px">Status</th>
+                                >>>>>>> origin/delivery-service
+                                <th class="min-w-200px">Addresses</th>
+                                <th class="text-end min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
                     <!--end::Table head-->
                     <!--begin::Table body-->
                     <tbody class="fw-bold text-gray-600">
+                        @if (count($customers) > 0)
+
+
                         @foreach ($customers as $customer)
                         <tr>
                             <!--begin::Checkbox-->
@@ -140,7 +149,8 @@
                             <!--end::Email=-->
                             <!--begin::Phone=-->
                             <td>
-                                {{$customer->businessCustomers[0]->business->name}}
+                                <p>{{count($customer->businessCustomers) > 0 ?
+                                    $customer->businessCustomers[0]->business->name: null}}</p>
                             </td>
                             <!--end::Phone=-->
 
@@ -152,9 +162,7 @@
                                 @endif
                                 <a href="https://www.google.com/maps?q={{$address->latitude }},{{$address->longitude }}"
                                     target="_blank">{{$address->address}}</a>
-                                <div class="badge badge-light-danger">{{$address->address_status}}
-                                </div>
-                                <br>
+                                <span class="badge badge-secondary">{{ $address->address_status }}</span>
                                 @endforeach
                             </td>
                             <!--end::IP Address=-->
@@ -195,7 +203,9 @@
                             <!--end::Action=-->
                         </tr>
                         @endforeach
-
+                        @else
+                        <p>No customers</p>
+                        @endif
                     </tbody>
                     <!--end::Table body-->
                 </table>

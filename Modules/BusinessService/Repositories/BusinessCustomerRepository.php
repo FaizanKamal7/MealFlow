@@ -20,6 +20,6 @@ class BusinessCustomerRepository implements BusinessCustomerInterface
 
     public function getBusinessCustomer($business_id)
     {
-        return BusinessCustomer::with('customers')->where(['business_id' => $business_id])->get();
+        return BusinessCustomer::with('customer')->where(['business_id' => $business_id])->get();
     }
 }

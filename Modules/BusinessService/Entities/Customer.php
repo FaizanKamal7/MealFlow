@@ -46,6 +46,7 @@ class Customer extends Model
         $array['customerAddresses'] = $this->customerAddresses->toArray();
         $array['secondaryNumbers'] = $this->secondaryNumbers->toArray();
         $array['businessCustomers'] = $this->businessCustomers->toArray();
+        $array['user'] = $this->user->toArray();
 
         return $array;
     }

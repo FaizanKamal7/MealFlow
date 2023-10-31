@@ -205,7 +205,7 @@
                                     name="application_model">
                                     <option></option>
                                     @foreach($application_models as $model)
-                                    <option value="{{ $model->id }}">{{ $model->model_name }}</option>
+                                    <option value="{{ $model->id }}">{{ $model->model_name }}, {{ $model->application->app_name }}</option>
                                     @endforeach
                                 </select>
                             </div>

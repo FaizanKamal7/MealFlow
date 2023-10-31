@@ -39,7 +39,7 @@ class Business extends Model
         return $this->hasMany(BusinessUser::class);
     }
 
-    public function business_customers()
+    public function businessCustomers()
     {
         return $this->hasMany(BusinessCustomer::class);
     }
@@ -77,6 +77,14 @@ class Business extends Model
     public function mainBranch()
     {
         return $this->hasOne(Branch::class)->where('is_main_branch', '1');
+    }
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['businessCustomers'] = $this->businessCustomers->toArray();
+
+        return $array;
     }
 
     protected static function newFactory()
