@@ -36,14 +36,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::group(['prefix' => 'core/'], function () {
-        // Route::get('/', function () {
-        //     return view('dashboards.admin_dashboard');
-        // })->name("admin_dashboard");
 
         if (Gate::denies('view_all_businesses')) {
             Route::get("", [DashboardController::class, "dashboard"])->name("partner_dashboard");
         } else {
-            return view('dashboards.admin_dashboard')->name("admin_dashboard");;
+            Route::get('/', function () {
+                return view('dashboards.admin_dashboard');
+            })->name("admin_dashboard");
         }
 
 
