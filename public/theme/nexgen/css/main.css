@@ -2070,6 +2070,10 @@ header .navbar-expand .navbar-brand img {
     height: var(--nav-brand-height);
 }
 
+.image_logo img{
+    height:60px !important;
+}
+
 header .navbar-expand .navbar-brand .brand {
     letter-spacing: 5px;
 }
