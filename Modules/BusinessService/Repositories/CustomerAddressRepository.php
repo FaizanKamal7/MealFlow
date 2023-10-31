@@ -23,6 +23,12 @@ class CustomerAddressRepository implements CustomerAddressInterface
         return CustomerAddress::create($data);
     }
 
+    public function getCustomerAddressById($id)
+    {
+        // return Area::where($id)->get();
+        return CustomerAddress::find($id);
+
+    }
     public function getCustomerCityAddresses($customer_id, $city_id)
     {
         return CustomerAddress::where('customer_id', $customer_id)
