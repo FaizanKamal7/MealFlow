@@ -37,14 +37,10 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'core/'], function () {
 
-        if (Gate::denies('view_all_businesses')) {
-            Route::get("", [DashboardController::class, "dashboard"])->name("partner_dashboard");
-        } else {
-            Route::get('/', function () {
-                return view('dashboards.admin_dashboard');
-            })->name("admin_dashboard");
-        }
 
+        Route::get('/', function () {
+            return (Gate::denies('view_all_businesses')) ? redirect(route("business_home")) : view('dashboards.admin_dashboard');
+        })->name("admin_dashboard");
 
         Route::get('fleets/', function () {
             return view('dashboards.fleets_dashboard');
