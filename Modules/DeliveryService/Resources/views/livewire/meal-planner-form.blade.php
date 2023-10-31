@@ -34,6 +34,12 @@
     <div class="upload-meal-main-div">
         <form id="upload_meal_form" class="form" action="{{ route('upload_plan_delivery') }}" method="post">
             @csrf
+            <input type="hidden" name="no_of_plan_days" value="{{ $no_of_days }}">
+            <input type="hidden" name="starting_date" value="{{ $starting_date }}">
+            <input type="hidden" name="expiry_date" value="{{ $expiry_dates }}">
+            <input type="hidden" name="skip_days" value="{{ $expiry_dates }}">
+
+
             @foreach ($included_dates ?? [] as $i => $date)
                 <div class="delievry-no d-flex ">
                     <h4 class="delivery-heading upload-label">
@@ -78,12 +84,6 @@
                                         {{ $slot['end_time'] }})
                                     </option>
                                 @endforeach
-
-                                {{-- @foreach ($customer_addresses as $address)
-                                    <option value="{{ $address->city->delivery_slot_pricings->de }}">
-                                        {{ $address->city->delivery_slot_pricings->start_time }}
-                                    </option>
-                                @endforeach --}}
                             </select>
                         </div>
                     </div>
@@ -125,9 +125,19 @@
                     <div class="form-group row mb-10">
                         <div class="col-md-4">
                             <label class="form-label upload-label">Pickup Point</label>
-                            <input type="text" class="form-control  meal-control mb-2 mb-md-0"
+                            {{-- <input type="text" class="form-control  meal-control mb-2 mb-md-0"
                                 placeholder="Pickup Point" name="pickup_point[]" id="pickup_point{{ $i }}"
-                                autocomplete="off" />
+                                autocomplete="off" /> --}}
+                            <select id="pickup_point{{ $i }}" class="form-select meal-control"
+                                data-control="select2" data-placeholder="Select" name="pickup_point[]">
+                                <option></option>
+                                @foreach ($branches as $branch)
+                                    <option value="{{ $branch->id }}">
+                                        {{ $branch->address }}
+                                    </option>
+                                @endforeach
+                            </select>
+
                         </div>
                         <div class="col-md-4">
                             <label class="form-label upload-label">Notes</label>

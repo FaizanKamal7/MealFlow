@@ -31,7 +31,6 @@
                             <select id="partnerSelect" class="form-select form-select-solid" data-control="select2"
                                 data-placeholder="Select a Partner">
                                 <option></option>
-                                <option></option>
                                 @foreach ($partners as $partner)
                                     <option value={{ $partner->id }}>
                                         {{ $partner->name }}
@@ -46,7 +45,6 @@
                                 @foreach ($other_customers as $i)
                                     <option value={{ $i->id }}>
                                         {{ $i->customer->user->name }}
-
                                     </option>
                                 @endforeach
                             </select>
@@ -133,7 +131,7 @@
                     </div>
                 </div>
                 <div id="meal-planner-form-id" style="display: none">
-                    @livewire('deliveryservice::meal-planner-form', ['customer_addresses' => $customer_addresses, 'product_type' => $product_type])
+                    @livewire('deliveryservice::meal-planner-form', ['customer_addresses' => $customer_addresses, 'product_type' => $product_type, 'branches' => $branches])
                 </div>
             </div>
         </div>
