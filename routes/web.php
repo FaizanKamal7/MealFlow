@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
         if (Gate::denies('view_all_businesses')) {
             Route::get("", [DashboardController::class, "dashboard"])->name("partner_dashboard");
         } else {
-            return view('dashboards.admin_dashboard');
+            return view('dashboards.admin_dashboard')->name("admin_dashboard");;
         }
 
 
