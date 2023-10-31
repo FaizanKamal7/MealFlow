@@ -9,7 +9,6 @@ use App\Enum\InvoiceItemTypeEnum;
 use App\Enum\BatchStatusEnum;
 use App\Enum\DeliveryImageTypeEnum;
 use App\Enum\DeliveryStatusEnum;
-use App\Enum\ServiceTypeEnum;
 use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
