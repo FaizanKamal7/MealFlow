@@ -13,7 +13,7 @@
 
     <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
 
-    <title>NIXUS - Gateway to Seamless Logistics</title>
+    <title>L O G X - Gateway to Seamless Logistics</title>
 
     <meta name="description" content="Business, Consulting, Finance, Insurance, Startup and Technology">
     <meta name="subject" content="Business, Consulting, Finance, Insurance, Startup and Technology">
@@ -131,19 +131,8 @@
             <div class="container header">
 
                 <!-- Navbar Brand-->
-                <a class="navbar-brand" href="/">
-                    {{-- <span class="brand">
-                        <span class="featured">
-                            <span class="first">NEX</span>
-                        </span>
-                        <span class="last">GEN</span>
-                    </span>
-                    --}}
-                    <!-- 
-                            Custom Logo
-                            <img src="theme/nexgen/images/logo.svg" alt="NEXGEN">
-                        -->
-                    <img src="theme/nexgen/images/logo_.png" alt="Nixus">
+                <a class="navbar-brand image_logo" href="/">
+                    <img src="theme/nexgen/images/logx_logo.png" alt="Nixus" height="100px; !important" >
                 </a>
 
                 <!-- Nav holder -->
@@ -865,12 +854,9 @@
                 <div class="row">
                     <div class="col-12 col-lg-3 footer-left">
                         <!-- Navbar Brand-->
-                        <a class="navbar-brand" href="/">
-                            <!-- 
-                                    Custom Logo
-                                    <img src="theme/nexgen/images/logo.svg" alt="NEXGEN">
-                                -->
-                            <img src="theme/nexgen/images/logo_white_with_logx_2.png" alt="Nixus">
+                        <a class="navbar-brand image_logo" href="/">
+                          
+                            <img src="theme/nexgen/images/logx_logo.png" alt="Nixus">
                         </a>
                         <p>Gateway to Seamless Logistics.</p>
 
@@ -942,7 +928,7 @@
                              -->
                     </div>
                     <div class="col-12 col-md-6 p-3 text-center text-lg-right">
-                        <p>© 2023 Nixus is Proudly Powered by <a href="https://www.logxtransport.com/" target="_blank">L
+                        <p>© 2023 Powered by <a href="https://www.logxtransport.com/" target="_blank">L
                                 O G X</a></p>
                     </div>
                 </div>
