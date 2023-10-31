@@ -1257,7 +1257,7 @@
                 background: rgba(0, 66, 110, 1);
                 border-radius: 6px;
                 width: 200px !important;">
-                <span class="btn-label">Visit Nixus.com</span>
+                <span class="btn-label">Visit logxtransport.com</span>
                 <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg') }}-->
                 {{-- <span class="svg-icon side-icon btn-icon svg-icon-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

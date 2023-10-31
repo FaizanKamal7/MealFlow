@@ -320,7 +320,7 @@ function assignDeliveries() {
         },
         error: function (xhr, status, error) {
             console.log("Below is error");
-            console.log(xhr.responseText);
+            console.log(xhr);
         }
 
     });
