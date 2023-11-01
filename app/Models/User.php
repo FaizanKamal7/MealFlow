@@ -13,11 +13,12 @@ use Modules\BusinessService\Entities\Business;
 use Modules\BusinessService\Entities\BusinessCustomer;
 use Modules\BusinessService\Entities\BusinessUser;
 use Modules\BusinessService\Entities\Customer;
+use Laravel\Passport\HasApiTokens;
+
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
-    use HasUuids;
+    use HasFactory, Notifiable, HasUuids, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.

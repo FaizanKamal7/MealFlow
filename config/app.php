@@ -189,8 +189,9 @@ return [
          * Package Service Providers...
          */
         Barryvdh\Debugbar\ServiceProvider::class,
-
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
