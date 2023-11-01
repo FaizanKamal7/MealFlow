@@ -3,6 +3,7 @@
 namespace Modules\DeliveryService\Repositories;
 
 use App\Enum\DeliveryStatusEnum;
+use Illuminate\Support\Facades\DB;
 use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Entities\PickupBatch;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
@@ -159,35 +160,66 @@ class DeliveryRepository implements DeliveryInterface
 
     public function getDriverPendingBranchPickups($driver_id, $batch_id, $branch_id)
     {
-        // $deliveries = Delivery::with([
-        //     'pickupBatch' => function ($query) use ($driver_id, $batch_id) {
-        //         $query->where('driver_id', '=', $driver_id);
-        //         $query->where('id', '=', $batch_id);
-        //     },
-        //     'deliveryBags'
-        // ])
-        //     ->get();
 
-
-        return Delivery::select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id', 'deliveries.pickup_batch_id')->with([
-            'customer' => function ($query) {
-                $query->select('id', 'user_id');
-            },
-            'customer.user' => function ($query) {
-                $query->select('id', 'name');
-            },
-            'branch' => function ($query) {
-                $query->select('id', 'name');
-            },
-
-        ])
+        $deliveries = DB::table('deliveries')
+            ->select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id', 'deliveries.pickup_batch_id')
             ->join('pickup_batches', 'deliveries.pickup_batch_id', '=', 'pickup_batches.id')
             ->leftJoin('delivery_bags', 'deliveries.id', '=', 'delivery_bags.delivery_id')
             ->where('deliveries.pickup_batch_id', '=', $batch_id)
             ->where('pickup_batches.driver_id', '=', $driver_id)
             ->where('deliveries.branch_id', '=', $branch_id)
             ->whereNull('delivery_bags.delivery_id')
-            ->get();
+            ->get()
+            ->keyBy('id');
+
+        $customerIds = $deliveries->pluck('customer_id');
+        $customers = DB::table('customers')
+            ->select('id', 'user_id')
+            ->whereIn('id', $customerIds)
+            ->get()
+            ->keyBy('id');
+
+        $userIds = $customers->pluck('user_id');
+        $users = DB::table('users')
+            ->select('id', 'name')
+            ->whereIn('id', $userIds)
+            ->get()
+            ->keyBy('id');
+
+        $branchIds = $deliveries->pluck('branch_id');
+        $branches = DB::table('branches')
+            ->select('id', 'name')
+            ->whereIn('id', $branchIds)
+            ->get()
+            ->keyBy('id');
+
+        foreach ($deliveries as $delivery) {
+            $delivery->customer = $customers[$delivery->customer_id] ?? null;
+            if ($delivery->customer) {
+                $delivery->customer->user = $users[$delivery->customer->user_id] ?? null;
+            }
+            $delivery->branch = $branches[$delivery->branch_id] ?? null;
+        }
+        return $deliveries;
+        // return Delivery::select('deliveries.id', 'deliveries.customer_id', 'deliveries.branch_id', 'deliveries.pickup_batch_id')->with([
+        //     'customer' => function ($query) {
+        //         $query->select('id', 'user_id');
+        //     },
+        //     'customer.user' => function ($query) {
+        //         $query->select('id', 'name');
+        //     },
+        //     'branch' => function ($query) {
+        //         $query->select('id', 'name');
+        //     },
+
+        // ])
+        //     ->join('pickup_batches', 'deliveries.pickup_batch_id', '=', 'pickup_batches.id')
+        //     ->leftJoin('delivery_bags', 'deliveries.id', '=', 'delivery_bags.delivery_id')
+        //     ->where('deliveries.pickup_batch_id', '=', $batch_id)
+        //     ->where('pickup_batches.driver_id', '=', $driver_id)
+        //     ->where('deliveries.branch_id', '=', $branch_id)
+        //     ->whereNull('delivery_bags.delivery_id')
+        //     ->get();
     }
 
     public function getDriverCompletedPickups($driver_id, $batch_id)

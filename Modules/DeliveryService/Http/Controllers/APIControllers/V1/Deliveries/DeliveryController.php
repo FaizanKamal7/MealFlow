@@ -626,14 +626,14 @@ class DeliveryController extends Controller
         try {
             $driver_id = $request->get('driver_id');
             $delivery_batch = $this->deliveryBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
-
-
             $data = ['delivery_batch' => $delivery_batch];
-            return $this->success($data, "delivery batch");
+            if (!$data) {
+                return $this->error($data, "Error! No deliveries assigned to the driver");
+            }
+            return $this->success($data, "Delivery batch deliveries");
         } catch (Exception $e) {
             return $this->error($e, 'Something went wrong contact support');
         }
-        // $deliveries = $this->deliveryRepository->getde   
     }
 
 
@@ -642,21 +642,21 @@ class DeliveryController extends Controller
     {
         try {
             // Check if $validator = Validator::make($request->all(), [
-            // $validator = Validator::make($request->all(), [
-            //     'delivery_id' => ['required', 'exists:deliveries,id'],
-            //     'open_bag_img' => ['required', 'image'],
-            //     'close_bag_img' => ['required', 'image'],
-            //     'delivered_bag_img' => ['required', 'image'],
-            //     'delivery_img' => ['image'],
-            //     'signature_img' => ['image'],
-            //     'address_img' => ['image'],
-            //     'empty_bag_count' => [],
-            // ]);
+            $validator = Validator::make($request->all(), [
+                'delivery_id' => ['required', 'exists:deliveries,id'],
+                'open_bag_img' => ['required', 'image'],
+                'close_bag_img' => ['required', 'image'],
+                'delivered_bag_img' => ['required', 'image'],
+                'delivery_img' => ['image'],
+                'signature_img' => ['image'],
+                'address_img' => ['image'],
+                'empty_bag_count' => [],
+            ]);
 
-            // // Check if validation fails
-            // if ($validator->fails()) {
-            //     return $this->error($validator->errors(), "validation failed", 422);
-            // }
+            // Check if validation fails
+            if ($validator->fails()) {
+                return $this->error($validator->errors(), "validation failed", 422);
+            }
 
             $delivery_id = $request->post('delivery_id');
             $open_bag_img = $request->file('open_bag_img');
