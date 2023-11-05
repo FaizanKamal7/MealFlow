@@ -202,7 +202,8 @@ class DeliveryController extends Controller
 
                     // $customer_with_sec_phon =  $this->customerRepository->customerWithMatchingPhoneNoInSecondaryNumbers($row['phone']); // Will need for dealing with secondary numbers
                     $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
-                    $address_matching = $this->addressDBStatus($deliveryAddress, $customer_addresses);
+                    $address_matching = $this->helper->addressDBStatus($deliveryAddress, $customer_addresses);
+                    $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
                 } else {
                     $user = $this->userRepository->createUser([
                         'name' => $name,
@@ -214,9 +215,9 @@ class DeliveryController extends Controller
                     $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id->id);
 
                     $customer = $this->customerRepository->create(['user_id' => $user->id]);
-
-                    $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $businessIdInput]);
-                    // $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
+                    $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
+                    $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id->id);
+                    $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
                 }
 
                 $delivery_type = $this->deliveryTypeRepository->getWhereFirst(['name' => $productType]);
@@ -395,7 +396,7 @@ class DeliveryController extends Controller
             try {
                 DB::beginTransaction();
 
-                if ($this->headersMatch($header, $expected_headers)) {
+                if ($this->helper->headersMatch($header, $expected_headers)) {
                     foreach ($chunk as $chunk_item_id => $row) {
                         $row = array_combine($header, $row);
                         // $chunks[$key][$chunk_item_id] = $row;
@@ -431,7 +432,8 @@ class DeliveryController extends Controller
                         if ($customer) {
                             // $customer_with_sec_phon =  $this->customerRepository->customerWithMatchingPhoneNoInSecondaryNumbers($row['phone']); // Will need for dealing with secondary numbers
                             $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
-                            $address_matching = $this->addressDBStatus($sheet_address, $customer_addresses);
+                            $address_matching = $this->helper->addressDBStatus($sheet_address, $customer_addresses);
+                            $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
                         } else {
                             $user = $this->userRepository->createUser([
                                 'name' => $row['full_name'],
@@ -441,8 +443,11 @@ class DeliveryController extends Controller
                                 'isActive' => true
                             ], false);
 
+
                             $customer = $this->customerRepository->create(['user_id' => $user->id]);
-                            $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $business_id]);
+                            $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
+                            $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
+                            $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id->id);
                         }
 
                         // --- Get DB Branch
@@ -632,52 +637,6 @@ class DeliveryController extends Controller
     }
 
 
-    public function addressDBStatus(...$parameters)
-    {
-
-        $passed_address = $parameters[0] ?? null;
-        $passed_db_addresses = $parameters[1] ?? null; // List of customer address can be passed from which already stored addresses can be analyzed
-
-        $customer_addresses = $passed_db_addresses;
-        $db_address_percent = [];
-        // 
-        if ($customer_addresses == null) {
-            $customer_addresses = $this->customerAddressRepository->get();
-        }
-
-        // ---- 4. Match the sheet address with $customer_address in db and calculate the percent
-        foreach ($customer_addresses as $customer_address) {
-            $temp_passed_address = $this->helper->concatWordsIfDoesnotExist($passed_address, [$customer_address->city->name, $customer_address->state->name, $customer_address->country->name]);
-            $temp_customer_address = $this->helper->concatWordsIfDoesnotExist($customer_address->address, [$customer_address->city->name, $customer_address->state->name, $customer_address->country->name]);
-            $similarity = $this->helper->addressSimilarityPercentage($temp_customer_address, $temp_passed_address);
-            array_push($db_address_percent, ['percent' => $similarity, 'address' => $customer_address->address]);
-
-            // Custom sorting function to sort by "percent" in descending order
-            usort($db_address_percent, function ($a, $b) {
-                return $b['percent'] - $a['percent'];
-            });
-        }
-
-
-        $highest_matching_address = !empty($db_address_percent) ? $db_address_percent[0] : [];
-
-        $result = [];
-        if (empty($highest_matching_address) || $highest_matching_address['percent'] < 51) {
-            // ---- 4.1. Check if highest matching address is exctly the same 
-            $result['status'] = "MISSING";
-            $result['passed_address'] = $passed_address;
-        } else {
-            if ($highest_matching_address['percent'] >= 95) {
-                $result['status'] = "MATCHED";
-                $result['customer_db_address'] = $customer_address;
-            } else {
-                $result['status'] = "CONFLICT";
-                $result['customer_db_address'] = $customer_address;
-                $result['passed_address'] = $passed_address;
-            }
-        }
-        return $result;
-    }
 
 
     //TODO::This function (getAddresses) will be moved to CustomerAddressController
@@ -691,28 +650,6 @@ class DeliveryController extends Controller
         return response()->json(['deliveryAddresses' => $deliveryAddresses]);
     }
 
-    protected function headersMatch($actual_headers, $expected_headers)
-    {
-        // - Making all words lower case
-        // - replace spaces with underscore "_"
-        // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
-
-        // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
-        // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
-
-        sort($actual_headers);
-        sort($expected_headers);
-        // echo '<pre>';
-        // print_r($actual_headers_lowercase);
-        // echo '<pre>';
-        // echo '<pre>';
-        // print_r($expected_headers_lowercase);
-        // echo '<pre>';
-        // dd();
-        return $actual_headers === $expected_headers;
-    }
 
     public function uploadDeliveries()
     {
@@ -935,5 +872,11 @@ class DeliveryController extends Controller
     {
         $businesses = $this->businessRepository->getActiveBusinesses();
         return view('deliveryservice::planner.plan_delivery', ['businesses' => $businesses]);
+    }
+
+    public function addCustomerToPlanView()
+    {
+        $businesses = $this->businessRepository->getActiveBusinesses();
+        return view('deliveryservice::planner.add_customer_to meal_plan', ['businesses' => $businesses]);
     }
 }

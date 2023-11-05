@@ -6,14 +6,20 @@ use App\Enum\AddressStatusEnum;
 use App\Enum\AddressTypeEnum;
 use App\Enum\RoleNamesEnum;
 use App\Http\Helper\Helper;
+use App\Interfaces\AreaInterface;
+use App\Interfaces\CityInterface;
 use App\Interfaces\CountryInterface;
+use App\Interfaces\DeliverySlotInterface;
 use App\Interfaces\RoleInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
+use App\Repositories\AreaRepository;
+use App\Repositories\CityRepository;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
@@ -22,6 +28,7 @@ use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
 use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\CustomerAddressInterface;
 use Modules\BusinessService\Interfaces\CustomerInterface;
+use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
 
 class CustomersController extends Controller
 {
@@ -37,7 +44,11 @@ class CustomersController extends Controller
     private $businessCustomerRepository;
     private UserRoleInterface $userRoleRepository;
     private RoleInterface $roleRepository;
-    private Helper $helper;
+    public Helper $helper;
+    private $areaRepository;
+    private $cityRepository;
+    private $deliverySlotRepository;
+    private $deliveryTypeRepository;
 
 
     public function __construct(
@@ -49,6 +60,10 @@ class CustomersController extends Controller
         BusinessCustomerInterface $businessCustomerRepository,
         RoleInterface $roleRepository,
         UserRoleInterface $userRoleRepository,
+        AreaInterface $areaRepository,
+        CityInterface       $cityRepository,
+        DeliverySlotInterface  $deliverySlotRepository,
+        DeliveryTypeInterface $deliveryTypeRepository,
         Helper $helper
 
     ) {
@@ -60,6 +75,10 @@ class CustomersController extends Controller
         $this->businessCustomerRepository = $businessCustomerRepository;
         $this->roleRepository = $roleRepository;
         $this->userRoleRepository = $userRoleRepository;
+        $this->areaRepository = $areaRepository;
+        $this->deliveryTypeRepository = $deliveryTypeRepository;
+        $this->deliverySlotRepository = $deliverySlotRepository;
+        $this->cityRepository = $cityRepository;
         $this->helper = $helper;
     }
 
@@ -142,7 +161,7 @@ class CustomersController extends Controller
                 ], false);
 
                 $customer = $this->customerRepository->create(['user_id' => $user->id, 'is_notification_enabled' => $is_notifications_enabled]);
-                $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $business_id]);
+                $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
                 $role = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
                 $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role->id);
             }
@@ -182,7 +201,7 @@ class CustomersController extends Controller
             //         'passed_address' => $address_matching['passed_address'],
             //         'passed_delivery_data' => $delivery_data,
             //     ];
-            //     array_push($conflicted_deliveries, $conflicted_delivery);
+            //     array_push($conflicted_customers, $conflicted_delivery);
             //     continue;
             // } 
             // elseif ($address_matching['status'] == 'MATCHED') {
@@ -201,5 +220,162 @@ class CustomersController extends Controller
             return redirect()->route("business_home")->with("error", "Something went wrong! Contact support");
         }
         // return view('businessservice::partner_portal.customers.add_new_customer', ['customers' => $customers, 'countries' => $countries]);
+    }
+
+
+    public function storeNewCustomersExcelInfo(Request $request)
+    {
+        $expected_headers = [
+            'Phone',
+            'Full Name',
+            'Email (Optional)',
+            'Address',
+            'Google Link Address (Optional)',
+            'Area with City (Select Option)',
+            'Pickup Point',
+            'City With Time (Select Option)',
+            'Notes',
+            'Notification (Select Option)',
+            'Product Type (Optional)',
+            'CustomerID (Optional)',
+
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'business_id' => 'required',
+            'excel_file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors()->first());
+        }
+
+        $file = $request->file('excel_file');
+
+        $data = $this->helper->getExcelSheetData($file);
+
+        // Create chunks of data with 10 rows each
+        $chunks = array_chunk($data, 10);
+
+        $header = $chunks[0][0];
+        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        unset($chunks[0][0]);
+        $batch = Bus::batch([])->dispatch();
+        $conflicted_customers = [];
+        foreach ($chunks as $key => $chunk) {
+            try {
+                DB::beginTransaction();
+
+                if ($this->helper->headersMatch($header, $expected_headers)) {
+                    foreach ($chunk as $chunk_item_id => $row) {
+                        $row = array_combine($header, $row);
+                        // $chunks[$key][$chunk_item_id] = $row;
+                        // $chunk[$chunk_item_id] = $row;
+
+
+                        $sheet_area_with_city = $row['area_with_city_select_option'];
+                        $city_name = '';
+                        $area_name = '';
+                        $new_address_coordinates = [];
+
+
+                        $openingParenthesisPos = strpos($sheet_area_with_city, '(');
+
+                        // ---- 2. Get the sheet area name with city and extract DB ID
+                        if ($openingParenthesisPos !== false) {
+                            $city_name = substr($sheet_area_with_city, 0, $openingParenthesisPos);
+                            $area_name = substr($sheet_area_with_city, $openingParenthesisPos + 1, -1);
+                        }
+                        $city = $this->cityRepository->searchCityFirst($this->helper->removeExtraSpacesFromString($city_name));
+                        $area = $this->areaRepository->searchAreaFirst($this->helper->removeExtraSpacesFromString($area_name));
+
+                        // ---- 3. Get all the addresses ($customer_address) of the db customer of selected city
+                        $sheet_address = $row['address'];
+                        $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($row['phone']);
+                        if (!$customer && ($row['email_optional'] != '' || $row['email_optional'] != null)) {
+                            $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
+                        }
+                        $customer_addresses = '';
+                        $address_matching = null;
+
+                        // --- If customer phone already exist in priamry list 
+                        if ($customer) {
+                            // $customer_with_sec_phon =  $this->customerRepository->customerWithMatchingPhoneNoInSecondaryNumbers($row['phone']); // Will need for dealing with secondary numbers
+                            $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
+                            $address_matching = $this->helper->addressDBStatus($sheet_address, $customer_addresses);
+                            $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
+                        } else {
+                            $user = $this->userRepository->createUser([
+                                'name' => $row['full_name'],
+                                'email' => $row['email_optional'] ?? null,
+                                'phone' => $row['phone'] ?? null,
+                                'password' => Hash::make("Aced732nokia501@"),
+                                'isActive' => true
+                            ], false);
+                            $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
+                            $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id->id);
+
+                            $customer = $this->customerRepository->create(['user_id' => $user->id]);
+                            $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
+                        }
+
+                        // --- Get DB Branch
+
+
+                        $delivery_slot = $this->helper->extractDeliverySlotFromCityWithTime($row['city_with_time_select_option']);
+                        $db_delivery_slot = $this->deliverySlotRepository->getDeliverySlotsByTimeAndCity($delivery_slot->start_time, $delivery_slot->end_time, $city->id);
+
+                        $address_coordinates = $this->helper->convertStringAddressToCoordinates($sheet_address);
+                        $latitude = $address_coordinates ? $address_coordinates->latitude : null;
+                        $longitude = $address_coordinates ? $address_coordinates->longitude : null;
+
+                        $finalized_address = '';
+                        $address_data = [
+                            'address' => $sheet_address,
+                            'address_type' => AddressTypeEnum::DEFAULT->value,
+                            'latitude' => $latitude,
+                            'longitude' => $longitude,
+                            'customer_id' => $customer->id,
+                            'address_status' => $new_address_coordinates ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
+                            'area_id' => $area->id,
+                            'city_id' => $city->id,
+                            'state_id' => $city->state->id,
+                            'country_id' => $city->state->country->id,
+                        ];
+
+                        if ($address_matching == null || ($address_matching && $address_matching['status'] == 'MISSING')) {
+                            $this->customerAddressRepository->create($address_data);
+                        } elseif ($address_matching['status'] == 'CONFLICT') {
+
+                            $conflicted_deta = [
+                                'conflict' => 'Similar address for customer already exists',
+                                'db_customer' => $customer,
+                                'customer_db_address' => $address_matching['customer_db_address'],
+                                'passed_address' => $address_matching['passed_address'],
+                                'address_data' => $address_data,
+                            ];
+                            array_push($conflicted_customers, $conflicted_deta);
+                            continue;
+                        } else {
+                            $this->customerAddressRepository->makeDefaultAddress($address_matching['customer_db_address']->id, $customer->id);
+                        }
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Uploaded file is not following excpected excel format.');
+                }
+                // TODO: upload deliveries via JOB
+                // $batch->add(new UploadDeliveriesCSVJob($chunk));
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                return 'Data upload failed: ' . $e->getMessage();
+            }
+        }
+
+        if (count($conflicted_customers) == 0) {
+            return redirect()->back()->with('success', 'Valid customers uploaded successfully.');
+        } else {
+            return view('businessservice::partner_portal.customers.conflicted_customers_view', ['conflicted_customers' => $conflicted_customers]);
+        }
     }
 }
