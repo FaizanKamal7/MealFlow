@@ -1,5 +1,5 @@
 @extends('layouts.admin_master')
-@section('title', 'Add Meal Plan')
+@section('title', 'View Meal Plan')
 
 @section('extra_style')
 <link rel="stylesheet" href="{{ asset('static/css/plan_delivery.css') }}" type="text/css">
@@ -44,13 +44,20 @@
 
                         </select>
                     </div>
+                    <!--begin::Card title-->
+                    <!--end::Card title-->
+                    <form id="yourForm" action="{{ route('add_plan_delivery') }}" method="post">
+                        @csrf
+                        <div class="">
+                            <button id='addDeliveryBtn' type="submit" class="btn text-white activate-btn"
+                                style="height: 38px !important; pointer-events: none; background:rgb(92 120 139)">+Add
+                                New
+                                Plan</button>
+                        </div>
+                        <input type="hidden" name="partner" id="partnerInput">
+                        <input type="hidden" name="customer" id="customerInput">
+                    </form>
 
-                    <div class="me-3">
-                        <select id="customerSelect" class="form-select form-select-solid" data-control="select2"
-                            data-placeholder="Select a Customer">
-                            <option></option>
-                        </select>
-                    </div>
 
                     <div class="me-3">
                         <a onclick="check()" class="btn text-white activate-btn" id="getRecordBtn"
@@ -79,21 +86,34 @@
                             <p>Email</p>
                         </div>
                     </div>
-                    <div class="table-row bottom-row">
-                        <div class="cell customer_name">
-                            <h5 class="fw-bolder">SAHAR ALI</h5>
+                    <div class="d-flex align-items-center business-second">
+                        <div class="me-3">
+                            <select id="partnerSelect" class="form-select form-select-solid" data-control="select2"
+                                data-placeholder="Select a Partner">
+                                <option></option>
+                                @foreach ($partners as $partner)
+                                    <option value={{ $partner->id }}>
+                                        {{ $partner->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="cell">
-                            <p class="fw-bolder">FR-2820</p>
+                        <div class="me-3">
+                            <select id="customerSelect" class="form-select form-select-solid" data-control="select2"
+                                data-placeholder="Select a Customer">
+                                <option></option>
+                                @foreach ($business_customers as $i)
+                                    <option value={{ $i->id }}>
+                                        {{ $i->customer->user->name }}
+
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="cell">
-                            <p class="fw-bolder">971558900197</p>
-                        </div>
-                        <div class="cell">
-                            <p class="fw-bolder">Freshly</p>
-                        </div>
-                        <div class="cell">
-                            <p class="fw-bolder">N/A</p>
+                        <div class="me-3">
+                            <a onclick="check()" class="btn text-white activate-btn" id="getRecordBtn"
+                                style="pointer-events: none; background:rgb(92 120 139)">Get
+                                Record</a>
                         </div>
                     </div>
                 </div>
@@ -304,16 +324,42 @@
 
 @section('extra_scripts')
 
-<script>
-    function getBusinessCustomers() {
-        // alert("here");
-        // const businessSelect = document.getElementById("partnerSelect");
-        // const customers_dropdown = document.getElementById("customerSelect");
-        // const selectedOption = businessSelect.options[businessSelect.selectedIndex];
-        // const business = JSON.parse(selectedOption.getAttribute('data-business-object'));
-        // console.log(businessSelect);
-        // console.log(typeof(businessSelect));
-        // // console.log(business.busWWWWinessCustomers);
+    <script>
+        // Attach an event handler to the form's submit event
+        document.getElementById('yourForm').addEventListener('submit', function(event) {
+            // Get the selected values from the <select> elements
+            var partnerValue = document.getElementById('partnerSelect').value;
+            var customerValue = document.getElementById('customerSelect').value;
+
+            // Set the values in the hidden input fields
+            document.getElementById('partnerInput').value = partnerValue;
+            document.getElementById('customerInput').value = customerValue;
+        });
+
+        function check() {
+            console.log('check')
+        }
+
+        $(document).ready(function() {
+            $('#partnerSelect, #customerSelect, #clientCodeSelect').on('change', function() {
+                // Check if all select elements have a selected option with a value
+                if ($('#partnerSelect').val() && $('#customerSelect').val()) {
+                    // If all are selected, enable the "Get Record" button
+                    $('#getRecordBtn').removeAttr('style');
+                    $('#addDeliveryBtn').removeAttr('style'); // Remove the style attribute
+                } else {
+                    $('#getRecordBtn').css('pointer-events', 'none'); // Add or set pointer-events: none
+                    $('#addDeliveryBtn').css('pointer-events', 'none'); // Add or set pointer-events: none
+
+                }
+            });
+
+            // Get the table headers and populate the dropdown
+            const tableHeaders = document.querySelectorAll(
+                "#plan_table thead th"
+            );
+            const columnVisibilityDropdown =
+                document.getElementById("columnVisibility");
 
 
         // business.businessCustomers.forEach((business_customer) => {

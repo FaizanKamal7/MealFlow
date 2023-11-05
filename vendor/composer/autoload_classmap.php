@@ -13,13 +13,19 @@ return array(
     'App\\Enum\\BagStatusEnum' => $baseDir . '/app/Enum/BagStatusEnum.php',
     'App\\Enum\\BatchStatusEnum' => $baseDir . '/app/Enum/BatchStatusEnum.php',
     'App\\Enum\\BusinessStatusEnum' => $baseDir . '/app/Enum/BusinessStatusEnum.php',
+<<<<<<< HEAD
     'App\\Enum\\BusinessWalletTransactionStatusEnum' => $baseDir . '/app/Enum/BusinessWalletTransactionStatusEnum.php',
+=======
+>>>>>>> origin/front-end
     'App\\Enum\\BusinessWalletTransactionTypeEnum' => $baseDir . '/app/Enum/BusinessWalletTransactionTypeEnum.php',
     'App\\Enum\\DeliveryImageTypeEnum' => $baseDir . '/app/Enum/DeliveryImageTypeEnum.php',
     'App\\Enum\\DeliveryStatusEnum' => $baseDir . '/app/Enum/DeliveryStatusEnum.php',
     'App\\Enum\\EmptyBagCollectionStatusEnum' => $baseDir . '/app/Enum/EmptyBagCollectionStatusEnum.php',
     'App\\Enum\\InvoiceItemTypeEnum' => $baseDir . '/app/Enum/InvoiceItemTypeEnum.php',
+<<<<<<< HEAD
     'App\\Enum\\ModulesTitleEnum' => $baseDir . '/app/Enum/ModulesTitleEnum.php',
+=======
+>>>>>>> origin/front-end
     'App\\Enum\\RoleNamesEnum' => $baseDir . '/app/Enum/RoleNamesEnum.php',
     'App\\Enum\\ServiceTypeEnum' => $baseDir . '/app/Enum/ServiceTypeEnum.php',
     'App\\Enum\\UserTypeEnum' => $baseDir . '/app/Enum/UserTypeEnum.php',
@@ -382,8 +388,12 @@ return array(
     'Database\\Seeders\\ApplicationModelSeeder' => $baseDir . '/database/seeders/ApplicationModelSeeder.php',
     'Database\\Seeders\\ApplicationSeeder' => $baseDir . '/database/seeders/ApplicationSeeder.php',
     'Database\\Seeders\\AreaSeeder' => $baseDir . '/database/seeders/AreaSeeder.php',
+<<<<<<< HEAD
     'Database\\Seeders\\BusinessCategoryTableSeeder' => $baseDir . '/database/seeders/BusinessCategoryTableSeeder.php',
     'Database\\Seeders\\BusinessSeeder' => $baseDir . '/database/seeders/BusinessSeeder.php',
+=======
+    'Database\\Seeders\\BusinessCategorySeeder' => $baseDir . '/database/seeders/BusinessCategorySeeder.php',
+>>>>>>> origin/front-end
     'Database\\Seeders\\CitiesTableChunkFiveSeeder' => $baseDir . '/database/seeders/CitiesTableChunkFiveSeeder.php',
     'Database\\Seeders\\CitiesTableChunkFourSeeder' => $baseDir . '/database/seeders/CitiesTableChunkFourSeeder.php',
     'Database\\Seeders\\CitiesTableChunkOneSeeder' => $baseDir . '/database/seeders/CitiesTableChunkOneSeeder.php',

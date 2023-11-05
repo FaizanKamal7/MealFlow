@@ -230,9 +230,15 @@
             'dev_requirement' => false,
         ),
         'giggsey/libphonenumber-for-php' => array(
+<<<<<<< HEAD
             'pretty_version' => '8.13.24',
             'version' => '8.13.24.0',
             'reference' => '746ca6a565b9d4167c94c80824f43fa6fb463fd1',
+=======
+            'pretty_version' => '8.13.23',
+            'version' => '8.13.23.0',
+            'reference' => 'b2dff83693cb46eb4478b193e9d94e2ff6258480',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../giggsey/libphonenumber-for-php',
             'aliases' => array(),
@@ -538,6 +544,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
+<<<<<<< HEAD
             'reference' => '61347b0ed2b5ed3a775db76919307c99dae8c2ee',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
@@ -557,24 +564,48 @@
             'pretty_version' => 'v1.13.5',
             'version' => '1.13.5.0',
             'reference' => 'df105cf8ce7a8f0b8a9425ff45cd281a5448e423',
+=======
+            'reference' => '4cb1c1b5401a59368f37d2e9bd393e8948b29a02',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'laravel/pint' => array(
+            'pretty_version' => 'v1.13.3',
+            'version' => '1.13.3.0',
+            'reference' => '93b2d0d49719bc6e444ba21cd4dbbccec935413d',
+>>>>>>> origin/front-end
             'type' => 'project',
             'install_path' => __DIR__ . '/../laravel/pint',
             'aliases' => array(),
             'dev_requirement' => true,
         ),
         'laravel/sail' => array(
+<<<<<<< HEAD
             'pretty_version' => 'v1.26.0',
             'version' => '1.26.0.0',
             'reference' => 'c60fe037004e272efd0d81f416ed2bfc623d70b4',
+=======
+            'pretty_version' => 'v1.25.0',
+            'version' => '1.25.0.0',
+            'reference' => 'e81a7bd7ac1a745ccb25572830fecf74a89bb48a',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../laravel/sail',
             'aliases' => array(),
             'dev_requirement' => true,
         ),
         'laravel/serializable-closure' => array(
+<<<<<<< HEAD
             'pretty_version' => 'v1.3.2',
             'version' => '1.3.2.0',
             'reference' => '076fe2cf128bd54b4341cdc6d49b95b34e101e4c',
+=======
+            'pretty_version' => 'v1.3.1',
+            'version' => '1.3.1.0',
+            'reference' => 'e5a3057a5591e1cfe8183034b0203921abe2c902',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../laravel/serializable-closure',
             'aliases' => array(),
@@ -596,6 +627,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../laravolt/avatar',
             'aliases' => array(),
+<<<<<<< HEAD
             'dev_requirement' => false,
         ),
         'lcobucci/clock' => array(
@@ -614,6 +646,8 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../lcobucci/jwt',
             'aliases' => array(),
+=======
+>>>>>>> origin/front-end
             'dev_requirement' => false,
         ),
         'league/commonmark' => array(
@@ -632,6 +666,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/config',
             'aliases' => array(),
+<<<<<<< HEAD
             'dev_requirement' => false,
         ),
         'league/event' => array(
@@ -641,6 +676,8 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/event',
             'aliases' => array(),
+=======
+>>>>>>> origin/front-end
             'dev_requirement' => false,
         ),
         'league/flysystem' => array(
@@ -668,6 +705,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/mime-type-detection',
             'aliases' => array(),
+<<<<<<< HEAD
             'dev_requirement' => false,
         ),
         'league/oauth2-server' => array(
@@ -701,6 +739,8 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/uri-interfaces',
             'aliases' => array(),
+=======
+>>>>>>> origin/front-end
             'dev_requirement' => false,
         ),
         'livewire/livewire' => array(
@@ -719,9 +759,15 @@
             ),
         ),
         'maatwebsite/excel' => array(
+<<<<<<< HEAD
             'pretty_version' => '3.1.49',
             'version' => '3.1.49.0',
             'reference' => '769209f49ebe3419017114f98bd61e2a7d9af259',
+=======
+            'pretty_version' => '3.1.48',
+            'version' => '3.1.48.0',
+            'reference' => '6d0fe2a1d195960c7af7bf0de760582da02a34b9',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../maatwebsite/excel',
             'aliases' => array(),
@@ -782,9 +828,15 @@
             'dev_requirement' => true,
         ),
         'monolog/monolog' => array(
+<<<<<<< HEAD
             'pretty_version' => '2.9.2',
             'version' => '2.9.2.0',
             'reference' => '437cb3628f4cf6042cc10ae97fc2b8472e48ca1f',
+=======
+            'pretty_version' => '2.9.1',
+            'version' => '2.9.1.0',
+            'reference' => 'f259e2b15fb95494c83f52d3caad003bbf5ffaa1',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../monolog/monolog',
             'aliases' => array(),
@@ -824,9 +876,15 @@
             'dev_requirement' => false,
         ),
         'nette/utils' => array(
+<<<<<<< HEAD
             'pretty_version' => 'v4.0.3',
             'version' => '4.0.3.0',
             'reference' => 'a9d127dd6a203ce6d255b2e2db49759f7506e015',
+=======
+            'pretty_version' => 'v4.0.2',
+            'version' => '4.0.2.0',
+            'reference' => 'cead6637226456b35e1175cc53797dd585d85545',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../nette/utils',
             'aliases' => array(),
@@ -866,6 +924,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../nwidart/laravel-modules',
             'aliases' => array(),
+<<<<<<< HEAD
             'dev_requirement' => false,
         ),
         'nyholm/psr7' => array(
@@ -893,6 +952,8 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../paragonie/random_compat',
             'aliases' => array(),
+=======
+>>>>>>> origin/front-end
             'dev_requirement' => false,
         ),
         'phar-io/manifest' => array(
@@ -935,6 +996,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpoption/phpoption',
             'aliases' => array(),
+<<<<<<< HEAD
             'dev_requirement' => false,
         ),
         'phpseclib/phpseclib' => array(
@@ -944,6 +1006,8 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpseclib/phpseclib',
             'aliases' => array(),
+=======
+>>>>>>> origin/front-end
             'dev_requirement' => false,
         ),
         'phpunit/php-code-coverage' => array(
@@ -1094,9 +1158,15 @@
             ),
         ),
         'psr/http-message' => array(
+<<<<<<< HEAD
             'pretty_version' => '1.1',
             'version' => '1.1.0.0',
             'reference' => 'cb6ce4845ce34a8ad9e68117c10ee90a29919eba',
+=======
+            'pretty_version' => '2.0',
+            'version' => '2.0.0.0',
+            'reference' => '402d35bcb92c70c026d1a6a9883f06b2ead23d71',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../psr/http-message',
             'aliases' => array(),
@@ -1467,18 +1537,30 @@
             'dev_requirement' => false,
         ),
         'symfony/http-foundation' => array(
+<<<<<<< HEAD
             'pretty_version' => 'v6.3.7',
             'version' => '6.3.7.0',
             'reference' => '59d1837d5d992d16c2628cd0d6b76acf8d69b33e',
+=======
+            'pretty_version' => 'v6.3.6',
+            'version' => '6.3.6.0',
+            'reference' => 'c186627f52febe09c6d5270b04f8462687a250a6',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/http-foundation',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'symfony/http-kernel' => array(
+<<<<<<< HEAD
             'pretty_version' => 'v6.3.7',
             'version' => '6.3.7.0',
             'reference' => '6d4098095f93279d9536a0e9124439560cc764d0',
+=======
+            'pretty_version' => 'v6.3.6',
+            'version' => '6.3.6.0',
+            'reference' => '4945f5001b06ff9080cd3d8f1f9f069094c0d156',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/http-kernel',
             'aliases' => array(),
@@ -1590,6 +1672,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/process',
             'aliases' => array(),
+<<<<<<< HEAD
             'dev_requirement' => false,
         ),
         'symfony/psr-http-message-bridge' => array(
@@ -1599,6 +1682,8 @@
             'type' => 'symfony-bridge',
             'install_path' => __DIR__ . '/../symfony/psr-http-message-bridge',
             'aliases' => array(),
+=======
+>>>>>>> origin/front-end
             'dev_requirement' => false,
         ),
         'symfony/routing' => array(
@@ -1629,9 +1714,15 @@
             'dev_requirement' => false,
         ),
         'symfony/translation' => array(
+<<<<<<< HEAD
             'pretty_version' => 'v6.3.7',
             'version' => '6.3.7.0',
             'reference' => '30212e7c87dcb79c83f6362b00bde0e0b1213499',
+=======
+            'pretty_version' => 'v6.3.6',
+            'version' => '6.3.6.0',
+            'reference' => '869b26c7a9d4b8a48afdd77ab36031909c87e3a2',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/translation',
             'aliases' => array(),
@@ -1671,9 +1762,15 @@
             'dev_requirement' => false,
         ),
         'symfony/yaml' => array(
+<<<<<<< HEAD
             'pretty_version' => 'v6.3.7',
             'version' => '6.3.7.0',
             'reference' => '9758b6c69d179936435d0ffb577c3708d57e38a8',
+=======
+            'pretty_version' => 'v6.3.3',
+            'version' => '6.3.3.0',
+            'reference' => 'e23292e8c07c85b971b44c1c4b87af52133e2add',
+>>>>>>> origin/front-end
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/yaml',
             'aliases' => array(),
