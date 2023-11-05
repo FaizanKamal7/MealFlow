@@ -787,13 +787,19 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'App\\Enum\\BagStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BagStatusEnum.php',
         'App\\Enum\\BatchStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BatchStatusEnum.php',
         'App\\Enum\\BusinessStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BusinessStatusEnum.php',
+<<<<<<< HEAD
         'App\\Enum\\BusinessWalletTransactionStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BusinessWalletTransactionStatusEnum.php',
+=======
+>>>>>>> origin/front-end
         'App\\Enum\\BusinessWalletTransactionTypeEnum' => __DIR__ . '/../..' . '/app/Enum/BusinessWalletTransactionTypeEnum.php',
         'App\\Enum\\DeliveryImageTypeEnum' => __DIR__ . '/../..' . '/app/Enum/DeliveryImageTypeEnum.php',
         'App\\Enum\\DeliveryStatusEnum' => __DIR__ . '/../..' . '/app/Enum/DeliveryStatusEnum.php',
         'App\\Enum\\EmptyBagCollectionStatusEnum' => __DIR__ . '/../..' . '/app/Enum/EmptyBagCollectionStatusEnum.php',
         'App\\Enum\\InvoiceItemTypeEnum' => __DIR__ . '/../..' . '/app/Enum/InvoiceItemTypeEnum.php',
+<<<<<<< HEAD
         'App\\Enum\\ModulesTitleEnum' => __DIR__ . '/../..' . '/app/Enum/ModulesTitleEnum.php',
+=======
+>>>>>>> origin/front-end
         'App\\Enum\\RoleNamesEnum' => __DIR__ . '/../..' . '/app/Enum/RoleNamesEnum.php',
         'App\\Enum\\ServiceTypeEnum' => __DIR__ . '/../..' . '/app/Enum/ServiceTypeEnum.php',
         'App\\Enum\\UserTypeEnum' => __DIR__ . '/../..' . '/app/Enum/UserTypeEnum.php',
@@ -1156,8 +1162,12 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'Database\\Seeders\\ApplicationModelSeeder' => __DIR__ . '/../..' . '/database/seeders/ApplicationModelSeeder.php',
         'Database\\Seeders\\ApplicationSeeder' => __DIR__ . '/../..' . '/database/seeders/ApplicationSeeder.php',
         'Database\\Seeders\\AreaSeeder' => __DIR__ . '/../..' . '/database/seeders/AreaSeeder.php',
+<<<<<<< HEAD
         'Database\\Seeders\\BusinessCategoryTableSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessCategoryTableSeeder.php',
         'Database\\Seeders\\BusinessSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessSeeder.php',
+=======
+        'Database\\Seeders\\BusinessCategorySeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessCategorySeeder.php',
+>>>>>>> origin/front-end
         'Database\\Seeders\\CitiesTableChunkFiveSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkFiveSeeder.php',
         'Database\\Seeders\\CitiesTableChunkFourSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkFourSeeder.php',
         'Database\\Seeders\\CitiesTableChunkOneSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkOneSeeder.php',

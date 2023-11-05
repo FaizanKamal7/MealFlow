@@ -103,5 +103,8 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::group(['prefix' => 'meal/'], function () {
         Route::get('add-customer-to-plan', [DeliveryController::class, "addCustomerToPlanView"])->name("add_customer_to_plan_view");
         Route::get('view-plan', [DeliveryController::class, "viewMealPlan"])->name("view_plan_delivery");
+        Route::get('view_plan', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewMealPlan"])->name("view_plan_delivery");
+        Route::post('add_plan', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "addMealPlan"])->name("add_plan_delivery");
+        Route::post('upload_plan', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadMealPlan"])->name("upload_plan_delivery");
     });
 });

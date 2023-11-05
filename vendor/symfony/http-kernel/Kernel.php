@@ -239,7 +239,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
         }
 
         $bundle = $this->getBundle($bundleName);
-        if (file_exists($file = $bundle->getPath().'/'.$path)) {
+        if (file_exists($file = $bundle->getPath() . '/' . $path)) {
             return $file;
         }
 
@@ -269,7 +269,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
             }
 
             $dir = $rootDir = \dirname($dir);
-            while (!is_file($dir.'/composer.json')) {
+            while (!is_file($dir . '/composer.json')) {
                 if ($dir === \dirname($dir)) {
                     return $this->projectDir = $rootDir;
                 }
@@ -295,7 +295,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
      */
     public function setAnnotatedClassCache(array $annotatedClasses): void
     {
-        file_put_contents(($this->warmupDir ?: $this->getBuildDir()).'/annotations.map', sprintf('<?php return %s;', var_export($annotatedClasses, true)));
+        file_put_contents(($this->warmupDir ?: $this->getBuildDir()) . '/annotations.map', sprintf('<?php return %s;', var_export($annotatedClasses, true)));
     }
 
     public function getStartTime(): float
@@ -305,7 +305,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
 
     public function getCacheDir(): string
     {
-        return $this->getProjectDir().'/var/cache/'.$this->environment;
+        return $this->getProjectDir() . '/var/cache/' . $this->environment;
     }
 
     public function getBuildDir(): string
@@ -316,7 +316,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
 
     public function getLogDir(): string
     {
-        return $this->getProjectDir().'/var/log';
+        return $this->getProjectDir() . '/var/log';
     }
 
     public function getCharset(): string
@@ -371,8 +371,8 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
     protected function getContainerClass(): string
     {
         $class = static::class;
-        $class = str_contains($class, "@anonymous\0") ? get_parent_class($class).str_replace('.', '_', ContainerBuilder::hash($class)) : $class;
-        $class = str_replace('\\', '_', $class).ucfirst($this->environment).($this->debug ? 'Debug' : '').'Container';
+        $class = str_contains($class, "@anonymous\0") ? get_parent_class($class) . str_replace('.', '_', ContainerBuilder::hash($class)) : $class;
+        $class = str_replace('\\', '_', $class) . ucfirst($this->environment) . ($this->debug ? 'Debug' : '') . 'Container';
 
         if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $class)) {
             throw new \InvalidArgumentException(sprintf('The environment "%s" contains invalid characters, it can only contain characters allowed in PHP class names.', $this->environment));
@@ -403,14 +403,15 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
     {
         $class = $this->getContainerClass();
         $buildDir = $this->warmupDir ?: $this->getBuildDir();
-        $cache = new ConfigCache($buildDir.'/'.$class.'.php', $this->debug);
+        $cache = new ConfigCache($buildDir . '/' . $class . '.php', $this->debug);
         $cachePath = $cache->getPath();
 
         // Silence E_WARNING to ignore "include" failures - don't use "@" to prevent silencing fatal errors
         $errorLevel = error_reporting(\E_ALL ^ \E_WARNING);
 
         try {
-            if (is_file($cachePath) && \is_object($this->container = include $cachePath)
+            if (
+                is_file($cachePath) && \is_object($this->container = include $cachePath)
                 && (!$this->debug || (self::$freshCache[$cachePath] ?? $cache->isFresh()))
             ) {
                 self::$freshCache[$cachePath] = true;
@@ -427,7 +428,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
         try {
             is_dir($buildDir) ?: mkdir($buildDir, 0777, true);
 
-            if ($lock = fopen($cachePath.'.lock', 'w+')) {
+            if ($lock = fopen($cachePath . '.lock', 'w+')) {
                 if (!flock($lock, \LOCK_EX | \LOCK_NB, $wouldBlock) && !flock($lock, $wouldBlock ? \LOCK_SH : \LOCK_EX)) {
                     fclose($lock);
                     $lock = null;
@@ -508,8 +509,8 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
             if ($collectDeprecations) {
                 restore_error_handler();
 
-                @file_put_contents($buildDir.'/'.$class.'Deprecations.log', serialize(array_values($collectedLogs)));
-                @file_put_contents($buildDir.'/'.$class.'Compiler.log', null !== $container ? implode("\n", $container->getCompiler()->getLog()) : '');
+                @file_put_contents($buildDir . '/' . $class . 'Deprecations.log', serialize(array_values($collectedLogs)));
+                @file_put_contents($buildDir . '/' . $class . 'Compiler.log', null !== $container ? implode("\n", $container->getCompiler()->getLog()) : '');
             }
         }
 
@@ -529,14 +530,14 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
             // but on a next dump of the container.
             static $legacyContainers = [];
             $oldContainerDir = \dirname($oldContainer->getFileName());
-            $legacyContainers[$oldContainerDir.'.legacy'] = true;
-            foreach (glob(\dirname($oldContainerDir).\DIRECTORY_SEPARATOR.'*.legacy', \GLOB_NOSORT) as $legacyContainer) {
+            $legacyContainers[$oldContainerDir . '.legacy'] = true;
+            foreach (glob(\dirname($oldContainerDir) . \DIRECTORY_SEPARATOR . '*.legacy', \GLOB_NOSORT) as $legacyContainer) {
                 if (!isset($legacyContainers[$legacyContainer]) && @unlink($legacyContainer)) {
                     (new Filesystem())->remove(substr($legacyContainer, 0, -7));
                 }
             }
 
-            touch($oldContainerDir.'.legacy');
+            touch($oldContainerDir . '.legacy');
         }
 
         $preload = $this instanceof WarmableInterface ? (array) $this->warmUp($this->container->getParameter('kernel.cache_dir')) : [];
@@ -545,7 +546,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
             $preload = array_merge($preload, (array) $this->container->get('cache_warmer')->warmUp($this->container->getParameter('kernel.cache_dir')));
         }
 
-        if ($preload && file_exists($preloadFile = $buildDir.'/'.$class.'.preload.php')) {
+        if ($preload && file_exists($preloadFile = $buildDir . '/' . $class . '.preload.php')) {
             Preloader::append($preloadFile, $preload);
         }
     }
@@ -707,14 +708,14 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
         ]);
 
         $rootCode = array_pop($content);
-        $dir = \dirname($cache->getPath()).'/';
+        $dir = \dirname($cache->getPath()) . '/';
         $fs = new Filesystem();
 
         foreach ($content as $file => $code) {
-            $fs->dumpFile($dir.$file, $code);
-            @chmod($dir.$file, 0666 & ~umask());
+            $fs->dumpFile($dir . $file, $code);
+            @chmod($dir . $file, 0666 & ~umask());
         }
-        $legacyFile = \dirname($dir.key($content)).'.legacy';
+        $legacyFile = \dirname($dir . key($content)) . '.legacy';
         if (is_file($legacyFile)) {
             @unlink($legacyFile);
         }
@@ -790,7 +791,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
             if (!isset($token[1]) || 'b"' === $token) {
                 $rawChunk .= $token;
             } elseif (\T_START_HEREDOC === $token[0]) {
-                $output .= $rawChunk.$token[1];
+                $output .= $rawChunk . $token[1];
                 do {
                     $token = $tokens[++$i];
                     $output .= isset($token[1]) && 'b"' !== $token ? $token[1] : $token;
@@ -838,7 +839,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
     public function __wakeup()
     {
         if (\is_object($this->environment) || \is_object($this->debug)) {
-            throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
+            throw new \BadMethodCallException('Cannot unserialize ' . __CLASS__);
         }
 
         $this->__construct($this->environment, $this->debug);

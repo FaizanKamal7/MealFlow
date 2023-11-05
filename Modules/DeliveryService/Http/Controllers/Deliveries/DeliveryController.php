@@ -103,12 +103,93 @@ class DeliveryController extends Controller
         $this->driverRepository = $driverRepository;
         $this->deliveryBatchRepository = $deliveryBatchRepository;
         $this->deliveryTimelineRepository = $deliveryTimelineRepository;
-        $this->roleRepository =  $roleRepository;
+        $this->roleRepository = $roleRepository;
         $this->userRoleRepository = $userRoleRepository;
         $this->helper = $helper;
     }
 
+    public function viewMealPlan()
+    {
+        $partner = $this->businessRepository->getActiveBusinesses();
+        $business_customers = $this->businessCustomerRepository->get();
+        $data = [
+            'partners' => $partner,
+            'business_customers' => $business_customers,
+        ];
 
+        return view('deliveryservice::planner.plan_delivery', $data);
+    }
+
+    public function addMealPlan(Request $request)
+    {
+        $partner = $request->input('partner');
+        // dd($partner, $branches);
+        $c_id = $request->input('customer');
+        $branches = $this->branchRepository->getBusinessBranches($partner);
+        $partner = $this->businessRepository->getActiveBusinesses(); //to show partners
+        $other_customers = $this->businessCustomerRepository->get(); //for dropdown
+        $business_customer = $this->businessCustomerRepository->getOneBusinessCustomer($c_id);
+        $product_type = $this->BusinessCategoryRepository->getBusinessCategory();
+        $customer_addr = $this->customerAddressRepository->getCustomerAddresses($business_customer->customer_id);
+        $data = [
+            'partners' => $partner,
+            'other_customers' => $other_customers,
+            'product_type' => $product_type,
+            'business_customer' => $business_customer,
+            'customer_addresses' => $customer_addr,
+            'branches' => $branches
+        ];
+
+        return view('deliveryservice::planner.add_plan_delivery', $data);
+    }
+    public function uploadMealPlan(Request $request)
+    {
+        $submittedData = request()->all(); // Get all input from the request
+        // $date = $deliveryAddresses[0]; 
+        $starting_date = $submittedData['starting_date'];
+        $expiry_date = $submittedData['expiry_date'];
+        $no_of_days = $submittedData['no_of_plan_days'];
+
+        //customer id, business id
+        //customer id from customer address and business ic can be get from branch id or business selected in view plan
+        $meal_data = [
+            'starting_date' => $starting_date,
+            'expiry_date' => $expiry_date,
+            'no_of_days' => $no_of_days,
+            'status' => 'unactive',
+        ];
+        //save this meal object in meal model and get id of saved data
+        // dd($deliveryAddresses, $request, $submittedData, $starting_date);
+
+        for ($i = 0; $i < count($submittedData['delivery_address']); $i++) {
+            // Create a new object for each iteration
+            //finding customer address object using customer address id, for using cityid etc
+            $customer = $this->customerAddressRepository->getCustomerAddressById($submittedData['delivery_address'][$i]);
+
+            dd('abc', $customer, $customer->city_id, $request, $submittedData, $starting_date);
+
+            $delivery_data = [
+                'status' => 'unassign',
+                'is_recurring' => false,
+                'payment_status' => false,
+                'is_sign_required' => false,
+                'is_notification_enabled' => $submittedData['notification'][$i],
+                'note' => $submittedData['notes'][$i],
+                'branch_id' => $submittedData['pickup_point'][$i],
+                'delivery_slot_id' => $submittedData['time_slot'][$i],
+                'delivery_type_id' => $submittedData['product_type'][$i],
+                'delivery_date' => $starting_date,
+                'customer_id' => $customer->customer_id,
+                'area_id' => $customer->area_id,
+                'city_id' => $customer->city_id,
+                'state_id' => $customer->state_id,
+                'country_id' => $customer->country_id,
+            ];
+            // $this->deliveryRepository->create($delivery_data);
+        }
+        // return view('deliveryservice::planner.add_plan_delivery');
+        return redirect()->route('view_plan_delivery')->with("success", "Meal-Plan uploaded successfully");
+    }
     /**
      * Display a listing of the resource.
      */
