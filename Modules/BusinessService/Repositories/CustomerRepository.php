@@ -44,4 +44,10 @@ class CustomerRepository implements CustomerInterface
             $query->where('phone_number', $phone_no);
         })->first();
     }
+
+
+    // public function updateCustomersDeliverySlotInfo($where, $data)
+    // {
+    //     return Customer::update;
+    // }
 }

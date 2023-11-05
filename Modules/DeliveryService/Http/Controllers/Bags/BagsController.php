@@ -2,6 +2,7 @@
 
 namespace Modules\DeliveryService\Http\Controllers\Bags;
 
+use App\Enum\BagStatusEnum;
 use App\Enum\EmptyBagCollectionStatusEnum;
 use App\Http\Helper\Helper;
 use Exception;
@@ -173,7 +174,7 @@ class BagsController extends Controller
                     bagType: $request->get("bag_size"),
                     weight: $request->get("weight"),
                     dimensions: $request->get("dimensions"),
-                    status: 'Added'
+                    status: BagStatusEnum::NEUTRAL->value
                 );
                 $qr_data = json_encode([
                     'bag_id' => $bag->id,
@@ -207,7 +208,7 @@ class BagsController extends Controller
         $business_id = $request->get("business_id");
 
         $businesses = $this->businessRepository->getActiveBusinesses();
-        $bags = $this->businessRepository->getBusiness($business_id)->bags;
+        $bags = $this->businessRepository->getBusiness($business_id)->get();
 
         $context = ["businesses" => $businesses, "bags" => $bags];
         return view('deliveryservice::bags.view_bags', $context);

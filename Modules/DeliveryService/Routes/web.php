@@ -93,11 +93,12 @@ Route::prefix('admin/deliveries')->group(function () {
 
 
 
-            // Route::GET('/driver-bag-collection', [BagsController::class, "assignBagsCollection"])->name("assign_bag_collection_to_driver");
+            // Route::GET('/d\river-bag-collection', [BagsController::class, "assignBagsCollection"])->name("assign_bag_collection_to_driver");
         });
     });
 
     Route::group(['prefix' => 'meal/'], function () {
-        Route::get('view_plan', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewMealPlan"])->name("view_plan_delivery");
+        Route::get('add-customer-to-plan', [DeliveryController::class, "addCustomerToPlanView"])->name("add_customer_to_plan_view");
+        Route::get('view-plan', [DeliveryController::class, "viewMealPlan"])->name("view_plan_delivery");
     });
 });

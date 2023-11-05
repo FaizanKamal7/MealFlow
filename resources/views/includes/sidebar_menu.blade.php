@@ -144,16 +144,16 @@
                 </div>
             </div>
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
-                    <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
-                    <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
-                        <x-iconsax-bol-buliding />
+                <a href="{{ route('add_customer_to_plan_view') }}">
+                    <span class="menu-link">
+                        <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
+                        <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
+                            <x-iconsax-bol-buliding />
+                        </span>
+                        <!--end::Svg Icon-->
+                        <span class="menu-title mx-5">Add Customer to Planner</span>
                     </span>
-                    <!--end::Svg Icon-->
-                    <span class="menu-title mx-5">Add Customer to Planner</span>
-                    {{-- <span class="menu-arrow"></span> --}}
-                </span>
-
+                </a>
             </div>
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -840,7 +840,7 @@
 
 
             <div class="separator"></div>
-            @can('view_employee')
+            @can('view_all_businesses')
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
                     <span class="menu-section text-dark text-uppercase fs-8 ls-1">HRM</span>

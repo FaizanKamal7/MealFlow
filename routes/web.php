@@ -37,6 +37,15 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'core/'], function () {
 
+        Route::get('/', function () {
+            return Gate::denies('view_all_businesses') ? Route::get("", [DashboardController::class, "dashboard"]) : view('dashboards.admin_dashboard');
+        })->name("admin_dashboard");
+
+        // if (Gate::denies('view_all_businesses')) {
+        //     Route::get("", [DashboardController::class, "dashboard"])->name("partner_dashboard");
+        // } else {
+        //     return view('dashboards.admin_dashboard')->name("admin_dashboard");
+        // }
 
         Route::get('/', function () {
             return (Gate::denies('view_all_businesses')) ? redirect(route("business_home")) : view('dashboards.admin_dashboard');

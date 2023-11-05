@@ -78,6 +78,8 @@ class DeliveryController extends Controller
     private $emptyBagcollectionRepository;
     private $bagTimeRepository;
 
+    private $roleRepository;
+    private $userRoleRepository;
 
 
 
@@ -110,6 +112,9 @@ class DeliveryController extends Controller
         BusinessWalletTransactionInterface $businessWalletTransactionRepository,
         EmptyBagCollectionInterface $emptyBagcollectionRepository,
         BagTimelineInterface $bagTimeRepository,
+        RoleInterface $roleRepository,
+        UserRoleInterface $userRoleRepository,
+        Helper $helper,
 
     ) {
         $this->customerRepository = $customerRepository;
@@ -137,11 +142,9 @@ class DeliveryController extends Controller
         $this->businessWalletTransactionRepository = $businessWalletTransactionRepository;
         $this->emptyBagcollectionRepository = $emptyBagcollectionRepository;
         $this->bagTimeRepository = $bagTimeRepository;
-
-
-
-
-        $this->helper = new Helper();
+        $this->roleRepository =  $roleRepository;
+        $this->userRoleRepository = $userRoleRepository;
+        $this->helper = $helper;
     }
 
 
@@ -186,8 +189,10 @@ class DeliveryController extends Controller
         return Excel::download(new DeliveryTemplateClass($data, $request->get("total_deliveries")), 'delivery_template.xlsx');
     }
 
+
     public function uploadDeliveriesByExcel(Request $request)
     {
+
         $businesses = $this->businessRepository->getActiveBusinesses();
 
         $request->validate([
@@ -210,6 +215,8 @@ class DeliveryController extends Controller
 
         ];
         $file = $request->file('excel_file');
+        $delivery_date = $request->delivery_date;
+
         $data = $this->helper->getExcelSheetData($file);
 
         // Create chunks of data with 10 rows each
@@ -250,7 +257,9 @@ class DeliveryController extends Controller
                         // ---- 3. Get all the addresses ($customer_address) of the db customer of selected city
                         $sheet_address = $row['address'];
                         $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($row['phone']);
-                        $customer = $customer ?? $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
+                        if (!$customer && ($row['email_optional'] != '' || $row['email_optional'] != null)) {
+                            $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
+                        }
                         $customer_addresses = '';
                         $address_matching = null;
 
@@ -260,17 +269,19 @@ class DeliveryController extends Controller
                             $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
                             $address_matching = $this->addressDBStatus($sheet_address, $customer_addresses);
                         } else {
-                            var_dump("inside else");
                             $user = $this->userRepository->createUser([
                                 'name' => $row['full_name'],
-                                'email' => $row['email_optional'] ?? '',
-                                'phone' => $row['phone'] ?? '',
-                                'password' => Hash::make("1234abcd"),
+                                'email' => $row['email_optional'] ?? null,
+                                'phone' => $row['phone'] ?? null,
+                                'password' => Hash::make("Aced732nokia501@"),
                                 'isActive' => true
                             ], false);
 
+
                             $customer = $this->customerRepository->create(['user_id' => $user->id]);
-                            $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
+                            $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
+                            $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
+                            $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id->id);
                         }
 
                         // --- Get DB Branch
@@ -291,7 +302,7 @@ class DeliveryController extends Controller
                         $finalized_address = '';
 
                         $delivery_data = [
-                            'status' => 'UNASSIGN',
+                            'status' => DeliveryStatusEnum::UNASSIGNED->value,
                             'is_recurring' => false,
                             'payment_status' => false,
                             'is_sign_required' => false,
@@ -300,6 +311,7 @@ class DeliveryController extends Controller
                             'branch_id' => $branch->id ?? null,
                             'delivery_slot_id' => $db_delivery_slot->id ?? null,
                             'delivery_type_id' => null,
+                            'delivery_date' => $delivery_date,
                             'customer_id' => $customer->id,
                             'area_id' => $area->id,
                             'city_id' => $city->id,
@@ -315,11 +327,11 @@ class DeliveryController extends Controller
 
                             $address_data = [
                                 'address' => $sheet_address,
-                                'address_type' => "OTHER",
+                                'address_type' => AddressTypeEnum::DEFAULT->value,
                                 'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
                                 'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
                                 'customer_id' => $customer->id,
-                                'address_status' => $new_address_coordinates ? "NO_COORDINATES" : "MANUAL_APPORVAL_REQUIRED",
+                                'address_status' => $new_address_coordinates ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
                                 'area_id' => $area->id,
                                 'city_id' => $city->id,
                                 'state_id' => $city->state->id,
@@ -379,16 +391,16 @@ class DeliveryController extends Controller
                 // TODO: upload deliveries via JOB
                 // $batch->add(new UploadDeliveriesCSVJob($chunk));
                 DB::commit();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 DB::rollback();
-                return 'Data upload failed: ' . $e->getMessage();
+                return $this->error($e, 'Something went wrong contact support');
             }
         }
 
         if (count($conflicted_deliveries) == 0) {
-            return redirect()->back()->with('success', 'Valid deliveries uploaded successfully.');
+            $this->success($data, "Deliveries uploaded successfully");
         } else {
-            return view('deliveryservice::deliveries.conflicted_deliveries', ['conflicted_deliveries' => $conflicted_deliveries]);
+            return $this->error($conflicted_deliveries, count($conflicted_deliveries) . ' deliveries not uploaded.');
         }
         // return redirect()->back()->with('success', 'Valid deliveries uploaded successfully.');
         // return redirect()->route('deliveryservice::deliveries.upload_delivery')->with(['businesses' => $businesses]);
@@ -398,6 +410,16 @@ class DeliveryController extends Controller
         //     'businesses' => $businesses,
         //     'conflicted_deliveries' => $conflicted_deliveries
         // ]);
+    }
+
+    public function uploadSingleDelivery(Request $request)
+    {
+        return $this->error("Error", 'Something went wrong contact support');
+    }
+
+    public function getBusinessCustomer(Request $request)
+    {
+        return $this->error("Error", 'Something went wrong contact support');
     }
 
     public function update(Request $request)
@@ -628,14 +650,14 @@ class DeliveryController extends Controller
         try {
             $driver_id = $request->get('driver_id');
             $delivery_batch = $this->deliveryBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
-
-
             $data = ['delivery_batch' => $delivery_batch];
-            return $this->success($data, "delivery batch");
+            if (!$data) {
+                return $this->error($data, "Error! No deliveries assigned to the driver");
+            }
+            return $this->success($data, "Delivery batch deliveries");
         } catch (Exception $e) {
             return $this->error($e, 'Something went wrong contact support');
         }
-        // $deliveries = $this->deliveryRepository->getde   
     }
 
 
@@ -655,7 +677,10 @@ class DeliveryController extends Controller
                 'empty_bag_count' => [],
             ]);
 
-
+            // Check if validation fails
+            if ($validator->fails()) {
+                return $this->error($validator->errors(), "validation failed", 422);
+            }
 
             $delivery_id = $request->post('delivery_id');
             $open_bag_img = $request->file('open_bag_img');
