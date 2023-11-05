@@ -113,7 +113,7 @@ class DeliveryController extends Controller
         EmptyBagCollectionInterface $emptyBagcollectionRepository,
         RoleInterface $roleRepository,
         UserRoleInterface $userRoleRepository,
-
+        Helper $helper,
     ) {
         $this->customerRepository = $customerRepository;
         $this->cityRepository = $cityRepository;
@@ -141,12 +141,7 @@ class DeliveryController extends Controller
         $this->emptyBagcollectionRepository = $emptyBagcollectionRepository;
         $this->roleRepository =  $roleRepository;
         $this->userRoleRepository = $userRoleRepository;
-
-
-
-
-
-        $this->helper = new Helper();
+        $this->helper = $helper;
     }
 
 
@@ -281,7 +276,7 @@ class DeliveryController extends Controller
 
 
                             $customer = $this->customerRepository->create(['user_id' => $user->id]);
-                            $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
+                            $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
                             $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
                             $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id->id);
                         }
