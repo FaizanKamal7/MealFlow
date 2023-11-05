@@ -29,8 +29,17 @@ Route::group(['prefix' => 'deliveryservice/'], function () {
         Route::POST('update-delivery-batch-progress', [DeliveryBatchController::class, "updateDeliveryBatchpProgress"]);
     });
     Route::prefix('deliveries/')->group(function () {
+        Route::GET('download-deliveries_excel-sample', [DeliveryController::class, "generateAndDownloadDeliveryTemplate"]);
+
+        Route::post('upload/excel', [DeliveryController::class, "uploadDeliveriesByExcel"]);
+        Route::post('upload/single-delivery', [DeliveryController::class, "uploadSingleDelivery"]);
+
         Route::POST('complete-delivery', [DeliveryController::class, "completeDelivery"]);
         Route::POST('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
+
+        Route::DELETE('delete-delivery', [DeliveryBatchController::class, "deleteDelivery"]);
+        Route::GET('get-business-customers', [DeliveryController::class, "getBusinessCustomer"]);
+        Route::GET('get-delivery-slots', [DeliveryController::class, "getDeliverySlots"]);
     });
 
     // Route::group(['prefix' => 'Collection/'], function () {

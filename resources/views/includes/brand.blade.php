@@ -3,6 +3,13 @@
     <a href="#">
         <img alt="Logo" src="{{ asset('static/media/logos-logo-full.png') }}" class="h-60px logo" />
     </a>
+    {{-- <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <div class="menu-item px-5">
+            <a href="{{route('logout') }}" onclick="event.preventDefault();
+            this.closest('form').submit();" class="menu-link px-5"> {{ __('Log Out') }}</a>
+        </div>
+    </form> --}}
     <!--end::Logo-->
     <!--begin::Aside toggler-->
     <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle" data-kt-toggle="true"
