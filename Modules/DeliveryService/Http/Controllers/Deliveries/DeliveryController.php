@@ -947,11 +947,11 @@ class DeliveryController extends Controller
         }
     }
 
-    public function viewMealPlan()
-    {
-        $businesses = $this->businessRepository->getActiveBusinesses();
-        return view('deliveryservice::planner.plan_delivery', ['businesses' => $businesses]);
-    }
+    // public function viewMealPlan()
+    // {
+    //     $businesses = $this->businessRepository->getActiveBusinesses();
+    //     return view('deliveryservice::planner.plan_delivery', ['businesses' => $businesses]);
+    // }
 
     public function addCustomerToPlanView()
     {
