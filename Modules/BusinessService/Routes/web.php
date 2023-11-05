@@ -86,6 +86,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [CustomersController::class, "viewAllCustomers"])->name("view_all_customers");
             Route::get('add/', [CustomersController::class, "viewAddCustomer"])->name("add_new_customer_view");
             Route::post('store/', [CustomersController::class, "storeNewCustomer"])->name("store_new_customer");
+            Route::post('store-excel-info/', [CustomersController::class, "storeNewCustomersExcelInfo"])->name("store_new_customers_excel_info");
         });
     });
 });
