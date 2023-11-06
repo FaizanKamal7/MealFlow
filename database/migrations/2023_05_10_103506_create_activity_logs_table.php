@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->text('description')->nullable();
             $table->string('ip_address', 45)->nullable();
-            $table->string('user_agent',500)->nullable();
+            $table->string('user_agent', 500)->nullable();
             $table->json('old_values')->nullable();
             $table->json('new_values')->nullable();
             $table->uuid('record_id')->nullable();
@@ -32,6 +32,7 @@ return new class extends Migration
             // Add foreign key constraint
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

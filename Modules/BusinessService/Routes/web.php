@@ -14,13 +14,21 @@
 use Modules\BusinessService\Http\Controllers\BusinessInfo\BusinessInfoController;
 use Modules\BusinessService\Http\Controllers\BusinessPricing\BusinessPricingController;
 use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsController;
+use Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController;
 use Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController;
 use Modules\FinanceService\Http\Controllers\WalletController;
-use Modules\FinanceService\Http\Controllers\WalletCreditController;
-use Modules\BusinessService\Http\Middleware\BusinessCheck;
+use Modules\FinanceService\Http\Controllers\WalletTransactionController;
 
 
-Route::middleware(['businessCheck'])->group(function () {
+
+
+Route::group(['prefix' => 'businessservice/onboarding/'], function () {
+    Route::get("", [BusinessOnboardingController::class, "index"])->name("business_onboarding");
+    Route::post("add/", [BusinessOnboardingController::class, "businessOnboarding"])->name("business_onboarding_add");
+    Route::get("pricing", [BusinessOnboardingController::class, "pricingCalculator"])->name("pricing_calculator");
+});
+
+Route::middleware(['auth'])->group(function () {
     Route::prefix('businessservice')->group(function () {
         Route::get("", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
         Route::get("deliveries/upload", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "uploadDeliveriesByForm"])->name("partner_upload_deliveries");
@@ -30,12 +38,6 @@ Route::middleware(['businessCheck'])->group(function () {
 
         Route::group(['prefix' => 'business_info/'], function () {
             Route::get("overview/{business_id}", [BusinessInfoController::class, "index"])->name("business_overview");
-        });
-
-        Route::group(['prefix' => 'onboarding/'], function () {
-            Route::get("", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "index"])->name("business_onboarding");
-            Route::post("add/", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "businessOnboarding"])->name("business_onboarding_add");
-            Route::get("pricing", [\Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController::class, "pricingCalculator"])->name("pricing_calculator");
         });
 
         Route::group(['prefix' => 'business_info/'], function () {
@@ -59,7 +61,6 @@ Route::middleware(['businessCheck'])->group(function () {
             Route::get("get-base-range-pricing", [BusinessPricingController::class, "getCityRangeBasePrice"])->name("get_base_range_pricing");
             Route::get("get-business-range-pricing", [BusinessPricingController::class, "getCitiesRangeBusinessPrice"])->name("get_business_range_pricing");
             Route::post("store-base-range-pricing", [BusinessPricingController::class, "storeCityRangeBasePrice"])->name("store_delivery_slots_of_city_in_base_price");
-
             Route::get("get-delivery-slots-of-city-in-base-price", [BusinessPricingController::class, "getDeliverySlotsOfCityInBasePrice"])->name("get_delivery_slots_of_city_in_base_price");
             Route::get("store-delivery-slot-pricing-in-base-price", [BusinessPricingController::class, "storeDeliverySlotPricingInBasePrice"])->name("store_delivery_slot_pricing_in_base_price");
         });
@@ -68,14 +69,13 @@ Route::middleware(['businessCheck'])->group(function () {
         Route::group(['prefix' => 'wallet/'], function () {
             Route::get("", [WalletController::class, "viewWallet"])->name("viewWallet");
             Route::group(['prefix' => 'credit/'], function () {
-                Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
-                Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
+                Route::POST("store", [WalletTransactionController::class, "store"])->name("storeCredit");
+                Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletTransactionController::class, "paymentSuccess"])->name("PaymentSuccess");
+                Route::POST("store-bank-transfer", [WalletTransactionController::class, "storeBankTransferDetails"])->name("upload_bank_transfer_details");
+                Route::get("pending-transactions", [WalletTransactionController::class, "pendingTransactionsView"])->name("pending_transactions");
+                Route::POST("approve-pending-transaction", [WalletTransactionController::class, "approvePendingTransaction"])->name("approve_pending_transaction");
             });
 
-            Route::group(['prefix' => 'credit/'], function () {
-                Route::POST("store", [WalletCreditController::class, "store"])->name("storeCredit");
-                Route::get("paymentSuccess/{CHECKOUT_SESSION_ID}", [WalletCreditController::class, "paymentSuccess"])->name("PaymentSuccess");
-            });
 
             Route::group(['prefix' => 'business-settings/'], function () {
             });
@@ -86,6 +86,7 @@ Route::middleware(['businessCheck'])->group(function () {
             Route::get('/', [CustomersController::class, "viewAllCustomers"])->name("view_all_customers");
             Route::get('add/', [CustomersController::class, "viewAddCustomer"])->name("add_new_customer_view");
             Route::post('store/', [CustomersController::class, "storeNewCustomer"])->name("store_new_customer");
+            Route::post('store-excel-info/', [CustomersController::class, "storeNewCustomersExcelInfo"])->name("store_new_customers_excel_info");
         });
     });
 });

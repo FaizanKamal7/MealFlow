@@ -11,7 +11,7 @@ class LoginController extends Controller
 {
     public function loginView()
     {
-        return view("authentication.login");
+        return view("auth.login");
     }
 
     public function loginUser(Request $request)
@@ -22,7 +22,7 @@ class LoginController extends Controller
         ]);
         $credentials = $request->only("email", "password");
         if (Auth::attempt($credentials)) {
-            return redirect()->route("admin_dashboard");
+            return redirect()->route("core");
         }
         Session::flash("message", "Invalid email address or password!");
         Session::flash('alert-class', 'alert-danger');

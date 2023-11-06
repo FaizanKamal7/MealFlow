@@ -16,5 +16,4 @@ class Helper
         $file->move("hr/" . $directory . "/", $file_url);
         return $file_url;
     }
-
 }

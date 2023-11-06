@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('cancelled_at')->nullable();
             $table->integer('created_at');
             $table->integer('finished_at')->nullable();
+            $table->softDeletes();
         });
     }
 

@@ -16,17 +16,17 @@ return new class extends Migration
         Schema::create('branch_coverages', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->boolean('active_status');
-            $table->uuid('area_id');
-            $table->uuid('city_id');
-            $table->uuid('state_id');
-            $table->uuid('country_id');
+            $table->uuid('area_id')->nullable();
+            $table->uuid('city_id')->nullable();
+            $table->uuid('state_id')->nullable();
+            $table->uuid('country_id')->nullable();
             $table->uuid('branch_id');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('set null');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('set null');
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('set null');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('set null');
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
         });
     }

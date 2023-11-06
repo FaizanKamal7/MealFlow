@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'LOGX'),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Dubai',
 
     /*
     |--------------------------------------------------------------------------
@@ -189,8 +189,9 @@ return [
          * Package Service Providers...
          */
         Barryvdh\Debugbar\ServiceProvider::class,
-
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -223,4 +224,3 @@ return [
     ])->toArray(),
 
 ];
-

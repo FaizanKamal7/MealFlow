@@ -2,7 +2,11 @@
 
 namespace Modules\HRManagement\Http\Controllers\Employees;
 
+use App\Enum\RoleNamesEnum;
 use App\Models\User;
+use App\Repositories\RoleRepository;
+use App\Repositories\UserRepository;
+use App\Repositories\UserRoleRepository;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -42,6 +46,10 @@ class EmployeesController extends Controller
     private LeavePolicyInterface $leavePolicy;
     private TaxesInterface $taxesRepository;
     private DriverAreaInterface $driverAreaRepository;
+    private $roleRepository;
+    private $userRoleRepository;
+    private $userRepository;
+
 
     /**
      * @param EmployeesInterface $employeesRepository
@@ -56,19 +64,23 @@ class EmployeesController extends Controller
      * @param LeavePolicyInterface $leavePolicy
      * @param TaxesInterface $taxesRepository
      */
-    public function __construct(EmployeesInterface $employeesRepository, 
-    DepartmentInterface $departmentRepository, 
-    DesignationInterface $designationRepository, 
-    TeamsInterface $teamsRepository, 
-    EmployeeDepartmentInterface $employeeDepartmentRepository, 
-    BanksInterface $banksRepository, 
-    TeamMembersInterface $teamMembersRepository, 
-    EmployeeSalaryInterface $salaryRepository, 
-    EmployeeMediaInterface $employeeMediaRepository, 
-    LeavePolicyInterface $leavePolicy, 
-    TaxesInterface $taxesRepository,
-    )
-    {
+    public function __construct(
+        EmployeesInterface $employeesRepository,
+        DepartmentInterface $departmentRepository,
+        DesignationInterface $designationRepository,
+        TeamsInterface $teamsRepository,
+        EmployeeDepartmentInterface $employeeDepartmentRepository,
+        BanksInterface $banksRepository,
+        TeamMembersInterface $teamMembersRepository,
+        EmployeeSalaryInterface $salaryRepository,
+        EmployeeMediaInterface $employeeMediaRepository,
+        LeavePolicyInterface $leavePolicy,
+        TaxesInterface $taxesRepository,
+        UserRepository $userRepository,
+        UserRoleRepository $userRoleRepository,
+        RoleRepository $roleRepository,
+
+    ) {
         $this->employeesRepository = $employeesRepository;
         $this->departmentRepository = $departmentRepository;
         $this->designationRepository = $designationRepository;
@@ -80,7 +92,9 @@ class EmployeesController extends Controller
         $this->employeeMediaRepository = $employeeMediaRepository;
         $this->leavePolicy = $leavePolicy;
         $this->taxesRepository = $taxesRepository;
-
+        $this->userRepository = $userRepository;
+        $this->userRoleRepository = $userRoleRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     // View
@@ -90,7 +104,6 @@ class EmployeesController extends Controller
      */
     public function viewEmployees()
     {
-        abort_if(Gate::denies('view_employee'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $employees = $this->employeesRepository->getEmployees();
         $departments = $this->departmentRepository->getDepartments();
         $designations = $this->designationRepository->getDesignations();
@@ -106,7 +119,6 @@ class EmployeesController extends Controller
      */
     public function addEmployee()
     {
-        abort_if(Gate::denies('add_employee'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $employees = $this->employeesRepository->getEmployees();
         $departments = $this->departmentRepository->getDepartments();
         $designations = $this->designationRepository->getDesignations();
@@ -147,7 +159,7 @@ class EmployeesController extends Controller
             $duty_end_time = $request->get("duty_end_time");
             // dd($duty_end_time);
             $agreement_file = null;
-           
+
 
             // Bank Details
             $bank_name = $request->get("bank_name");
@@ -176,13 +188,19 @@ class EmployeesController extends Controller
                 $password = Str::random(8);
             }
             if ($create_user) {
-                $user = new User([
-                    "name" => $first_name . " " . $last_name,
-                    "email" => $company_email_address,
-                    "password" => Hash::make($password),
-                    "is_active" => true,
-                ]);
-                $user->save();
+                $user = $this->userRepository->createUser([
+                    'name' => $first_name . " " . $last_name,
+                    'email' =>  $company_email_address,
+                    'phone' =>  $personal_phone_number,
+                    'password' => Hash::make($password),
+                    'isActive' => true
+                ], true);
+
+
+                $role = $this->roleRepository->getRoleByName(RoleNamesEnum::BUSINESS_ADMIN->value);
+                $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role->id);
+
+
                 $user = User::where(["email" => $company_email_address])->first();
                 $user_id = $user->id;
             }
@@ -192,7 +210,7 @@ class EmployeesController extends Controller
                 $helper = new Helper();
                 $picture = $helper->storeFile($file, "employees");
             }
-            $employee = $this->employeesRepository->createEmployee(firstName: $first_name, lastName: $last_name, personalEmailAddress: $personal_email_address, personalPhoneNumber: $personal_phone_number, companyEmailAddress: $company_email_address, companyPhoneNumber: $company_phone_number, picture: $picture, city: $city, country: $country, maritalStatus: $marital_status, hireDate: $hire_date, probationStartDate: $probation_period_start, probationEndDate: $probation_period_end, designationId: $designation, leavePolicyId: $leave_policy, employeeType: $employee_type, contractStartDate: $contract_start_date, contractEndDate: $contract_end_date, duty_start_time:$duty_start_time, duty_end_time:$duty_end_time, userId: $user_id);
+            $employee = $this->employeesRepository->createEmployee(firstName: $first_name, lastName: $last_name, personalEmailAddress: $personal_email_address, personalPhoneNumber: $personal_phone_number, companyEmailAddress: $company_email_address, companyPhoneNumber: $company_phone_number, picture: $picture, city: $city, country: $country, maritalStatus: $marital_status, hireDate: $hire_date, probationStartDate: $probation_period_start, probationEndDate: $probation_period_end, designationId: $designation, leavePolicyId: $leave_policy, employeeType: $employee_type, contractStartDate: $contract_start_date, contractEndDate: $contract_end_date, duty_start_time: $duty_start_time, duty_end_time: $duty_end_time, userId: $user_id);
 
             // create employee media
             if ($file = $request->file("agreement_file")) {
@@ -221,7 +239,7 @@ class EmployeesController extends Controller
         } catch (Exception $exception) {
             Log::error($exception);
             error_log("error " . $exception);
-            return redirect()->route("hr_employees")->with("error", "Something went wrong! Contact support");
+            return redirect()->route("hr_employees")->with("error", "Error! " . $exception->getMessage());
         }
     }
     // Edit

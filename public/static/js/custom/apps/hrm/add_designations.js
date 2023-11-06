@@ -79,40 +79,40 @@ var blockUI = new KTBlockUI(target);
 function editDesignation(id) {
     blockUI.block();
     $.ajax({
-        url: "designations/edit/"+id,
-        type:"GET",
-        success: function (data){
+        url: "designations/edit/" + id,
+        type: "GET",
+        success: function (data) {
             console.log(data);
             $("#id").val(data.designation.id);
             $("#edit_designation_name").val(data.designation.name);
             $("#re_edit_designations_modal").modal("show");
             blockUI.release();
         },
-        error:function (){
+        error: function () {
             $("#re_edit_designations_modal").modal("hide");
             blockUI.release();
         }
     });
 }
 
-function deleteDesignation(id){
-    const button = document.getElementById('delete_designation_btn_'+id);
-        Swal.fire({
-            html: `Are you sure you want to delete this designation?`,
-            icon: "question",
-            buttonsStyling: false,
-            showCancelButton: true,
-            confirmButtonText: "Yes!",
-            cancelButtonText: 'Nope, cancel it',
-            customClass: {
-                confirmButton: "btn btn-danger",
-                cancelButton: 'btn btn-primary'
-            }
-        }).then((result) =>{
-            if (result.isConfirmed){
-                window.location.replace("designations/delete/"+id);
-            }
-        });
+function deleteDesignation(id) {
+    const button = document.getElementById('delete_designation_btn_' + id);
+    Swal.fire({
+        html: `Are you sure you want to delete this designation?`,
+        icon: "question",
+        buttonsStyling: false,
+        showCancelButton: true,
+        confirmButtonText: "Yes!",
+        cancelButtonText: 'Nope, cancel it',
+        customClass: {
+            confirmButton: "btn btn-danger",
+            cancelButton: 'btn btn-primary'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.replace("designations/delete/" + id);
+        }
+    });
 }
 
 // Edit

@@ -7,8 +7,7 @@
                 id="kt_aside_mobile_toggle">
                 <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg') }}-->
                 <span class="svg-icon svg-icon-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z"
                             fill="currentColor" />
                         <path opacity="0.3"
@@ -59,12 +58,19 @@
                                 <!--begin::Username-->
                                 <div class="d-flex flex-column">
                                     <a href="#" class="fw-bold fs-18 px-2 py-1 ms-2 text-hover-primary">
-                                        {{--                                        {{ Auth::user()->name }} --}}
-                                        John Doe
+                                        {{ Auth::user()->name }}
+                                        {{-- @if ( Auth::user()->business_users->count() > 0)
+                                        <b> ({{Auth::user()->business_users[0]->business->name}})</b>
+                                        @endif --}}
+
+
                                     </a>
                                     <div class="fw-bolder d-flex align-items-center fs-5">
+                                        {{-- @foreach ( Auth::user()->userRoles as $user_role->role->role_id)
                                         <span
-                                            class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">admin</span>
+                                            class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{$user_role->id}}</span>
+                                        @endforeach --}}
+
                                     </div>
 
                                 </div>
@@ -83,9 +89,13 @@
                         </div>
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <a href="{{ route('logout') }}" class="menu-link px-5">Sign Out</a>
-                        </div>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <div class="menu-item px-5">
+                                <a href="{{route('logout') }}" onclick="event.preventDefault();
+                                this.closest('form').submit();" class="menu-link px-5"> {{ __('Log Out') }}</a>
+                            </div>
+                        </form>
                         <!--end::Menu item-->
                     </div>
                     <!--end::User account menu-->

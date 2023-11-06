@@ -1,0 +1,103 @@
+.bags_upperdiv {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        108.67deg,
+        rgba(255, 255, 255, 0.9) 0.67%,
+        rgba(255, 255, 255, 0.65) 99.61%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-radius: 12px;
+    height: 76px;
+    padding: 10px 20px;
+}
+
+/* below are the styling of viewing bag history */
+
+.bags_second_div {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        108.67deg,
+        rgba(255, 255, 255, 0.9) 0.67%,
+        rgba(255, 255, 255, 0.65) 99.61%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-radius: 12px;
+    /* height: 76px; */
+    /* padding: 20px 20px 10px; */
+    overflow: hidden;
+}
+
+.business_name_div h3 {
+    color: rgba(0, 66, 110, 1) !important;
+    font-size: 16px !important;
+    line-height: 2;
+}
+
+.not_black_h5 {
+    color: rgba(17, 16, 16, 0.8) !important;
+    font-size: 14px;
+    line-height: 2;
+}
+
+.black_h5 {
+    color: black !important;
+    font-size: 14px;
+}
+
+.second_div_customer {
+    margin-left: 20px;
+}
+.customer_details {
+    padding: 20px;
+    margin-right: 20px;
+}
+
+.vehicle_details {
+    background: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    flex-grow: 100;
+    padding: 20px;
+}
+
+.heading_info {
+    height: 58px;
+    display: flex;
+    align-items: center;
+}
+
+.order_id {
+    background: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    padding: 10px 20px;
+}
+
+.detail_div {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        108.67deg,
+        rgba(255, 255, 255, 0.9) 0.67%,
+        rgba(255, 255, 255, 0.65) 99.61%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    padding: 10px 20px;
+}
+
+.timeline_content {
+    border-bottom: 0.5px solid rgba(0, 66, 110, 0.2);
+    padding-bottom: 10px;
+}
+
+.timeline-label:before {
+    left: 50px;
+}

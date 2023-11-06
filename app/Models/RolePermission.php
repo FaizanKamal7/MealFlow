@@ -10,16 +10,19 @@ class RolePermission extends Model
 {
     use HasFactory;
     use HasUuids;
+
     protected $fillable = [
         "role_id",
         "permission_id"
     ];
 
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(Role::class, "role_id");
     }
 
-    public function permission(){
+    public function permission()
+    {
         return $this->belongsTo(Permission::class, "permission_id");
     }
 }

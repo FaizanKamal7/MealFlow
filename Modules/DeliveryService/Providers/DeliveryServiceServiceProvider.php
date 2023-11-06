@@ -10,11 +10,23 @@ use Modules\DeliveryService\Interfaces\EmptyBagCollectionBatchInterface;
 use Modules\DeliveryService\Interfaces\EmptyBagCollectionInterface;
 use Modules\DeliveryService\Interfaces\BagsInterface;
 use Modules\DeliveryService\Interfaces\BagStatusInterface;
+use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
+use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
+use Modules\DeliveryService\Interfaces\DeliveryTimelineInterface;
+use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Interfaces\PickupBatchBranchInterface;
+use Modules\DeliveryService\Interfaces\PickupBatchInterface;
 use Modules\DeliveryService\Repositories\DeliveryImagesRepository;
 use Modules\DeliveryService\Repositories\EmptyBagCollectionBatchRepository;
 use Modules\DeliveryService\Repositories\EmptyBagCollectionRepository;
 use Modules\DeliveryService\Repositories\BagsRepository;
 use Modules\DeliveryService\Repositories\BagStatusRepository;
+use Modules\DeliveryService\Repositories\DeliveryBagRepository;
+use Modules\DeliveryService\Repositories\DeliveryBatchRepository;
+use Modules\DeliveryService\Repositories\DeliveryTimelineRepository;
+use Modules\DeliveryService\Repositories\DeliveryTypeRepository;
+use Modules\DeliveryService\Repositories\PickupBatchBranchRepository;
+use Modules\DeliveryService\Repositories\PickupBatchRepository;
 
 
 class DeliveryServiceServiceProvider extends ServiceProvider
@@ -50,15 +62,23 @@ class DeliveryServiceServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-        $this->app->bind(BagsInterface::class,BagsRepository::class);
-        $this->app->bind(BagStatusInterface::class,BagStatusRepository::class);
-        $this->app->bind(EmptyBagCollectionInterface::class,EmptyBagCollectionRepository::class);
-        $this->app->bind(EmptyBagCollectionBatchInterface::class,EmptyBagCollectionBatchRepository::class);
-        $this->app->bind(DeliveryImagesInterface::class,DeliveryImagesRepository::class);
-       
-       
-
+        $this->app->bind(BagsInterface::class, BagsRepository::class);
+        $this->app->bind(BagStatusInterface::class, BagStatusRepository::class);
+        $this->app->bind(EmptyBagCollectionInterface::class, EmptyBagCollectionRepository::class);
+        $this->app->bind(EmptyBagCollectionBatchInterface::class, EmptyBagCollectionBatchRepository::class);
+        $this->app->bind(DeliveryTypeInterface::class, DeliveryTypeRepository::class);
+        $this->app->bind(DeliveryBatchInterface::class, DeliveryBatchRepository::class);
+        $this->app->bind(PickupBatchInterface::class, PickupBatchRepository::class);
+        $this->app->bind(PickupBatchBranchInterface::class, PickupBatchBranchRepository::class);
+        $this->app->bind(BagsInterface::class, BagsRepository::class);
+        $this->app->bind(BagStatusInterface::class, BagStatusRepository::class);
+        $this->app->bind(EmptyBagCollectionInterface::class, EmptyBagCollectionRepository::class);
+        $this->app->bind(EmptyBagCollectionBatchInterface::class, EmptyBagCollectionBatchRepository::class);
+        $this->app->bind(DeliveryImagesInterface::class, DeliveryImagesRepository::class);
+        $this->app->bind(DeliveryBagInterface::class, DeliveryBagRepository::class);
+        $this->app->bind(DeliveryTimelineInterface::class, DeliveryTimelineRepository::class);
     }
+
 
     /**
      * Register config.
@@ -71,7 +91,8 @@ class DeliveryServiceServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 

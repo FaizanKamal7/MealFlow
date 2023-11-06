@@ -62,4 +62,23 @@ class RangePricingRepository implements RangePricingInterface
     {
         return RangePricing::where(['business_id' => $business_id])->get();
     }
+
+    public function getRangePriceOfDelivery($delivery_count, $city_id, $business_id = null)
+    {
+        $final_range_pricing = null;
+
+        if ($business_id !== null) {
+            $final_range_pricing = RangePricing::where('min_range', '<=', $delivery_count)
+                ->where('max_range', '>=', $delivery_count)
+                ->where('city_id', '=', $city_id)->where('business_id', '=', $business_id)->orderBy('created_at', 'desc')->first();
+        }
+        
+        if ($final_range_pricing == null || $business_id == null) {
+            $final_range_pricing = RangePricing::where('min_range', '<=', $delivery_count)
+                ->where('max_range', '>=', $delivery_count)
+                ->where('city_id', '=', $city_id)->orderBy('created_at', 'desc')->first();
+        }
+
+        return $final_range_pricing;
+    }
 }

@@ -16,6 +16,7 @@
                 </div>
             </div>
 
+            @can('view_all_businesses')
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <a href="{{ route('admin_dashboard') }}">
                     <span class="menu-link">
@@ -31,64 +32,54 @@
                     </span>
                 </a>
             </div>
+            @else
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <a href="{{ route('viewWallet') }}">
+                <a href="{{ route('business_home') }}">
                     <span class="menu-link">
-
                         <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                            <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
                             <span class="svg-icon side-icon svg-icon-2">
-                                <x-iconsax-bol-wallet-3 />
+                                <x-iconsax-bul-element-3 />
                             </span>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-title mx-5">Wallet </span>
+                        <span class="menu-title mx-5">Dashboard</span>
+                        <span class="menu-arrow"></span>
                     </span>
                 </a>
-            </div>
-
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
-                    <span class="menu-icon">
-                        <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
-                        <span class="svg-icon side-icon svg-icon-2">
-                            <x-iconsax-bol-home-trend-up />
-                        </span>
-                        <!--end::Svg Icon-->
-                    </span>
-                    <span class="menu-title mx-5">Business Management</span>
-                    <span class="menu-arrow"></span>
-
-                </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('business_home') }}">
+                        <a class="menu-link" href="{{ route('viewWallet') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Dashboard</span>
+                            <span class="menu-title">Wallet Details</span>
                         </a>
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('permissions_view') }}">
+                        <a class="menu-link" href="{{ route('viewWallet') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Branches</span>
+                            <span class="menu-title">Pricings</span>
                         </a>
                     </div>
 
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('delivery_slot_wise_base_pricing') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Pricing Info</span>
-                        </a>
-                    </div>
+
+
+
                 </div>
             </div>
+            @endcan
+
+
+
+
+
+
+
+
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
@@ -103,8 +94,7 @@
                     <span class="menu-arrow"></span>
 
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
-                    @can('view_permissions')
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('permissions_view') }}">
                             <span class="menu-bullet">
@@ -113,9 +103,7 @@
                             <span class="menu-title">Permissions</span>
                         </a>
                     </div>
-                    @endcan
 
-                    @can('view_role')
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('roles_view') }}">
                             <span class="menu-bullet">
@@ -124,9 +112,7 @@
                             <span class="menu-title">Roles</span>
                         </a>
                     </div>
-                    @endcan
 
-                    @can('view_users')
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('users_view') }}">
                             <span class="menu-bullet">
@@ -135,9 +121,63 @@
                             <span class="menu-title">Users</span>
                         </a>
                     </div>
-                    @endcan
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('applications_view') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Applications</span>
+                        </a>
+                    </div>
+
 
                 </div>
+            </div>
+            <div class="separator"></div>
+
+
+            <div class="menu-item">
+                <div class="menu-content pt-5 pb-2">
+                    <span class="menu-section text-dark text-uppercase fs-8 ls-1">MEAL
+                        PLANNER</span>
+                </div>
+            </div>
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <a href="{{ route('add_customer_to_plan_view') }}">
+                    <span class="menu-link">
+                        <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
+                        <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
+                            <x-iconsax-bol-buliding />
+                        </span>
+                        <!--end::Svg Icon-->
+                        <span class="menu-title mx-5">Add Customer to Planner</span>
+                    </span>
+                </a>
+            </div>
+
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <a href="{{ route('view_plan_delivery') }}">
+                    <span class="menu-link">
+                        <span class="svg-icon side-icon svg-icon-muted svg-icon-1x">
+                            <x-iconsax-bol-convert-3d-cube />
+                        </span>
+                        <!--end::Svg Icon-->
+                        <span class="menu-title mx-5">Plan Delivery Days</span>
+                    </span>
+                </a>
+            </div>
+
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
+                    <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
+                        <x-iconsax-bul-shop />
+                    </span>
+                    <!--end::Svg Icon-->
+                    <span class="menu-title mx-5">Meal Plan Tracker</span>
+                    {{-- <span class="menu-arrow"></span> --}}
+                </span>
             </div>
             <div class="separator"></div>
 
@@ -171,6 +211,7 @@
 
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('unassigned_deliveries') }}">
+
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -178,14 +219,58 @@
                         </a>
                     </div>
 
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('view_assigned_deliveries') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Assigned Deliveries</span>
+                        </a>
+                    </div>
+
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('view_completed_deliveries') }}">
+                            <span class=" menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Completed Deliveries</span>
+                        </a>
+                    </div>
 
                     <div class="menu-item">
                         <a class="menu-link" href="">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Completed Deliveries</span>
-                            <span class="menu-arrow"></span>
+                            <span class="menu-title">Completed Deliveries (CS)</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">API Paused Deliveries</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Cancelled Deliveries</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Rescheduled Deliveries</span>
                         </a>
                     </div>
 
@@ -195,6 +280,26 @@
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Delayed Deliveries</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Deleted Deliveries</span>
+                        </a>
+                    </div>
+
+
+
+                    <div class="menu-item">
+                        <a class="menu-link" href="">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Delivery Insights</span>
                         </a>
                     </div>
 
@@ -211,18 +316,71 @@
                     <!--end::Svg Icon-->
                     <span class="menu-title mx-5">Bag Collections</span>
                     <span class="menu-arrow"></span>
-
-                    <div class="menu-sub menu-sub-accordion menu-active-bg">
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{route('upload_deliveries')}}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Upload Deliveries</span>
-                            </a>
-                        </div>
-                    </div>
                 </span>
+
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('upload_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Upload Bag Collection</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Unassigned Bag Collections</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('assigned_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Assigned Bag Collections</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('completed_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Completed Bag Collections</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('cancelled_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Cancelled Bag Collections</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('deleted_bags_collection') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Deleted Bag Collections</span>
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -236,19 +394,77 @@
                 </span>
 
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title">Unassigned Bag Pickups</span>
+                            <span class="menu-title">Unassigned Bag Pickups (Delivery Wise)</span>
                         </a>
                     </div>
+                </div>
 
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('assigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Unassigned Bag Pickups (Partner Wise)</span>
+                        </a>
+                    </div>
+                </div>
 
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('assigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Assigned Bag Pickups</span>
+                        </a>
+                    </div>
+                </div>
 
-
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('completed_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Collected Bag Pickups</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Requested Cancel</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Cancelled Bag Pickups</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('unassigned_bags_pickup') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Report Bag Pickups</span>
+                        </a>
+                    </div>
                 </div>
 
             </div>
@@ -307,7 +523,7 @@
                     </span>
                     <!--end::Svg Icon-->
                     <span class="menu-title mx-5">Cash Collections</span>
-                    <span class="menu-arrow"></span>
+                    {{-- <span class="menu-arrow"></span> --}}
                 </span>
 
             </div>
@@ -326,7 +542,7 @@
                     <span class="menu-arrow"></span>
 
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-bullet">
@@ -442,14 +658,8 @@
                                     <span class="menu-title">vehicles Mentainence</span>
                                 </a>
                             </div>
-
-
                         </div>
                     </div>
-
-
-
-
                 </div>
 
                 <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
@@ -554,13 +764,15 @@
 
                 </div>
             </div>
+
             <div class="separator"></div>
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
-                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Partners</span>
+                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Users</span>
                 </div>
             </div>
 
+            @can('view_all_businesses')
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
@@ -568,11 +780,10 @@
                         <x-iconsax-bol-password-check />
                     </span>
                     <!--end::Svg Icon-->
-                    <span class="menu-title mx-2">Partners</span>
+                    <span class="menu-title mx-5">Partners</span>
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('business_new_requests') }}">
                             <span class="menu-bullet">
@@ -581,11 +792,18 @@
                             <span class="menu-title">New Businesses Requests</span>
                         </a>
                     </div>
-
-
                 </div>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('pending_transactions') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Pending Business Transactions</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('get_all_businesses') }}">
                             <span class="menu-bullet">
@@ -594,60 +812,41 @@
                             <span class="menu-title">All Businesses</span>
                         </a>
                     </div>
-
-
                 </div>
-                <div class="menu-sub menu-sub-accordion menu-active-bg">
-
-                </div>
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
-                        <span class="svg-icon side-icon svg-icon-muted svg-icon-2"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <path
-                                    d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z"
-                                    fill="currentColor" />
-                                <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('view_all_customers') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Customers</span>
-                            </a>
-                        </div>
-
-
-                </div>
-
             </div>
-
+            @endcan
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
                     <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
-                        <x-iconsax-bul-shield-cross />
+                        <x-iconsax-bol-password-check />
                     </span>
                     <!--end::Svg Icon-->
-                    <span class="menu-title mx-5">Cancelled</span>
-
+                    <span class="menu-title mx-5">Customer</span>
+                    <span class="menu-arrow"></span>
                 </span>
-
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('view_all_customers') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">All Customers</span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            {{-- <div class="separator"></div> --}}
 
-            {{-- <div class="menu-item">
+
+
+            <div class="separator"></div>
+            @can('view_all_businesses')
+            <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
                     <span class="menu-section text-dark text-uppercase fs-8 ls-1">HRM</span>
                 </div>
             </div>
-            <div class="separator"></div> --}}
-            @can('view_hr')
+            <div class="separator"></div>
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
@@ -666,7 +865,7 @@
                     <span class="menu-title mx-5">HR Management</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
 
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
@@ -677,7 +876,6 @@
                             <span class="menu-arrow"></span>
                         </span>
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
-                            @can('add_department')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_departments') }}">
                                     <span class="menu-bullet">
@@ -686,9 +884,7 @@
                                     <span class="menu-title">Departments</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_designation')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_designations') }}">
                                     <span class="menu-bullet">
@@ -697,9 +893,7 @@
                                     <span class="menu-title">Designations</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_events')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_events') }}">
                                     <span class="menu-bullet">
@@ -708,9 +902,7 @@
                                     <span class="menu-title">Events</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_award')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_awards') }}">
                                     <span class="menu-bullet">
@@ -719,9 +911,7 @@
                                     <span class="menu-title">Awards</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_appreciation')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_appreciations') }}">
                                     <span class="menu-bullet">
@@ -730,9 +920,7 @@
                                     <span class="menu-title">Appreciations</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_taxes')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_taxes') }}">
                                     <span class="menu-bullet">
@@ -741,7 +929,6 @@
                                     <span class="menu-title">Taxes</span>
                                 </a>
                             </div>
-                            @endcan
 
 
 
@@ -759,7 +946,6 @@
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
 
 
-                            @can('view_employee')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_employees') }}">
                                     <span class="menu-bullet">
@@ -768,9 +954,8 @@
                                     <span class="menu-title">Employees</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_employee')
+
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_salaries') }}">
                                     <span class="menu-bullet">
@@ -779,9 +964,7 @@
                                     <span class="menu-title">Employee Salaries</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_timesheet')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_timesheets') }}">
                                     <span class="menu-bullet">
@@ -790,9 +973,7 @@
                                     <span class="menu-title">Timesheets</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_overtime')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_overtimes') }}">
                                     <span class="menu-bullet">
@@ -801,9 +982,7 @@
                                     <span class="menu-title">Overtimes</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_deduction')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_deductions') }}">
                                     <span class="menu-bullet">
@@ -812,9 +991,7 @@
                                     <span class="menu-title">Deductions</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_expense_reclaim')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_expense_reclaims') }}">
                                     <span class="menu-bullet">
@@ -823,13 +1000,11 @@
                                     <span class="menu-title">Expense Reclaims</span>
                                 </a>
                             </div>
-                            @endcan
 
 
                         </div>
                     </div>
 
-                    @can('view_team')
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('hr_teams') }}">
                             <span class="menu-bullet">
@@ -838,7 +1013,6 @@
                             <span class="menu-title mx-5">Teams</span>
                         </a>
                     </div>
-                    @endcan
 
 
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -851,7 +1025,6 @@
                         </span>
                         <div class="menu-sub menu-sub-accordion menu-active-bg">
 
-                            @can('view_attendence')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_attendance') }}">
                                     <span class="menu-bullet">
@@ -860,9 +1033,7 @@
                                     <span class="menu-title">Attendance</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_leave_application')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_leave_applications') }}">
                                     <span class="menu-bullet">
@@ -871,9 +1042,7 @@
                                     <span class="menu-title">Leave Applications</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_leave_type')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('hr_leave_types') }}">
                                     <span class="menu-bullet">
@@ -882,9 +1051,7 @@
                                     <span class="menu-title">Leave Types</span>
                                 </a>
                             </div>
-                            @endcan
 
-                            @can('view_leave_policy')
                             <div class="menu-item">
                                 <a class="menu-link" href="{{ route('leave_policy') }}">
                                     <span class="menu-bullet">
@@ -893,15 +1060,15 @@
                                     <span class="menu-title">Leave Policies</span>
                                 </a>
                             </div>
-                            @endcan
 
                         </div>
                     </div>
 
                 </div>
             </div>
-            @endcan
             <div class="separator"></div>
+
+
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
                     <span class="menu-section text-dark text-uppercase fs-8 ls-1">TEAM</span>
@@ -915,7 +1082,7 @@
                     </span>
                     <!--end::Svg Icon-->
                     <span class="menu-title mx-5">Indoor Team</span>
-                    <span class="menu-arrow"></span>
+                    {{-- <span class="menu-arrow"></span> --}}
                 </span>
 
             </div>
@@ -927,7 +1094,7 @@
                         <x-iconsax-bul-buildings-2 />
                     </span>
                     <span class="menu-title mx-5">Outdoor Team</span>
-                    <span class="menu-arrow"></span>
+                    {{-- <span class="menu-arrow"></span> --}}
                 </span>
 
             </div>
@@ -940,20 +1107,16 @@
                     </span>
                     <!--end::Svg Icon-->
                     <span class="menu-title mx-5">Storekeeper</span>
-                    <span class="menu-arrow"></span>
+                    {{-- <span class="menu-arrow"></span> --}}
                 </span>
 
             </div>
 
             <div class="separator"></div>
+            @endcan
 
 
-            {{-- <div class="menu-item">
-                <div class="menu-content pt-5 pb-2">
-                    <span class="menu-section text-dark text-uppercase fs-8 ls-1">MEAL
-                        PLANNER</span>
-                </div>
-            </div> --}}
+            <div class="separator"></div>
 
             <div class="menu-item">
                 <div class="menu-content pt-5 pb-2">
@@ -961,21 +1124,24 @@
                 </div>
             </div>
 
-
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
-                    <span class="menu-icon">
+                    {{-- <span class="menu-icon"> --}}
                         <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
                         <span class="svg-icon side-icon svg-icon-2">
                             <x-iconsax-bol-picture-frame />
                         </span>
                         <!--end::Svg Icon-->
-                    </span>
+                        {{--
+                    </span> --}}
                     <span class="menu-title mx-5">Locations</span>
                     <span class="menu-arrow"></span>
 
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    @can('update_city')
+
+
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('activate_locations_view') }}">
                             <span class="menu-bullet">
@@ -984,6 +1150,7 @@
                             <span class="menu-title">Activate Locations</span>
                         </a>
                     </div>
+                    @endcan
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('activated_locations_view') }}">
                             <span class="menu-bullet">
@@ -992,61 +1159,24 @@
                             <span class="menu-title">Activated Locations</span>
                         </a>
                     </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('business_home') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Active Countries</span>
-                        </a>
-                    </div>
-
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('permissions_view') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Active States</span>
-                        </a>
-                    </div>
-
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('roles_view') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Active Cities</span>
-                        </a>
-                    </div>
-
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('roles_view') }}">
-                            <span class="menu-bullet">
-                                <span class="bullet bullet-dot"></span>
-                            </span>
-                            <span class="menu-title">Active Areas</span>
-                        </a>
-                    </div>
-
-
-
 
                 </div>
             </div>
+
+            @can('view_range_pricing')
+
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
-                    <span class="menu-icon">
-                        <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
-                        <span class="svg-icon side-icon svg-icon-2">
-                            <x-iconsax-bol-dollar-square />
-                        </span>
-                        <!--end::Svg Icon-->
+                    <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
+                    <span class="svg-icon side-icon svg-icon-2">
+                        <x-iconsax-bol-dollar-square />
                     </span>
+                    <!--end::Svg Icon-->
                     <span class="menu-title mx-5">Pricing Info</span>
                     <span class="menu-arrow"></span>
 
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-active-bg" style="display: none; overflow: hidden;">
+                <div class="menu-sub menu-sub-accordion menu-active-bg" style="overflow: hidden;">
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('delivery_slot_wise_base_pricing') }}">
                             <span class="menu-bullet">
@@ -1076,7 +1206,7 @@
                 </div>
             </div>
 
-
+            @endcan
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <a href="{{ route('get_all_delivery_slots') }}">
@@ -1149,3 +1279,50 @@
 
 </div>
 <!--end::Menu-->
+<script>
+    // function to make menu open when page refreshes or changes
+    document.addEventListener("DOMContentLoaded", function() {
+        // Check if a menu item is stored in session storage
+        const selectedMenuItem = sessionStorage.getItem("selectedMenuItem");
+        // If a menu item is stored, select it and expand its submenu
+        if (selectedMenuItem) {
+            const menuLink = document.querySelector(`a[href="${selectedMenuItem}"]`);
+            if (menuLink) {
+                // Expand the submenu (if applicable)
+                const submenu = menuLink.closest(".menu-item.menu-accordion");
+                if (submenu) {
+                    submenu.classList.add("menu-item-open");
+                }
+                // Add "active" class to the selected menu item and its parent menu items
+                menuLink.classList.add("active");
+                // Open the parent menu items (if applicable)
+                const parentMenus = menuLink.parents(".menu-item.menu-accordion");
+                parentMenus.forEach((parentMenu) => {
+                    parentMenu.classList.add("menu-item-open", "hover", "show"); // Add classes here
+                });
+            }
+        }
+        // Add click event listeners to menu items to store the selected item
+        const menuItems = document.querySelectorAll(".menu-item.menu-accordion a");
+        // console.log('menuityem', menuItems)
+        menuItems.forEach((menuItem) => {
+            menuItem.addEventListener("click", function() {
+                const href = menuItem.getAttribute("href");
+                // Store the selected menu item in session storage
+                sessionStorage.setItem("selectedMenuItem", href);
+            });
+        });
+    });
+    // Helper function to get all parent menu items
+    Element.prototype.parents = function(selector) {
+        const parents = [];
+        let currentElement = this;
+        while (currentElement) {
+            if (currentElement.matches(selector)) {
+                parents.push(currentElement);
+            }
+            currentElement = currentElement.parentElement;
+        }
+        return parents;
+    };
+</script>

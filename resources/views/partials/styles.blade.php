@@ -18,7 +18,11 @@
 <link href="{{ asset('static/css/activate-location.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('static/css/activated-locations.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('static/css/delivery_slot_wise_base_pricing.css') }}" rel="stylesheet" type="text/css" />
-
+<link href="{{ asset('static/css/add_delivery_slot_base_pricing.blade.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('static/css/unassigned_delivery.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('static/css/upload_delivery.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('static/css/wallet.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('static/css/view_bags.css') }}" rel="stylesheet" type="text/css" />
 
 
 <!--end::Global Stylesheets Bundle-->

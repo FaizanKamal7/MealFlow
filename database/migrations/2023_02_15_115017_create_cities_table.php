@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->boolean('active_status');
+            $table->boolean('active_status')->default(false);
             $table->string('name');
 
             $table->uuid('state_id');

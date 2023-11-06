@@ -40,7 +40,7 @@ class VehicleRepository implements VehicleInterface
 
    public function createVehicle($registrationNumber, $engineNumber, $chassisNumber, $vehicleModelID, $vehicleYear, $vehicleColor, $vehicle_active_status, $vehicleTypeId, $vehiclePicture = null, $vehicleMileage, $registrationPicture = null, $registrationIssueDate, $registrationExpiryDate, $insurancePicture = null, $insuranceIssueDate, $insuranceExpiryDate, $municipalityPicture = null, $municipalityIssueDate, $municipalityExpiryDate, $apiUnitId, $qrCode = null)
    {
-      $vehicle = Vehicle::create([
+      return Vehicle::create([
          'api_unit_id' => $apiUnitId,
          'registration_number' => $registrationNumber,
          'vehicle_picture' => $vehiclePicture,
@@ -63,16 +63,11 @@ class VehicleRepository implements VehicleInterface
          'mileage' => $vehicleMileage,
          'vehicle_type_id' => $vehicleTypeId,
       ]);
-      $vehicle->save();
-      return $vehicle;
-
    }
    public function updateVehicle($id, $registrationNumber, $engineNumber, $chassisNumber, $vehicleModel, $vehicleYear, $vehicleColor, $vehicle_active_status, $vehicleTypeId, $vehiclePicture = null, $vehicleMileage, $registrationPicture = null, $registrationIssueDate, $registrationExpiryDate, $insurancePicture = null, $insuranceIssueDate, $insuranceExpiryDate, $municipalityPicture = null, $municipalityIssueDate, $municipalityExpiryDate, $apiUnitId, $qrCode)
    {
 
-
       $vehicle = Vehicle::find($id);
-
       $vehicle->api_unit_id = $apiUnitId;
       $vehicle->registration_number = $registrationNumber;
       $vehicle->vehicle_picture = $vehiclePicture;
@@ -104,7 +99,6 @@ class VehicleRepository implements VehicleInterface
       $vehicle = Vehicle::find($id);
       $vehicle->fill($fields);
       return $vehicle->save();
-
    }
    public function getVehicles()
    {
@@ -119,10 +113,10 @@ class VehicleRepository implements VehicleInterface
    {
       return Vehicle::with([
          'vehicleModel' => function ($query) {
-            $query->select('id','make','model');
+            $query->select('id', 'make', 'model');
          },
          'vehicleType' => function ($query) {
-            $query->select('id','name','icon','capacity');
+            $query->select('id', 'name', 'icon', 'capacity');
          }
       ])->find($id);
    }

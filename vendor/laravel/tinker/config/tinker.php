@@ -15,6 +15,7 @@ return [
 
     'commands' => [
         // App\Console\Commands\ExampleCommand::class,
+        app\Console\Commands\RunMultipleMigrations::class
     ],
 
     /*

@@ -14,18 +14,29 @@ use Modules\DeliveryService\Entities\DeliveryTimeline;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
+use Modules\BusinessService\Repositories\CustomerAddressRepository;
+use Modules\DeliveryService\Entities\Delivery;
+use Modules\DeliveryService\Entities\EmptyBagCollection;
+use Modules\FinanceService\Entities\BusinessWalletTransaction;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Helper
 {
+
+    private $customerAddressRepository;
+    public function __construct(CustomerAddressRepository $customerAddressRepository)
+    {
+        $this->customerAddressRepository = $customerAddressRepository;
+    }
     public function storeFile($file, $module, $directory)
     {
         $file_url = $file->getClientOriginalName();
         $file_url = time() . '-' . date('YmdHi') . '-' . $file_url;
-        $file_url = $module."/" . $directory . "/" . $file_url;
-        $file->move($module."/" . $directory . "/", $file_url);
+        $file_url = $module . "/" . $directory . "/" . $file_url;
+        $file->move($module . "/" . $directory . "/", $file_url);
         return $file_url;
     }
+
     public function logActivity($userId, $moduleName, $action, $subject, $url, $description, $ipAddress, $userAgent, $oldValues, $newValues, $recordId, $recordType, $method)
     {
         ActivityLogs::create([
@@ -45,6 +56,75 @@ class Helper
         ]);
     }
 
+    public function headersMatch($actual_headers, $expected_headers)
+    {
+        // - Making all words lower case
+        // - replace spaces with underscore "_"
+        // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
+        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+
+        // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
+        // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
+
+        sort($actual_headers);
+        sort($expected_headers);
+        // echo '<pre>';
+        // print_r($actual_headers_lowercase);
+        // echo '<pre>';
+        // echo '<pre>';
+        // print_r($expected_headers_lowercase);
+        // echo '<pre>';
+        // dd();
+        return $actual_headers === $expected_headers;
+    }
+
+    public function addressDBStatus(...$parameters)
+    {
+
+        $passed_address = $parameters[0] ?? null;
+        $passed_db_addresses = $parameters[1] ?? null; // List of customer address can be passed from which passed address can be analyzed
+
+        $customer_addresses = $passed_db_addresses;
+        $db_address_percent = [];
+        if ($customer_addresses == null) {
+            $customer_addresses = $this->customerAddressRepository->get();
+        }
+
+        // ---- 4. Match the sheet address with $customer_address in db and calculate the percent
+        foreach ($customer_addresses as $customer_address) {
+            $temp_passed_address = $this->concatWordsIfDoesnotExist($passed_address, [$customer_address->city->name, $customer_address->state->name, $customer_address->country->name]);
+            $temp_customer_address = $this->concatWordsIfDoesnotExist($customer_address->address, [$customer_address->city->name, $customer_address->state->name, $customer_address->country->name]);
+            $similarity = $this->addressSimilarityPercentage($temp_customer_address, $temp_passed_address);
+            array_push($db_address_percent, ['percent' => $similarity, 'address' => $customer_address->address]);
+
+            // Custom sorting function to sort by "percent" in descending order
+            usort($db_address_percent, function ($a, $b) {
+                return $b['percent'] - $a['percent'];
+            });
+        }
+
+
+        $highest_matching_address = !empty($db_address_percent) ? $db_address_percent[0] : [];
+
+        $result = [];
+        if (empty($highest_matching_address) || $highest_matching_address['percent'] < 51) {
+            // ---- 4.1. Check if highest matching address is exctly the same 
+            $result['status'] = "MISSING";
+            $result['passed_address'] = $passed_address;
+        } else {
+            if ($highest_matching_address['percent'] >= 95) {
+                $result['status'] = "MATCHED";
+                $result['customer_db_address'] = $customer_address;
+            } else {
+                $result['status'] = "CONFLICT";
+                $result['customer_db_address'] = $customer_address;
+                $result['passed_address'] = $passed_address;
+            }
+        }
+        return $result;
+    }
+
     public function bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description)
     {
         BagTimeline::create([
@@ -56,6 +136,7 @@ class Helper
             'description' => $description,
         ]);
     }
+
     public function deliveryTimeline($delivery_id, $status, $action_by, $vehicle_id, $description)
     {
         DeliveryTimeline::create([
@@ -66,6 +147,22 @@ class Helper
             'description' => $description,
         ]);
     }
+
+    public function businessWalletTransactions($amount, $type,  $wallet_id, $note = null, $payment_method_id = null, $invoice_item_id  = null, $card_id = null)
+    {
+        BusinessWalletTransaction::create([
+            'amount' => $amount,
+            'type' => $type,
+            'wallet_id' => $wallet_id,
+            'note' => $note,
+            'payment_method_id' => $payment_method_id,
+            'invoice_item_id' => $invoice_item_id,
+            'card_id' => $card_id,
+            'transaction_date' => date("Y-m-d H:i:s"),
+
+        ]);
+    }
+
     public function createWallet($business_id)
     {
         BusinessWallet::create([

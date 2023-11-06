@@ -13,13 +13,28 @@ class BusinessCustomerRepository implements BusinessCustomerInterface
      * @return mixed
      */
 
-    public function create($data)
+    public function create($customer_id, $business_id)
     {
-        return BusinessCustomer::create($data);
+
+        // Try to find the business customer with the given customer_id and business_id
+        // If it does not exist, then create it
+        return BusinessCustomer::firstOrCreate([
+            'customer_id' => $customer_id,
+            'business_id' => $business_id,
+        ]);
     }
 
     public function getBusinessCustomer($business_id)
     {
-        return BusinessCustomer::with('customers')->where(['business_id' => $business_id])->get();
+        return BusinessCustomer::with('customer')->where(['business_id' => $business_id])->get();
     }
+    public function get()
+    {
+        return BusinessCustomer::all();
+    }
+    public function getOneBusinessCustomer($id)
+    {
+        return BusinessCustomer::find($id);
+    }
+
 }

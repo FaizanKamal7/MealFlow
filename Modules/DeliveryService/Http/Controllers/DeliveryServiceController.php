@@ -16,24 +16,27 @@ class DeliveryServiceController extends Controller
     public function downloadExcel()
     {
         $data = [
-//            [
-//                'column1' => 'Value 1',
-//                'column2' => 'Value 2',
+            //            [
+            //                'column1' => 'Value 1',
+            //                'column2' => 'Value 2',
 
-//            ],
-//            [
-//                'column1' => 'Value 3',
-//                'column2' => 'Value 4',
-//            ],
+            //            ],
+            //            [
+            //                'column1' => 'Value 3',
+            //                'column2' => 'Value 4',
+            //            ],
         ];
-        return Excel::download(new DeliveryTemplateClass($data), 'delivery_template.xlsx');
+        // return Excel::download(new DeliveryTemplateClass($data), 'delivery_template.xlsx');
+        return;
     }
 
-    public function uploadDeliveryView(Request $request){
+    public function uploadDeliveryView(Request $request)
+    {
         return view('deliveryservice::index');
     }
 
-    public function uploadFile(Request $request){
+    public function uploadFile(Request $request)
+    {
         $request->validate([
             'excel_file' => 'required|mimes:xlsx,xls'
         ]);
@@ -42,7 +45,7 @@ class DeliveryServiceController extends Controller
         try {
 
             // Load the Excel file using the import class
-            Excel::import(new ExcelImportClass, $file);
+            // Excel::import(new ExcelImportClass, $file);
 
             return redirect()->back()->with('success', 'Data successfully imported.');
         } catch (\Exception $e) {
@@ -118,7 +121,8 @@ class DeliveryServiceController extends Controller
         //
     }
 
-    public function bulkAddView(){
+    public function bulkAddView()
+    {
         return view("deliveryservice::delivery.bulk");
     }
     public function addBulk(Request $request)
@@ -154,8 +158,6 @@ class DeliveryServiceController extends Controller
             error_log("Notes: " . $notes);
             error_log("COD Amount: " . $cod_amount);
             error_log("****************");
-
         }
     }
-
 }

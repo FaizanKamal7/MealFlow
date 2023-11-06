@@ -32,4 +32,14 @@ class BusinessCustomer extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['customer'] = $this->customer->toArray();
+        $array['business'] = $this->business->toArray();
+
+        return $array;
+    }
 }

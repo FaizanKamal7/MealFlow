@@ -34,7 +34,7 @@ class UsersController extends Controller
     public function viewUsers()
     {
         try {
-            abort_if(Gate::denies('view_users'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // abort_if(Gate::denies('view_users'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $roles = $this->roleRepository->getRoles();
             $users = $this->userRepository->getUsers();
             return view("admin.users.users", ["roles" => $roles, "users" => $users]);
@@ -47,15 +47,13 @@ class UsersController extends Controller
     public function storeUsers(Request $request)
     {
         try {
-            abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $user = $this->userRepository->createUser(
-                [
-                    'name' =>  $request->get("user_name"),
-                    'email' => $request->get("user_email"),
-                    'password' => $request->get("user_password"),
-                    'isActive' => true
-                ]
-            );
+            // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $user = $this->userRepository->createUser([
+                'name' =>  $request->get("user_name"),
+                'email' => $request->get("user_email"),
+                'password' => $request->get("user_password"),
+                'isActive' => true
+            ], true);
 
             if ($request->get("user_roles") != null) {
                 foreach ($request->get("user_roles") as $role) {
@@ -72,7 +70,7 @@ class UsersController extends Controller
     public function viewUserDetails(Request $request, $user_id)
     {
         try {
-            abort_if(Gate::denies('edit_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // abort_if(Gate::denies('edit_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $user_roles = $this->userRoleRepository->getUserRolesByUser(userId: $user_id);
             $roles = $this->roleRepository->getRoles();
             $user = $this->userRepository->getUser($user_id);
@@ -87,7 +85,7 @@ class UsersController extends Controller
     public function updateUserRoles(Request $request)
     {
         try {
-            abort_if(Gate::denies('update_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // abort_if(Gate::denies('update_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             $roles = $request->get("user_roles");
             $user_id = $request->get("user_id");
@@ -125,7 +123,7 @@ class UsersController extends Controller
     public function deleteUser(Request $request, $user_id)
     {
         try {
-            abort_if(Gate::denies('delete_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // abort_if(Gate::denies('delete_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $this->userRepository->deleteUser($user_id);
 
             return redirect()->route("users_view")->with("success", "User deleted successfully");
