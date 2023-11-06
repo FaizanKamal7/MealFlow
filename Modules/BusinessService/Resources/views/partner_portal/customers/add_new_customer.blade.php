@@ -91,20 +91,40 @@
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="fv-row mb-10">
-                        <!--begin::Label-->
-                        <label class="form-label required">Phone Number</label>
-                        <!--end::Label-->
-                        <!--begin::Input-->
-                        <input name="phone" class="form-control form-control-lg form-control-solid" type="numbers" />
-                        <!--end::Input-->
+                    <div class="row">
+                        <div class="col-md-6 mb-5 fv-row" data-kt-password-meter="true">
+                            <label class="form-label required">Phone Number</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input name="phone" class="form-control form-control-lg form-control-solid"
+                                type="numbers" />
+                        </div>
+                        <!--end::Input group=-->
+                        <!--begin::Input group-->
+                        <div class="col-md-6 fv-row mb-5">
+                            <label class="form-label required">Select Business</label>
+
+                            <select id="business" name='business_id' class="form-control form-select-lg form-select-solid" data-control="select2"
+                                data-placeholder="Select business" data-allow-clear="true">
+
+                                <option value="">Select business</option>
+                                @if ($businesses->count())
+                                @foreach ($businesses as $business)
+                                <option value="{{ $business['id'] }}">{{ $business['name'] }}</option>
+                                @endforeach
+                                @else
+                                <option value="">Businesses not available</option>
+                                @endif
+                            </select>
+                        </div>
                     </div>
+
+
                     <!--end::Input group-->
 
                     <!--begin::Input group-->
                     <div class="fv-row mb-10">
-                        <label class="form-label required">Address (Business Main Branch
-                            Address)</label>
+                        <label class="form-label required">Address </label>
                         <br>
                         <div class="form-group row" id="google_map_address_selection">
                             <input class="form-control form-control-lg form-control-solid" name="map_address"
@@ -221,6 +241,7 @@
                                 </div>
                             </div>
                             <!--end::Col-->
+
                             <!--begin::Col-->
                             <div class="col-xl-7">
                                 <div class="fv-row mb-10">
@@ -304,6 +325,6 @@
 
 @section('extra_scripts')
 
-<script src="{{ asset('static/js/custom/core/locations.js') }}"></script>
+<script src="{{ asset('static/js/custom/core/locations.js') }}" type="text/javascript"></script>
 
 @endsection

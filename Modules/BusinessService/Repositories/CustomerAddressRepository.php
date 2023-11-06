@@ -2,6 +2,7 @@
 
 namespace Modules\BusinessService\Repositories;
 
+use Illuminate\Support\Facades\DB;
 use Modules\BusinessService\Entities\CustomerAddress;
 use Modules\BusinessService\Interfaces\CustomerAddressInterface;
 
@@ -23,6 +24,12 @@ class CustomerAddressRepository implements CustomerAddressInterface
         return CustomerAddress::create($data);
     }
 
+    public function getCustomerAddressById($id)
+    {
+        // return Area::where($id)->get();
+        return CustomerAddress::find($id);
+
+    }
     public function getCustomerCityAddresses($customer_id, $city_id)
     {
         return CustomerAddress::where('customer_id', $customer_id)
@@ -41,5 +48,15 @@ class CustomerAddressRepository implements CustomerAddressInterface
         return CustomerAddress::where('id', $address_id)
             ->first();
     }
-}
 
+    public function makeDefaultAddress($address_id, $customer_id)
+    {
+        // Set all addresses to not default for this customer
+        CustomerAddress::where('customer_id', $customer_id)->update(['is_default' => false]);
+
+        // Set the specified address as default
+        CustomerAddress::where('customer_id', $customer_id)
+            ->where('id', $address_id)
+            ->update(['is_default' => true]);
+    }
+}

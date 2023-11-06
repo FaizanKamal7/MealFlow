@@ -10,7 +10,7 @@ class BagTimeline extends Model
 {
     use HasFactory;
     use HasUuids;
-    
+
     protected $fillable = [
         "bag_id",
         "delivery_id",
@@ -27,7 +27,13 @@ class BagTimeline extends Model
         return \Modules\DeliveryService\Database\factories\BagTimelineFactory::new();
     }
 
-    public function bag(){
-        return $this->belongsTo(Bags::class);
+    public function bag()
+    {
+        return $this->belongsTo(Bag::class);
+    }
+
+    public function delivery()
+    {
+        return $this->belongsTo(Delivery::class, 'delivery_id');
     }
 }

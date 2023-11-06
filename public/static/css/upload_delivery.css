@@ -1,0 +1,53 @@
+.business-heading h1 {
+    color: rgba(0, 66, 110, 1);
+    font-size: 18px !important;
+}
+
+.upload-delivery-div {
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.64) 0.78%,
+        rgba(255, 255, 255, 0.448) 100%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.upload-delivery-header {
+    background: linear-gradient(
+        120.29deg,
+        rgba(179, 225, 255, 0.2) 0%,
+        rgba(161, 211, 243, 0.2) 54.03%,
+        rgba(143, 197, 232, 0.2) 98.79%
+    );
+    padding: 10px;
+}
+
+.upload-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(0, 66, 110, 1);
+}
+
+.add-div {
+    border-spacing: 15px;
+    border: 1px dotted rgba(0, 66, 110, 1);
+}
+.add-div a {
+    display: flex !important;
+    justify-content: center;
+    color: rgba(0, 66, 110, 1);
+    background: transparent;
+    font-size: 14px;
+}
+.upload-control {
+    border: 0.5px solid rgba(179, 225, 255, 1);
+    height: 41px;
+}
+
+.upload-errors {
+    margin: 10px;
+    color: #f1416c;
+}

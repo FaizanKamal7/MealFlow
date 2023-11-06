@@ -8,6 +8,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * 
      *
      * @return void
      */
@@ -27,11 +28,11 @@ return new class extends Migration
             $table->boolean('is_same_for_all_services')->default(1);
             $table->string('currency')->nullable();
             $table->uuid('city_id');
-            $table->uuid('business_id');
+            $table->uuid('business_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
-            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('set null');
         });
     }
 

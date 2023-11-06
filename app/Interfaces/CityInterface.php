@@ -16,4 +16,6 @@ interface CityInterface
 
     public function getWhere($where);
     public function searchCityFirst($searchTerm);
+    public function getActiveCities();
+
 }

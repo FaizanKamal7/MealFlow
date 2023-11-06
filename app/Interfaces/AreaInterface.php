@@ -12,4 +12,6 @@ interface AreaInterface
     public function updateOrInsertAreaIfAttributeExist($attribute, $value, $data);
     public function searchArea($searchTerm);
     public function searchAreaFirst($searchTerm);
+    public function getAreaById($id);
+
 }

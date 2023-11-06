@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('branch_coverage_delivery_slots', function (Blueprint $table) {
-            $table->uuid()->primary();
+            $table->uuid("id")->primary();
             $table->uuid('branch_coverage_id');
             $table->uuid('delivery_slot_id');
             $table->softDeletes();

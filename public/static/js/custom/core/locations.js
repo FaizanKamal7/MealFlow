@@ -189,9 +189,7 @@ function fetchCitiesWithMultiSelectOption() {
 
 function fetchAreas() {
     var cityID = document.getElementById("city").value;
-
     var areaDropdown = document.getElementById("area");
-
     // Clear current options
     areaDropdown.innerHTML = '<option value="">Select area</option>';
 
@@ -206,6 +204,7 @@ function fetchAreas() {
             data: { city_id: cityID },
             success: function (response) {
                 var area = response;
+                console.log('area', response)
                 // Populate city dropdown
                 // Loop through the response data and create an option element for each item
                 area.forEach((item) => {
@@ -269,8 +268,11 @@ function fetchAreasWithMultiSelectOption() {
 }
 
 
+// ---------------- GOOGLE MAPS IMPLMENTAION BELOW
 
 $(document).ready(function () {
+    var google_api_key = "{{ env('GOOGLE_API_KEY') }}";
+
     // Make an AJAX request to the Laravel route that returns the config values
     $.get("/api/config", function (data) {
         // Access the Google API key and use it in your JavaScript logic
@@ -326,7 +328,8 @@ $(document).ready(function () {
         ? console.warn(p + " only loads once. Ignoring:", g)
         : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
 })({
-    key: "AIzaSyC45M9bSvmoPH_wfAcwmxCAWCavsUURp3w",
+    // key: google_api_key,
+    key: "AIzaSyBiBaqUbcNKI8aa_wLCcB4tz-dcnDZ-qbw",
     libraries: "places",
     v: "weekly",
 });

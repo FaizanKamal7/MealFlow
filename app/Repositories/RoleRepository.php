@@ -12,7 +12,7 @@ class RoleRepository implements RoleInterface
     {
         $role = new Role([
             "role_name" => $roleName,
-            "description"=>$description,
+            "description" => $description,
             "is_active" => true,
         ]);
 
@@ -22,9 +22,9 @@ class RoleRepository implements RoleInterface
 
     public function updateRole($id, $roleName, $description = null, $isActive = true)
     {
-     return Role::where(["id"=>$id])->update([
+        return Role::where(["id" => $id])->update([
             "role_name" => $roleName,
-            "description"=>$description,
+            "description" => $description,
             "is_active" => true,
         ]);
     }
@@ -36,11 +36,16 @@ class RoleRepository implements RoleInterface
 
     public function getRole($id)
     {
-        return Role::where(["id"=>$id])->first();
+        return Role::where(["id" => $id])->first();
+    }
+
+    public function getRoleByName($name)
+    {
+        return Role::where(["role_name" => $name])->first();
     }
 
     public function deleteRole($id)
     {
-        return Role::where(["id"=>$id])->delete();
+        return Role::where(["id" => $id])->delete();
     }
 }

@@ -2,10 +2,13 @@
 
 namespace Modules\BusinessService\Http\Controllers\Onboarding;
 
+use App\Enum\BusinessStatusEnum;
+use App\Enum\RoleNamesEnum;
 use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
 use App\Interfaces\CountryInterface;
+use App\Interfaces\RoleInterface;
 use App\Interfaces\StateInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
@@ -23,6 +26,7 @@ use Modules\BusinessService\Interfaces\OnboardingInterface;
 use Modules\BusinessService\Interfaces\BranchCoverageDeliverySlotsInterface;
 use Illuminate\Support\Facades\Session;
 use Modules\BusinessService\Http\Requests\BusinessRequest;
+use Modules\FinanceService\Interfaces\BusinessWalletInterface;
 
 class BusinessOnboardingController extends Controller
 {
@@ -40,6 +44,10 @@ class BusinessOnboardingController extends Controller
     private CityInterface $cityRepository;
     private AreaInterface $areaRepository;
     private BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository;
+    private BusinessWalletInterface $businessWalletRepository;
+    private RoleInterface $roleRepository;
+
+
     private Helper $helper;
 
 
@@ -59,6 +67,8 @@ class BusinessOnboardingController extends Controller
         CityInterface $cityRepository,
         AreaInterface $areaRepository,
         BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository,
+        BusinessWalletInterface $businessWalletRepository,
+        RoleInterface $roleRepository,
         Helper $helper
 
 
@@ -76,6 +86,8 @@ class BusinessOnboardingController extends Controller
         $this->cityRepository = $cityRepository;
         $this->areaRepository = $areaRepository;
         $this->branchCoverageDeliverySlotRepository = $branchCoverageDeliverySlotRepository;
+        $this->businessWalletRepository = $businessWalletRepository;
+        $this->roleRepository = $roleRepository;
         $this->helper = $helper;
     }
 
@@ -108,6 +120,7 @@ class BusinessOnboardingController extends Controller
         $card_cvv = $request->card_cvv;
         $business_category_id = $request->category;
         $phone = $request->phone;
+        $business_phone = $request->business_phone;
         $address = $request->address;
         $address_country = $request->address_country;
         $address_state = $request->address_state;
@@ -117,6 +130,7 @@ class BusinessOnboardingController extends Controller
         $longitude = $request->longitude;
         $area_coverage_list = $request->area_coverage_list;
         $cities = $this->helper->extractCitiesFromCoveragesSelection($area_coverage_list);
+
 
 
         // echo "<pre>" . $latitude . "-" . $longitude . "</pre>";
@@ -131,6 +145,7 @@ class BusinessOnboardingController extends Controller
             $address_city = $db_map_location_ids['city_id'] != '' ? $db_map_location_ids['city_id'] : null;
             $address_area = $db_map_location_ids['area_id'] != '' ?  $db_map_location_ids['area_id'] : null;
         }
+
         // echo "<pre> address_country: " . print_r($address_country, true) . "</pre>";
         // echo "<pre> address_state: " . print_r($address_state, true) . "</pre>";
         // echo "<pre> address_city: " . print_r($address_city, true) . "</pre>";
@@ -138,16 +153,20 @@ class BusinessOnboardingController extends Controller
         // echo "<pre>cities" . json_encode($cities) . "-" . $longitude . "</pre>";
         // dd($area_coverage_list);
 
-
         try {
             // --- Adding data in users table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $user = $this->userRepository->createUser([
                 'name' => $first_name . " " . $last_name,
                 'email' =>  $email,
+                'phone' =>  $phone,
                 'password' => Hash::make($password),
                 'isActive' => true
-            ]);
+            ], true);
+            // TODO
+            $role = $this->roleRepository->getRoleByName(RoleNamesEnum::BUSINESS_ADMIN->value);
+            $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role->id);
+
 
 
             // --- Adding data in business table
@@ -162,7 +181,8 @@ class BusinessOnboardingController extends Controller
                 card_cvv: $card_cvv,
                 business_category_id: $business_category_id,
                 admin: $user->id,
-                status: "NEW_REQUEST",
+                status: BusinessStatusEnum::NEW_REQUEST->value,
+
             );
 
             // // Adding ternary relation
@@ -171,6 +191,7 @@ class BusinessOnboardingController extends Controller
                 user_id: $user->id,
             );
 
+            $this->businessWalletRepository->createWallet($business->id);
 
 
             $branch = $this->branchRepository->createBranch(
@@ -187,27 +208,25 @@ class BusinessOnboardingController extends Controller
                 latitude: $latitude,
                 longitude: $longitude
             );
-            $this->helper->print_array("area_coverage_list", $area_coverage_list);
             // echo "<pre>  ================================= </pre>";
 
             if ($area_coverage_list) {
                 foreach ($area_coverage_list as $coverage_list_item) {
                     $cities = $coverage_list_item["city"];
+                    $state_id = $coverage_list_item["state_id"];
+                    $country_id = $coverage_list_item["country_id"];
+
                     // $cities = json_decode($cities);
-                    foreach ($cities as $city) {
-                        $areas = $this->areaRepository->getAreasOfCity($city);
+                    foreach ($cities as $city_id) {
+                        $areas = $this->areaRepository->getAreasOfCity($city_id);
                         $areas = $areas->toArray();
-                        echo "<pre> city: " . print_r($city, true) . "</pre>";
-
-                        $this->helper->print_array("AREAS", $areas);
-
                         foreach ($areas as $area) {
                             $this->branchCoverageRepository->createBranchCoverage(
                                 active_status: 1,
                                 area_id: $area['id'],
-                                city_id: $city,
-                                state: $coverage_list_item["state"],
-                                country: $coverage_list_item["country"],
+                                city_id: $city_id,
+                                state: $state_id,
+                                country: $country_id,
                                 branch_id: $branch->id,
                             );
 

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('currency')->nullable();
             $table->uuid('city_id');
             $table->uuid('delivery_slot_id');
-            $table->uuid('business_id');
+            $table->uuid('business_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');

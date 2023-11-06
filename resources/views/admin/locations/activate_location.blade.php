@@ -56,6 +56,7 @@
                         </div>
                         <!--end::Card title-->
 
+                        <!--end::Search-->
                     </div>
                     <!--end::Card header-->
                     <!--begin::Card body-->

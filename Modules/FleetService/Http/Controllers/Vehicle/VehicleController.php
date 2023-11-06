@@ -59,7 +59,6 @@ class VehicleController extends Controller
         $vehicleMakes = $this->vehicleModelRepository->getActiveVehicleMakes();
         $data = ["vehicles" => $vehicles, "vehicleTypes" => $vehicleTypes, 'vehicleMakes' => $vehicleMakes];
         return view('fleetservice::fleets.all_fleets', $data);
-
     }
     /**
      * Show the form for creating a new resource.
@@ -114,6 +113,7 @@ class VehicleController extends Controller
             $municipalityExpiryDate = $request->get('municipality_expiry_date');
 
             $qrCode = null;
+
             // Retrieve API details
             $apiUnitId = $request->get('api_unit_id');
 
@@ -124,16 +124,37 @@ class VehicleController extends Controller
 
             // Creating Vehicle
 
-            $vehicle = $this->vehicleRepository->createVehicle($registrationNumber, $engineNumber, $chassisNumber, $vehicleModelID, $vehicleYear, $vehicleColor, $vehicleStatus, $vehicleTypeId, $vehiclePicture, $vehicleMileage, $registrationPicture, $registrationIssueDate, $registrationExpiryDate, $insurancePicture, $insuranceIssueDate, $insuranceExpiryDate, $municipalityPicture, $municipalityIssueDate, $municipalityExpiryDate, $apiUnitId, $qrCode);
+            $vehicle = $this->vehicleRepository->createVehicle(
+                $registrationNumber,
+                $engineNumber,
+                $chassisNumber,
+                $vehicleModelID,
+                $vehicleYear,
+                $vehicleColor,
+                $vehicleStatus,
+                $vehicleTypeId,
+                $vehiclePicture,
+                $vehicleMileage,
+                $registrationPicture,
+                $registrationIssueDate,
+                $registrationExpiryDate,
+                $insurancePicture,
+                $insuranceIssueDate,
+                $insuranceExpiryDate,
+                $municipalityPicture,
+                $municipalityIssueDate,
+                $municipalityExpiryDate,
+                $apiUnitId,
+                $qrCode,
+            );
 
             if (!$vehicle) {
-               return redirect()->route("fleet_vehicle")->with("error", "Something went wrong! contact support");
+                return redirect()->route("fleet_vehicle")->with("error", "Something went wrong! contact support");
             }
-
             QrCode::size(400)
-            ->generate($vehicle->id, public_path($path));
-            $fields= ['qr_code'=>$path];
-            $this->vehicleRepository->updateVehicleFields(id:$vehicle->id, fields:$fields);
+                ->generate($vehicle->id, public_path($path));
+            $fields = ['qr_code' => $path];
+            $this->vehicleRepository->updateVehicleFields(id: $vehicle->id, fields: $fields);
 
             return redirect()->route("fleet_vehicle")->with("success", "Vehicle added successfully");
         } catch (Exception $exception) {
@@ -236,9 +257,8 @@ class VehicleController extends Controller
 
         try {
 
-            $vehicle= $this->vehicleRepository->deleteVehicle($id);
+            $vehicle = $this->vehicleRepository->deleteVehicle($id);
             return redirect()->route("fleet_vehicle")->with("success", "Vehicle Deleted successfully");
-
         } catch (Exception $exception) {
             Log::error($exception);
             error_log("error " . $exception);
@@ -258,7 +278,6 @@ class VehicleController extends Controller
         }
         // echo $unique;
         return response()->json(['valid' => $unique]);
-
     }
     /**
      * GETTING ALL MODEL FOR A SPECIFIC MAKE TYPE

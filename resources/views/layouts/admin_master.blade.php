@@ -20,6 +20,22 @@
     @include('partials.styles')
     @yield('extra_style')
 
+    <style>
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1 0 auto;
+        }
+
+        .footer-div {
+            flex-shrink: 0;
+        }
+    </style>
+
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -43,7 +59,7 @@
                     @include('includes.sidebar_menu')
                 @show
                 @section('sidebar_footer')
-                    @include('includes.sidebar_menu')
+                    @include('includes.sidebar_footer')
                 @show
             </div>
             <!--end::Aside-->
@@ -55,10 +71,11 @@
                     @yield('main_content')
                 </div>
                 <!--end::Content-->
-
-                @section('footer')
-                    @include('includes.footer')
-                @show
+                <div class="footer-div">
+                    @section('footer')
+                        @include('includes.footer')
+                    @show
+                </div>
 
             </div>
             <!--end::Wrapper-->

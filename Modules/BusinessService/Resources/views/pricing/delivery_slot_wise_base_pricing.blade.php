@@ -31,13 +31,13 @@
                         {{-- </form> --}}
                     </div>
                     <!--end::Search-->
-                    <div class="me-3">
+                    {{-- <div class="me-3">
                         <select class="form-select location-dropdown" data-control="select2" data-placeholder="All">
                             <option></option>
                             <option value="1">Option 1</option>
                             <option value="2">Option 2</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="me-3">
                         <a href="{{ route('add_delivery_slot_base_pricing') }}" class="btn text-white activate-btn">
                             Add Delivery Slot Price
@@ -48,44 +48,13 @@
             </div>
 
             <div class="cities d-flex mt-2 align-items-center justify-content-between">
-                <h2 class="table-sort-desc"> Cities</h2>
+                <h2 class="table-sort"> Cities</h2>
                 <h2> Actions</h2>
 
             </div>
             {{-- end city div --}}
             <div class="accordion-div">
-                <?php
-				// Sample data (you should fetch data from your backend)
-				$cities = [
-					[
-						'id' => 1,
-						'name' => 'Abaiara, (Ceará, Brazil)',
-						'slots' => [
-							['slot' => '02:00 - 06:00', 'business' => 'BASE', 'price' => 34, 'bag'=>43, 'cash'=> 34, 'added'=>'2023-08-01 10:40:35'],
-							['slot' => '10:00 - 13:00', 'business' => 'BASE', 'price' => 4345, 'bag'=>4345, 'cash'=> 4345, 'added'=>'2023-08-01 10:40:35'],
-							['slot' => '10:00 - 13:00', 'business' => 'BASE', 'price' => 4345, 'bag'=>4345, 'cash'=> 4345, 'added'=>'2023-08-01 10:40:35'],
-							['slot' => '10:00 - 13:00', 'business' => 'BASE', 'price' => 4345, 'bag'=>4345, 'cash'=> 4345, 'added'=>'2023-08-01 10:40:35'],
-
-						],
-					],
-					[
-						'id'=> 2,
-						'name' => 'Adh Dhayad, (Sharjah, United Arab)',
-						'slots' => [
-							['slot' => '02:00 - 06:00', 'business' => 'BASE', 'price' => 34, 'bag'=>43, 'cash'=> 34, 'added'=>'2023-08-01 10:40:35'],
-							['slot' => '10:00 - 13:00', 'business' => 'BASE', 'price' => 4345, 'bag'=>4345, 'cash'=> 4345, 'added'=>'2023-08-01 10:40:35'],
-						],
-					],
-					[
-						'id'=> 3,
-						'name' => 'Russia (Rostov, Nikolayevskaya)',
-						'slots' => [
-							['slot' => '02:00 - 06:00', 'business' => 'BASE', 'price' => 34, 'bag'=>43, 'cash'=> 34, 'added'=>'2023-08-01 10:40:35'],
-							['slot' => '10:00 - 13:00', 'business' => 'BASE', 'price' => 4345, 'bag'=>4345, 'cash'=> 4345, 'added'=>'2023-08-01 10:40:35'],
-						],
-					],
-				];
-			
+                <?php		
 				// Loop through cities to create accordion items
 				foreach ($cities as $city) {
 					?>
@@ -104,10 +73,10 @@
                         <div id="collapse_{{ $city['id'] }}" class="accordion-collapse collapse"
                             aria-labelledby="heading_{{ $city['id'] }}">
                             <div class="accordion-body p-0">
-                                <table class="table table-rounded table-striped border gy-7 gs-7">
+                                <table id="delivery_slot_table" class="table table-rounded table-striped border gy-7 gs-7">
                                     <thead>
                                         <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
-                                            <th class="min-w-1px">Delivery Slot</th>
+                                            <th class="min-w-1px w-200px">Delivery Slot</th>
                                             <th class="min-w-1px">Business</th>
                                             <th class="min-w-1px">Delivery Price<br>(Same Location)</th>
                                             <th class="min-w-1px">Bag Collection Price<br>(Same Location)</th>
@@ -155,17 +124,15 @@
 
             </div>
             {{-- end accordion div --}}
+
             <div class="mt-6">
-                <ul class="pagination ">
-                    <li class="page-item previous disabled"><a href="#" class="page-link"><i class="previous"></i></a>
+                <ul class="pagination" id="paginationList">
+                    <li class="page-item previous"><a id="prevPage" href="#" class="page-link"><i
+                                class="previous"></i></a>
                     </li>
-                    <li class="page-item "><a href="#" class="page-link">1</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item "><a href="#" class="page-link">3</a></li>
-                    <li class="page-item "><a href="#" class="page-link">4</a></li>
-                    <li class="page-item "><a href="#" class="page-link">5</a></li>
-                    <li class="page-item "><a href="#" class="page-link">6</a></li>
-                    <li class="page-item next"><a href="#" class="page-link"><i class="next"></i></a></li>
+                    <li class="page-item active"><a href="#" class="page-link"></a></li>
+                    <li class="page-item next"><a id="nextPage" href="#" class="page-link"><i class="next"></i></a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -173,17 +140,5 @@
 @endsection
 
 @section('extra_scripts')
-    <script src="{{ asset('static/plugins/custom/documentation/general/datatables/datatables.bundle.js') }}"></script>
-    {{-- <script src="{{ asset('static/js/custom/documentation/general/datatables/subtable.js')}}"></script> --}}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const accordionHeaders = document.querySelectorAll(".accordion-header");
-            accordionHeaders.forEach((header) => {
-                header.addEventListener("click", function() {
-                    // Toggle the opened class when the button is clicked
-                    header.classList.toggle("accordion-opened");
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('static/js/custom/apps/ecommerce/customers/deliveries/delivery_slot_base.js') }}"></script>
 @endsection

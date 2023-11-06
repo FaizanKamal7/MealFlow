@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\FleetService\Repositories;
 
 use Modules\FleetService\Entities\Driver;
@@ -8,7 +9,7 @@ use Modules\FleetService\Interfaces\DriverInterface;
 class DriverRepository implements DriverInterface
 {
 
-    public function createDriver($employee_id,$license_number, $is_available, $license_document, $license_issue_date, $license_expiry_date)
+    public function createDriver($employee_id, $license_number, $is_available, $license_document, $license_issue_date, $license_expiry_date)
     {
 
         $driver = Driver::create([
@@ -22,10 +23,10 @@ class DriverRepository implements DriverInterface
 
         $driver->save();
         return $driver;
-
     }
 
-    public function updateDriver($id,$license_number, $is_available, $license_document, $license_issue_date, $license_expiry_date){
+    public function updateDriver($id, $license_number, $is_available, $license_document, $license_issue_date, $license_expiry_date)
+    {
 
         $driver = Driver::findorFail($id);
 
@@ -37,42 +38,46 @@ class DriverRepository implements DriverInterface
 
         return $driver->save();
     }
-    public function updateDriverAreas($id,$areas){
+    public function updateDriverAreas($id, $areas)
+    {
         // $driver = Driver::findOrFail($id);
         // $driver->areas()->sync($areas);
         // TODO USING SYNC
         DriverArea::where('driver_id', $id)->delete();
-        
-     }
-    public function getDrivers(){
+    }
+    public function getDrivers()
+    {
         return Driver::all();
     }
-    public function getDetailDrivers(){
-        return Driver::with('employee','areas','lastIncompleteTimeline')->get();
+    public function getDetailDrivers()
+    {
+        return Driver::with('employee', 'areas', 'lastIncompleteTimeline')->get();
     }
-    public function getDriver($id){
+    public function getDriver($id)
+    {
         return Driver::find($id);
     }
-    public function getDriverWithDeliveries($driver_id){
-        return Driver::with('deliveries')->where('id',$driver_id)->get();
+    public function getDriverWithDeliveries($driver_id)
+    {
+        return Driver::with('deliveries')->where('id', $driver_id)->get();
     }
 
-    public function getDriverByEmployeeId($employee_id){
-        return Driver::where(["employee_id"=>$employee_id])->first();
+    public function getDriverByEmployeeId($employee_id)
+    {
+        return Driver::where(["employee_id" => $employee_id])->first();
     }
-    public function getDriversbyAreaID($area_id,$slot_start,$slot_end){
+    public function getDriversbyAreaID($area_id, $slot_start, $slot_end)
+    {
         return Driver::select('drivers.*')
-        ->join('driver_areas', 'drivers.id', '=', 'driver_areas.driver_id')
-        ->join('employees', 'drivers.employee_id', '=', 'employees.id')
-        ->where('driver_areas.area_id', $area_id)
-        ->whereTime('employees.duty_start_time', '<=', $slot_start)
-        ->whereTime('employees.duty_end_time', '>=', $slot_end)
-        ->get();
+            ->join('driver_areas', 'drivers.id', '=', 'driver_areas.driver_id')
+            ->join('employees', 'drivers.employee_id', '=', 'employees.id')
+            ->where('driver_areas.area_id', $area_id)
+            ->whereTime('employees.duty_start_time', '<=', $slot_start)
+            ->whereTime('employees.duty_end_time', '>=', $slot_end)
+            ->get();
     }
-    public function delete_driver($id){
+    public function delete_driver($id)
+    {
         return Driver::find($id)->delete();
     }
-
-
-
 }

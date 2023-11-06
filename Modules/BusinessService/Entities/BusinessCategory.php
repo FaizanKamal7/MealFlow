@@ -13,7 +13,6 @@ class BusinessCategory extends Model
 
     protected $fillable = [
         'name',
-        'is_deleted',
     ];
 
     protected static function newFactory()

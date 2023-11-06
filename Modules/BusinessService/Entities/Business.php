@@ -4,12 +4,14 @@ namespace Modules\BusinessService\Entities;
 
 use App\Http\Helper\Helper;
 use App\Models\User;
+use DocuSign\eSign\Model\Brand;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\DeliveryService\Entities\Bags;
 use Illuminate\Support\Facades\Request;
+use Modules\DeliveryService\Entities\Bag;
 use Modules\FinanceService\Entities\BusinessWallet;
 
 class Business extends Model
@@ -37,7 +39,7 @@ class Business extends Model
         return $this->hasMany(BusinessUser::class);
     }
 
-    public function business_customers()
+    public function businessCustomers()
     {
         return $this->hasMany(BusinessCustomer::class);
     }
@@ -59,7 +61,7 @@ class Business extends Model
 
     public function bags()
     {
-        return $this->hasMany(Bags::class);
+        return $this->hasMany(Bag::class);
     }
 
     public function wallet()
@@ -74,7 +76,15 @@ class Business extends Model
 
     public function mainBranch()
     {
-        return $this->hasOne(Branch::class)->where('name', 'Main Branch');
+        return $this->hasOne(Branch::class)->where('is_main_branch', '1');
+    }
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['businessCustomers'] = $this->businessCustomers->toArray();
+
+        return $array;
     }
 
     protected static function newFactory()
