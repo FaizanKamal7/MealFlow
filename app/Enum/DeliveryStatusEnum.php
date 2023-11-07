@@ -2,13 +2,13 @@
 
 namespace App\Enum;
 
-enum DeliveryStatusEnum: string
+class DeliveryStatusEnum 
 {
-    case UNASSIGNED = 'unassigned';
-    case ASSIGNED = 'assigned';
+    const UNASSIGNED = 'unassigned';
+    const ASSIGNED = 'assigned';
         // case DISPATCHED = 'dispatched';
-    case DELIVERED = 'delivered';
-    case CANCELED = 'canceled';
-    case RESCHEDULED = 'rescheduled';
-    case DELAYED = 'delayed';
+    const DELIVERED = 'delivered';
+    const CANCELED = 'canceled';
+    const RESCHEDULED = 'rescheduled';
+    const DELAYED = 'delayed';
 }

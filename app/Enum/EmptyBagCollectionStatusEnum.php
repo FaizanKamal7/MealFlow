@@ -2,11 +2,11 @@
 
 namespace App\Enum;
 
-enum EmptyBagCollectionStatusEnum: string
+class EmptyBagCollectionStatusEnum
 {
-    case UNASSIGNED = 'unassigned';
-    case ASSIGNED = 'assigned';
-    case COMPLETED = 'completed';
-    case CANCELED = 'canceled';
-    case DELAYED = 'delayed';
+    const UNASSIGNED = 'unassigned';
+    const ASSIGNED = 'assigned';
+    const COMPLETED = 'completed';
+    const CANCELED = 'canceled';
+    const DELAYED = 'delayed';
 }

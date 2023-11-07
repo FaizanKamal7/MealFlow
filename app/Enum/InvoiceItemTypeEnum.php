@@ -3,8 +3,8 @@
 namespace App\Enum;
 
 
-enum InvoiceItemTypeEnum: string
+class InvoiceItemTypeEnum
 {
-    case DELIVERY_SLOT_PRICING = 'delivery_slot_pricing';
-    case RANGE_PRICING = 'range_pricing';
+    const DELIVERY_SLOT_PRICING = 'delivery_slot_pricing';
+    const RANGE_PRICING = 'range_pricing';
 }

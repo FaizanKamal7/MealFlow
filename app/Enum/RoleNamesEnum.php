@@ -3,10 +3,9 @@
 namespace App\Enum;
 
 
-enum RoleNamesEnum: string
+class RoleNamesEnum
 {
-    case BUSINESS_ADMIN = 'Business Admin';
-    case CUSTOMER = 'Customer';
-    case CUSTOMER_SUPPORT_EMPLOYEE = 'Customer Support Employee';
-    
+    const BUSINESS_ADMIN = 'Business Admin';
+    const CUSTOMER = 'Customer';
+    const CUSTOMER_SUPPORT_EMPLOYEE = 'Customer Support Employee';
 }

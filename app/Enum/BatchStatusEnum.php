@@ -3,9 +3,9 @@
 namespace App\Enum;
 
 
-enum BatchStatusEnum: string
+class BatchStatusEnum
 {
-    case ASSIGNED = 'assigned';
-    case STARTED = 'started';
-    case ENDED = 'ended';
+    const ASSIGNED = 'assigned';
+    const STARTED = 'started';
+    const ENDED = 'ended';
 }

@@ -3,9 +3,9 @@
 namespace App\Enum;
 
 
-enum ServiceTypeEnum: string
+class ServiceTypeEnum
 {
-    case DELIVERY = 'delivery';
-    case BAG_COLLECTION = 'bag_collection';
-    case CASH_COLLECTION = 'cash_collection';
+    const DELIVERY = 'delivery';
+    const BAG_COLLECTION = 'bag_collection';
+    const CASH_COLLECTION = 'cash_collection';
 }

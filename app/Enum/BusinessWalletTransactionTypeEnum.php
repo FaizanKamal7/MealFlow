@@ -3,8 +3,8 @@
 namespace App\Enum;
 
 
-enum BusinessWalletTransactionTypeEnum: string
+class BusinessWalletTransactionTypeEnum
 {
-    case DEBIT = 'debit';
-    case CREDIT = 'credit';
+    const DEBIT = 'debit';
+    const CREDIT = 'credit';
 }
