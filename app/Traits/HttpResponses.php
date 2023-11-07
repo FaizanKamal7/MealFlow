@@ -13,6 +13,7 @@ trait HttpResponses
             'data' => $data
         ], $code);
     }
+    
     public function error($data, $message = 'Error has Occured.....', $code = 500)
     {
         return response()->json([

@@ -15,6 +15,7 @@ use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTimelineInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Interfaces\MealPlanInterface;
 use Modules\DeliveryService\Interfaces\PickupBatchBranchInterface;
 use Modules\DeliveryService\Interfaces\PickupBatchInterface;
 use Modules\DeliveryService\Repositories\DeliveryImagesRepository;
@@ -27,6 +28,7 @@ use Modules\DeliveryService\Repositories\DeliveryBagRepository;
 use Modules\DeliveryService\Repositories\DeliveryBatchRepository;
 use Modules\DeliveryService\Repositories\DeliveryTimelineRepository;
 use Modules\DeliveryService\Repositories\DeliveryTypeRepository;
+use Modules\DeliveryService\Repositories\MealPlanRepository;
 use Modules\DeliveryService\Repositories\PickupBatchBranchRepository;
 use Modules\DeliveryService\Repositories\PickupBatchRepository;
 
@@ -80,6 +82,7 @@ class DeliveryServiceServiceProvider extends ServiceProvider
         $this->app->bind(DeliveryBagInterface::class, DeliveryBagRepository::class);
         $this->app->bind(DeliveryTimelineInterface::class, DeliveryTimelineRepository::class);
         $this->app->bind(BagTimelineInterface::class, BagTimelineRepository::class);
+        $this->app->bind(MealPlanInterface::class, MealPlanRepository::class);
     }
 
 

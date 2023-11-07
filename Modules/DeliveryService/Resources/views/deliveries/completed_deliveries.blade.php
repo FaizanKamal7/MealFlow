@@ -1,4 +1,4 @@
-@extends('businessservice::layouts.master')
+@extends('layouts.admin_master')
 @section('title', 'Completed Deliveries')
 
 @section('extra_style')
