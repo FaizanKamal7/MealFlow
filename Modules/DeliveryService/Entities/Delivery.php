@@ -39,7 +39,8 @@ class Delivery extends Model
         "customer_address_id",
         "pickup_batch_id",
         "delivery_batch_id",
-        'empty_bag_count'
+        'empty_bag_count',
+        'meal_plan_id'
     ];
 
     public function branch()

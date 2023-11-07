@@ -5,6 +5,7 @@ namespace Modules\DeliveryService\Http\Controllers\Deliveries;
 use App\Enum\AddressStatusEnum;
 use App\Enum\AddressTypeEnum;
 use App\Enum\DeliveryStatusEnum;
+use App\Enum\MealPlanStatusEnum;
 use App\Enum\RoleNamesEnum;
 use App\Http\Helper\Helper;
 
@@ -23,6 +24,7 @@ use App\Interfaces\DeliverySlotInterface;
 use App\Interfaces\RoleInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
+use DateTime;
 use Modules\BusinessService\Interfaces\BranchInterface;
 use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
@@ -35,6 +37,7 @@ use Modules\DeliveryService\Interfaces\DeliveryBatchInterface;
 use Modules\DeliveryService\Interfaces\DeliveryInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTimelineInterface;
 use Modules\DeliveryService\Interfaces\DeliveryTypeInterface;
+use Modules\DeliveryService\Interfaces\MealPlanInterface;
 use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -63,6 +66,8 @@ class DeliveryController extends Controller
     private $deliveryTimelineRepository;
     private $roleRepository;
     private $userRoleRepository;
+    private $mealPlanRepository;
+
 
     public function __construct(
         CustomerInterface $customerRepository,
@@ -84,6 +89,7 @@ class DeliveryController extends Controller
         DeliveryTimelineInterface $deliveryTimelineRepository,
         RoleInterface $roleRepository,
         UserRoleInterface $userRoleRepository,
+        MealPlanInterface $mealPlanRepository,
         Helper $helper,
     ) {
         $this->customerRepository = $customerRepository;
@@ -105,6 +111,7 @@ class DeliveryController extends Controller
         $this->deliveryTimelineRepository = $deliveryTimelineRepository;
         $this->roleRepository = $roleRepository;
         $this->userRoleRepository = $userRoleRepository;
+        $this->mealPlanRepository = $mealPlanRepository;
         $this->helper = $helper;
     }
 
@@ -112,9 +119,11 @@ class DeliveryController extends Controller
     {
         $partner = $this->businessRepository->getActiveBusinesses();
         $business_customers = $this->businessCustomerRepository->get();
+        $businesses = $this->businessRepository->getActiveBusinesses();
         $data = [
             'partners' => $partner,
             'business_customers' => $business_customers,
+            'businesses' => $businesses,
         ];
 
         return view('deliveryservice::planner.plan_delivery', $data);
@@ -122,8 +131,8 @@ class DeliveryController extends Controller
 
     public function addMealPlan(Request $request)
     {
+
         $partner = $request->input('partner');
-        // dd($partner, $branches);
         $c_id = $request->input('customer');
         $branches = $this->branchRepository->getBusinessBranches($partner);
         $partner = $this->businessRepository->getActiveBusinesses(); //to show partners
@@ -149,47 +158,98 @@ class DeliveryController extends Controller
         $starting_date = $submittedData['starting_date'];
         $expiry_date = $submittedData['expiry_date'];
         $no_of_days = $submittedData['no_of_plan_days'];
+        $skip_days = $submittedData['skip_days'];
+        $customer_id = $submittedData['customer_id'];
+        $business_id = $submittedData['business_id'];
+        $included_dates = json_decode($submittedData['included_dates']);
 
+
+        // $start_date = new DateTime::format('Y-m-d', $start_date);
+        // $end_date = new DateTime($expiry_date);
+
+        // Create a DateTime object from the string
+        $start_date = new DateTime($starting_date);
+        $end_date = new DateTime($expiry_date);
+
+
+        // Format the date however you need
+        // For example, to display it in 'Y-m-d H:i:s' format
+        // dd($date->forma('Y-m-d H:i:s'), gettype($date->format('Y-m-d')));
+        // $dateObject = DateTime::createFromFormat('Y-m-d', $starting_date);
+        // if ($dateObject === false) {
+        //     // Handle invalid date format
+        //     dd("Invalid date format ", $starting_date, gettype($starting_date));
+        // } else {
+        //     $start_date = $dateObject->getTimestamp();
+        //     $start_time = date('Y-m-d H:i:s', $start_date);
+        //     dd($start_time);
+        // }
+
+
+
+        $start_date =  $start_date->format('Y-m-d');
+        $end_date = $end_date->format('Y-m-d');
+
+        // dd($start_date, $end_date, gettype($start_date), gettype($start_date));
         //customer id, business id
         //customer id from customer address and business ic can be get from branch id or business selected in view plan
+
         $meal_data = [
-            'starting_date' => $starting_date,
-            'expiry_date' => $expiry_date,
-            'no_of_days' => $no_of_days,
-            'status' => 'unactive',
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'status' => MealPlanStatusEnum::ACTIVE->value,
+            'skip_days' => json_encode($skip_days),
+            'customer_id' => $customer_id,
+            'business_id' => $business_id,
+
         ];
-        //save this meal object in meal model and get id of saved data
-        // dd($deliveryAddresses, $request, $submittedData, $starting_date);
+        try {
+            DB::beginTransaction();
+            $plan = $this->mealPlanRepository->create($meal_data);
+            //save this meal object in meal model and get id of saved data
+            // dd($deliveryAddresses, $request, $submittedData, $starting_date);
+            foreach ($included_dates as $i => $date) {
+                $customer = $this->customerAddressRepository->getCustomerAddressById($submittedData['delivery_address'][$i]);
 
-        for ($i = 0; $i < count($submittedData['delivery_address']); $i++) {
-            // Create a new object for each iteration
-            //finding customer address object using customer address id, for using cityid etc
-            $customer = $this->customerAddressRepository->getCustomerAddressById($submittedData['delivery_address'][$i]);
 
-            dd('abc', $customer, $customer->city_id, $request, $submittedData, $starting_date);
+                $delivery_data = [
+                    'status' => DeliveryStatusEnum::UNASSIGNED->value,
+                    'is_recurring' => false,
+                    'payment_status' => false,
+                    'is_sign_required' => false,
+                    'is_notification_enabled' => $submittedData['notification'][$i],
+                    'note' => $submittedData['notes'][$i],
+                    'branch_id' => $submittedData['pickup_point'][$i],
+                    'delivery_slot_id' => $submittedData['time_slot'][$i],
+                    'delivery_type_id' => null,
+                    'delivery_date' => $date,
+                    'customer_id' => $customer->customer_id,
+                    'area_id' => $customer->area_id,
+                    'city_id' => $customer->city_id,
+                    'state_id' => $customer->state_id,
+                    'country_id' => $customer->country_id,
+                    'meal_plan_id' => $plan->id
+                ];
 
-            $delivery_data = [
-                'status' => 'unassign',
-                'is_recurring' => false,
-                'payment_status' => false,
-                'is_sign_required' => false,
-                'is_notification_enabled' => $submittedData['notification'][$i],
-                'note' => $submittedData['notes'][$i],
-                'branch_id' => $submittedData['pickup_point'][$i],
-                'delivery_slot_id' => $submittedData['time_slot'][$i],
-                'delivery_type_id' => $submittedData['product_type'][$i],
-                'delivery_date' => $starting_date,
-                'customer_id' => $customer->customer_id,
-                'area_id' => $customer->area_id,
-                'city_id' => $customer->city_id,
-                'state_id' => $customer->state_id,
-                'country_id' => $customer->country_id,
-            ];
-            // $this->deliveryRepository->create($delivery_data);
+                $this->deliveryRepository->create($delivery_data);
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return 'Delivery Data upload failed: ' . $e->getMessage();
         }
         // return view('deliveryservice::planner.add_plan_delivery');
         return redirect()->route('view_plan_delivery')->with("success", "Meal-Plan uploaded successfully");
     }
+
+
+    public function getCustomersMealPlan($customer_id)
+    {
+        $customer_meal_plans = $this->mealPlanRepository->getCustomerMealPlans($customer_id);
+        return response()->json($customer_meal_plans);
+    }
+
     /**
      * Display a listing of the resource.
      */
