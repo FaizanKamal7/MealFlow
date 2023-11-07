@@ -3,11 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-<<<<<<< HEAD
-        'reference' => '4ab445e582a019e49930a902afeac1b4a58a828a',
-=======
-        'reference' => 'e1697818d73930799dc8470c6013c8235b57f039',
->>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
+        'reference' => '6fe58d872beaf85a2b581821fec5ad6224118a64',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -533,11 +529,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-<<<<<<< HEAD
-            'reference' => '4ab445e582a019e49930a902afeac1b4a58a828a',
-=======
-            'reference' => 'e1697818d73930799dc8470c6013c8235b57f039',
->>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
+            'reference' => '6fe58d872beaf85a2b581821fec5ad6224118a64',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -643,18 +635,18 @@
             'dev_requirement' => false,
         ),
         'league/flysystem' => array(
-            'pretty_version' => '3.18.0',
-            'version' => '3.18.0.0',
-            'reference' => '015633a05aee22490495159237a5944091d8281e',
+            'pretty_version' => '3.19.0',
+            'version' => '3.19.0.0',
+            'reference' => '1b2aa10f2326e0351399b8ce68e287d8e9209a83',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/flysystem',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'league/flysystem-local' => array(
-            'pretty_version' => '3.18.0',
-            'version' => '3.18.0.0',
-            'reference' => 'e7381ef7643f658b87efb7dbe98fe538fb1bbf32',
+            'pretty_version' => '3.19.0',
+            'version' => '3.19.0.0',
+            'reference' => '8d868217f9eeb4e9a7320db5ccad825e9a7a4076',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/flysystem-local',
             'aliases' => array(),
@@ -1119,8 +1111,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(

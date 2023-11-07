@@ -453,8 +453,8 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -538,8 +538,8 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri-interfaces/src',
-            1 => __DIR__ . '/..' . '/league/uri/src',
+            0 => __DIR__ . '/..' . '/league/uri/src',
+            1 => __DIR__ . '/..' . '/league/uri-interfaces/src',
         ),
         'League\\OAuth2\\Server\\' => 
         array (
@@ -788,10 +788,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'App\\Enum\\DeliveryStatusEnum' => __DIR__ . '/../..' . '/app/Enum/DeliveryStatusEnum.php',
         'App\\Enum\\EmptyBagCollectionStatusEnum' => __DIR__ . '/../..' . '/app/Enum/EmptyBagCollectionStatusEnum.php',
         'App\\Enum\\InvoiceItemTypeEnum' => __DIR__ . '/../..' . '/app/Enum/InvoiceItemTypeEnum.php',
-<<<<<<< HEAD
-=======
         'App\\Enum\\MealPlanStatusEnum' => __DIR__ . '/../..' . '/app/Enum/MealPlanStatusEnum.php',
->>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
         'App\\Enum\\ModulesTitleEnum' => __DIR__ . '/../..' . '/app/Enum/ModulesTitleEnum.php',
         'App\\Enum\\RoleNamesEnum' => __DIR__ . '/../..' . '/app/Enum/RoleNamesEnum.php',
         'App\\Enum\\ServiceTypeEnum' => __DIR__ . '/../..' . '/app/Enum/ServiceTypeEnum.php',
@@ -1146,11 +1143,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Database\\Seeders\\ApplicationModelSeeder' => __DIR__ . '/../..' . '/database/seeders/ApplicationModelSeeder.php',
         'Database\\Seeders\\ApplicationSeeder' => __DIR__ . '/../..' . '/database/seeders/ApplicationSeeder.php',
         'Database\\Seeders\\AreaSeeder' => __DIR__ . '/../..' . '/database/seeders/AreaSeeder.php',
-<<<<<<< HEAD
-        'Database\\Seeders\\BusinessCategorySeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessCategorySeeder.php',
-=======
         'Database\\Seeders\\BusinessCategoryTableSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessCategoryTableSeeder.php',
->>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
         'Database\\Seeders\\BusinessSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessSeeder.php',
         'Database\\Seeders\\CitiesTableChunkFiveSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkFiveSeeder.php',
         'Database\\Seeders\\CitiesTableChunkFourSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkFourSeeder.php',
@@ -1162,6 +1155,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\DeliverySlotSeeder' => __DIR__ . '/../..' . '/database/seeders/DeliverySlotSeeder.php',
         'Database\\Seeders\\DepartmentTableSeeder' => __DIR__ . '/../..' . '/database/seeders/DepartmentTableSeeder.php',
+        'Database\\Seeders\\DesignationTableSeeder' => __DIR__ . '/../..' . '/database/seeders/DesignationTableSeeder.php',
         'Database\\Seeders\\PermissionTableSeeder' => __DIR__ . '/../..' . '/database/seeders/PermissionTableSeeder.php',
         'Database\\Seeders\\RolePermissionTableSeeder' => __DIR__ . '/../..' . '/database/seeders/RolePermissionTableSeeder.php',
         'Database\\Seeders\\RolesTableSeeder' => __DIR__ . '/../..' . '/database/seeders/RolesTableSeeder.php',
@@ -5609,7 +5603,6 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Modules\\BusinessService\\Http\\Controllers\\Onboarding\\BusinessOnboardingController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/Onboarding/BusinessOnboardingController.php',
         'Modules\\BusinessService\\Http\\Controllers\\PartnerPortal\\CustomersController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/PartnerPortal/CustomersController.php',
         'Modules\\BusinessService\\Http\\Controllers\\PartnerPortal\\DashboardController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/PartnerPortal/DashboardController.php',
-        'Modules\\BusinessService\\Http\\Controllers\\PartnerPortal\\DeliveriesController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/PartnerPortal/DeliveriesController.php',
         'Modules\\BusinessService\\Http\\Livewire\\DeliverySlotPricingComponent' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Livewire/DeliverySlotPricingComponent.php',
         'Modules\\BusinessService\\Http\\Livewire\\RangePricingComponent' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Livewire/RangePricingComponent.php',
         'Modules\\BusinessService\\Http\\Middleware\\BusinessCheck' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Middleware/BusinessCheck.php',
@@ -5678,10 +5671,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Modules\\DeliveryService\\Http\\Livewire\\EditDeliveryFeild' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/EditDeliveryFeild.php',
         'Modules\\DeliveryService\\Http\\Livewire\\MealPlan\\CustomerMealPlans' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/MealPlan/CustomerMealPlans.php',
         'Modules\\DeliveryService\\Http\\Livewire\\MealPlannerForm' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/MealPlannerForm.php',
-<<<<<<< HEAD
-=======
         'Modules\\DeliveryService\\Http\\Livewire\\PlanReport' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/PlanReport.php',
->>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
         'Modules\\DeliveryService\\Http\\Requests\\PickupBatchRequest' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Requests/PickupBatchRequest.php',
         'Modules\\DeliveryService\\Interfaces\\BagStatusInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/BagStatusInterface.php',
         'Modules\\DeliveryService\\Interfaces\\BagTimelineInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/BagTimelineInterface.php',
@@ -5714,8 +5704,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Modules\\DeliveryService\\Repositories\\MealPlanRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/MealPlanRepository.php',
         'Modules\\DeliveryService\\Repositories\\PickupBatchBranchRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/PickupBatchBranchRepository.php',
         'Modules\\DeliveryService\\Repositories\\PickupBatchRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/PickupBatchRepository.php',
-        'Modules\\DeliveryService\\Rules\\DeliveryBatchStatusRule' => __DIR__ . '/../..' . '/Modules/DeliveryService/Rules/DeliveryBatchStatusRule.php',
-        'Modules\\DeliveryService\\Rules\\PickupBatchStatusRule' => __DIR__ . '/../..' . '/Modules/DeliveryService/Rules/PickupBatchStatusRule.php',
+        'Modules\\DeliveryService\\Rules\\BatchStatusRule' => __DIR__ . '/../..' . '/Modules/DeliveryService/Rules/BatchStatusRule.php',
         'Modules\\FinanceService\\Database\\Seeders\\FinanceServiceDatabaseSeeder' => __DIR__ . '/../..' . '/Modules/FinanceService/Database/Seeders/FinanceServiceDatabaseSeeder.php',
         'Modules\\FinanceService\\Entities\\BusinessCard' => __DIR__ . '/../..' . '/Modules/FinanceService/Entities/BusinessCard.php',
         'Modules\\FinanceService\\Entities\\BusinessWallet' => __DIR__ . '/../..' . '/Modules/FinanceService/Entities/BusinessWallet.php',
