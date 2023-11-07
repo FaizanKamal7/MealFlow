@@ -50,45 +50,7 @@
                 <h6>{{ $date }}</h6>
             </div>
             <div class="form-element-div">
-                <div class="form-group row mb-10">
-                    <div class="col-md-4">
-                        <label class="form-label upload-label">Delivery Address</label>
-                        <select id="delivery_address_{{ $i }}" class="form-select meal-control"
-                            placeholder="Current Address" name="delivery_address[]">
-                            <option></option>
-                            @foreach ($customer_addresses as $address)
-                            <option value="{{ $address->id }}">
-                                {{ $address->address }}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label upload-label">Emirate & Area</label>
-                        <select id="emirates_and_area{{ $i }}" class="form-select meal-control" data-control="select2"
-                            data-placeholder="Dubai" name="emirates_and_area[]">
-                            <option></option>
-                            @foreach ($customer_addresses as $address)
-                            <option value="{{ $address->id }}">
-                                {{ $address->city->name }} ({{ $address->area->name }})
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label upload-label">Time Slot*</label>
-                        <select id="time_slot{{ $i }}" class="form-select meal-control" data-control="select2"
-                            data-placeholder="Dubai (2am -6 am)" name="time_slot[]">
-                            <option></option>
-                            @foreach ($address->city->deliverySlot as $slot)
-                            <option value="{{ $slot->id }}">
-                                {{ $slot->city->name }} ({{ $slot['start_time'] }} -
-                                {{ $slot['end_time'] }})
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+
                 <div class="form-element-div">
                     <div class="form-group row mb-10">
                         <div class="col-md-4">

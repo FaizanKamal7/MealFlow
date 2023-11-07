@@ -1174,8 +1174,6 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     @can('update_city')
-
-
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('activate_locations_view') }}">
                             <span class="menu-bullet">

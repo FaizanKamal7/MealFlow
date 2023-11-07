@@ -15,6 +15,7 @@ use Modules\DeliveryService\Entities\DeliveryTimeline;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
+use Modules\BusinessService\Interfaces\CustomerAddressInterface;
 use Modules\BusinessService\Repositories\CustomerAddressRepository;
 use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Entities\EmptyBagCollection;
@@ -26,7 +27,7 @@ class Helper
 
     private $customerAddressRepository;
 
-    public function __construct(CustomerAddressRepository $customerAddressRepository = null)
+    public function __construct(CustomerAddressInterface $customerAddressRepository = null)
     {
         $this->customerAddressRepository = $customerAddressRepository;
     }
