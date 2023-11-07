@@ -15,18 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login',[AuthController::class,'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::group(['middleware'=>'auth:sanctum'],function (){
-    
-    Route::post('/logout',[AuthController::class,'logout']);
+Route::group(['middleware' => 'auth'], function () {
 
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
-    
 });
 
 
@@ -38,4 +36,3 @@ Route::get('/get-google-api-key', function () {
         'google_api_key' => config('services.google.key')
     ]);
 });
-

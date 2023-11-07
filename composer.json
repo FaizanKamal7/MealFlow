@@ -13,6 +13,7 @@
         "laravel/breeze": "*",
         "laravel/framework": "^9.19",
         "laravel/passport": "^11.8",
+        "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.7",
         "laravolt/avatar": "^5.0",
         "livewire/livewire": "^2.12",

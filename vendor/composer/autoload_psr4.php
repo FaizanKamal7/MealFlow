@@ -92,6 +92,7 @@ return array(
     'Laravolt\\Avatar\\' => array($vendorDir . '/laravolt/avatar/src'),
     'Laravel\\Tinker\\' => array($vendorDir . '/laravel/tinker/src'),
     'Laravel\\SerializableClosure\\' => array($vendorDir . '/laravel/serializable-closure/src'),
+    'Laravel\\Sanctum\\' => array($vendorDir . '/laravel/sanctum/src'),
     'Laravel\\Sail\\' => array($vendorDir . '/laravel/sail/src'),
     'Laravel\\Passport\\Database\\Factories\\' => array($vendorDir . '/laravel/passport/database/factories'),
     'Laravel\\Passport\\' => array($vendorDir . '/laravel/passport/src'),
