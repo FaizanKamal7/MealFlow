@@ -137,7 +137,7 @@ class DeliveryController extends Controller
         $branches = $this->branchRepository->getBusinessBranches($partner);
         $partner = $this->businessRepository->getActiveBusinesses(); //to show partners
         $other_customers = $this->businessCustomerRepository->get(); //for dropdown
-        $business_customer = $this->businessCustomerRepository->getOneBusinessCustomer($c_id);
+        $business_customer = $this->businessCustomerRepository->getSingleBusinessCustomerWhere(['customer_id' => $c_id]);
         $product_type = $this->BusinessCategoryRepository->getBusinessCategory();
         $customer_addr = $this->customerAddressRepository->getCustomerAddresses($business_customer->customer_id);
         $data = [

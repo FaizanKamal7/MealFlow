@@ -42,8 +42,8 @@ class BusinessCustomerRepository implements BusinessCustomerInterface
     {
         return BusinessCustomer::all();
     }
-    public function getOneBusinessCustomer($id)
+    public function getSingleBusinessCustomerWhere($where)
     {
-        return BusinessCustomer::find($id);
+        return BusinessCustomer::where($where)->first();
     }
 }
