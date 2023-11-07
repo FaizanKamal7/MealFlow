@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
+class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -454,8 +454,8 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -539,8 +539,8 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri/src',
-            1 => __DIR__ . '/..' . '/league/uri-interfaces/src',
+            0 => __DIR__ . '/..' . '/league/uri-interfaces/src',
+            1 => __DIR__ . '/..' . '/league/uri/src',
         ),
         'League\\OAuth2\\Server\\' => 
         array (
@@ -787,19 +787,13 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'App\\Enum\\BagStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BagStatusEnum.php',
         'App\\Enum\\BatchStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BatchStatusEnum.php',
         'App\\Enum\\BusinessStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BusinessStatusEnum.php',
-<<<<<<< HEAD
         'App\\Enum\\BusinessWalletTransactionStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BusinessWalletTransactionStatusEnum.php',
-=======
->>>>>>> origin/front-end
         'App\\Enum\\BusinessWalletTransactionTypeEnum' => __DIR__ . '/../..' . '/app/Enum/BusinessWalletTransactionTypeEnum.php',
         'App\\Enum\\DeliveryImageTypeEnum' => __DIR__ . '/../..' . '/app/Enum/DeliveryImageTypeEnum.php',
         'App\\Enum\\DeliveryStatusEnum' => __DIR__ . '/../..' . '/app/Enum/DeliveryStatusEnum.php',
         'App\\Enum\\EmptyBagCollectionStatusEnum' => __DIR__ . '/../..' . '/app/Enum/EmptyBagCollectionStatusEnum.php',
         'App\\Enum\\InvoiceItemTypeEnum' => __DIR__ . '/../..' . '/app/Enum/InvoiceItemTypeEnum.php',
-<<<<<<< HEAD
         'App\\Enum\\ModulesTitleEnum' => __DIR__ . '/../..' . '/app/Enum/ModulesTitleEnum.php',
-=======
->>>>>>> origin/front-end
         'App\\Enum\\RoleNamesEnum' => __DIR__ . '/../..' . '/app/Enum/RoleNamesEnum.php',
         'App\\Enum\\ServiceTypeEnum' => __DIR__ . '/../..' . '/app/Enum/ServiceTypeEnum.php',
         'App\\Enum\\UserTypeEnum' => __DIR__ . '/../..' . '/app/Enum/UserTypeEnum.php',
@@ -1162,12 +1156,8 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'Database\\Seeders\\ApplicationModelSeeder' => __DIR__ . '/../..' . '/database/seeders/ApplicationModelSeeder.php',
         'Database\\Seeders\\ApplicationSeeder' => __DIR__ . '/../..' . '/database/seeders/ApplicationSeeder.php',
         'Database\\Seeders\\AreaSeeder' => __DIR__ . '/../..' . '/database/seeders/AreaSeeder.php',
-<<<<<<< HEAD
-        'Database\\Seeders\\BusinessCategoryTableSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessCategoryTableSeeder.php',
-        'Database\\Seeders\\BusinessSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessSeeder.php',
-=======
         'Database\\Seeders\\BusinessCategorySeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessCategorySeeder.php',
->>>>>>> origin/front-end
+        'Database\\Seeders\\BusinessSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessSeeder.php',
         'Database\\Seeders\\CitiesTableChunkFiveSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkFiveSeeder.php',
         'Database\\Seeders\\CitiesTableChunkFourSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkFourSeeder.php',
         'Database\\Seeders\\CitiesTableChunkOneSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkOneSeeder.php',
@@ -5630,6 +5620,7 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'Modules\\BusinessService\\Http\\Controllers\\Onboarding\\BusinessOnboardingController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/Onboarding/BusinessOnboardingController.php',
         'Modules\\BusinessService\\Http\\Controllers\\PartnerPortal\\CustomersController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/PartnerPortal/CustomersController.php',
         'Modules\\BusinessService\\Http\\Controllers\\PartnerPortal\\DashboardController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/PartnerPortal/DashboardController.php',
+        'Modules\\BusinessService\\Http\\Controllers\\PartnerPortal\\DeliveriesController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/PartnerPortal/DeliveriesController.php',
         'Modules\\BusinessService\\Http\\Livewire\\DeliverySlotPricingComponent' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Livewire/DeliverySlotPricingComponent.php',
         'Modules\\BusinessService\\Http\\Livewire\\RangePricingComponent' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Livewire/RangePricingComponent.php',
         'Modules\\BusinessService\\Http\\Middleware\\BusinessCheck' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Middleware/BusinessCheck.php',
@@ -5697,6 +5688,7 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'Modules\\DeliveryService\\Http\\Livewire\\BatchProgress' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/BatchProgress.php',
         'Modules\\DeliveryService\\Http\\Livewire\\EditDeliveryFeild' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/EditDeliveryFeild.php',
         'Modules\\DeliveryService\\Http\\Livewire\\MealPlan\\CustomerMealPlans' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/MealPlan/CustomerMealPlans.php',
+        'Modules\\DeliveryService\\Http\\Livewire\\MealPlannerForm' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/MealPlannerForm.php',
         'Modules\\DeliveryService\\Http\\Requests\\PickupBatchRequest' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Requests/PickupBatchRequest.php',
         'Modules\\DeliveryService\\Interfaces\\BagStatusInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/BagStatusInterface.php',
         'Modules\\DeliveryService\\Interfaces\\BagTimelineInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/BagTimelineInterface.php',
@@ -5727,7 +5719,8 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'Modules\\DeliveryService\\Repositories\\EmptyBagCollectionRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/EmptyBagCollectionRepository.php',
         'Modules\\DeliveryService\\Repositories\\PickupBatchBranchRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/PickupBatchBranchRepository.php',
         'Modules\\DeliveryService\\Repositories\\PickupBatchRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/PickupBatchRepository.php',
-        'Modules\\DeliveryService\\Rules\\BatchStatusRule' => __DIR__ . '/../..' . '/Modules/DeliveryService/Rules/BatchStatusRule.php',
+        'Modules\\DeliveryService\\Rules\\DeliveryBatchStatusRule' => __DIR__ . '/../..' . '/Modules/DeliveryService/Rules/DeliveryBatchStatusRule.php',
+        'Modules\\DeliveryService\\Rules\\PickupBatchStatusRule' => __DIR__ . '/../..' . '/Modules/DeliveryService/Rules/PickupBatchStatusRule.php',
         'Modules\\FinanceService\\Database\\Seeders\\FinanceServiceDatabaseSeeder' => __DIR__ . '/../..' . '/Modules/FinanceService/Database/Seeders/FinanceServiceDatabaseSeeder.php',
         'Modules\\FinanceService\\Entities\\BusinessCard' => __DIR__ . '/../..' . '/Modules/FinanceService/Entities/BusinessCard.php',
         'Modules\\FinanceService\\Entities\\BusinessWallet' => __DIR__ . '/../..' . '/Modules/FinanceService/Entities/BusinessWallet.php',
@@ -9934,10 +9927,10 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit07fc982328bcbaf742865ffcec369d2d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit07fc982328bcbaf742865ffcec369d2d::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit07fc982328bcbaf742865ffcec369d2d::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit07fc982328bcbaf742865ffcec369d2d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$classMap;
 
         }, null, ClassLoader::class);
     }

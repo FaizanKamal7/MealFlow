@@ -17,6 +17,7 @@ class ApplicationSeeder extends Seeder
         \DB::table('applications')->delete();
 
         \DB::table('applications')->insert(array(
+            array('id' => '04b1c75b-97e7-11ed-b4bc-f8281997df43', 'app_icon' => NULL, 'app_name' => 'Core Management', 'description' => NULL, 'menu' => NULL, 'logs' => NULL, 'previous_version' => NULL, 'current_version' => NULL, 'is_active' => '1', 'created_at' => NULL, 'updated_at' => NULL),
             array('id' => '04b1c75b-97e7-11ed-b4bc-f8281997de10', 'app_icon' => NULL, 'app_name' => 'User Management', 'description' => NULL, 'menu' => NULL, 'logs' => NULL, 'previous_version' => NULL, 'current_version' => NULL, 'is_active' => '1', 'created_at' => NULL, 'updated_at' => NULL),
             array('id' => 'cb503f1c-f54b-11ed-a20b-283a4d1eea26', 'app_icon' => NULL, 'app_name' => 'HR managment', 'description' => NULL, 'menu' => NULL, 'logs' => NULL, 'previous_version' => NULL, 'current_version' => NULL, 'is_active' => '1', 'created_at' => NULL, 'updated_at' => NULL),
             array('id' => 'cb503f1c-f54b-11ed-a20b-283a4d1e324v', 'app_icon' => NULL, 'app_name' => 'Fleet managment', 'description' => NULL, 'menu' => NULL, 'logs' => NULL, 'previous_version' => NULL, 'current_version' => NULL, 'is_active' => '1', 'created_at' => NULL, 'updated_at' => NULL),
