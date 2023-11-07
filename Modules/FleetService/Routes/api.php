@@ -22,7 +22,7 @@ use Modules\FleetService\Http\Controllers\APIControllers\V1\Settings\VehicleType
 
 // });
 
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'fleet/'], function () {
+Route::group(['middleware' => 'auth:api', 'prefix' => 'fleet/'], function () {
 
     Route::get('dashboard', [DashboardController::class, "getDashboardData"]);
 

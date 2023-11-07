@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 use Modules\BusinessService\Entities\Business;
 use Modules\BusinessService\Entities\BusinessCustomer;
 use Modules\BusinessService\Entities\BusinessUser;
 use Modules\BusinessService\Entities\Customer;
-use Laravel\Passport\HasApiTokens;
+
 
 
 class User extends Authenticatable
