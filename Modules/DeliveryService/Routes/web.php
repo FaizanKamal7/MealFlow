@@ -106,4 +106,9 @@ Route::prefix('admin/deliveries')->group(function () {
         Route::post('upload_plan', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadMealPlan"])->name("upload_plan_delivery");
 
     });
+
+    Route::group(['prefix' => 'track/'], function () {
+        Route::get('view_pickup_batch', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewPickupBatch"])->name("view_pickup_batch");
+
+    });
 });

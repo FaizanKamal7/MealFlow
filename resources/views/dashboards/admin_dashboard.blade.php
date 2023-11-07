@@ -2,14 +2,14 @@
 @section('title', ' Dashboard')
 
 @section('extra_style')
-{{-- styles for earth are in admin dashboard css file, comment out in last --}}
+    {{-- styles for earth are in admin dashboard css file, comment out in last --}}
 @endsection
 
 @section('main_content')
 
-{{-- globe div, for later use --}}
-<!--begin::Post-->
-{{-- <div id="earth"></div>
+    {{-- globe div, for later use --}}
+    <!--begin::Post-->
+    {{-- <div id="earth"></div>
 <div class="canva_earth">
 
     <canvas id="scene"></canvas>
@@ -19,408 +19,416 @@
     <canvas id="canvas"></canvas>
 </div> --}}
 
-<div class="post d-flex flex-column-fluid" id="kt_post">
-    <!--begin::Container-->
-    <div id="kt_content_container" class="container-fluid">
-        <!--begin::Row-->
-        <div class="row gy-5 g-xl-8">
-            <!--begin::Col-->
-            <div class="col-xl-7">
-                <div class="general_statistic">
-                    <div class="head_general">
-                        <h1 class="fs-lg-2x  pb-5 heading_type">General Statistics</h1>
-                    </div>
-                    <!--begin::Row-->
-                    <div class="bottom_div">
-                        <div class="row gy-5 g-xl-10 mb-5">
-                            <!--begin::Col-->
-                            <div class="col-sm-6 col-xl-6">
-                                <!--begin::Card widget 2-->
-                                <div class="card h-lg-100 delivery" style=" border-radius: 3em">
-                                    <!--begin::Body-->
-                                    <div class="card-body d-flex justify-content-between card_body">
-                                        <!--begin::Icon-->
-
-                                        <!--end::Icon-->
-                                        <!--begin::Section-->
-                                        <div class="box_div">
-                                            <div class="d-flex box-div_btm">
-                                                <span
-                                                    class="fw-bold fs-3x text-primary-800 lh-1 ls-n2 onePoint">1.5M</span>
-                                                <div class="m-0">
-                                                    <span class="badge badge-success fs-base">
-                                                        +55%
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <!--end::Section-->
-                                            <!--begin::Badge-->
-                                            <span class="fw-bold fs-6 text-black-400 ">Total Deliveries</span>
-                                        </div>
-                                        <div class="m-0 icon-div">
-                                            <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
-                                            <span class="svg-icon svg-icon-2 svg white-icon">
-                                                <x-iconsax-bol-box-1 />
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                        <!--end::Badge-->
-                                    </div>
-                                    <!--end::Body-->
-                                </div>
-                                <!--end::Card widget 2-->
-                            </div>
-                            <!--end::Col-->
-                            <!--begin::Col-->
-                            <div class="col-sm-6 col-xl-6 ">
-                                <!--begin::Card widget 2-->
-                                <div class="card h-lg-100 delivery" style=" border-radius: 3em">
-                                    <!--begin::Body-->
-                                    <div class="card-body d-flex justify-content-between card_body">
-                                        <div class="box_div">
-                                            <div class="d-flex box-div_btm">
-                                                <span
-                                                    class="fw-bold fs-3x text-primary-800 lh-1 ls-n2 onePoint">75</span>
-                                                <div class="m-0">
-                                                    <span class="badge badge-danger fs-base">
-                                                        -25%
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <!--end::Section-->
-                                            <!--begin::Badge-->
-                                            <span class="fw-bold fs-6 text-black-400 ">Total partners</span>
-                                        </div>
-                                        <div class="m-0 icon-div">
-                                            <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
-                                            <span class="svg-icon svg-icon-2 svg white-icon">
-                                                <x-iconsax-bol-profile-2user />
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
-                                    </div>
-                                    <!--end::Body-->
-                                </div>
-                                <!--end::Card widget 2-->
-                            </div>
-                            <!--begin::Icon-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-fluid">
+            <!--begin::Row-->
+            <div class="row gy-5 g-xl-8">
+                <!--begin::Col-->
+                <div class="col-xl-7">
+                    <div class="general_statistic">
+                        <div class="head_general">
+                            <h1 class="fs-lg-2x  pb-5 heading_type">General Statistics</h1>
                         </div>
-                        <!--end::Row-->
-
                         <!--begin::Row-->
-                        <div class="row gy-5 g-xl-10">
-                            <div class="col-sm-6 col-xl-6">
-                                <!--begin::Card widget 2-->
-                                <div class="card h-lg-100 delivery" style=" border-radius: 3em">
-                                    <!--begin::Body-->
-                                    <div class="card-body d-flex justify-content-between card_body">
-                                        <div class="box_div">
-                                            <div class="d-flex box-div_btm">
-                                                <span class="fw-bold fs-3x text-primary-800 lh-1 ls-n2 onePoint">154
-                                                    K</span>
-                                                <div class="m-0">
-                                                    <span class="badge badge-success fs-base">
-                                                        +3%
-                                                    </span>
+                        <div class="bottom_div">
+                            <div class="row gy-5 g-xl-10 mb-5">
+                                <!--begin::Col-->
+                                <div class="col-sm-6 col-xl-6">
+                                    <!--begin::Card widget 2-->
+                                    <div class="card h-lg-100 delivery" style=" border-radius: 3em">
+                                        <!--begin::Body-->
+                                        <div class="card-body d-flex justify-content-between card_body">
+                                            <!--begin::Icon-->
+
+                                            <!--end::Icon-->
+                                            <!--begin::Section-->
+                                            <div class="box_div">
+                                                <div class="d-flex box-div_btm">
+                                                    <span
+                                                        class="fw-bold fs-3x text-primary-800 lh-1 ls-n2 onePoint">1.5M</span>
+                                                    <div class="m-0">
+                                                        <span class="badge badge-success fs-base">
+                                                            +55%
+                                                        </span>
+                                                    </div>
                                                 </div>
+                                                <!--end::Section-->
+                                                <!--begin::Badge-->
+                                                <span class="fw-bold fs-6 text-black-400 ">Total Deliveries</span>
                                             </div>
-                                            <!--end::Section-->
-                                            <!--begin::Badge-->
-                                            <span class="fw-bold fs-6 text-black-400 ">Todays Customers</span>
+                                            <div class="m-0 icon-div">
+                                                <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
+                                                <span class="svg-icon svg-icon-2 svg white-icon">
+                                                    <x-iconsax-bol-box-1 />
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Badge-->
                                         </div>
-                                        <div class="m-0 icon-div">
-                                            <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
-                                            <span class="svg-icon svg-icon-2 svg white-icon">
-                                                <x-iconsax-bul-people />
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
+                                        <!--end::Body-->
                                     </div>
-                                    <!--end::Body-->
+                                    <!--end::Card widget 2-->
                                 </div>
-                                <!--end::Card widget 2-->
-                            </div>
-                            <div class="col-sm-6 col-xl-6 mb-xl-5">
-                                <!--begin::Card widget 2-->
-                                <div class="card h-lg-100 delivery" style=" border-radius: 3em">
-                                    <!--begin::Body-->
-                                    <div class="card-body d-flex justify-content-between card_body">
-                                        <div class="box_div">
-                                            <div class="d-flex box-div_btm">
-                                                <span
-                                                    class="fw-bold fs-3x text-primary-800 lh-1 ls-n2 onePoint">65</span>
-                                                <div class="m-0">
-                                                    <span class="badge badge-success fs-base">
-                                                        +5%
-                                                    </span>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-sm-6 col-xl-6 ">
+                                    <!--begin::Card widget 2-->
+                                    <div class="card h-lg-100 delivery" style=" border-radius: 3em">
+                                        <!--begin::Body-->
+                                        <div class="card-body d-flex justify-content-between card_body">
+                                            <div class="box_div">
+                                                <div class="d-flex box-div_btm">
+                                                    <span
+                                                        class="fw-bold fs-3x text-primary-800 lh-1 ls-n2 onePoint">75</span>
+                                                    <div class="m-0">
+                                                        <span class="badge badge-danger fs-base">
+                                                            -25%
+                                                        </span>
+                                                    </div>
                                                 </div>
+                                                <!--end::Section-->
+                                                <!--begin::Badge-->
+                                                <span class="fw-bold fs-6 text-black-400 ">Total partners</span>
                                             </div>
-                                            <!--end::Section-->
-                                            <!--begin::Badge-->
-                                            <span class="fw-bold fs-6 text-black-400 ">Total Vehicles</span>
+                                            <div class="m-0 icon-div">
+                                                <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
+                                                <span class="svg-icon svg-icon-2 svg white-icon">
+                                                    <x-iconsax-bol-profile-2user />
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
                                         </div>
-                                        <div class="m-0 icon-div">
-                                            <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
-                                            <span class="svg-icon svg-icon-2 svg white-icon">
-                                                <x-iconsax-bol-car />
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </div>
+                                        <!--end::Body-->
                                     </div>
-                                    <!--end::Body-->
+                                    <!--end::Card widget 2-->
                                 </div>
-                                <!--end::Card widget 2-->
+                                <!--begin::Icon-->
                             </div>
+                            <!--end::Row-->
+
+                            <!--begin::Row-->
+                            <div class="row gy-5 g-xl-10">
+                                <div class="col-sm-6 col-xl-6">
+                                    <!--begin::Card widget 2-->
+                                    <div class="card h-lg-100 delivery" style=" border-radius: 3em">
+                                        <!--begin::Body-->
+                                        <div class="card-body d-flex justify-content-between card_body">
+                                            <div class="box_div">
+                                                <div class="d-flex box-div_btm">
+                                                    <span class="fw-bold fs-3x text-primary-800 lh-1 ls-n2 onePoint">154
+                                                        K</span>
+                                                    <div class="m-0">
+                                                        <span class="badge badge-success fs-base">
+                                                            +3%
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <!--end::Section-->
+                                                <!--begin::Badge-->
+                                                <span class="fw-bold fs-6 text-black-400 ">Todays Customers</span>
+                                            </div>
+                                            <div class="m-0 icon-div">
+                                                <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
+                                                <span class="svg-icon svg-icon-2 svg white-icon">
+                                                    <x-iconsax-bul-people />
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                        </div>
+                                        <!--end::Body-->
+                                    </div>
+                                    <!--end::Card widget 2-->
+                                </div>
+                                <div class="col-sm-6 col-xl-6 mb-xl-5">
+                                    <!--begin::Card widget 2-->
+                                    <div class="card h-lg-100 delivery" style=" border-radius: 3em">
+                                        <!--begin::Body-->
+                                        <div class="card-body d-flex justify-content-between card_body">
+                                            <div class="box_div">
+                                                <div class="d-flex box-div_btm">
+                                                    <span
+                                                        class="fw-bold fs-3x text-primary-800 lh-1 ls-n2 onePoint">65</span>
+                                                    <div class="m-0">
+                                                        <span class="badge badge-success fs-base">
+                                                            +5%
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <!--end::Section-->
+                                                <!--begin::Badge-->
+                                                <span class="fw-bold fs-6 text-black-400 ">Total Vehicles</span>
+                                            </div>
+                                            <div class="m-0 icon-div">
+                                                <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
+                                                <span class="svg-icon svg-icon-2 svg white-icon">
+                                                    <x-iconsax-bol-car />
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                        </div>
+                                        <!--end::Body-->
+                                    </div>
+                                    <!--end::Card widget 2-->
+                                </div>
+                            </div>
+                            <!--end::Row-->
                         </div>
-                        <!--end::Row-->
                     </div>
+                    <!--begin::Mixed Widget 4-->
+
+                    <!--end::Mixed Widget 4-->
                 </div>
-                <!--begin::Mixed Widget 4-->
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-5">
 
-                <!--end::Mixed Widget 4-->
-            </div>
-            <!--end::Col-->
-            <!--begin::Col-->
-            <div class="col-xl-5">
+                    <div class="col-xl-12">
+                        <div class="card outer-card">
+                            <h2> Hello there, Hope You Have
+                                Great Day! </h2>
+                            <div class="card mb-10 weather-card ">
+                                <!--begin::Body-->
+                                <div class="card-body d-flex justify-content-between  flex-column ">
 
-                <div class="col-xl-12">
-                    <div class="card outer-card">
-                        <h2> Hello there, Hope You Have
-                            Great Day! </h2>
-                        <div class="card mb-10 weather-card ">
-                            <!--begin::Body-->
-                            <div class="card-body d-flex justify-content-between  flex-column ">
+                                    <!--end::Icon-->
+                                    <!--begin::Section-->
+                                    <div class="row align-items-center">
+                                        <div class="col-4">
+                                            <span class="svg-icon svg-icon-5hx svg-icon-gray-600">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256"
+                                                    height="256" viewBox="0 0 256 256" xml:space="preserve">
 
-                                <!--end::Icon-->
-                                <!--begin::Section-->
-                                <div class="row align-items-center">
-                                    <div class="col-4">
-                                        <span class="svg-icon svg-icon-5hx svg-icon-gray-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256"
-                                                height="256" viewBox="0 0 256 256" xml:space="preserve">
+                                                    <defs>
+                                                    </defs>
+                                                    <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+                                                        transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                                                        <circle cx="34.717" cy="35.307" r="19.817"
+                                                            style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(232,224,119); fill-rule: nonzero; opacity: 1;"
+                                                            transform="  matrix(1 0 0 1 0 0) " />
+                                                        <path
+                                                            d="M 42.869 37.202 c 0.799 -6.532 6.455 -11.579 13.087 -11.579 c 4.749 0 9.038 2.489 11.398 6.553 c 1.78 -1.822 4.203 -2.851 6.775 -2.851 c 4.815 0 8.875 3.661 9.416 8.406 C 87.423 39.216 90 42.937 90 47.112 c 0 5.543 -4.51 10.054 -10.054 10.054 H 44.536 c -5.543 0 -10.054 -4.51 -10.054 -10.054 C 34.482 42.18 38.054 38.004 42.869 37.202 z"
+                                                            style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(183,189,244); fill-rule: nonzero; opacity: 1;"
+                                                            transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                                                        <path
+                                                            d="M 62.119 48.202 C 61.066 39.593 53.612 32.94 44.87 32.94 c -6.259 0 -11.912 3.28 -15.022 8.637 c -2.346 -2.402 -5.539 -3.758 -8.929 -3.758 c -6.347 0 -11.698 4.825 -12.411 11.079 C 3.397 50.857 0 55.76 0 61.263 c 0 7.306 5.944 13.251 13.251 13.251 h 46.672 c 7.306 0 13.251 -5.945 13.251 -13.251 C 73.173 54.763 68.466 49.259 62.119 48.202 z"
+                                                            style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(131,141,229); fill-rule: nonzero; opacity: 1;"
+                                                            transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                            {{-- <span class="fw-bold fs-2x text-white lh-1 ls-n2 mt-3">Cloudy</span> --}}
+                                        </div>
 
-                                                <defs>
-                                                </defs>
-                                                <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-                                                    transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-                                                    <circle cx="34.717" cy="35.307" r="19.817"
-                                                        style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(232,224,119); fill-rule: nonzero; opacity: 1;"
-                                                        transform="  matrix(1 0 0 1 0 0) " />
-                                                    <path
-                                                        d="M 42.869 37.202 c 0.799 -6.532 6.455 -11.579 13.087 -11.579 c 4.749 0 9.038 2.489 11.398 6.553 c 1.78 -1.822 4.203 -2.851 6.775 -2.851 c 4.815 0 8.875 3.661 9.416 8.406 C 87.423 39.216 90 42.937 90 47.112 c 0 5.543 -4.51 10.054 -10.054 10.054 H 44.536 c -5.543 0 -10.054 -4.51 -10.054 -10.054 C 34.482 42.18 38.054 38.004 42.869 37.202 z"
-                                                        style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(183,189,244); fill-rule: nonzero; opacity: 1;"
-                                                        transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                                                    <path
-                                                        d="M 62.119 48.202 C 61.066 39.593 53.612 32.94 44.87 32.94 c -6.259 0 -11.912 3.28 -15.022 8.637 c -2.346 -2.402 -5.539 -3.758 -8.929 -3.758 c -6.347 0 -11.698 4.825 -12.411 11.079 C 3.397 50.857 0 55.76 0 61.263 c 0 7.306 5.944 13.251 13.251 13.251 h 46.672 c 7.306 0 13.251 -5.945 13.251 -13.251 C 73.173 54.763 68.466 49.259 62.119 48.202 z"
-                                                        style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(131,141,229); fill-rule: nonzero; opacity: 1;"
-                                                        transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                                                </g>
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                        {{-- <span class="fw-bold fs-2x text-white lh-1 ls-n2 mt-3">Cloudy</span> --}}
-                                    </div>
-
-                                    <div class="d-flex my-7 col-7" style="
+                                        <div class="d-flex my-7 col-7"
+                                            style="
                                     border-left: 1px solid gray;
                                     border-width: 3px;
                                     padding: 0 15px;
                                 ">
-                                        <!--begin::Number-->
-                                        <div class="flex-column ">
+                                            <!--begin::Number-->
+                                            <div class="flex-column ">
 
-                                            <span class="fw-bold fs-3x lh-1 ls-n2 mt-3">-29 °C</span>
-                                            <div class="ms-5">
-                                                <span class="fw-bold fs-6" style="color: gray">Mostly Cloudy
+                                                <span class="fw-bold fs-3x lh-1 ls-n2 mt-3">-29 °C</span>
+                                                <div class="ms-5">
+                                                    <span class="fw-bold fs-6" style="color: gray">Mostly Cloudy
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="m-0 dubai">
+                                                <span class="fw-bold fs-6">Dubai
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="m-0 dubai">
-                                            <span class="fw-bold fs-6">Dubai
-                                            </span>
+                                        <!--end::Section-->
+                                    </div>
+                                    <!--begin::Badge-->
+                                    <!--end::Badge-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--begin::Mixed Widget 7-->
+
+                    <!--end::Mixed Widget 7-->
+                    {{-- commented out this div to remove extra space in height --}}
+                    {{-- <div id="kt_amcharts_3" style="height: 600px;"></div> --}}
+
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+            <!--begin::Row-->
+
+            <div class="row gy-5 g-xl-8 mb-10">
+
+                <div class="col-xl-7">
+                    <div class="card h-100 card-xl-stretch mb-xl-8 mb-10 delivery-card">
+                        <!--begin::Beader-->
+                        <div class="card-header border-1 pb-5 delivery-header">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bolder fs-3 mb-1 header-font">Today’s
+                                    Deliveries Progress</span>
+                            </h3>
+                            <h4 class="card-label fw-bolder fs-3 mb-1 view">
+                                View All</h4>
+
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Body-->
+                        <div class="  card-body d-flex flex-column delivery-body">
+                            <div class="row">
+                                <div class="col-3 h-50">
+                                    <div class="d-flex flex-column flex-grow-1 align-items-center">
+                                        <div class="mixed-widget-4-chart" data-kt-chart-color="primary"
+                                            style="height: 150px">
+                                        </div>
+                                        <div class="time-div">
+                                            <span class="fw-bold  text-dark-300 time ">(2 AM - 6 AM)</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column col-3 flex-nowrap text-nowrap">
+                                    <!--begin::Number-->
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash text-gray">-</span>
+                                        <span class="complete span-adjust"> Completed </span> <span class="number"> 1100
+                                        </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
+                                            class="pending span-adjust"> Pending </span> <span class="number"> 42
+                                        </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash"
+                                            style="color: rgba(241, 65, 108, 1);
+                                        ">-</span>
+                                        <span class="cancel span-adjust"> Cancelled </span> <span class="number"
+                                            style="color: rgba(241, 65, 108, 1);
+                                            ">
+                                            3 </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
+                                            class="complete span-adjust"> Total </span> <span class="number"> 1146
+                                        </span></span>
+                                    <!--end::Number-->
+                                    <!--begin::Follower-->
+
+                                    <!--end::Follower-->
+                                </div>
+
+                                <div class="col-3 h-50">
+                                    <div class="d-flex flex-column flex-grow-1 align-items-center">
+                                        <div class="mixed-widget-4-chart" data-kt-chart-color="primary"
+                                            style="height: 150px">
+                                        </div>
+                                        <div class="time-div">
+                                            <span class="fw-bold  text-dark-300 time ">(2 AM - 7 AM)</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column col-3 flex-nowrap text-nowrap">
+                                    <!--begin::Number-->
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash text-gray">-</span>
+                                        <span class="complete span-adjust"> Completed </span> <span class="number"> 1100
+                                        </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
+                                            class="pending span-adjust"> Pending </span> <span class="number"> 42
+                                        </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash"
+                                            style="color: rgba(241, 65, 108, 1);
+                                        ">-</span>
+                                        <span class="cancel span-adjust"> Cancelled </span> <span class="number"
+                                            style="color: rgba(241, 65, 108, 1);
+                                            ">
+                                            3 </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
+                                            class="complete span-adjust"> Total </span> <span class="number"> 1146
+                                        </span></span>
+                                    <!--end::Number-->
+                                    <!--begin::Follower-->
+
+                                    <!--end::Follower-->
+                                </div>
+                            </div>
+                            <div class="separator"></div>
+
+                            <div class="row">
+                                <div class="col-3 h-50">
+                                    <div class="d-flex flex-column flex-grow-1 align-items-center">
+                                        <div class="mixed-widget-4-chart" data-kt-chart-color="primary"
+                                            style="height: 150px">
+                                        </div>
+                                        <div class="time-div">
+                                            <span class="fw-bold  text-dark-300 time ">(2 AM - 6 AM)</span>
                                         </div>
                                     </div>
-                                    <!--end::Section-->
                                 </div>
-                                <!--begin::Badge-->
-                                <!--end::Badge-->
-                            </div>
-                            <!--end::Body-->
-                        </div>
-                    </div>
+                                <div class="d-flex flex-column col-3 flex-nowrap text-nowrap">
+                                    <!--begin::Number-->
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash text-gray">-</span>
+                                        <span class="complete span-adjust"> Completed </span> <span class="number"> 1100
+                                        </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
+                                            class="pending span-adjust"> Pending </span> <span class="number"> 42
+                                        </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash"
+                                            style="color: rgba(241, 65, 108, 1);
+                                        ">-</span>
+                                        <span class="cancel span-adjust"> Cancelled </span> <span class="number"
+                                            style="color: rgba(241, 65, 108, 1);
+                                            ">
+                                            3 </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
+                                            class="complete span-adjust"> Total </span> <span class="number"> 1146
+                                        </span></span>
+                                    <!--end::Number-->
+                                    <!--begin::Follower-->
 
+                                    <!--end::Follower-->
+                                </div>
+                                <div class="col-3 h-50">
+                                    <div class="d-flex flex-column flex-grow-1 align-items-center">
+                                        <div class="mixed-widget-4-chart" data-kt-chart-color="primary"
+                                            style="height: 150px">
+                                        </div>
+                                        <div class="time-div">
+                                            <span class="fw-bold  text-dark-300 time ">(2 AM - 7 AM)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column col-3 flex-nowrap text-nowrap">
+                                    <!--begin::Number-->
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash text-gray">-</span>
+                                        <span class="complete span-adjust"> Completed </span> <span class="number"> 1100
+                                        </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
+                                            class="pending span-adjust"> Pending </span> <span class="number"> 42
+                                        </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash"
+                                            style="color: rgba(241, 65, 108, 1);
+                                        ">-</span>
+                                        <span class="cancel span-adjust"> Cancelled </span> <span class="number"
+                                            style="color: rgba(241, 65, 108, 1);
+                                            ">
+                                            3 </span></span>
+                                    <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
+                                            class="complete span-adjust"> Total </span> <span class="number"> 1146
+                                        </span></span>
+                                    <!--end::Number-->
+                                    <!--begin::Follower-->
+
+                                    <!--end::Follower-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Body-->
+                    </div>
                 </div>
-                <!--begin::Mixed Widget 7-->
-
-                <!--end::Mixed Widget 7-->
-                {{-- commented out this div to remove extra space in height --}}
-                {{-- <div id="kt_amcharts_3" style="height: 600px;"></div> --}}
-
-            </div>
-            <!--end::Col-->
-        </div>
-        <!--end::Row-->
-        <!--begin::Row-->
-
-        <div class="row gy-5 g-xl-8">
-
-            <div class="col-xl-7">
-                <div class="card card-xl-stretch mb-xl-8 mb-10 delivery-card">
-                    <!--begin::Beader-->
-                    <div class="card-header border-1 pb-5 delivery-header">
-                        <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1 header-font">Today’s
-                                Deliveries Progress</span>
-                        </h3>
-                        <h4 class="card-label fw-bolder fs-3 mb-1 view">
-                            View All</h4>
-
-                    </div>
-                    <!--end::Header-->
-                    <!--begin::Body-->
-                    <div class="  card-body d-flex flex-column delivery-body">
-                        <div class="row">
-                            <div class="col-3 h-50">
-                                <div class="d-flex flex-column flex-grow-1 align-items-center">
-                                    <div class="mixed-widget-4-chart" data-kt-chart-color="primary"
-                                        style="height: 150px">
-                                    </div>
-                                    <div class="time-div">
-                                        <span class="fw-bold  text-dark-300 time ">(2 AM - 6 AM)</span>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column col-3 flex-nowrap text-nowrap">
-                                <!--begin::Number-->
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash text-gray">-</span>
-                                    <span class="complete span-adjust"> Completed </span> <span class="number"> 1100
-                                    </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
-                                        class="pending span-adjust"> Pending </span> <span class="number"> 42
-                                    </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash" style="color: rgba(241, 65, 108, 1);
-                                        ">-</span>
-                                    <span class="cancel span-adjust"> Cancelled </span> <span class="number" style="color: rgba(241, 65, 108, 1);
-                                            ">
-                                        3 </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
-                                        class="complete span-adjust"> Total </span> <span class="number"> 1146
-                                    </span></span>
-                                <!--end::Number-->
-                                <!--begin::Follower-->
-
-                                <!--end::Follower-->
-                            </div>
-
-                            <div class="col-3 h-50">
-                                <div class="d-flex flex-column flex-grow-1 align-items-center">
-                                    <div class="mixed-widget-4-chart" data-kt-chart-color="primary"
-                                        style="height: 150px">
-                                    </div>
-                                    <div class="time-div">
-                                        <span class="fw-bold  text-dark-300 time ">(2 AM - 7 AM)</span>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column col-3 flex-nowrap text-nowrap">
-                                <!--begin::Number-->
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash text-gray">-</span>
-                                    <span class="complete span-adjust"> Completed </span> <span class="number"> 1100
-                                    </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
-                                        class="pending span-adjust"> Pending </span> <span class="number"> 42
-                                    </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash" style="color: rgba(241, 65, 108, 1);
-                                        ">-</span>
-                                    <span class="cancel span-adjust"> Cancelled </span> <span class="number" style="color: rgba(241, 65, 108, 1);
-                                            ">
-                                        3 </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
-                                        class="complete span-adjust"> Total </span> <span class="number"> 1146
-                                    </span></span>
-                                <!--end::Number-->
-                                <!--begin::Follower-->
-
-                                <!--end::Follower-->
-                            </div>
-                        </div>
-                        <div class="separator"></div>
-
-                        <div class="row">
-                            <div class="col-3 h-50">
-                                <div class="d-flex flex-column flex-grow-1 align-items-center">
-                                    <div class="mixed-widget-4-chart" data-kt-chart-color="primary"
-                                        style="height: 150px">
-                                    </div>
-                                    <div class="time-div">
-                                        <span class="fw-bold  text-dark-300 time ">(2 AM - 6 AM)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column col-3 flex-nowrap text-nowrap">
-                                <!--begin::Number-->
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash text-gray">-</span>
-                                    <span class="complete span-adjust"> Completed </span> <span class="number"> 1100
-                                    </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
-                                        class="pending span-adjust"> Pending </span> <span class="number"> 42
-                                    </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash" style="color: rgba(241, 65, 108, 1);
-                                        ">-</span>
-                                    <span class="cancel span-adjust"> Cancelled </span> <span class="number" style="color: rgba(241, 65, 108, 1);
-                                            ">
-                                        3 </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
-                                        class="complete span-adjust"> Total </span> <span class="number"> 1146
-                                    </span></span>
-                                <!--end::Number-->
-                                <!--begin::Follower-->
-
-                                <!--end::Follower-->
-                            </div>
-                            <div class="col-3 h-50">
-                                <div class="d-flex flex-column flex-grow-1 align-items-center">
-                                    <div class="mixed-widget-4-chart" data-kt-chart-color="primary"
-                                        style="height: 150px">
-                                    </div>
-                                    <div class="time-div">
-                                        <span class="fw-bold  text-dark-300 time ">(2 AM - 7 AM)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column col-3 flex-nowrap text-nowrap">
-                                <!--begin::Number-->
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash text-gray">-</span>
-                                    <span class="complete span-adjust"> Completed </span> <span class="number"> 1100
-                                    </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
-                                        class="pending span-adjust"> Pending </span> <span class="number"> 42
-                                    </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash" style="color: rgba(241, 65, 108, 1);
-                                        ">-</span>
-                                    <span class="cancel span-adjust"> Cancelled </span> <span class="number" style="color: rgba(241, 65, 108, 1);
-                                            ">
-                                        3 </span></span>
-                                <span class="fw-bold   text-gray-500 pb-1 pt-2"><span class="dash">-</span> <span
-                                        class="complete span-adjust"> Total </span> <span class="number"> 1146
-                                    </span></span>
-                                <!--end::Number-->
-                                <!--begin::Follower-->
-
-                                <!--end::Follower-->
-                            </div>
-                        </div>
-                    </div>
-                    <!--end::Body-->
-                </div>
-            </div>
-            <div class="col-xl-5">
-                <div class="col-xl-12">
+                <div class="col-xl-5">
                     <!--begin::Statistics Widget 5-->
-                    <div class="card hoverable card-length">
+                    <div class="card h-100 hoverable card-length">
                         <!--begin::Body-->
                         <div class="card-body earning-card">
                             <h3 class="earning"> Earnings</h3>
@@ -435,340 +443,350 @@
                     <!--end::Statistics Widget 5-->
                 </div>
             </div>
-        </div>
-        <!--end::Row-->
-        <!--begin::Row-->
-        <div class="row ">
-            <!--begin::Col-->
-            <!--begin::Col-->
-            <div class="col-xl-7">
-                <!--begin::Chart widget 4-->
-                <div class="card card-flush overflow-hidden h-md-100 delivery-card">
-                    <!--begin::Header-->
-                    <div class="card-header py-5 delivery-header">
-                        <!--begin::Title-->
-                        <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder text-dark header-font">Key Performance Indicator</span>
-                        </h3>
-                        <!--end::Title-->
-                        <!--begin::Toolbar-->
-                    </div>
-                    <!--end::Header-->
-                    <!--begin::Card body-->
-                    <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
-                        <!--begin::Chart-->
-                        <div id="kt_charts_widget_4" class="min-h-auto ps-4 pe-6" style="height: 300px"></div>
-                        <!--end::Chart-->
-                    </div>
-                    <!--end::Card body-->
-                </div>
-                <!--end::Chart widget 4-->
-            </div>
-            <!--end::Col-->
-            <!--begin::Col-->
-            <div class="col-xl-5">
-                <!--begin::Card widget 4-->
-                <div class="card card-flush h-100  delivery-card">
-                    <div class="card-header py-5 delivery-header">
-                        <!--begin::Title-->
-                        <h3 class="card-title align-items-start flex-column ">
-                            <span class="card-label fw-bolder text-dark header-font">Partner's Comparison Dilervery
-                                Wise</span>
-                        </h3>
-                        <!--end::Title-->
-                        <!--begin::Toolbar-->
-                    </div>
-                    <!--begin::Card body-->
-                    <div class="px-4 pt-2 pb-2">
-                        <!--begin::Chart-->
-                        <div class="d-flex justify-content-around align-items-center">
-                            <div id="kt_chart_widgets_22_chart_1" class="mb-4 ms-n12"></div>
-                            <div class="">
-                                <a class="btn btn-primary text-white view-more">See All Partners</a>
-                            </div>
+            <!--end::Row-->
+            <!--begin::Row-->
+            <div class="row ">
+                <!--begin::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-7">
+                    <!--begin::Chart widget 4-->
+                    <div class="card card-flush overflow-hidden h-md-100 delivery-card">
+                        <!--begin::Header-->
+                        <div class="card-header py-5 delivery-header">
+                            <!--begin::Title-->
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bolder text-dark header-font">Key Performance Indicator</span>
+                            </h3>
+                            <!--end::Title-->
+                            <!--begin::Toolbar-->
                         </div>
-                        <!--end::Chart-->
-                        <!--begin::Labels-->
-                        <div class="delivery-body d-flex flex-column content-justify-center w-100">
-                            <h3 style="color: rgba(0, 66, 110, 1); 
+                        <!--end::Header-->
+                        <!--begin::Card body-->
+                        <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
+                            <!--begin::Chart-->
+                            <div id="kt_charts_widget_4" class="min-h-auto ps-4 pe-6" style="height: 300px"></div>
+                            <!--end::Chart-->
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::Chart widget 4-->
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-5">
+                    <!--begin::Card widget 4-->
+                    <div class="card card-flush h-100  delivery-card">
+                        <div class="card-header py-5 delivery-header">
+                            <!--begin::Title-->
+                            <h3 class="card-title align-items-start flex-column ">
+                                <span class="card-label fw-bolder text-dark header-font">Partner's Comparison Dilervery
+                                    Wise</span>
+                            </h3>
+                            <!--end::Title-->
+                            <!--begin::Toolbar-->
+                        </div>
+                        <!--begin::Card body-->
+                        <div class="px-4 pt-2 pb-2">
+                            <!--begin::Chart-->
+                            <div class="d-flex justify-content-around align-items-center">
+                                <div id="kt_chart_widgets_22_chart_1" class="mb-4 ms-n12"></div>
+                                <div class="">
+                                    <a class="btn btn-primary text-white view-more">See All Partners</a>
+                                </div>
+                            </div>
+                            <!--end::Chart-->
+                            <!--begin::Labels-->
+                            <div class="delivery-body d-flex flex-column content-justify-center w-100">
+                                <h3
+                                    style="color: rgba(0, 66, 110, 1); 
                                     opacity:0.7; 
                                     font-size:16px !important;
                                 ">
-                                Partner's List</h3>
-                            <!--begin::Label-->
-                            <div class="d-flex fs-6 fw-bold align-items-center">
-                                <!--begin::Bullet-->
-                                <div class="bullet w-15px h-6px rounded-2 me-3"></div>
-                                <!--end::Bullet-->
+                                    Partner's List</h3>
                                 <!--begin::Label-->
-                                <div class="text-black-700 opacity-75 flex-grow-1 me-4 my-1">Super Meals</div>
-                                <!--end::Label-->
-                                <!--begin::Stats-->
-                                <div class="text-gray-600 text-xxl-end"><span class="fw-boldest text-700" style="color:rgba(0, 66, 110, 1);
+                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-15px h-6px rounded-2 me-3"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-black-700 opacity-75 flex-grow-1 me-4 my-1">Super Meals</div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="text-gray-600 text-xxl-end"><span class="fw-boldest text-700"
+                                            style="color:rgba(0, 66, 110, 1);
                                         ">25%
-                                    </span>(250)
+                                        </span>(250)
+                                    </div>
+                                    <!--end::Stats-->
                                 </div>
-                                <!--end::Stats-->
-                            </div>
-                            <div class="separator"></div>
-                            <!--end::Label-->
-                            <!--begin::Label-->
-                            <div class="d-flex fs-6 fw-bold align-items-center">
-                                <!--begin::Bullet-->
-                                <div class="bullet w-15px h-6px rounded-2 me-3"></div>
-                                <!--end::Bullet-->
+                                <div class="separator"></div>
+                                <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="text-black-700 opacity-75 flex-grow-1 me-4 my-1">Super Meals</div>
-                                <!--end::Label-->
-                                <!--begin::Stats-->
-                                <div class="text-gray-600 text-xxl-end"><span class="fw-boldest text-700" style="color:rgba(0, 66, 110, 1);
+                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-15px h-6px rounded-2 me-3"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-black-700 opacity-75 flex-grow-1 me-4 my-1">Super Meals</div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="text-gray-600 text-xxl-end"><span class="fw-boldest text-700"
+                                            style="color:rgba(0, 66, 110, 1);
                                         ">25%
-                                    </span>(250)
+                                        </span>(250)
+                                    </div>
+                                    <!--end::Stats-->
                                 </div>
-                                <!--end::Stats-->
-                            </div>
-                            <div class="separator"></div>
-                            <div class="d-flex fs-6 fw-bold align-items-center">
-                                <!--begin::Bullet-->
-                                <div class="bullet w-15px h-6px rounded-2 me-3"></div>
-                                <!--end::Bullet-->
-                                <!--begin::Label-->
-                                <div class="text-black-700 opacity-75 flex-grow-1 me-4 my-1">Super Meals</div>
-                                <!--end::Label-->
-                                <!--begin::Stats-->
-                                <div class="text-gray-600 text-xxl-end"><span class="fw-boldest text-700" style="color:rgba(0, 66, 110, 1);
+                                <div class="separator"></div>
+                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-15px h-6px rounded-2 me-3"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-black-700 opacity-75 flex-grow-1 me-4 my-1">Super Meals</div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="text-gray-600 text-xxl-end"><span class="fw-boldest text-700"
+                                            style="color:rgba(0, 66, 110, 1);
                                         ">25%
-                                    </span>(250)
+                                        </span>(250)
+                                    </div>
+                                    <!--end::Stats-->
                                 </div>
-                                <!--end::Stats-->
-                            </div>
-                            <div class="separator"></div>
+                                <div class="separator"></div>
 
+                            </div>
+                            <!--end::Labels-->
                         </div>
-                        <!--end::Labels-->
+                        <!--end::Card body-->
                     </div>
-                    <!--end::Card body-->
+                    <!--end::Card widget 4-->
                 </div>
-                <!--end::Card widget 4-->
+                <!--end::Col-->
             </div>
-            <!--end::Col-->
-        </div>
-        <!--end::Row-->
-        {{-- copyyy --}}
-        <!--begin::Row-->
-        <div class="row my-2 mb-8 gy-5 g-xl-8">
-            <!--begin::Col-->
-            <!--begin::Col-->
-            <div class="col-xl-7">
-                <!--begin::Chart widget 4-->
-                <div class="card card-flush h-100 mb-5 delivery-card">
-                    <div class="card-header border border-1 delivery-header justify-content-between"
-                        style="padding: 0 30px !important;">
-                        <!--begin::Title-->
-                        <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder text-dark">Complaints OverView</span>
+            <!--end::Row-->
+            {{-- copyyy --}}
+            <!--begin::Row-->
+            <div class="row my-2 mb-8 gy-5 g-xl-8">
+                <!--begin::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-7">
+                    <!--begin::Chart widget 4-->
+                    <div class="card card-flush h-100 delivery-card">
+                        <div class="card-header border border-1 delivery-header justify-content-between"
+                            style="padding: 0 30px !important;">
+                            <!--begin::Title-->
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bolder text-dark">Complaints OverView</span>
 
-                        </h3>
-                        <div class="d-flex justify-content-between align-items-center gap-10 mt-2 ">
-                            <p>Month</p>
-                            <p>Week</p>
-                            <p style="background: rgba(0, 66, 110, 1);
+                            </h3>
+                            <div class="d-flex justify-content-between align-items-center gap-10 mt-2 ">
+                                <p>Month</p>
+                                <p>Week</p>
+                                <p
+                                    style="background: rgba(0, 66, 110, 1);
                                 color: white;
                                 padding: 10px;
                                 border-radius: 6px;
                                 width: 54px;
                                 text-align: center;">
-                                Day</p>
+                                    Day</p>
+                            </div>
+                            <!--end::Title-->
+                            <!--begin::Toolbar-->
                         </div>
-                        <!--end::Title-->
-                        <!--begin::Toolbar-->
-                    </div>
-                    <!--begin::Body-->
-                    <div class="card-body d-flex justify-content-between flex-column p-0 pt-5">
-                        <!--begin::Items-->
-                        <div class="mb-5 px-9">
-                            <!--begin::Item-->
-                            <div class="row">
-                                <!--begin::Section-->
-                                <div class="d-flex align-items-center me-3 my-2">
-                                    <div class="d-flex align-items-center w-100 justify-content-between">
-                                        <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder  ">Dillevery
-                                            on
-                                            Wrong Adress (Driver Error)</a>
-                                        <span class="text-black-700 fw-bolder">68%</span>
-                                    </div>
-                                    <!--end::Section-->
-                                </div>
-                                <!--end::Section-->
-                                <!--begin::Statistics-->
-                                <div class="d-flex align-items-center w-100">
-                                    <!--begin::Progress-->
-                                    <div class="progress h-6px w-100 me-2 bg-light-success">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%; background: linear-gradient(180deg, #246FA1 0%, #488CB9 100%);
-                                            " aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <!--end::Progress-->
-                                    <!--begin::Value-->
-                                    <!--end::Value-->
-                                </div>
-                                <!--end::Statistics-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Separator-->
-                            <div class="separator separator-dashed my-4"></div>
-                            <div class="row">
-                                <!--begin::Section-->
-                                <div class="d-flex align-items-center me-3 my-2">
-                                    <div class="d-flex align-items-center w-100 justify-content-between">
-                                        <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder">Employee
-                                            Complaints</a>
-                                        <span class="text-black-700 fw-bolder">58%</span>
-                                    </div>
-                                    <!--end::Section-->
-                                </div>
-                                <!--end::Section-->
-                                <!--begin::Statistics-->
-                                <div class="d-flex align-items-center w-100">
-                                    <!--begin::Progress-->
-                                    <div class="progress h-6px w-100 me-2 bg-light-success">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 58%;"
-                                            aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <!--end::Progress-->
-                                    <!--begin::Value-->
-                                    <!--end::Value-->
-                                </div>
-                                <!--end::Statistics-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Separator-->
-                            <div class="separator separator-dashed my-4"></div>
-
-                            <div class="row">
-                                <!--begin::Section-->
-                                <div class="d-flex align-items-center me-3 my-2">
+                        <!--begin::Body-->
+                        <div class="card-body d-flex justify-content-between flex-column p-0 pt-5">
+                            <!--begin::Items-->
+                            <div class="mb-5 px-9">
+                                <!--begin::Item-->
+                                <div class="row">
                                     <!--begin::Section-->
-                                    <div class="d-flex align-items-center w-100 justify-content-between">
-                                        <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder">Negative
-                                            Reviews</a>
-                                        <span class="text-black-700 fw-bolder">28%</span>
+                                    <div class="d-flex align-items-center me-3 my-2">
+                                        <div class="d-flex align-items-center w-100 justify-content-between">
+                                            <a href="#"
+                                                class="text-gray-800 text-hover-primary fs-5 fw-bolder  ">Dillevery
+                                                on
+                                                Wrong Adress (Driver Error)</a>
+                                            <span class="text-black-700 fw-bolder">68%</span>
+                                        </div>
+                                        <!--end::Section-->
                                     </div>
                                     <!--end::Section-->
+                                    <!--begin::Statistics-->
+                                    <div class="d-flex align-items-center w-100">
+                                        <!--begin::Progress-->
+                                        <div class="progress h-6px w-100 me-2 bg-light-success">
+                                            <div class="progress-bar bg-success" role="progressbar"
+                                                style="width: 65%; background: linear-gradient(180deg, #246FA1 0%, #488CB9 100%);
+                                            "
+                                                aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <!--end::Progress-->
+                                        <!--begin::Value-->
+                                        <!--end::Value-->
+                                    </div>
+                                    <!--end::Statistics-->
                                 </div>
-                                <!--end::Section-->
-                                <!--begin::Statistics-->
-                                <div class="d-flex align-items-center w-100">
-                                    <!--begin::Progress-->
-                                    <div class="progress h-6px w-100 me-2 bg-light-success">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 28%; "
-                                            aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                <!--end::Item-->
+                                <!--begin::Separator-->
+                                <div class="separator separator-dashed my-4"></div>
+                                <div class="row">
+                                    <!--begin::Section-->
+                                    <div class="d-flex align-items-center me-3 my-2">
+                                        <div class="d-flex align-items-center w-100 justify-content-between">
+                                            <a href="#"
+                                                class="text-gray-800 text-hover-primary fs-5 fw-bolder">Employee
+                                                Complaints</a>
+                                            <span class="text-black-700 fw-bolder">58%</span>
+                                        </div>
+                                        <!--end::Section-->
+                                    </div>
+                                    <!--end::Section-->
+                                    <!--begin::Statistics-->
+                                    <div class="d-flex align-items-center w-100">
+                                        <!--begin::Progress-->
+                                        <div class="progress h-6px w-100 me-2 bg-light-success">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 58%;"
+                                                aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <!--end::Progress-->
+                                        <!--begin::Value-->
+                                        <!--end::Value-->
+                                    </div>
+                                    <!--end::Statistics-->
+                                </div>
+                                <!--end::Item-->
+                                <!--begin::Separator-->
+                                <div class="separator separator-dashed my-4"></div>
+
+                                <div class="row">
+                                    <!--begin::Section-->
+                                    <div class="d-flex align-items-center me-3 my-2">
+                                        <!--begin::Section-->
+                                        <div class="d-flex align-items-center w-100 justify-content-between">
+                                            <a href="#"
+                                                class="text-gray-800 text-hover-primary fs-5 fw-bolder">Negative
+                                                Reviews</a>
+                                            <span class="text-black-700 fw-bolder">28%</span>
+                                        </div>
+                                        <!--end::Section-->
+                                    </div>
+                                    <!--end::Section-->
+                                    <!--begin::Statistics-->
+                                    <div class="d-flex align-items-center w-100">
+                                        <!--begin::Progress-->
+                                        <div class="progress h-6px w-100 me-2 bg-light-success">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 28%; "
+                                                aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <!--end::Statistics-->
+                                </div>
+                                <!--end::Item-->
+                                <!--begin::Separator-->
+                                <div class="separator" style="margin-top: 30px !important"></div>
+                            </div>
+                            <!--end::Items-->
+
+                        </div>
+                        <!--end::Body-->
+
+                        <div class="Card-footer">
+
+                            <div class="d-flex flex-column my-7 mx-8">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="m-0">
+                                            <span class="fw-bold fs-6 text-gray-400 ">Total numbers of complain in last 30
+                                                Days</span>
+                                        </div>
+                                        <span class="fw-bold fs-2x text-gray-800 lh-1 ls-n2 my-3">865 Complaints</span>
+                                        <!--begin::Number-->
+                                    </div>
+
+                                    <div class="col-4">
+                                        <a class="btn btn-primary text-white view-more" style="width: auto !important">See
+                                            All Complaints</a>
                                     </div>
                                 </div>
-                                <!--end::Statistics-->
+
                             </div>
-                            <!--end::Item-->
-                            <!--begin::Separator-->
-                            <div class="separator" style="margin-top: 30px !important"></div>
-                        </div>
-                        <!--end::Items-->
 
-                    </div>
-                    <!--end::Body-->
-
-                    <div class="Card-footer">
-
-                        <div class="d-flex flex-column my-7 mx-8">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="m-0">
-                                        <span class="fw-bold fs-6 text-gray-400 ">Total numbers of complain in last 30
-                                            Days</span>
-                                    </div>
-                                    <span class="fw-bold fs-2x text-gray-800 lh-1 ls-n2 my-3">865 Complaints</span>
-                                    <!--begin::Number-->
-                                </div>
-
-                                <div class="col-4">
-                                    <a class="btn btn-primary text-white view-more" style="width: auto !important">See
-                                        All Complaints</a>
-                                </div>
-                            </div>
 
                         </div>
 
+                        <div>
+                        </div>
+                        <!--end::Card widget 4-->
+
 
                     </div>
-
-                    <div>
-                    </div>
-                    <!--end::Card widget 4-->
-
-
+                    <!--end::Chart widget 4-->
                 </div>
-                <!--end::Chart widget 4-->
-            </div>
-            <!--end::Col-->
+                <!--end::Col-->
 
-            <!--begin::Col-->
-            <div class="col-xl-5">
-                <!--begin::Card widget 4-->
-                <div class="card card-flush delivery-card">
-                    <div class="card-header py-5 delivery-header">
-                        <!--begin::Title-->
-                        <h3 class="card-title align-items-start flex-column ">
-                            <span class="card-label fw-bolder text-dark header-font">Revenues</span>
-                        </h3>
-                        <!--end::Title-->
-                        <!--begin::Toolbar-->
-                    </div>
-                    <!--begin::Card body-->
-                    <div class="px-4 pt-2 pb-2">
-                        <div class="delivery-body d-flex flex-column content-justify-center w-100">
+                <!--begin::Col-->
+                <div class="col-xl-5">
+                    <!--begin::Card widget 4-->
+                    <div class="card card-flush h-100 delivery-card">
+                        <div class="card-header py-5 delivery-header">
+                            <!--begin::Title-->
+                            <h3 class="card-title align-items-start flex-column ">
+                                <span class="card-label fw-bolder text-dark header-font">Revenues</span>
+                            </h3>
+                            <!--end::Title-->
+                            <!--begin::Toolbar-->
+                        </div>
+                        <!--begin::Card body-->
+                        <div class="px-4 pt-2 pb-2">
+                            <div class="delivery-body d-flex flex-column content-justify-center w-100">
 
-                            <div class="d-flex fs-6 fw-bold align-items-center mt-5">
-                                <!--begin::Bullet-->
-                                <div class="bullet w-15px h-6px rounded-2 me-3"></div>
-                                <!--end::Bullet-->
-                                <!--begin::Label-->
-                                <div class="text-black-700 opacity-75  w-150px">Deliveries Revenue
-                                </div>
-                                <div class="text-success fw-boldest opacity-75 flex-grow-1">+3%</div>
+                                <div class="d-flex fs-6 fw-bold align-items-center mt-5">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-15px h-6px rounded-2 me-3"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-black-700 opacity-75  w-150px">Deliveries Revenue
+                                    </div>
+                                    <div class="text-success fw-boldest opacity-75 flex-grow-1">+3%</div>
 
-                                <!--end::Label-->
-                                <!--begin::Stats-->
-                                <div class="text-xxl-end fw-boldest text-700 fs-1" style="color:rgba(0, 66, 110, 1);
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="text-xxl-end fw-boldest text-700 fs-1"
+                                        style="color:rgba(0, 66, 110, 1);
                                         ">$54,340
 
+                                    </div>
+                                    <!--end::Stats-->
                                 </div>
-                                <!--end::Stats-->
-                            </div>
-                            <div class="separator"></div>
-                            <div class="d-flex fs-6 fw-bold align-items-center mt-5">
-                                <!--begin::Bullet-->
-                                <div class="bullet w-15px h-6px rounded-2 me-3"></div>
-                                <!--end::Bullet-->
-                                <!--begin::Label-->
-                                <div class="text opacity-75 w-150px">Bags Revenue</div>
-                                <div class="text-success fw-boldest opacity-75 flex-grow-1">+3%</div>
+                                <div class="separator"></div>
+                                <div class="d-flex fs-6 fw-bold align-items-center mt-5">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-15px h-6px rounded-2 me-3"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text opacity-75 w-150px">Bags Revenue</div>
+                                    <div class="text-success fw-boldest opacity-75 flex-grow-1">+3%</div>
 
-                                <!--end::Label-->
-                                <!--begin::Stats-->
-                                <div class="text-700 text-xxl-end fw-boldest fs-1" style="color:rgba(0, 66, 110, 1)">
-                                    154 K
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="text-700 text-xxl-end fw-boldest fs-1" style="color:rgba(0, 66, 110, 1)">
+                                        154 K
+                                    </div>
+                                    <!--end::Stats-->
                                 </div>
-                                <!--end::Stats-->
+                                <div class="align-self-center mt-20">
+                                    <a class="btn btn-primary text-white view-more">See All Revenue</a>
+                                </div>
+                                <!--end::Label-->
+                                <!--begin::Label-->
                             </div>
-                            <div class="align-self-center mt-20">
-                                <a class="btn btn-primary text-white view-more">See All Revenue</a>
-                            </div>
-                            <!--end::Label-->
-                            <!--begin::Label-->
+                            <!--end::Labels-->
                         </div>
-                        <!--end::Labels-->
+                        <!--end::Card body-->
                     </div>
-                    <!--end::Card body-->
-                </div>
-                {{-- <div class="">
+                    {{-- <div class="">
 
                     <div class="col-6">
                         <div class="card card-xl-stretch " style="background-color: #F7D9E3">
@@ -840,13 +858,13 @@
 
 
                 </div> --}}
+                    <!--end::Col-->
+                    <!--end::Card widget 4-->
+                </div>
                 <!--end::Col-->
-                <!--end::Card widget 4-->
             </div>
-            <!--end::Col-->
-        </div>
-        <!--end::Row-->
-        {{-- <div class="row ">
+            <!--end::Row-->
+            {{-- <div class="row ">
             <!--begin::Col-->
             <!--begin::Col-->
             <div class="col-xl-6">
@@ -1192,30 +1210,30 @@
             </div>
         </div>
         --}}
-        <!--end::Post-->
+            <!--end::Post-->
 
-        {{-- closing 1st and 2nd div --}}
+            {{-- closing 1st and 2nd div --}}
+        </div>
     </div>
-</div>
 @endsection
 
 @section('extra_scripts')
 
-<!--begin::Page Custom Javascript(used by dashboard)-->
-<script src="https://cdn.amcharts.com/lib/4/geodata/worldLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/geodata/continentsLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <!--begin::Page Custom Javascript(used by dashboard)-->
+    <script src="https://cdn.amcharts.com/lib/4/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/geodata/continentsLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
-{{-- globe scripts --}}
-{{-- <script src="{{ asset('static/js/three.js') }}"></script> --}}
+    {{-- globe scripts --}}
+    {{-- <script src="{{ asset('static/js/three.js') }}"></script> --}}
 
-{{-- <script type="module">
+    {{-- <script type="module">
     {
                         "imports": {
                             "three": "https://unpkg.com/three@0.138.0/build/three.module.js",
@@ -1224,9 +1242,9 @@
                         }
                     }
 </script> --}}
-{{-- <script src="{{ asset('static/js/three.js') }}" type="module"></script> --}}
+    {{-- <script src="{{ asset('static/js/three.js') }}" type="module"></script> --}}
 
-{{-- <script type="module">
+    {{-- <script type="module">
     import * as THREE from "nixus_erp/node_modules/three";
                     // import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUtils.js";
                     // import {
@@ -1447,8 +1465,8 @@
 
 
 
-{{-- scene id script-commenting out, for later use --}}
-{{-- <script>
+    {{-- scene id script-commenting out, for later use --}}
+    {{-- <script>
     // console.clear();
 
                     // Get the canvas element from the DOM

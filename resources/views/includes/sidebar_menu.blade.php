@@ -264,6 +264,40 @@
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
+                    {{-- <span class="menu-icon"> --}}
+                        <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
+                        <span class="svg-icon side-icon svg-icon-2">
+                            <x-iconsax-bol-picture-frame />
+                        </span>
+                        <!--end::Svg Icon-->
+                        {{--
+                    </span> --}}
+                    <span class="menu-title mx-5">Tracking</span>
+                    <span class="menu-arrow"></span>
+
+                </span>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('view_pickup_batch') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Pickup Batch</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('activated_locations_view') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Delivery Batch</span>
+                        </a>
+                    </div>            
+                </div>
+            </div>
+
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
                     <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs027.svg-->
                     <span class="svg-icon side-icon svg-icon-muted svg-icon-2">
                         <x-iconsax-bol-bag-2 />

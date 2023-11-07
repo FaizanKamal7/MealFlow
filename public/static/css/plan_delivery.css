@@ -118,7 +118,10 @@
     background: rgba(231, 248, 239, 1);
     text-align: center;
 }
+/* 
+ */
 
+/*  */
 /* add meal plan css */
 .form-generate-div {
     padding: 0rem 1rem !important;
@@ -170,4 +173,15 @@
 
 .meal-control {
     border: 0.5px solid rgba(179, 225, 255, 1);
+}
+
+#copyAllAddresses {
+    text-decoration: underline;
+    border: none;
+    text-decoration-color: rgba(0, 66, 110, 1);
+    background: none;
+    padding: 0 5px;
+    margin-right: 15px;
+    font-style: italic;
+    cursor: pointer;
 }
