@@ -11958,6 +11958,7 @@
         "fakerphp/faker",
         "filp/whoops",
         "hamcrest/hamcrest-php",
+        "laravel/breeze",
         "laravel/pint",
         "laravel/sail",
         "maximebf/debugbar",
