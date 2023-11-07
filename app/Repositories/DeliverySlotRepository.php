@@ -19,6 +19,9 @@ class DeliverySlotRepository implements DeliverySlotInterface
 
     public function getAllDeliverySlotsOfCities($cities)
     {
+        // return DeliverySlot::selectRaw('TIME_FORMAT(start_time, "%l:%i %p") as start_time')
+        // ->selectRaw('TIME_FORMAT(end_time, "%l:%i %p") as end_time')
+        // ->where(["city_id" => $city_id, "active_status" => 1])->get();
         return DeliverySlot::whereIn('city_id', $cities)
             ->where('active_status', 1)
             ->get();

@@ -291,37 +291,50 @@ document.querySelector("form").addEventListener("submit", function (e) {
 
 
 function assignDeliveries() {
-    // Get all checkboxes
     const checkboxes = document.querySelectorAll('input.form-check-input[type="checkbox"]');
-    // Initialize an array to store selected values
     const selectedDeliveryIds = [];
-    // Loop through checkboxes and add the selected values to the array
     checkboxes.forEach((checkbox) => {
         if (checkbox.checked) {
             selectedDeliveryIds.push(checkbox.value);
         }
     });
     const driver_id = document.getElementById("driverSelect").value;
-
     var url = "/admin/deliveries/assigning_process/";
+    if (url.startsWith("http://")) {
+        url = url.replace("http://", "https://");
+    }
+    var csrf_token = "{{ csrf_token() }}";
 
     $.ajax({
         url: url,
         type: "POST",
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Use the meta tag value
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        data: { selected_delivery_ids: selectedDeliveryIds, driver_id: driver_id },
+        data: {
+            selected_delivery_ids: selectedDeliveryIds,
+            driver_id: driver_id
+        },
         success: function (response) {
-            if (response.redirect) {
-                // Pass the selected deliveries as a parameter when redirecting
-                window.location.href = response.redirect + '?deliveries=' + selectedDeliveries.join(',');
+            console.log("Below is success");
+            console.log(response.success);
+            if (response.success) {
+                // Show the success message right away
+                toastr.success(response.success);
+
+                // Now do the redirect
+                window.location.href = response.redirect_url;
             }
         },
-        error: function (error) {
+        error: function (xhr, status, error) {
+            console.log("Below is error");
+            console.log(xhr);
             console.log(error);
+            console.log(status);
+            
+            
         }
-    });
 
+    });
 }
 

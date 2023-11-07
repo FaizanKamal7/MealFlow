@@ -107,12 +107,17 @@
                                         data-kt-check-target="#kt_customers_table .form-check-input" value="1" />
                                 </div>
                             </th>
-                            <th class="min-w-125px">Name</th>
-                            <th class="min-w-125px">Contact</th>
-                            <th class="min-w-125px">Partner</th>
-                            <th class="min-w-100px">Status</th>
-                            <th class="min-w-200px">Addresses</th>
-                            <th class="text-end min-w-70px">Actions</th>
+                            <<<<<<< HEAD <th class="min-w-125px">Customer Name</th>
+                                <th class="min-w-125px">Email</th>
+                                <th class="min-w-125px">Phone</th>
+                                =======
+                                <th class="min-w-125px">Name</th>
+                                <th class="min-w-125px">Contact</th>
+                                <th class="min-w-125px">Partner</th>
+                                <th class="min-w-100px">Status</th>
+                                >>>>>>> origin/delivery-service
+                                <th class="min-w-200px">Addresses</th>
+                                <th class="text-end min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -139,7 +144,7 @@
                             <!--end::Name=-->
                             <!--begin::Email=-->
                             <td>
-                                <p>{{$customer->user->email}} <br>{{$customer->user->phone}}</p>
+                                <p>{{$customer->user->phone}}<br>{{$customer->user->email}}</p>
                             </td>
                             <!--end::Email=-->
                             <!--begin::Phone=-->
@@ -148,13 +153,7 @@
                                     $customer->businessCustomers[0]->business->name: null}}</p>
                             </td>
                             <!--end::Phone=-->
-                            <!--begin::Status=-->
-                            <td>
-                                <!--begin::Badges-->
-                                <div class="badge badge-light-danger">Locked</div>
-                                <!--end::Badges-->
-                            </td>
-                            <!--end::Status=-->
+
                             <!--begin::IP Address=-->
                             <td>
                                 @foreach ($customer->customerAddresses as $key => $address)

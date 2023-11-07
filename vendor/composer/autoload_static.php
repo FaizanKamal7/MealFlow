@@ -173,7 +173,6 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
             'Laravel\\Sail\\' => 13,
             'Laravel\\Passport\\Database\\Factories\\' => 36,
             'Laravel\\Passport\\' => 17,
-            'Laravel\\Breeze\\' => 15,
         ),
         'J' => 
         array (
@@ -602,10 +601,6 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         array (
             0 => __DIR__ . '/..' . '/laravel/passport/src',
         ),
-        'Laravel\\Breeze\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/breeze/src',
-        ),
         'JasonGuru\\LaravelMakeRepository\\' => 
         array (
             0 => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src',
@@ -793,6 +788,10 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'App\\Enum\\DeliveryStatusEnum' => __DIR__ . '/../..' . '/app/Enum/DeliveryStatusEnum.php',
         'App\\Enum\\EmptyBagCollectionStatusEnum' => __DIR__ . '/../..' . '/app/Enum/EmptyBagCollectionStatusEnum.php',
         'App\\Enum\\InvoiceItemTypeEnum' => __DIR__ . '/../..' . '/app/Enum/InvoiceItemTypeEnum.php',
+<<<<<<< HEAD
+=======
+        'App\\Enum\\MealPlanStatusEnum' => __DIR__ . '/../..' . '/app/Enum/MealPlanStatusEnum.php',
+>>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
         'App\\Enum\\ModulesTitleEnum' => __DIR__ . '/../..' . '/app/Enum/ModulesTitleEnum.php',
         'App\\Enum\\RoleNamesEnum' => __DIR__ . '/../..' . '/app/Enum/RoleNamesEnum.php',
         'App\\Enum\\ServiceTypeEnum' => __DIR__ . '/../..' . '/app/Enum/ServiceTypeEnum.php',
@@ -810,15 +809,6 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'App\\Http\\Controllers\\Admin\\UserManagement\\PermissionsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/PermissionsController.php',
         'App\\Http\\Controllers\\Admin\\UserManagement\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/RolesController.php',
         'App\\Http\\Controllers\\Admin\\UserManagement\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/UsersController.php',
-        'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
-        'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
-        'App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationNotificationController.php',
-        'App\\Http\\Controllers\\Auth\\EmailVerificationPromptController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationPromptController.php',
-        'App\\Http\\Controllers\\Auth\\NewPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/NewPasswordController.php',
-        'App\\Http\\Controllers\\Auth\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordController.php',
-        'App\\Http\\Controllers\\Auth\\PasswordResetLinkController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordResetLinkController.php',
-        'App\\Http\\Controllers\\Auth\\RegisteredUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisteredUserController.php',
-        'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Authentication\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Authentication/LoginController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
@@ -1156,7 +1146,11 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Database\\Seeders\\ApplicationModelSeeder' => __DIR__ . '/../..' . '/database/seeders/ApplicationModelSeeder.php',
         'Database\\Seeders\\ApplicationSeeder' => __DIR__ . '/../..' . '/database/seeders/ApplicationSeeder.php',
         'Database\\Seeders\\AreaSeeder' => __DIR__ . '/../..' . '/database/seeders/AreaSeeder.php',
+<<<<<<< HEAD
         'Database\\Seeders\\BusinessCategorySeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessCategorySeeder.php',
+=======
+        'Database\\Seeders\\BusinessCategoryTableSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessCategoryTableSeeder.php',
+>>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
         'Database\\Seeders\\BusinessSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessSeeder.php',
         'Database\\Seeders\\CitiesTableChunkFiveSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkFiveSeeder.php',
         'Database\\Seeders\\CitiesTableChunkFourSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkFourSeeder.php',
@@ -4590,11 +4584,6 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'JasonGuru\\LaravelMakeRepository\\RepositoryServiceProvider' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/RepositoryServiceProvider.php',
         'JasonGuru\\LaravelMakeRepository\\Repository\\BaseRepository' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/repository/BaseRepository.php',
         'JasonGuru\\LaravelMakeRepository\\Repository\\RepositoryContract' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/repository/RepositoryContract.php',
-        'Laravel\\Breeze\\BreezeServiceProvider' => __DIR__ . '/..' . '/laravel/breeze/src/BreezeServiceProvider.php',
-        'Laravel\\Breeze\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallCommand.php',
-        'Laravel\\Breeze\\Console\\InstallsApiStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsApiStack.php',
-        'Laravel\\Breeze\\Console\\InstallsBladeStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsBladeStack.php',
-        'Laravel\\Breeze\\Console\\InstallsInertiaStacks' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsInertiaStacks.php',
         'Laravel\\Passport\\ApiTokenCookieFactory' => __DIR__ . '/..' . '/laravel/passport/src/ApiTokenCookieFactory.php',
         'Laravel\\Passport\\AuthCode' => __DIR__ . '/..' . '/laravel/passport/src/AuthCode.php',
         'Laravel\\Passport\\Bridge\\AccessToken' => __DIR__ . '/..' . '/laravel/passport/src/Bridge/AccessToken.php',
@@ -5689,6 +5678,10 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Modules\\DeliveryService\\Http\\Livewire\\EditDeliveryFeild' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/EditDeliveryFeild.php',
         'Modules\\DeliveryService\\Http\\Livewire\\MealPlan\\CustomerMealPlans' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/MealPlan/CustomerMealPlans.php',
         'Modules\\DeliveryService\\Http\\Livewire\\MealPlannerForm' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/MealPlannerForm.php',
+<<<<<<< HEAD
+=======
+        'Modules\\DeliveryService\\Http\\Livewire\\PlanReport' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Livewire/PlanReport.php',
+>>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
         'Modules\\DeliveryService\\Http\\Requests\\PickupBatchRequest' => __DIR__ . '/../..' . '/Modules/DeliveryService/Http/Requests/PickupBatchRequest.php',
         'Modules\\DeliveryService\\Interfaces\\BagStatusInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/BagStatusInterface.php',
         'Modules\\DeliveryService\\Interfaces\\BagTimelineInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/BagTimelineInterface.php',
@@ -5701,6 +5694,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Modules\\DeliveryService\\Interfaces\\DeliveryTypeInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/DeliveryTypeInterface.php',
         'Modules\\DeliveryService\\Interfaces\\EmptyBagCollectionBatchInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/EmptyBagCollectionBatchInterface.php',
         'Modules\\DeliveryService\\Interfaces\\EmptyBagCollectionInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/EmptyBagCollectionInterface.php',
+        'Modules\\DeliveryService\\Interfaces\\MealPlanInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/MealPlanInterface.php',
         'Modules\\DeliveryService\\Interfaces\\PickupBatchBranchInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/PickupBatchBranchInterface.php',
         'Modules\\DeliveryService\\Interfaces\\PickupBatchInterface' => __DIR__ . '/../..' . '/Modules/DeliveryService/Interfaces/PickupBatchInterface.php',
         'Modules\\DeliveryService\\Jobs\\UploadDeliveriesCSVJob' => __DIR__ . '/../..' . '/Modules/DeliveryService/Jobs/UploadDeliveriesCSVJob.php',
@@ -5717,6 +5711,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Modules\\DeliveryService\\Repositories\\DeliveryTypeRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/DeliveryTypeRepository.php',
         'Modules\\DeliveryService\\Repositories\\EmptyBagCollectionBatchRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/EmptyBagCollectionBatchRepository.php',
         'Modules\\DeliveryService\\Repositories\\EmptyBagCollectionRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/EmptyBagCollectionRepository.php',
+        'Modules\\DeliveryService\\Repositories\\MealPlanRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/MealPlanRepository.php',
         'Modules\\DeliveryService\\Repositories\\PickupBatchBranchRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/PickupBatchBranchRepository.php',
         'Modules\\DeliveryService\\Repositories\\PickupBatchRepository' => __DIR__ . '/../..' . '/Modules/DeliveryService/Repositories/PickupBatchRepository.php',
         'Modules\\DeliveryService\\Rules\\DeliveryBatchStatusRule' => __DIR__ . '/../..' . '/Modules/DeliveryService/Rules/DeliveryBatchStatusRule.php',

@@ -87,8 +87,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CustomerSecondaryNumberInterface::class, CustomerSecondaryNumberRepository::class);
         $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
         $this->app->bind(InvoiceItemInterface::class, InvoiceItemRepository::class);
+        $this->app->bind(InvoiceItemInterface::class, InvoiceItemRepository::class);
         $this->app->bind(ApplicationInterface::class, ApplicationRepository::class);
-        
     }
 
     /**

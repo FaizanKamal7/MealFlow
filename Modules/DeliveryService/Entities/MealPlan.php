@@ -13,8 +13,8 @@ class MealPlan extends Model
     use HasUuids;
 
     protected $fillable = [
-        "plan_start_date",
-        "plan_end_date",
+        "start_date",
+        "end_date",
         "status",
         "skip_days",
         "customer_id",

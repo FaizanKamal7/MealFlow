@@ -10,4 +10,8 @@ use Modules\DeliveryService\Interfaces\BagTimelineInterface;
 
 class BagTimelineRepository implements BagTimelineInterface
 {
+    public function getLastBagWithStatus($bag_id, $status)
+    {
+        return BagTimeline::where('bag_id', $bag_id)->where('status', $status)->latest()->first();
+    }
 }

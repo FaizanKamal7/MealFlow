@@ -16,6 +16,7 @@ use Modules\BusinessService\Http\Controllers\BusinessPricing\BusinessPricingCont
 use Modules\BusinessService\Http\Controllers\BusinessRequests\NewRequestsController;
 use Modules\BusinessService\Http\Controllers\Onboarding\BusinessOnboardingController;
 use Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController;
+use Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController;
 use Modules\FinanceService\Http\Controllers\WalletController;
 use Modules\FinanceService\Http\Controllers\WalletTransactionController;
 
@@ -30,19 +31,16 @@ Route::group(['prefix' => 'businessservice/onboarding/'], function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('businessservice')->group(function () {
-        Route::get("", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
-        Route::get("deliveries/upload", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "uploadDeliveriesByForm"])->name("partner_upload_deliveries");
-        Route::get("deliveries", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "viewAllDeliveries"])->name("partner_all_deliveries");
-        Route::get("home/", [\Modules\BusinessService\Http\Controllers\BusinessSettings\BusinessSettingsController::class, "index"])->name("business_home");
+        // Route::get("/", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController::class, "dashboard"])->name("partner_dashboard");
+        // Route::get("deliveries/upload", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "uploadDeliveriesByForm"])->name("partner_upload_deliveries");
+        // Route::get("deliveries", [\Modules\BusinessService\Http\Controllers\PartnerPortal\DeliveriesController::class, "viewAllDeliveries"])->name("partner_all_deliveries");
+        Route::get("home/", [DashboardController::class, "dashboard"])->name("business_home");
         Route::get("customers", [\Modules\BusinessService\Http\Controllers\PartnerPortal\CustomersController::class, "viewAllCustomers"])->name("partner_all_customers");
 
         Route::group(['prefix' => 'business_info/'], function () {
             Route::get("overview/{business_id}", [BusinessInfoController::class, "index"])->name("business_overview");
-        });
-
-        Route::group(['prefix' => 'business_info/'], function () {
-            Route::get("overview/{business_id}", [BusinessInfoController::class, "index"])->name("business_overview");
             Route::get("overview/send-contract-file/{business_id}", [BusinessInfoController::class, "sendContractFile"])->name("send_contract_file");
+            Route::get('/get-customers/{business_id}', [BusinessInfoController::class, "getBusinessCustomers"])->name('get_customers');
         });
 
         Route::group(['prefix' => 'new_requests/'], function () {

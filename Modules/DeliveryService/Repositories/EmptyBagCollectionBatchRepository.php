@@ -22,6 +22,12 @@ class EmptyBagCollectionBatchRepository implements EmptyBagCollectionBatchInterf
         ]);
     }
 
+    public function updateBagCollectionBatch($batch_id, $data)
+    {
+        $batch = EmptyBagCollectionBatch::findOrFail($batch_id);
+        return $batch->update($data);
+    }
+
     public function getActiveDeliveryBatchByDriver($driver_id)
     {
         $batch = EmptyBagCollectionBatch::where('driver_id', $driver_id)->where('batch_end_time', null)->first();

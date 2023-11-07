@@ -18,7 +18,7 @@ class RunMultipleMigrations extends Command
      *
      * @var string
      */
-    protected $description = 'Run migrations from multiple folders in desired sequence ';
+    protected $description = 'Run migrations from multiple folders in specific sequence ';
 
 
     public function __construct()
@@ -32,12 +32,12 @@ class RunMultipleMigrations extends Command
      */
     public function handle()
     {
-        $this->call('migrate', ['--path' => 'database\migrations']);
-        $this->call('migrate', ['--path' => 'Modules\HRManagement\Database\Migrations']);
-        $this->call('migrate', ['--path' => 'Modules\FleetService\Database\Migrations']);
-        $this->call('migrate', ['--path' => 'Modules\BusinessService\Database\Migrations']);
-        $this->call('migrate', ['--path' => 'Modules\DeliveryService\Database\Migrations']);
-        $this->call('migrate', ['--path' => 'Modules\FinanceService\Database\Migrations']);
+        $this->call('migrate', ['--path' => 'database/migrations']);
+        $this->call('migrate', ['--path' => 'Modules/HRManagement/Database/Migrations']);
+        $this->call('migrate', ['--path' => 'Modules/FleetService/Database/Migrations']);
+        $this->call('migrate', ['--path' => 'Modules/BusinessService/Database/Migrations']);
+        $this->call('migrate', ['--path' => 'Modules/DeliveryService/Database/Migrations']);
+        $this->call('migrate', ['--path' => 'Modules/FinanceService/Database/Migrations']);
 
 
         $this->info('Multiple migrations of project ran successfully');

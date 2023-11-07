@@ -2,6 +2,7 @@
 
 namespace Modules\BusinessService\Repositories;
 
+use App\Http\Helper\Helper;
 use Modules\BusinessService\Entities\DeliverySlotPricing;
 use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
 
@@ -15,7 +16,7 @@ class DeliverySlotPricingRepository implements DeliverySlotPricingInterface
 
     public function get()
     {
-        return DeliverySlotPricing::all();
+        return DeliverySlotPricing::with('deliverySlot')->get();
     }
 
     public function create($data)
@@ -30,7 +31,7 @@ class DeliverySlotPricingRepository implements DeliverySlotPricingInterface
 
     public function getBusinessPricing($business_id)
     {
-        return DeliverySlotPricing::where(['business_id' => $business_id])->get();
+        return DeliverySlotPricing::with('deliverySlot')->where(['business_id' => $business_id])->get();
     }
 
     public function getDeliverySlotPriceOfDelivery($delivery_slot_id, $city_id, $business_id = null)
@@ -38,13 +39,15 @@ class DeliverySlotPricingRepository implements DeliverySlotPricingInterface
         $delivery_slot_pricing = null;
 
         if ($business_id !== null) {
-            $delivery_slot_pricing = DeliverySlotPricing::where('delivery_slot_id', '=', $delivery_slot_id)
-                ->where('city_id', '=', $city_id)->where('business_id', '=', $business_id)->orderBy('created_at', 'desc')->first();
+            $delivery_slot_pricing = DeliverySlotPricing::with('deliverySlot')->where('delivery_slot_id', '=', $delivery_slot_id)
+                ->where('city_id', '=', $city_id)->where('business_id', '=', $business_id)
+                ->orderBy('created_at', 'desc')->first();
         }
 
         if ($delivery_slot_pricing == null || $business_id == null) {
-            $delivery_slot_pricing = DeliverySlotPricing::where('delivery_slot_id', '=', $delivery_slot_id)
-                ->where('city_id', '=', $city_id)->orderBy('created_at', 'desc')->first();
+            $delivery_slot_pricing = DeliverySlotPricing::with('deliverySlot')->where('delivery_slot_id', '=', $delivery_slot_id)
+                ->where('city_id', '=', $city_id)->orderBy('created_at', 'desc')
+                ->first();
         }
 
         return $delivery_slot_pricing;

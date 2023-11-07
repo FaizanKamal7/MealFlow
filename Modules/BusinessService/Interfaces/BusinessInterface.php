@@ -15,6 +15,10 @@ interface BusinessInterface
         $business_category_id,
         $admin,
         $status,
+        $trade_licence_file,
+        $state_legal_id,
+        $trn_number,
+        $trn_file
     );
 
     public function getNewBusinesses();

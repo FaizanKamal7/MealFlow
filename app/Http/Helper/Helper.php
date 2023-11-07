@@ -2,6 +2,7 @@
 
 namespace App\Http\Helper;
 
+use App\Enum\EmptyBagCollectionStatusEnum;
 use App\Models\ActivityLogs;
 use App\Models\Area;
 use App\Models\City;
@@ -24,7 +25,12 @@ class Helper
 {
 
     private $customerAddressRepository;
+<<<<<<< HEAD
     public function __construct(CustomerAddressRepository $customerAddressRepository =null)
+=======
+
+    public function __construct(CustomerAddressRepository $customerAddressRepository = null)
+>>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
     {
         $this->customerAddressRepository = $customerAddressRepository;
     }
@@ -35,6 +41,11 @@ class Helper
         $file_url = $module . "/" . $directory . "/" . $file_url;
         $file->move($module . "/" . $directory . "/", $file_url);
         return $file_url;
+    }
+
+    public function convertTo12HourFormat($time)
+    {
+        return date("g:i A", strtotime($time));
     }
 
     public function logActivity($userId, $moduleName, $action, $subject, $url, $description, $ipAddress, $userAgent, $oldValues, $newValues, $recordId, $recordType, $method)
@@ -342,7 +353,6 @@ class Helper
 
     function convertStringAddressToCoordinates($address)
     {
-        return null; // will remove it once API is acrivated
         $api_key = Config::get('services.google.key');
         $maxAttempts = 5; // Set a maximum number of attempts
         for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
@@ -432,5 +442,51 @@ class Helper
         } else {
             echo $title . " is not an array.";
         }
+    }
+
+    function getEmptyCollectionBatchBags($empty_bag_collection_batch_id)
+    {
+        return EmptyBagCollection::where(
+            [
+                "empty_bag_collection_batch_id" => $empty_bag_collection_batch_id,
+                "status" => EmptyBagCollectionStatusEnum::COMPLETED->value
+            ]
+        )->get();
+    }
+
+    function getDeliveryBatchDeliveries($delivery_batch_id)
+    {
+        return Delivery::where(['delivery_batch_id' => $delivery_batch_id])->get();
+    }
+
+    function getDeliveryBatchBagCollection($delivery_batch_id)
+    {
+        $delivery_batch_deliveries = $this->getDeliveryBatchDeliveries($delivery_batch_id);
+        $delivery_ids = collect($delivery_batch_deliveries)->pluck('id');
+        return EmptyBagCollection::whereIn('delivery_id', $delivery_ids)->get();
+    }
+
+    function getDelivery($delivery_id)
+    {
+        return Delivery::find($delivery_id);
+    }
+
+    public function removeArrayDuplicatesWithProperty($array = [], $property_name = '')
+    {
+        if (is_string($array) && $array === "") {
+            $array = [];
+        }
+        // Count the occurrences of each name
+        $nameCountArray = array_count_values(array_column($array, $property_name));
+        // Filter the array by removing elements with repeated names
+        $response_array = array_filter($array, function ($item) use ($property_name, $nameCountArray) {
+            if (is_array($item) && isset($item[$property_name])) {
+                return $nameCountArray[$item[$property_name]] == 1;
+            } elseif (is_object($item) && isset($item->{$property_name})) {
+                return $nameCountArray[$item->{$property_name}] == 1;
+            }
+        });
+        // Re-index the array
+        return array_values($response_array);
     }
 }

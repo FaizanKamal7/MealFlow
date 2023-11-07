@@ -68,7 +68,7 @@ class Branch extends Model
     {
         $array = parent::toArray();
         $array['business'] = $this->business->toArray();
-        $array['area'] = $this->area->toArray();
+        // $array['area'] = $this->area->toArray() ?? null;
         $array['city'] = $this->city->toArray();
         $array['state'] = $this->state->toArray();
 

@@ -19,7 +19,7 @@ class DeliveryBatchRepository implements DeliveryBatchInterface
       "batch_end_time" => null,
       "batch_arrival_map_coordinates" => null,
       "batch_end_map_coordinates" => null,
-      "status" => "Assigned",
+      "status" => BatchStatusEnum::ASSIGNED->value,
       "vehicle_id" => null,
       "driver_id" => $driver_id,
     ]);
