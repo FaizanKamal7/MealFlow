@@ -201,8 +201,8 @@
             }
             var expiryDate = new Date(includedDates[includedDates.length - 1]); // Last included date
 
-            console.log('Expiry Date: ' + expiryDate.toISOString().slice(0, 10));
-            console.log('Included Dates: ' + includedDates.join(', '));
+            // console.log('Expiry Date: ' + expiryDate.toISOString().slice(0, 10));
+            // console.log('Included Dates: ' + includedDates.join(', '));
             invokeForm(expiryDate, startDate, includedDates, numPlanDays)
         }
         // Helper function to get the name of the day
@@ -212,7 +212,7 @@
         }
 
         function invokeForm(expiry_date, start_date, included_dates, no_of_days) {
-            console.log(expiry_date, start_date, no_of_days, included_dates)
+            // console.log(expiry_date, start_date, no_of_days, included_dates)
             var form_component = document.getElementById("meal-planner-form-id");
             form_component.style.display = "block";
             var component_id = document.querySelector('#meal-planner-form-id [wire\\:id]').getAttribute('wire:id');

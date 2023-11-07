@@ -50,8 +50,14 @@
                 <div class="form-element-div">
                     <div class="form-group row mb-10">
                         <div class="col-md-4">
-                            <label class="form-label upload-label">Delivery Address</label>
-                            <select id="delivery_address_{{ $i }}" class="form-select meal-control"
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label upload-label">Delivery Address</label>
+                                <button id="copyAllAddresses"
+                                    onclick="changeAllDeliveryAddress('delivery_address{{ $i }}')"
+                                    type="button">Copy
+                                    All</button>
+                            </div>
+                            <select id="delivery_address{{ $i }}" class="form-select meal-control"
                                 placeholder="Current Address" name="delivery_address[]">
                                 <option></option>
                                 @foreach ($customer_addresses as $address)
@@ -59,7 +65,11 @@
                                         {{ $address->address }}
                                     </option>
                                 @endforeach
+                                {{-- <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option> --}}
                             </select>
+
                         </div>
                         <div class="col-md-4">
                             <label class="form-label upload-label">Emirate & Area</label>
@@ -120,14 +130,16 @@
                                 <option value="0">No</option>
                             </select>
                         </div>
-
                     </div>
                     <div class="form-group row mb-10">
                         <div class="col-md-4">
-                            <label class="form-label upload-label">Pickup Point</label>
-                            {{-- <input type="text" class="form-control  meal-control mb-2 mb-md-0"
-                                placeholder="Pickup Point" name="pickup_point[]" id="pickup_point{{ $i }}"
-                                autocomplete="off" /> --}}
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label upload-label">Pickup Point</label>
+                                <button id="copyAllAddresses"
+                                    onclick="changeAllPickUpAddress('pickup_point{{ $i }}')"
+                                    type="button">Copy
+                                    All</button>
+                            </div>
                             <select id="pickup_point{{ $i }}" class="form-select meal-control"
                                 data-control="select2" data-placeholder="Select" name="pickup_point[]">
                                 <option></option>
@@ -177,5 +189,15 @@
 
 
 @push('scripts')
-    <script></script>
+    <script>
+        function changeAllDeliveryAddress(selectId) {
+            var selectedAddress = $('#' + selectId).val();
+            $('select[name="delivery_address[]"]').val(selectedAddress).trigger('change');
+        }
+
+        function changeAllPickUpAddress(selectId) {
+            var selectePickUpdAddress = $('#' + selectId).val();
+            $('select[name="pickup_point[]"]').val(selectePickUpdAddress).trigger('change');
+        }
+    </script>
 @endpush

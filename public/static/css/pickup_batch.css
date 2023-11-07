@@ -1,0 +1,205 @@
+.on-route,
+.completed {
+    background-blend-mode: luminosity;
+    border-radius: 4px;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.5) 0.78%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    padding: 8px 10px;
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-left: 3px solid rgba(0, 66, 110, 1);
+}
+.delivery-car-pick {
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    background: rgba(0, 66, 110, 1);
+}
+
+.on-route p,
+h5 {
+    color: rgba(0, 66, 110, 1);
+}
+.on-route p {
+    font-size: 10px;
+}
+
+.completed p {
+    color: rgba(0, 146, 93, 1);
+    font-size: 10px;
+}
+.completed h5 {
+    color: rgba(0, 146, 93, 1);
+}
+
+.completed {
+    border-left: 3px solid rgba(0, 146, 93, 1);
+}
+
+.search-box {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 90px;
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    padding: 7px;
+    height: 44px;
+    width: 89%;
+}
+
+.setting-icon {
+    border-radius: 100%;
+    color: rgba(0, 66, 110, 1) !important;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 8px 6px;
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    /* margin-left: 10px; */
+}
+
+.tab-heading-div {
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.5) 0.78%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-radius: 4px;
+}
+
+.nav-line-tabs .nav-item .nav-link.active,
+.nav-line-tabs .nav-item .nav-link:hover:not(.disabled),
+.nav-line-tabs .nav-item.show .nav-link {
+    background-color: rgba(161, 211, 243, 1);
+    border-bottom: 1px solid rgba(0, 66, 110, 1);
+    color: rgba(0, 66, 110, 1);
+    font-weight: 700;
+}
+.nav-line-tabs .nav-item .nav-link {
+    color: rgba(17, 16, 16, 0.5);
+    margin: 0 2px;
+    padding: 10px;
+    width: 80px;
+    text-align: center;
+}
+
+.nav {
+    justify-content: space-between;
+}
+
+.num-span {
+    margin-left: unset;
+    font-size: 16px;
+}
+
+.delivery-id {
+    font-size: 12px;
+    color: rgba(0, 66, 110, 1);
+}
+
+.delivery-time {
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(17, 16, 16, 0.6);
+    line-height: 6px;
+}
+
+.driver-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+p.vehicle-number {
+    font-size: 10px;
+    line-height: 0px;
+}
+
+.progress-div {
+    flex: 2;
+}
+.driver-name-div {
+    flex: 2;
+}
+.id-div {
+    flex: 1;
+}
+
+.rate {
+    color: rgba(0, 66, 110, 1);
+    font-size: 12px !important;
+}
+p.p-route {
+    width: 70px;
+}
+.tab-div-batches {
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.5) 0.78%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    border: 4px solid;
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-radius: 6px;
+}
+
+.pickup-batches {
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.5) 0.78%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.pickup-batches h4 {
+    color: rgba(0, 66, 110, 1);
+    font-size: 16px;
+}
+
+.d-flex.batch-row {
+    background: linear-gradient(
+        176.59deg,
+        rgba(244, 251, 255, 0.74) 0.22%,
+        rgba(226, 244, 255, 0.4) 99.71%
+    );
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    padding: 10px;
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+}

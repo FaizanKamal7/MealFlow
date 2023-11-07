@@ -7,7 +7,8 @@
                 id="kt_aside_mobile_toggle">
                 <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg') }}-->
                 <span class="svg-icon svg-icon-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none">
                         <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z"
                             fill="currentColor" />
                         <path opacity="0.3"
@@ -40,6 +41,15 @@
                 <!--begin::User menu-->
                 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                     <!--begin::Menu wrapper-->
+                    {{-- <div class="top_icon_div">
+                        <span class="svg-icon svg-icon-2x"
+                            style="border: 0.5px solid rgba(0, 66, 110, 1);
+                        border-radius: 5px;
+                        padding: 10px 5px;
+                        color: rgba(0, 66, 110, 1) !important;">
+                            <x-iconsax-bol-convert-3d-cube />
+                        </span>
+                    </div> --}}
                     <div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click"
                         data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                         <img src="{{ asset('static/media/avatars/300-1.jpg') }}" alt="user" />
@@ -85,8 +95,10 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <div class="menu-item px-5">
-                                <a href="{{route('logout') }}" onclick="event.preventDefault();
-                                this.closest('form').submit();" class="menu-link px-5"> {{ __('Log Out') }}</a>
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                this.closest('form').submit();"
+                                    class="menu-link px-5"> {{ __('Log Out') }}</a>
                             </div>
                         </form>
                         <!--end::Menu item-->
