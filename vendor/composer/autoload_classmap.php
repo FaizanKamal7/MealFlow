@@ -19,10 +19,7 @@ return array(
     'App\\Enum\\DeliveryStatusEnum' => $baseDir . '/app/Enum/DeliveryStatusEnum.php',
     'App\\Enum\\EmptyBagCollectionStatusEnum' => $baseDir . '/app/Enum/EmptyBagCollectionStatusEnum.php',
     'App\\Enum\\InvoiceItemTypeEnum' => $baseDir . '/app/Enum/InvoiceItemTypeEnum.php',
-<<<<<<< HEAD
-=======
     'App\\Enum\\MealPlanStatusEnum' => $baseDir . '/app/Enum/MealPlanStatusEnum.php',
->>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
     'App\\Enum\\ModulesTitleEnum' => $baseDir . '/app/Enum/ModulesTitleEnum.php',
     'App\\Enum\\RoleNamesEnum' => $baseDir . '/app/Enum/RoleNamesEnum.php',
     'App\\Enum\\ServiceTypeEnum' => $baseDir . '/app/Enum/ServiceTypeEnum.php',
@@ -377,11 +374,7 @@ return array(
     'Database\\Seeders\\ApplicationModelSeeder' => $baseDir . '/database/seeders/ApplicationModelSeeder.php',
     'Database\\Seeders\\ApplicationSeeder' => $baseDir . '/database/seeders/ApplicationSeeder.php',
     'Database\\Seeders\\AreaSeeder' => $baseDir . '/database/seeders/AreaSeeder.php',
-<<<<<<< HEAD
-    'Database\\Seeders\\BusinessCategorySeeder' => $baseDir . '/database/seeders/BusinessCategorySeeder.php',
-=======
     'Database\\Seeders\\BusinessCategoryTableSeeder' => $baseDir . '/database/seeders/BusinessCategoryTableSeeder.php',
->>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
     'Database\\Seeders\\BusinessSeeder' => $baseDir . '/database/seeders/BusinessSeeder.php',
     'Database\\Seeders\\CitiesTableChunkFiveSeeder' => $baseDir . '/database/seeders/CitiesTableChunkFiveSeeder.php',
     'Database\\Seeders\\CitiesTableChunkFourSeeder' => $baseDir . '/database/seeders/CitiesTableChunkFourSeeder.php',
@@ -393,6 +386,7 @@ return array(
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
     'Database\\Seeders\\DeliverySlotSeeder' => $baseDir . '/database/seeders/DeliverySlotSeeder.php',
     'Database\\Seeders\\DepartmentTableSeeder' => $baseDir . '/database/seeders/DepartmentTableSeeder.php',
+    'Database\\Seeders\\DesignationTableSeeder' => $baseDir . '/database/seeders/DesignationTableSeeder.php',
     'Database\\Seeders\\PermissionTableSeeder' => $baseDir . '/database/seeders/PermissionTableSeeder.php',
     'Database\\Seeders\\RolePermissionTableSeeder' => $baseDir . '/database/seeders/RolePermissionTableSeeder.php',
     'Database\\Seeders\\RolesTableSeeder' => $baseDir . '/database/seeders/RolesTableSeeder.php',
@@ -4908,10 +4902,7 @@ return array(
     'Modules\\DeliveryService\\Http\\Livewire\\EditDeliveryFeild' => $baseDir . '/Modules/DeliveryService/Http/Livewire/EditDeliveryFeild.php',
     'Modules\\DeliveryService\\Http\\Livewire\\MealPlan\\CustomerMealPlans' => $baseDir . '/Modules/DeliveryService/Http/Livewire/MealPlan/CustomerMealPlans.php',
     'Modules\\DeliveryService\\Http\\Livewire\\MealPlannerForm' => $baseDir . '/Modules/DeliveryService/Http/Livewire/MealPlannerForm.php',
-<<<<<<< HEAD
-=======
     'Modules\\DeliveryService\\Http\\Livewire\\PlanReport' => $baseDir . '/Modules/DeliveryService/Http/Livewire/PlanReport.php',
->>>>>>> 251ec066600f33a0be3d049b5a9d758b2b64ea82
     'Modules\\DeliveryService\\Http\\Requests\\PickupBatchRequest' => $baseDir . '/Modules/DeliveryService/Http/Requests/PickupBatchRequest.php',
     'Modules\\DeliveryService\\Interfaces\\BagStatusInterface' => $baseDir . '/Modules/DeliveryService/Interfaces/BagStatusInterface.php',
     'Modules\\DeliveryService\\Interfaces\\BagTimelineInterface' => $baseDir . '/Modules/DeliveryService/Interfaces/BagTimelineInterface.php',
