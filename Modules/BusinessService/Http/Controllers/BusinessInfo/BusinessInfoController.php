@@ -6,7 +6,9 @@ use App\Http\Helper\Helper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\BusinessService\Entities\BusinessCustomer;
 use Modules\BusinessService\Interfaces\BranchCoverageInterface;
+use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
 use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
 use Modules\BusinessService\Interfaces\RangePricingInterface;
@@ -18,13 +20,16 @@ class BusinessInfoController extends Controller
     private DeliverySlotPricingInterface $deliverySlotPricingRepository;
     private RangePricingInterface $rangePricingRepository;
     private BranchCoverageInterface $branchCoverageRepository;
+    private BusinessCustomerInterface $businessCustomereRepository;
 
-    public function __construct(BusinessInterface $businessRepository, DeliverySlotPricingInterface $deliverySlotPricingRepository, RangePricingInterface $rangePricingRepository, BranchCoverageInterface $branchCoverageRepository)
+
+    public function __construct(BusinessInterface $businessRepository, DeliverySlotPricingInterface $deliverySlotPricingRepository, RangePricingInterface $rangePricingRepository, BranchCoverageInterface $branchCoverageRepository, BusinessCustomerInterface $businessCustomereRepository)
     {
         $this->businessRepository = $businessRepository;
         $this->deliverySlotPricingRepository = $deliverySlotPricingRepository;
         $this->rangePricingRepository = $rangePricingRepository;
         $this->branchCoverageRepository = $branchCoverageRepository;
+        $this->businessCustomereRepository = $businessCustomereRepository;
     }
 
     /**
@@ -52,9 +57,7 @@ class BusinessInfoController extends Controller
     public function getBusinessBaseDeliverySlotPricing($business)
     {
         $business_branches_coverages = $this->getBusinessCoveragesCities($business);
-        foreach ($business_branches_coverages as $key => $value) {
-            echo "<pre>" . $value .  "</pre>";
-        }
+
         $city_delivery_slot_wise_business_base_price = $business_branches_coverages->map(function ($branch_coverage) {
             $null_pricing = $branch_coverage->city->delivery_slot_pricings()->businessNull()->get();
             return $null_pricing ? $null_pricing : null;
@@ -104,5 +107,11 @@ class BusinessInfoController extends Controller
     {
         $this->businessRepository->update($business_id, ['status' => 'CONTRACT_SENT']);
         return redirect()->back()->with("success", "Contract file sent successfully");
+    }
+
+    public function getBusinessCustomers($business_id)
+    {
+        $business_customers = $this->businessCustomereRepository->getBusinessCustomer($business_id);
+        return response()->json(['data' => $business_customers]);
     }
 }

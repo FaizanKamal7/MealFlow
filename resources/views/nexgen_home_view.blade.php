@@ -13,7 +13,7 @@
 
     <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
 
-    <title>NIXUS - Gateway to Seamless Logistics</title>
+    <title>L O G X - Gateway to Seamless Logistics</title>
 
     <meta name="description" content="Business, Consulting, Finance, Insurance, Startup and Technology">
     <meta name="subject" content="Business, Consulting, Finance, Insurance, Startup and Technology">
@@ -131,19 +131,8 @@
             <div class="container header">
 
                 <!-- Navbar Brand-->
-                <a class="navbar-brand" href="/">
-                    {{-- <span class="brand">
-                        <span class="featured">
-                            <span class="first">NEX</span>
-                        </span>
-                        <span class="last">GEN</span>
-                    </span>
-                    --}}
-                    <!-- 
-                            Custom Logo
-                            <img src="theme/nexgen/images/logo.svg" alt="NEXGEN">
-                        -->
-                    <img src="theme/nexgen/images/logo_white_with_logx_2.png" alt="Nixus">
+                <a class="navbar-brand image_logo" href="/">
+                    <img src="theme/nexgen/images/logx_logo.png" alt="Nixus" height="100px; !important" >
                 </a>
 
                 <!-- Nav holder -->
@@ -188,9 +177,10 @@
                 <ul class="navbar-nav action">
                     <li class="nav-item ml-3">
                         @if(Auth::check())
-                            <a href= "/dashboard/" target="_blank" class="btn ml-lg-auto primary-button">Try Now. Its FREE</a> 
+                        <a href="/dashboard/" target="_blank" class="btn ml-lg-auto primary-button">Try Now. Its
+                            FREE</a>
                         @else
-                            <a href= "/login/" target="_blank" class="btn ml-lg-auto primary-button">Try Now. Its FREE</a> 
+                        <a href="/login/" target="_blank" class="btn ml-lg-auto primary-button">Try Now. Its FREE</a>
                         @endif
                         <!-- 
                                 Suggestion: Replace the purchase button above with a contact button.
@@ -358,7 +348,8 @@
                         <div class="col-12 p-0">
                             <span class="pre-title m-auto m-md-0">About the network</span>
                             <h2><span class="featured"><span>Solving</span></span> Critical Logistics Initiatives</h2>
-                            <p>With all of this expertise and capability comes an unrivalled commitment to customer service.</p>
+                            <p>With all of this expertise and capability comes an unrivalled commitment to customer
+                                service.</p>
                         </div>
                     </div>
                     <div data-aos="fade-up" class="row flex align-items-center text-left item">
@@ -829,7 +820,7 @@
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="fas fa-phone-alt mr-2"></i>
-                                     042-838857
+                                    042-838857
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -841,7 +832,7 @@
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="fas fa-map-marker-alt mr-2"></i>
-                                     Dubai, UAE
+                                    Dubai, UAE
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -863,12 +854,9 @@
                 <div class="row">
                     <div class="col-12 col-lg-3 footer-left">
                         <!-- Navbar Brand-->
-                        <a class="navbar-brand" href="/">
-                            <!-- 
-                                    Custom Logo
-                                    <img src="theme/nexgen/images/logo.svg" alt="NEXGEN">
-                                -->
-                            <img src="theme/nexgen/images/logo_white_with_logx_2.png" alt="Nixus">
+                        <a class="navbar-brand image_logo" href="/">
+                          
+                            <img src="theme/nexgen/images/logx_logo.png" alt="Nixus">
                         </a>
                         <p>Gateway to Seamless Logistics.</p>
 
@@ -890,7 +878,7 @@
                                         <li class="nav-item">
                                             <a href="#" class="nav-link">
                                                 <i class="fas fa-phone-alt mr-2"></i>
-                                                 042-838857
+                                                042-838857
                                             </a>
                                         </li>
                                         <li class="nav-item">
@@ -902,7 +890,7 @@
                                         <li class="nav-item">
                                             <a href="#" class="nav-link">
                                                 <i class="fas fa-map-marker-alt mr-2"></i>
-                                                 Dubai, UAE
+                                                Dubai, UAE
                                             </a>
                                         </li>
                                         <li class="nav-item">
@@ -940,8 +928,8 @@
                              -->
                     </div>
                     <div class="col-12 col-md-6 p-3 text-center text-lg-right">
-                        <p>© 2023 Nixus is Proudly Powered by <a href="https://www.logxtransport.com/"
-                                target="_blank">L O G X</a></p>
+                        <p>© 2023 Powered by <a href="https://www.logxtransport.com/" target="_blank">L
+                                O G X</a></p>
                     </div>
                 </div>
             </div>

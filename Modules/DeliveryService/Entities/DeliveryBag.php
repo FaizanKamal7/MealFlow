@@ -49,9 +49,9 @@ class DeliveryBag extends Model
             $action_by = auth()->id();
             $bag_id = $attributes['bag_id'];
             $delivery_id = $attributes['delivery_id'];
-            $status =  BagStatusEnum::ATTACHED_TO_DELIVERY;
+            $status =  BagStatusEnum::ATTACHED_TO_DELIVERY->value;
             $description = "Driver just picked the delivery bag from the partner";
-            $vehicle_id = Delivery::find($delivery_id)->pickupBatch->vehicle_id;
+            $vehicle_id = isset(Delivery::find($delivery_id)->pickupBatch->vehicle_id) ? Delivery::find($delivery_id)->pickupBatch->vehicle_id  : null;
             $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
         });
 
@@ -65,7 +65,7 @@ class DeliveryBag extends Model
                 $bag_id = $attributes['bag_id'];
                 $delivery_id = $model->getOriginal('delivery_id');
                 $status = $attributes['status'];
-                $vehicle_id = $model->getOriginal('vehicle_id');;
+                $vehicle_id = $model->getOriginal('vehicle_id') ?? null;
                 $description = "Delivery bag status updated";
                 $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
             }

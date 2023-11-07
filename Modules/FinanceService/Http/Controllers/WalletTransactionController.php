@@ -99,15 +99,11 @@ class WalletTransactionController extends Controller
 
 
             $this->businessWalletTransactionRepository->createBusinessWalletTransactions(
-                $amount,
-                BusinessWalletTransactionTypeEnum::CREDIT->value,
-                $business->wallet->id,
-                BusinessWalletTransactionStatusEnum::APPROVED->value,
-                null,
-                null,
-                null,
-                $card->id,
-
+                amount: $amount,
+                type: BusinessWalletTransactionTypeEnum::CREDIT->value,
+                wallet_id: $business->wallet->id,
+                status: BusinessWalletTransactionStatusEnum::PENDING->value,
+                card_id: $card->id
             );
 
             $balance = $business->wallet->balance + $amount;
@@ -146,13 +142,11 @@ class WalletTransactionController extends Controller
             $business_wallet = $this->businessWalletRepository->getBusinessWallet('9a67ee94-b544-482e-9545-3e22f9382899');
 
             $this->businessWalletTransactionRepository->createBusinessWalletTransactions(
-                $amount,
-                BusinessWalletTransactionTypeEnum::CREDIT->value,
-                $business_wallet->id,
-                BusinessWalletTransactionStatusEnum::PENDING->value,
-                json_encode($transaction_info),
-                null,
-                null,
+                amount: $amount,
+                type: BusinessWalletTransactionTypeEnum::CREDIT->value,
+                wallet_id: $business_wallet->id,
+                status: BusinessWalletTransactionStatusEnum::PENDING->value,
+                info: json_encode($transaction_info),
             );
             return redirect()->back()->with('success', 'Bank Transfer details shared. Wait for the approval. Thanks for your patience ');
         } else {

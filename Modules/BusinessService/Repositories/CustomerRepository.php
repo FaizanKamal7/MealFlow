@@ -26,21 +26,21 @@ class CustomerRepository implements CustomerInterface
 
     public function customerWithMatchingPhoneNoInUsers($phone_no)
     {
-        return Customer::whereHas('user', function ($query) use ($phone_no) {
+        return Customer::with('user')->whereHas('user', function ($query) use ($phone_no) {
             $query->where('phone', $phone_no);
         })->first();
     }
 
     public function customerWithMatchingEmailInUsers($email)
     {
-        return Customer::whereHas('user', function ($query) use ($email) {
+        return Customer::with('user')->whereHas('user', function ($query) use ($email) {
             $query->where('email', $email);
         })->first();
     }
 
     public function customerWithMatchingPhoneNoInSecondaryNumbers($phone_no)
     {
-        return  Customer::whereHas('customer_secondary_numbers', function ($query) use ($phone_no) {
+        return  Customer::with('user')->whereHas('customer_secondary_numbers', function ($query) use ($phone_no) {
             $query->where('phone_number', $phone_no);
         })->first();
     }

@@ -28,9 +28,9 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboards.admin_dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -50,13 +50,10 @@ Route::middleware('auth')->group(function () {
         //     return view('dashboards.admin_dashboard')->name("admin_dashboard");
         // }
 
+        Route::get('/', function () {
+            return (Gate::denies('view_all_businesses')) ? redirect(route("business_home")) : view('dashboards.admin_dashboard');
+        })->name("admin_dashboard");
 
-        Route::get('fleets/', function () {
-            return view('dashboards.fleets_dashboard');
-        })->name("fleet_dashboard");
-        Route::get('fleets/details', function () {
-            return view('fleets.fleet_details');
-        })->name("fleet_details");
 
 
         Route::group(['prefix' => 'applications/'], function () {
@@ -120,7 +117,6 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-require __DIR__ . '/auth.php';
 
 
 

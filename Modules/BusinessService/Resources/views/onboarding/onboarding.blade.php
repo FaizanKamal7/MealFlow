@@ -22,7 +22,7 @@
                             class="h-75px logo" />
                     </a>
                     <h2 class="mb-10 mb-lg-10" style="font-size: 25px; color: #00538A;">
-                        Business Account Steps
+                        Business Onboarding Steps
                     </h2>
                     <!--end::Logo-->
                     <!--begin::Nav-->
@@ -40,8 +40,9 @@
                             <!--end::Icon-->
                             <!--begin::Label-->
                             <div class="stepper-label">
-                                <h3 class="stepper-title">Business Account Info</h3>
-                                <div class="stepper-desc fw-bold">Setup Your Account Details</div>
+                                <h3 class="stepper-title">Business Admin</h3>
+                                <div class="stepper-desc fw-bold">Enter your details as an individual for authentication
+                                </div>
                             </div>
                             <!--end::Label-->
 
@@ -61,7 +62,7 @@
                             <!--begin::Label-->
                             <div class="stepper-label">
                                 <h3 class="stepper-title">Business Info</h3>
-                                <div class="stepper-desc fw-bold">Setup Your Account Settings</div>
+                                <div class="stepper-desc fw-bold">Setup Your Business Account Settings. </div>
                             </div>
                             <!--end::Label-->
                         </div>
@@ -80,8 +81,8 @@
                             <!--end::Icon-->
                             <!--begin::Label-->
                             <div class="stepper-label">
-                                <h3 class="stepper-title">Extra Detail</h3>
-                                <div class="stepper-desc fw-bold">Your Business Related Info</div>
+                                <h3 class="stepper-title">Business Coverage</h3>
+                                <div class="stepper-desc fw-bold">Where would you like us to deliver?</div>
                             </div>
                             <!--end::Label-->
                         </div>
@@ -373,15 +374,36 @@
 
 
                                 <!--begin::Input group-->
-                                {{-- <div class="fv-row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label required">Contact Email</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input name="contact_email"
-                                        class="form-control form-control-lg form-control-solid" />
-                                    <!--end::Input-->
-                                </div> --}}
+                                <div class="row fv-row">
+
+                                    <div class="col-md-6 mb-6">
+                                        <label class="form-label">Emirate/State ID</label>
+                                        <input class="form-control form-control-lg form-control-solid"
+                                            placeholder="Enter Emirate/State ID" name="state_legal_id"
+                                            autocomplete="off" />
+
+                                    </div>
+                                    <div class="col-md-6 mb-6">
+                                        <label class="form-label">TRN Number/Tax ID</label>
+                                        <input class="form-control form-control-lg form-control-solid"
+                                            placeholder="Enter TRN" name="trn_number" autocomplete="off" />
+
+                                    </div>
+                                </div>
+
+                                <div class="row fv-row">
+                                    <div class="col-md-6 mb-6">
+                                        <label class="fs-6 fw-bold mb-2">Upload TRN File</label>
+                                        <input type="file" class="form-control form-control-solid"
+                                            placeholder="Select TRN file" name="trn_file" />
+                                    </div>
+                                    <div class="col-md-6 mb-6">
+                                        <label class="fs-6 fw-bold mb-2">Trade Licence</label>
+                                        <input type="file" class="form-control form-control-solid"
+                                            placeholder="Select Trade Licence File" name="trade_licence_file" />
+                                    </div>
+                                </div>
+
                                 <div class="fv-row mb-10">
                                     <label class="form-label required">Address (Business Main Branch Address)</label>
                                     <br>
@@ -405,8 +427,8 @@
                                                 <!--begin::Content-->
                                                 <li class="d-flex align-items-center py-2">
                                                     <span class="bullet bullet-dot bg-primary me-5"></span><i> &nbsp
-                                                        You
-                                                        can your exact location don't
+                                                        If you
+                                                        can't find your exact location don't
                                                         show
                                                         up in the search suggestions, search nearest location and drap
                                                         and drop
@@ -880,10 +902,9 @@
                                     <h2 class="fw-bolder text-dark">Your Are Done!</h2>
                                     <!--end::Title-->
                                     <!--begin::Notice-->
-                                    <div class="text-muted fw-bold fs-6">We got you info.
-                                        other relavant info
-                                        <a href="../../demo1/dist/authentication/sign-in/basic.html"
-                                            class="link-primary fw-bolder">Sign In</a>.
+                                    <div class="text-muted fw-bold fs-6">We got the relevant info
+
+
                                     </div>
                                     <!--end::Notice-->
                                 </div>
@@ -916,7 +937,9 @@
                                         <div class="d-flex flex-stack flex-grow-1">
                                             <!--begin::Content-->
                                             <div class="fw-bold">
-                                                <h4 class="text-gray-900 fw-bolder">Go on and login to explore</h4>
+                                                <h4 class="text-gray-900 fw-bolder">Go on and <a href="/login/"
+                                                        class="link-primary fw-bolder">{{ __('Login') }}</a>
+                                                    to explore</h4>
                                                 <div class="fs-6 text-gray-700">>All the pricing related info and
                                                     much
                                                     more will

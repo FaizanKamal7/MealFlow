@@ -285,7 +285,7 @@ $(document).ready(function () {
         var address_map = new google.maps.Map(
             document.getElementById("address_map"),
             {
-                center: { lat: -34.397, lng: 150.644 },
+                center: { lat: 25.1972, lng: 55.2744 },
                 zoom: 8,
             }
         );

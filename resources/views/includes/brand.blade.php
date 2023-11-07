@@ -1,22 +1,18 @@
-<div class="aside-logo flex-column-auto" id="kt_aside_logo">
+<div class="aside-logo flex-column-auto text-center" id="kt_aside_logo">
     <!--begin::Logo-->
-    <a href="#">
-        <img alt="Logo" src="{{ asset('static/media/logos-logo-full.png') }}" class="h-60px logo" />
-    </a>
-    {{-- <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <div class="menu-item px-5">
-            <a href="{{route('logout') }}" onclick="event.preventDefault();
-            this.closest('form').submit();" class="menu-link px-5"> {{ __('Log Out') }}</a>
-        </div>
-    </form> --}}
+    <img alt="Logo" src="{{ asset('static/media/logx_logo.png') }}" class="h-60px logo" />
+    {{-- <p style="text-align: left">Gateway to <b>Seamless Logistics</b></p> --}}
+    <div style="text-align: left">
+        <span class="float-start"> Gateway to <b>Seamless Logistics</b></span>
+    </div>
+
     <!--end::Logo-->
     <!--begin::Aside toggler-->
-    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle" data-kt-toggle="true"
-        data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize">
+    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
+        data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
+        data-kt-toggle-name="aside-minimize">
         <!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg') }}-->
-        <span class="svg-icon svg-icon-1 rotate-180"
-            style="    background: #00426E;
+        <span class="svg-icon svg-icon-1 rotate-180" style="background: #00426E;
         color: white !important;
         border-radius: 100%;">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -31,5 +27,5 @@
         </span>
         <!--end::Svg Icon-->
     </div>
-        <!--end::Aside toggler-->
+    <!--end::Aside toggler-->
 </div>

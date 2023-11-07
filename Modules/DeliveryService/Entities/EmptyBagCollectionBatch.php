@@ -2,7 +2,10 @@
 
 namespace Modules\DeliveryService\Entities;
 
+use App\Enum\BagStatusEnum;
+use App\Enum\BatchStatusEnum;
 use App\Http\Helper\Helper;
+use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
@@ -34,7 +37,8 @@ class EmptyBagCollectionBatch extends Model
     {
         return $this->belongsTo(Driver::class, 'driver_id');
     }
-    public function bagCollection(){
+    public function bagCollection()
+    {
         return $this->hasMany(EmptyBagCollection::class);
     }
 
@@ -63,9 +67,18 @@ class EmptyBagCollectionBatch extends Model
             $method = Request::method();
 
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
         });
@@ -89,10 +102,38 @@ class EmptyBagCollectionBatch extends Model
                 $record_type = get_class($model);
                 $method = Request::method();
 
+
+                if ($model->isDirty('status')) {
+                    $attributes = $model->getAttributes();
+                    $helper = new Helper();
+                    $action_by = auth()->id();
+                    $id = $attributes['id'];
+                    $status = $attributes['status'];
+                    $driver_id = $attributes('driver_id');
+                    $vehicle_id = $attributes('vehicle_id');
+
+                    if ($status == BatchStatusEnum::ENDED->value) {
+                        $description = "Empty Bag Collection Batch Completed. Hence, Bag arrived at warehouse";
+                        $empty_bags = $helper->getEmptyCollectionBatchBags($id);
+                        foreach ($empty_bags as $single_bag) {
+                            $helper->bagTimeline($single_bag->bag_id, $single_bag->delivery_id, BagStatusEnum::RECEIVED_EMPTY_IN_WAREHOUSE->value, $action_by, $vehicle_id, $description);
+                        }
+                    }
+                }
+
                 $helper->logActivity(
-                    userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                    url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                    oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                    userId: $user_id,
+                    moduleName: $module_name,
+                    action: $action,
+                    subject: $subject,
+                    url: $url,
+                    description: $description,
+                    ipAddress: $ip_address,
+                    userAgent: $user_agent,
+                    oldValues: $old_values,
+                    newValues: $new_values,
+                    recordId: $record_id,
+                    recordType: $record_type,
                     method: $method
                 );
             }
@@ -114,13 +155,20 @@ class EmptyBagCollectionBatch extends Model
             $record_type = get_class($model);
             $method = Request::method();
             $helper->logActivity(
-                userId: $user_id, moduleName: $module_name, action: $action, subject: $subject,
-                url: $url, description: $description, ipAddress: $ip_address, userAgent: $user_agent,
-                oldValues: $old_values, newValues: $new_values, recordId: $record_id, recordType: $record_type,
+                userId: $user_id,
+                moduleName: $module_name,
+                action: $action,
+                subject: $subject,
+                url: $url,
+                description: $description,
+                ipAddress: $ip_address,
+                userAgent: $user_agent,
+                oldValues: $old_values,
+                newValues: $new_values,
+                recordId: $record_id,
+                recordType: $record_type,
                 method: $method
             );
-
         });
-
     }
 }
