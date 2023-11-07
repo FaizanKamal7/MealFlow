@@ -34,7 +34,7 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::post('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByForm"])->name("upload_deliveries_by_form");
     Route::get('generate-template', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "generateAndDownloadDeliveryTemplate"])->name("generate_delivery_template");
     Route::post('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
-    Route::get('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
+    // Route::get('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
     Route::get('/batch', [DeliveryController::class, "batch"])->name("batch");
     Route::get('/update', [DeliveryController::class, "update"])->name("users.update");
     Route::post('/upload-conflicted-deliveries', [DeliveryController::class, "uploadConflictedDeliveries"])->name("upload_conflicted_deliveries");
@@ -57,7 +57,6 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveries"])->name("upload_deliveries");
     Route::post('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByForm"])->name("upload_deliveries_by_form");
     Route::get('generate-template', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "generateAndDownloadDeliveryTemplate"])->name("generate_delivery_template");
-    Route::post('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
     Route::get('unassign', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewUnassignedDeliveries"])->name("view_unassign");
     Route::get('update-deliveries-label', [DeliveryController::class, "updateDeliveriesLabel"])->name("update_deliveries_label");
     Route::get('deliveries-label/{deliveries}', [DeliveryController::class, "viewDeliveriesLabelView"])->name("view_deliveries_label");
@@ -103,8 +102,8 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::group(['prefix' => 'meal/'], function () {
         Route::get('add-customer-to-plan', [DeliveryController::class, "addCustomerToPlanView"])->name("add_customer_to_plan_view");
         Route::get('view-plan', [DeliveryController::class, "viewMealPlan"])->name("view_plan_delivery");
-        Route::get('view_plan', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewMealPlan"])->name("view_plan_delivery");
-        Route::post('add_plan', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "addMealPlan"])->name("add_plan_delivery");
-        Route::post('upload_plan', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadMealPlan"])->name("upload_plan_delivery");
+        Route::post('add_plan', [DeliveryController::class, "addMealPlan"])->name("add_plan_delivery");
+        Route::post('upload_plan', [DeliveryController::class, "uploadMealPlan"])->name("upload_plan_delivery");
+        Route::get('customer-meal-plans/{customer_id}', [DeliveryController::class, "getCustomersMealPlan"])->name("get_customer_meal_plans");
     });
 });
