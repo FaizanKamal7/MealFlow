@@ -115,6 +115,12 @@ class DeliveryController extends Controller
         $this->helper = $helper;
     }
 
+
+    public function viewPickupBatch()
+    {
+        return view('deliveryservice::batches.pickup_batch');
+
+    }
     public function viewMealPlan()
     {
         $partner = $this->businessRepository->getActiveBusinesses();
