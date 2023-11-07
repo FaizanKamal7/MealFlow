@@ -103,8 +103,8 @@ class Bag extends Model
                 $status = $attributes['status'];
                 $vehicle_id = $model->getOriginal('vehicle_id');;
                 $description = "status updated";
-
-
+    
+    
                 $helper->bagTimeline($bag_id, $delivery_id, $status, $action_by, $vehicle_id, $description);
             }
         });

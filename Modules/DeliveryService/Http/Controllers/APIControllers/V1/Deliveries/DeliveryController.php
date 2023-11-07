@@ -115,7 +115,6 @@ class DeliveryController extends Controller
         RoleInterface $roleRepository,
         UserRoleInterface $userRoleRepository,
         Helper $helper,
-
     ) {
         $this->customerRepository = $customerRepository;
         $this->cityRepository = $cityRepository;

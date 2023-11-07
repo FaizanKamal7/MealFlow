@@ -2,25 +2,24 @@
 @section('title', 'Business | Wallet')
 
 @section('extra_style')
-<link href="{{ asset('static/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('static/plugins/custom/vis-timeline/vis-timeline.bundle.css') }}" rel="stylesheet"
-    type="text/css" />
+    <link href="{{ asset('static/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('static/plugins/custom/vis-timeline/vis-timeline.bundle.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('main_content')
 
-<!--begin::Post-->
-<div class="post d-flex flex-column-fluid" id="kt_post">
-    <div id="kt_content_container" class="container-xxl">
-        <!--begin::Row-->
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Row-->
 
-        <div class="main_topup_div mb-5">
-            <div class="d-flex align-items-center top_up">
-                <div class="d-flex icon_topup_div">
-                    <span class="svg-icon svg-icon-2 top_icon">
-                        <x-iconsax-bol-wallet-add />
-                    </span>
-                    <h5>You have to <span class="top_clr">TOP-UP</span> some balance to start deliveries</h5>
-                </div>
+            <div class="main_topup_div mb-5">
+                <div class="d-flex align-items-center top_up">
+                    <div class="d-flex icon_topup_div">
+                        <span class="svg-icon svg-icon-2 top_icon">
+                            <x-iconsax-bol-wallet-add />
+                        </span>
+                        <h5>You have to <span class="top_clr">TOP-UP</span> some balance to start deliveries</h5>
+                    </div>
 
             </div>
             <div class="d-flex justify-content-between align-items-center current_blnce">
@@ -28,14 +27,9 @@
                     <h5>Current Balance: </h5> <span class="aed_blue"> 0.00 AED</span>
                 </div>
                 <div class="amount_btn">
-                    <a class="btn text-white activate-btn" data-bs-toggle="modal"
-                        data-bs-target="#bank_transfer_modal">+ Add
-                        Amount (Bank Transfer)</a>
                     <a class="btn text-white activate-btn" data-bs-toggle="modal" data-bs-target="#kt_modal_1">+ Add
-                        Amount (Stripe)</a>
+                        Amount</a>
                 </div>
-
-
             </div>
         </div>
         {{-- add amount modal --}}
@@ -43,7 +37,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">Add Amount</h3>
+                        <h3 class="modal-title">Add Amount $$$</h3>
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
                             aria-label="Close">
@@ -53,41 +47,42 @@
                         <!--end::Close-->
                     </div>
 
-                    <div class="modal-body">
-                        <form id="kt_modal_new_card_form" class="form" action="{{ route('storeCredit') }}" method="POST"
-                            data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
-                            @csrf
-                            <div class="d-flex flex-column mb-2 fv-row">
-                                <!--begin::Label-->
-                                <label class="required fs-6 fw-bold form-label mb-2">Amount</label>
-                                <!--end::Label-->
-                                <!--begin::Input wrapper-->
-                                <div class="position-relative">
-                                    <!--begin::Input-->
-                                    <input type="number" class="form-control form-control-solid"
-                                        placeholder="Enter amount" name="amount" value="" />
-                                    <!--end::Input-->
-                                    @error('amount')
-                                    <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                        <div class="modal-body">
+                            <form id="kt_modal_new_card_form" class="form" action="{{ route('storeCredit') }}"
+                                method="POST" data-cc-on-file="false"
+                                data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
+                                @csrf
+                                <div class="d-flex flex-column mb-2 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold form-label mb-2">Amount</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input wrapper-->
+                                    <div class="position-relative">
+                                        <!--begin::Input-->
+                                        <input type="number" class="form-control form-control-solid"
+                                            placeholder="Enter amount" name="amount" value="" />
+                                        <!--end::Input-->
+                                        @error('amount')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <!--end::Input wrapper-->
                                 </div>
-                                <!--end::Input wrapper-->
-                            </div>
 
-                            <!--begin::Action-->
-                            <div class="d-flex align-items-end modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" type="submit">Top up </button>
+                                <!--begin::Action-->
+                                <div class="d-flex align-items-end modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary" type="submit">Top up </button>
 
-                            </div>
-                            <!--end::Action-->
-                        </form>
+                                </div>
+                                <!--end::Action-->
+                            </form>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {{-- end modal --}}
+            {{-- end modal --}}
 
         {{-- add bank transfer amount modal --}}
         <div class="modal fade" tabindex="-1" id="bank_transfer_modal">
@@ -173,20 +168,21 @@
         {{-- end modal --}}
 
 
-        <div class="graph_second_div mb-5">
-            <div class="col-xxl-12">
-                <!--begin::Chart widget 26-->
-                <div class="card card-flush overflow-hidden h-xl-100 wallet-graph">
-                    <!--begin::Header-->
-                    <div class="card-header wallet-card-header">
-                        <!--begin::Title-->
-                        <h3 class="card-title wallet-title fw-bolder">Balance Statistics</h3>
-                        <!--end::Title-->
-                        <!--begin::Toolbar-->
-                        <div class="d-flex justify-content-between align-items-center gap-10 mt-2 ">
-                            <p>Credit</p>
-                            <p>Debit</p>
-                            <p style="background: rgba(0, 66, 110, 1);
+            <div class="graph_second_div mb-5">
+                <div class="col-xxl-12">
+                    <!--begin::Chart widget 26-->
+                    <div class="card card-flush overflow-hidden h-xl-100 wallet-graph">
+                        <!--begin::Header-->
+                        <div class="card-header wallet-card-header">
+                            <!--begin::Title-->
+                            <h3 class="card-title wallet-title fw-bolder">Balance Statistics</h3>
+                            <!--end::Title-->
+                            <!--begin::Toolbar-->
+                            <div class="d-flex justify-content-between align-items-center gap-10 mt-2 ">
+                                <p>Credit</p>
+                                <p>Debit</p>
+                                <p
+                                    style="background: rgba(0, 66, 110, 1);
                                 color: white;
                                 padding: 10px;
                                 border-radius: 6px;
@@ -230,17 +226,16 @@
                         <!--end::Chart-->
                     </div>
                     <!--end::Card body-->
+                    <<<<<<< HEAD </div>
+                        <!--end::Chart widget 26-->
                 </div>
                 <!--end::Chart widget 26-->
             </div>
 
-        </div>
-
-        <div class="row g-xl-10 mt-5 mb-5 mb-xl-10">
-            <div class="col-xl-7 credit-details">
-                <div class="wallet-graph overflow-hidden">
-                    <div class="credit-header wallet-card-header">
-                        <h3 class="wallet-title fw-bolder">Credit Details</h3>
+            <div class="d-flex card-details-div mb-5">
+                <div class="credit-details wallet-graph">
+                    <div class="card-header credit-header wallet-card-header">
+                        <h3 class="card-title wallet-title fw-bolder">Credit Details</h3>
 
                     </div>
                     <div class="credit_table">
@@ -256,8 +251,6 @@
                             @php
                             $dummyData = [
                             [
-                            'Logo' =>
-                            'https://w7.pngwing.com/pngs/23/320/png-transparent-mastercard-credit-card-visa-payment-service-mastercard-company-orange-logo-thumbnail.png',
                             'Card' => 'Visa Card',
                             'Number' => '**** **** **** 1234',
                             'Amount' => '15,000 AED',
@@ -265,8 +258,6 @@
                             'Note' => 'Sample note 1',
                             ],
                             [
-                            'Logo' =>
-                            'https://w7.pngwing.com/pngs/23/320/png-transparent-mastercard-credit-card-visa-payment-service-mastercard-company-orange-logo-thumbnail.png',
                             'Card' => 'Master Card',
                             'Number' => '**** **** **** 5678',
                             'Amount' => '10,000 AED',
@@ -274,17 +265,6 @@
                             'Note' => 'Sample note 2',
                             ],
                             [
-                            'Logo' =>
-                            'https://w7.pngwing.com/pngs/23/320/png-transparent-mastercard-credit-card-visa-payment-service-mastercard-company-orange-logo-thumbnail.png',
-                            'Card' => 'Amex Card',
-                            'Number' => '**** **** **** 9012',
-                            'Amount' => '5,000 AED',
-                            'Date' => '2023-09-22',
-                            'Note' => 'Sample note 3',
-                            ],
-                            [
-                            'Logo' =>
-                            'https://w7.pngwing.com/pngs/23/320/png-transparent-mastercard-credit-card-visa-payment-service-mastercard-company-orange-logo-thumbnail.png',
                             'Card' => 'Amex Card',
                             'Number' => '**** **** **** 9012',
                             'Amount' => '5,000 AED',
@@ -296,8 +276,7 @@
 
                             @foreach ($dummyData as $data)
                             <tr>
-                                <td class="text-gray-700"> <img style="width:30px" src="{{ $data['Logo'] }}" alt="Logo">
-                                    {{ $data['Card'] }} <br>{{ $data['Number'] }} </td>
+                                <td class="text-gray-700">{{ $data['Card'] }} <br>{{ $data['Number'] }} </td>
                                 <td>{{ $data['Amount'] }}</td>
                                 <td class="text-gray-700">{{ $data['Date'] }}</td>
                                 <td class="text-gray-700">{{ $data['Note'] }}</td>
@@ -306,312 +285,422 @@
                         </table>
 
                     </div>
-                </div>
-            </div>
-            <div class="col-xl-5 debit_details ">
-                <div class="wallet-graph overflow-hidden">
-                    <div class="credit-header wallet-card-header">
-                        <h3 class="wallet-title fw-bolder">Debit Details</h3>
-
-                    </div>
-                    <div class="credit_table">
-                        <table class="table table-rounded table-striped border gy-3 gs-7">
-                            <thead class="credit-thead">
-                                <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
-                                    <th class="min-w-1px">Amount <br></th>
-                                    <th class="min-w-1px">Date</th>
-                                    <th class="min-w-1px">Details</th>
-                                </tr>
-                            </thead>
-                            @php
-                            $dummyData = [
-                            [
-                            'Amount' => '15,000 AED',
-                            'Date' => '2023-09-20',
-                            ],
-                            [
-                            'Amount' => '10,000 AED',
-                            'Date' => '2023-09-21',
-                            ],
-                            [
-                            'Amount' => '5,000 AED',
-                            'Date' => '2023-09-22',
-                            ],
-                            [
-                            'Amount' => '5,000 AED',
-                            'Date' => '2023-09-22',
-                            ],
-                            [
-                            'Amount' => '5,000 AED',
-                            'Date' => '2023-09-22',
-                            ],
-                            ];
-                            @endphp
-
-                            @foreach ($dummyData as $data)
-                            <tr>
-                                <td>{{ $data['Amount'] }}</td>
-                                <td class="text-gray-700">{{ $data['Date'] }}</td>
-                                <td class="text-gray-700"><a href="/">View</a> </td>
-                            </tr>
-                            @endforeach
-                        </table>
-
-                    </div>
 
                 </div>
+                <div class="debit_details">
 
-            </div>
-        </div>
-
-    </div>
-    <!--end::Container-->
-</div>
-<!--end::Post-->
-<!--begin::Modal - New Card-->
-{{-- <div class="modal fade" id="kt_modal_new_card" tabindex="-1" aria-hidden="true">
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog modal-dialog-centered mw-650px">
-        <!--begin::Modal content-->
-        <div class="modal-content">
-            <!--begin::Modal header-->
-            <div class="modal-header">
-                <!--begin::Modal title-->
-                <h2>Add New Card</h2>
-                <!--end::Modal title-->
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                    <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                                fill="currentColor" />
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->
-                </div>
-                <!--end::Close-->
-            </div>
-            <!--end::Modal header-->
-            <!--begin::Modal body-->
-            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                <!--begin::Form-->
-                <form id="kt_modal_new_card_form" class="form" action="{{ route('storeCredit') }}" method="POST"
-                    data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
-                    @csrf
-                    <!--begin::Input group-->
-                    <div class="d-flex flex-column mb-7 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                            <span class="required">Name On Card</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                title="Specify a card holder's name"></i>
-                        </label>
-                        <!--end::Label-->
-                        <input type="text" class="form-control form-control-solid" placeholder="Max doe"
-                            name="card_holder_name" value="" />
-                        <input type="text" class="form-control form-control-solid" hidden name="stripe_token"
-                            value="" />
-                        @error('card_holder_name')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="d-flex flex-column mb-7 fv-row">
-                        <!--begin::Label-->
-                        <label class="required fs-6 fw-bold form-label mb-2">Card Number</label>
-                        <!--end::Label-->
-                        <!--begin::Input wrapper-->
-                        <div class="position-relative">
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter card number"
-                                name="card_number" value="" />
-                            <span class="text-danger" id="card_number"></span>
-
-                            <!--end::Input-->
-                            <!--begin::Card logos-->
-                            <div class="position-absolute translate-middle-y top-50 end-0 me-5">
-                                <img src="{{ asset('static/media/svg/card-logos/visa.svg') }}" alt="" class="h-25px" />
-                                <img src="{{ asset('static/media/svg/card-logos/mastercard.svg') }}" alt=""
-                                    class="h-25px" />
-                                <img src="{{ asset('static/media/svg/card-logos/american-express.svg') }}" alt=""
-                                    class="h-25px" />
-                            </div>
-                            <!--end::Card logos-->
+                    <div class="credit-details wallet-graph">
+                        <div class="card-header credit-header wallet-card-header">
+                            <h3 class="card-title wallet-title fw-bolder">Debit Details</h3>
+                            =======
                         </div>
-                        <!--end::Input wrapper-->
+                        <!--end::Chart widget 26-->
                     </div>
-                    <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="row mb-10">
-                        <!--begin::Col-->
-                        <div class="col-md-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold form-label mb-2">Expiration Date</label>
-                            <!--end::Label-->
-                            <!--begin::Row-->
-                            <div class="row fv-row">
-                                <!--begin::Col-->
-                                <div class="col-6">
-                                    <select name="expiry_month" class="form-select form-select-solid"
-                                        data-control="select2" data-hide-search="true" data-placeholder="Month">
-                                        <option value="">MM</option>
-                                        @foreach (range(1, 12) as $month)
-                                        <option value="{{ $month }}">{{ $month }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-danger" id="expiry_month"></span>
 
+                </div>
+
+                <div class="row g-xl-10 mt-5 mb-5 mb-xl-10">
+                    <div class="col-xl-7 credit-details">
+                        <div class="wallet-graph overflow-hidden">
+                            <div class="credit-header wallet-card-header">
+                                <h3 class="wallet-title fw-bolder">Credit Details</h3>
+                                >>>>>>> origin/front-end
+
+                            </div>
+                            <div class="credit_table">
+                                <table class="table table-rounded table-striped border gy-3 gs-7">
+                                    <thead class="credit-thead">
+                                        <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
+                                            <<<<<<< HEAD <th class="min-w-1px">Amount</th>
+                                                <th class="min-w-1px">Date</th>
+                                                <th class="min-w-1px">Details</th>
+                                                =======
+                                                <th class="min-w-1px">Card</th>
+                                                <th class="min-w-1px">Amount</th>
+                                                <th class="min-w-1px">Date</th>
+                                                <th class="min-w-1px">Note</th>
+                                                >>>>>>> origin/front-end
+                                        </tr>
+                                    </thead>
+                                    @php
+                                    $dummyData = [
+                                    [
+                                    <<<<<<< HEAD 'Amount'=> '15,000 AED',
+                                        'Date' => '2023-09-20',
+                                        // 'Details' => 'Sample note 1',
+                                        ],
+                                        [
+                                        'Amount' => '10,000 AED',
+                                        'Date' => '2023-09-21',
+                                        // 'Details' => 'Sample note 2',
+                                        =======
+                                        'Logo' =>
+                                        'https://w7.pngwing.com/pngs/23/320/png-transparent-mastercard-credit-card-visa-payment-service-mastercard-company-orange-logo-thumbnail.png',
+                                        'Card' => 'Visa Card',
+                                        'Number' => '**** **** **** 1234',
+                                        'Amount' => '15,000 AED',
+                                        'Date' => '2023-09-20',
+                                        'Note' => 'Sample note 1',
+                                        ],
+                                        [
+                                        'Logo' =>
+                                        'https://w7.pngwing.com/pngs/23/320/png-transparent-mastercard-credit-card-visa-payment-service-mastercard-company-orange-logo-thumbnail.png',
+                                        'Card' => 'Master Card',
+                                        'Number' => '**** **** **** 5678',
+                                        'Amount' => '10,000 AED',
+                                        'Date' => '2023-09-21',
+                                        'Note' => 'Sample note 2',
+                                        ],
+                                        [
+                                        'Logo' =>
+                                        'https://w7.pngwing.com/pngs/23/320/png-transparent-mastercard-credit-card-visa-payment-service-mastercard-company-orange-logo-thumbnail.png',
+                                        'Card' => 'Amex Card',
+                                        'Number' => '**** **** **** 9012',
+                                        'Amount' => '5,000 AED',
+                                        'Date' => '2023-09-22',
+                                        'Note' => 'Sample note 3',
+                                        ],
+                                        [
+                                        'Logo' =>
+                                        'https://w7.pngwing.com/pngs/23/320/png-transparent-mastercard-credit-card-visa-payment-service-mastercard-company-orange-logo-thumbnail.png',
+                                        'Card' => 'Amex Card',
+                                        'Number' => '**** **** **** 9012',
+                                        'Amount' => '5,000 AED',
+                                        'Date' => '2023-09-22',
+                                        'Note' => 'Sample note 3',
+                                        ],
+                                        ];
+                                        @endphp
+
+                                        @foreach ($dummyData as $data)
+                                        <tr>
+                                            <td class="text-gray-700"> <img style="width:30px" src="{{ $data['Logo'] }}"
+                                                    alt="Logo">
+                                                {{ $data['Card'] }} <br>{{ $data['Number'] }} </td>
+                                            <td>{{ $data['Amount'] }}</td>
+                                            <td class="text-gray-700">{{ $data['Date'] }}</td>
+                                            <td class="text-gray-700">{{ $data['Note'] }}</td>
+                                        </tr>
+                                        @endforeach
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 debit_details ">
+                        <div class="wallet-graph overflow-hidden">
+                            <div class="credit-header wallet-card-header">
+                                <h3 class="wallet-title fw-bolder">Debit Details</h3>
+
+                            </div>
+                            <div class="credit_table">
+                                <table class="table table-rounded table-striped border gy-3 gs-7">
+                                    <thead class="credit-thead">
+                                        <tr class="text-start fw-bolder fs-7 text-uppercase gs-0">
+                                            <th class="min-w-1px">Amount <br></th>
+                                            <th class="min-w-1px">Date</th>
+                                            <th class="min-w-1px">Details</th>
+                                        </tr>
+                                    </thead>
+                                    @php
+                                    $dummyData = [
+                                    [
+                                    'Amount' => '15,000 AED',
+                                    'Date' => '2023-09-20',
+                                    ],
+                                    [
+                                    'Amount' => '10,000 AED',
+                                    'Date' => '2023-09-21',
+                                    ],
+                                    [
+                                    'Amount' => '5,000 AED',
+                                    'Date' => '2023-09-22',
+                                    ],
+                                    [
+                                    'Amount' => '5,000 AED',
+                                    'Date' => '2023-09-22',
+                                    >>>>>>> origin/front-end
+                                    ],
+                                    [
+                                    'Amount' => '5,000 AED',
+                                    'Date' => '2023-09-22',
+                                    <<<<<<< HEAD // 'Details'=> 'Sample note 3',
+                                        =======
+                                        >>>>>>> origin/front-end
+                                        ],
+                                        ];
+                                        @endphp
+
+                                        @foreach ($dummyData as $data)
+                                        <tr>
+                                            <td>{{ $data['Amount'] }}</td>
+                                            <td class="text-gray-700">{{ $data['Date'] }}</td>
+                                            <td class="text-gray-700"><a href="/">View</a> </td>
+                                        </tr>
+                                        @endforeach
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <<<<<<< HEAD <!--end::Row-->
+                    =======
+                    >>>>>>> origin/front-end
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Post-->
+        <!--begin::Modal - New Card-->
+        <div class="modal fade" id="kt_modal_new_card" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header">
+                        <!--begin::Modal title-->
+                        <h2>Add New Card</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                            <span class="svg-icon svg-icon-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                        transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                    <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                        transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                        <!--begin::Form-->
+                        <form id="kt_modal_new_card_form" class="form" action="{{ route('storeCredit') }}" method="POST"
+                            data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
+                            @csrf
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <!--begin::Label-->
+                                <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+                                    <span class="required">Name On Card</span>
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                        title="Specify a card holder's name"></i>
+                                </label>
+                                <!--end::Label-->
+                                <input type="text" class="form-control form-control-solid" placeholder="Max doe"
+                                    name="card_holder_name" value="" />
+                                <input type="text" class="form-control form-control-solid" hidden name="stripe_token"
+                                    value="" />
+                                @error('card_holder_name')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-bold form-label mb-2">Card Number</label>
+                                <!--end::Label-->
+                                <!--begin::Input wrapper-->
+                                <div class="position-relative">
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-solid"
+                                        placeholder="Enter card number" name="card_number" value="" />
+                                    <span class="text-danger" id="card_number"></span>
+
+                                    <!--end::Input-->
+                                    <!--begin::Card logos-->
+                                    <div class="position-absolute translate-middle-y top-50 end-0 me-5">
+                                        <img src="{{ asset('static/media/svg/card-logos/visa.svg') }}" alt=""
+                                            class="h-25px" />
+                                        <img src="{{ asset('static/media/svg/card-logos/mastercard.svg') }}" alt=""
+                                            class="h-25px" />
+                                        <img src="{{ asset('static/media/svg/card-logos/american-express.svg') }}"
+                                            alt="" class="h-25px" />
+                                    </div>
+                                    <!--end::Card logos-->
+                                </div>
+                                <!--end::Input wrapper-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="row mb-10">
+                                <!--begin::Col-->
+                                <div class="col-md-8 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold form-label mb-2">Expiration Date</label>
+                                    <!--end::Label-->
+                                    <!--begin::Row-->
+                                    <div class="row fv-row">
+                                        <!--begin::Col-->
+                                        <div class="col-6">
+                                            <select name="expiry_month" class="form-select form-select-solid"
+                                                data-control="select2" data-hide-search="true" data-placeholder="Month">
+                                                <option value="">MM</option>
+                                                @foreach (range(1, 12) as $month)
+                                                <option value="{{ $month }}">{{ $month }}</option>
+                                                @endforeach
+                                            </select>
+                                            <span class="text-danger" id="expiry_month"></span>
+
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-6">
+                                            <select name="expiry_year" class="form-select form-select-solid"
+                                                data-control="select2" data-hide-search="true" data-placeholder="Year">
+                                                <option value="">YYYY</option>
+                                                @foreach (range(date('Y'), date('Y') + 10) as $year)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                                @endforeach
+
+                                            </select>
+                                            <span class="text-danger" id="expiry_year"></span>
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Row-->
                                 </div>
                                 <!--end::Col-->
                                 <!--begin::Col-->
-                                <div class="col-6">
-                                    <select name="expiry_year" class="form-select form-select-solid"
-                                        data-control="select2" data-hide-search="true" data-placeholder="Year">
-                                        <option value="">YYYY</option>
-                                        @foreach (range(date('Y'), date('Y') + 10) as $year)
-                                        <option value="{{ $year }}">{{ $year }}</option>
-                                        @endforeach
+                                <div class="col-md-4 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+                                        <span class="required">CVV</span>
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                            title="Enter a card CVV code"></i>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Input wrapper-->
+                                    <div class="position-relative">
+                                        <!--begin::Input-->
+                                        <input type="number" class="form-control form-control-solid" minlength="3"
+                                            maxlength="4" placeholder="CVV" name="cvv" />
+                                        <!--end::Input-->
+                                        <span class="text-danger" id="cvv"></span>
 
-                                    </select>
-                                    <span class="text-danger" id="expiry_year"></span>
+                                        <!--begin::CVV icon-->
+                                        <div class="position-absolute translate-middle-y top-50 end-0 me-3">
+                                            <!--begin::Svg Icon | path: icons/duotune/finance/fin002.svg-->
+                                            <span class="svg-icon svg-icon-2hx">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none">
+                                                    <path d="M22 7H2V11H22V7Z" fill="currentColor" />
+                                                    <path opacity="0.3"
+                                                        d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19ZM14 14C14 13.4 13.6 13 13 13H5C4.4 13 4 13.4 4 14C4 14.6 4.4 15 5 15H13C13.6 15 14 14.6 14 14ZM16 15.5C16 16.3 16.7 17 17.5 17H18.5C19.3 17 20 16.3 20 15.5C20 14.7 19.3 14 18.5 14H17.5C16.7 14 16 14.7 16 15.5Z"
+                                                        fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </div>
+                                        <!--end::CVV icon-->
+                                    </div>
+                                    <!--end::Input wrapper-->
                                 </div>
                                 <!--end::Col-->
                             </div>
-                            <!--end::Row-->
-                        </div>
-                        <!--end::Col-->
-                        <!--begin::Col-->
-                        <div class="col-md-4 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                <span class="required">CVV</span>
-                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                    title="Enter a card CVV code"></i>
-                            </label>
-                            <!--end::Label-->
-                            <!--begin::Input wrapper-->
-                            <div class="position-relative">
-                                <!--begin::Input-->
-                                <input type="number" class="form-control form-control-solid" minlength="3" maxlength="4"
-                                    placeholder="CVV" name="cvv" />
-                                <!--end::Input-->
-                                <span class="text-danger" id="cvv"></span>
-
-                                <!--begin::CVV icon-->
-                                <div class="position-absolute translate-middle-y top-50 end-0 me-3">
-                                    <!--begin::Svg Icon | path: icons/duotune/finance/fin002.svg-->
-                                    <span class="svg-icon svg-icon-2hx">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none">
-                                            <path d="M22 7H2V11H22V7Z" fill="currentColor" />
-                                            <path opacity="0.3"
-                                                d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19ZM14 14C14 13.4 13.6 13 13 13H5C4.4 13 4 13.4 4 14C4 14.6 4.4 15 5 15H13C13.6 15 14 14.6 14 14ZM16 15.5C16 16.3 16.7 17 17.5 17H18.5C19.3 17 20 16.3 20 15.5C20 14.7 19.3 14 18.5 14H17.5C16.7 14 16 14.7 16 15.5Z"
-                                                fill="currentColor" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-bold form-label mb-2">Amount</label>
+                                <!--end::Label-->
+                                <!--begin::Input wrapper-->
+                                <div class="position-relative">
+                                    <!--begin::Input-->
+                                    <input type="number" class="form-control form-control-solid"
+                                        placeholder="Enter amount" name="amount" value="" />
+                                    <!--end::Input-->
+                                    @error('amount')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                                <!--end::CVV icon-->
+                                <!--end::Input wrapper-->
                             </div>
-                            <!--end::Input wrapper-->
-                        </div>
-                        <!--end::Col-->
-                    </div>
-                    <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="d-flex flex-column mb-7 fv-row">
-                        <!--begin::Label-->
-                        <label class="required fs-6 fw-bold form-label mb-2">Amount</label>
-                        <!--end::Label-->
-                        <!--begin::Input wrapper-->
-                        <div class="position-relative">
-                            <!--begin::Input-->
-                            <input type="number" class="form-control form-control-solid" placeholder="Enter amount"
-                                name="amount" value="" />
-                            <!--end::Input-->
-                            @error('amount')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <!--end::Input wrapper-->
-                    </div>
-                    <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="d-flex flex-stack">
-                        <!--begin::Label-->
-                        <div class="me-5">
-                            <label class="fs-6 fw-bold form-label">Save Card for further billing?</label>
-                            <div class="fs-7 fw-bold text-muted">
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-stack">
+                                <!--begin::Label-->
+                                <div class="me-5">
+                                    <label class="fs-6 fw-bold form-label">Save Card for further billing?</label>
+                                    <div class="fs-7 fw-bold text-muted">
+                                    </div>
+                                </div>
+                                <!--end::Label-->
+                                <!--begin::Switch-->
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" name="save_card" type="checkbox" value="1"
+                                        checked="checked" />
+                                    <span class="form-check-label fw-bold text-muted">Save Card</span>
+                                </label>
+                                <!--end::Switch-->
                             </div>
-                        </div>
-                        <!--end::Label-->
-                        <!--begin::Switch-->
-                        <label class="form-check form-switch form-check-custom form-check-solid">
-                            <input class="form-check-input" name="save_card" type="checkbox" value="1"
-                                checked="checked" />
-                            <span class="form-check-label fw-bold text-muted">Save Card</span>
-                        </label>
-                        <!--end::Switch-->
+                            <!--end::Input group-->
+                            <!--begin::Actions-->
+                            <div class="text-center pt-15">
+                                <button type="reset" id="kt_modal_new_card_cancel"
+                                    class="btn btn-light me-3">Discard</button>
+                                <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
+                                    <span class="indicator-label">Submit</span>
+                                    <span class="indicator-progress">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div>
+                            <!--end::Actions-->
+                        </form>
+                        <!--end::Form-->
                     </div>
-                    <!--end::Input group-->
-                    <!--begin::Actions-->
-                    <div class="text-center pt-15">
-                        <button type="reset" id="kt_modal_new_card_cancel" class="btn btn-light me-3">Discard</button>
-                        <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
-                            <span class="indicator-label">Submit</span>
-                            <span class="indicator-progress">Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                        </button>
-                    </div>
-                    <!--end::Actions-->
-                </form>
-                <!--end::Form-->
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
             </div>
-            <!--end::Modal body-->
+            <!--end::Modal dialog-->
         </div>
-        <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-</div> --}}
-<!--end::Modal - New Card-->
-@endsection
+        <!--end::Modal - New Card-->
+        @endsection
 
 @section('extra_scripts')
 
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<script src="{{ asset('static/js/custom/apps/finance/stripe_payment.js') }}"></script>
+        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+        <script src="{{ asset('static/js/custom/apps/finance/stripe_payment.js') }}"></script>
 
-<!--begin::Page Vendors Javascript(used by this page)-->
-<script src="{{ asset('static/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<script src="{{ asset('static/plugins/custom/vis-timeline/vis-timeline.bundle.js') }}"></script>
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-<!--end::Page Vendors Javascript-->
-<!--begin::Page Custom Javascript(used by this page)-->
-<script src="{{ asset('static/js/widgets.bundle.js') }}"></script>
-<script src="{{ asset('static/js/custom/widgets.js') }}"></script>
-<script src="{{ asset('static/js/custom/apps/chat/chat.js') }}"></script>
-<script src="{{ asset('static/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
-<script src="{{ asset('static/js/custom/utilities/modals/top-up-wallet.js') }}"></script>
-<script src="{{ asset('static/js/custom/utilities/modals/create-account.js') }}"></script>
-<script src="{{ asset('static/js/custom/utilities/modals/users-search.js') }}"></script>
-<!--end::Page Custom Javascript-->
-<script src="{{ asset('static/js/custom/apps/fleet/add_model.js') }}"></script>
+        <!--begin::Page Vendors Javascript(used by this page)-->
+        <script src="{{ asset('static/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+        <script src="{{ asset('static/plugins/custom/vis-timeline/vis-timeline.bundle.js') }}"></script>
+        <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+        <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+        <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+        <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+        <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+        <!--end::Page Vendors Javascript-->
+        <!--begin::Page Custom Javascript(used by this page)-->
+        <script src="{{ asset('static/js/widgets.bundle.js') }}"></script>
+        <script src="{{ asset('static/js/custom/widgets.js') }}"></script>
+        <script src="{{ asset('static/js/custom/apps/chat/chat.js') }}"></script>
+        <script src="{{ asset('static/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
+        <script src="{{ asset('static/js/custom/utilities/modals/top-up-wallet.js') }}"></script>
+        <script src="{{ asset('static/js/custom/utilities/modals/create-account.js') }}"></script>
+        <script src="{{ asset('static/js/custom/utilities/modals/users-search.js') }}"></script>
+        <!--end::Page Custom Javascript-->
+        <script src="{{ asset('static/js/custom/apps/fleet/add_model.js') }}"></script>
 
-@if ($errors->any())
-<script>
-    $(document).ready(function() {
+        @if ($errors->any())
+        <script>
+            $(document).ready(function() {
                 // Show the modal when there are validation errors
                 $('#bank_transfer_modal').modal('show');
 
             });
-</script>
-@endif
-@endsection
+        </script>
+        @endif
+        <<<<<<< HEAD @endsection=======@endsection>>>>>>> origin/front-end

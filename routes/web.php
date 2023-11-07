@@ -51,12 +51,6 @@ Route::middleware('auth')->group(function () {
             return (Gate::denies('view_all_businesses')) ? redirect(route("business_home")) : view('dashboards.admin_dashboard');
         })->name("admin_dashboard");
 
-        Route::get('fleets/', function () {
-            return view('dashboards.fleets_dashboard');
-        })->name("fleet_dashboard");
-        Route::get('fleets/details', function () {
-            return view('fleets.fleet_details');
-        })->name("fleet_details");
 
 
         Route::group(['prefix' => 'applications/'], function () {

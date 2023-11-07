@@ -39,11 +39,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::group(['prefix' => 'business_info/'], function () {
             Route::get("overview/{business_id}", [BusinessInfoController::class, "index"])->name("business_overview");
-        });
-
-        Route::group(['prefix' => 'business_info/'], function () {
-            Route::get("overview/{business_id}", [BusinessInfoController::class, "index"])->name("business_overview");
             Route::get("overview/send-contract-file/{business_id}", [BusinessInfoController::class, "sendContractFile"])->name("send_contract_file");
+            Route::get('/get-customers/{business_id}', [BusinessInfoController::class, "getBusinessCustomers"])->name('get_customers');
         });
 
         Route::group(['prefix' => 'new_requests/'], function () {
