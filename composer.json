@@ -10,7 +10,6 @@
         "docusign/esign-client": "^6.16",
         "guzzlehttp/guzzle": "^7.2",
         "jason-guru/laravel-make-repository": "^0.0.3",
-        "laravel/breeze": "*",
         "laravel/framework": "^9.19",
         "laravel/passport": "^11.8",
         "laravel/tinker": "^2.7",
