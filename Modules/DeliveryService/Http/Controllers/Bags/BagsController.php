@@ -496,7 +496,7 @@ class BagsController extends Controller
                     'is_active' => true
                 ], false);
                 $customer = $this->customerRepository->create(['user_id' => $user->id]);
-                $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $businessIdInput]);
+                $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $businessIdInput);
                 // $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
             }
 
