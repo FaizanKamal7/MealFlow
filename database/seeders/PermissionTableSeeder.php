@@ -17,6 +17,7 @@ class PermissionTableSeeder extends Seeder
         \DB::table('permissions')->delete();
 
         \DB::table('permissions')->insert(array(
+            array('id' => '98458166-a2c5-46f7-b970-3bd00e4obh62', 'name' => 'view', 'codename' => 'view_all_businesses', 'is_active' => '1', 'model_id' => '1948f28a-97e7-11ed-b4bc-f8281997ce32', 'created_at' => '2023-01-20 19:28:31', 'updated_at' => '2023-01-20 19:28:31'),
             array('id' => '98458166-a2c5-46f7-b970-3bd00e4a0bb2', 'name' => 'Add', 'codename' => 'add_permission', 'is_active' => '1', 'model_id' => '894b9364-98f8-11ed-974e-f8281997de10', 'created_at' => '2023-01-20 19:28:31', 'updated_at' => '2023-01-20 19:28:31'),
             array('id' => '984581a2-c5a4-4a2c-8db8-41d130706042', 'name' => 'View', 'codename' => 'view_permissions', 'is_active' => '1', 'model_id' => '894b9364-98f8-11ed-974e-f8281997de10', 'created_at' => '2023-01-20 19:29:10', 'updated_at' => '2023-01-20 19:29:10'),
             array('id' => '984581c5-b434-4dd6-9320-aa58bc96b34e', 'name' => 'Update', 'codename' => 'update_permission', 'is_active' => '1', 'model_id' => '894b9364-98f8-11ed-974e-f8281997de10', 'created_at' => '2023-01-20 19:29:33', 'updated_at' => '2023-01-20 19:29:33'),

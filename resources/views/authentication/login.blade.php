@@ -1,6 +1,6 @@
 @extends('layouts.others_master')
 @section('title', 'Login')
-<x-auth-session-status class="mb-4" :status="session('status')" />
+{{-- <x-auth-session-status class="mb-4" :status="session('status')" /> --}}
 
 @section('main_content')
 

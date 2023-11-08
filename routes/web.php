@@ -28,18 +28,21 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboards.admin_dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::group(['prefix' => 'core/'], function () {
-
         Route::get('/', function () {
-            return Gate::denies('view_all_businesses') ? Route::get("", [DashboardController::class, "dashboard"]) : view('dashboards.admin_dashboard');
+            return view('dashboards.admin_dashboard');
         })->name("admin_dashboard");
+
+        // Route::get('/', function () {
+        //     return Gate::denies('view_all_businesses') ? Route::get("", [DashboardController::class, "dashboard"]) : view('dashboards.admin_dashboard');
+        // })->name("admin_dashboard");
 
         // if (Gate::denies('view_all_businesses')) {
         //     Route::get("", [DashboardController::class, "dashboard"])->name("partner_dashboard");
@@ -114,7 +117,6 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-require __DIR__ . '/auth.php';
 
 
 

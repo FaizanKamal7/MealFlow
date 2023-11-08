@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
+class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -174,7 +174,6 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
             'Laravel\\Sail\\' => 13,
             'Laravel\\Passport\\Database\\Factories\\' => 36,
             'Laravel\\Passport\\' => 17,
-            'Laravel\\Breeze\\' => 15,
         ),
         'J' => 
         array (
@@ -607,10 +606,6 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         array (
             0 => __DIR__ . '/..' . '/laravel/passport/src',
         ),
-        'Laravel\\Breeze\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/breeze/src',
-        ),
         'JasonGuru\\LaravelMakeRepository\\' => 
         array (
             0 => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src',
@@ -816,15 +811,6 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'App\\Http\\Controllers\\Admin\\UserManagement\\PermissionsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/PermissionsController.php',
         'App\\Http\\Controllers\\Admin\\UserManagement\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/RolesController.php',
         'App\\Http\\Controllers\\Admin\\UserManagement\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/UsersController.php',
-        'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
-        'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
-        'App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationNotificationController.php',
-        'App\\Http\\Controllers\\Auth\\EmailVerificationPromptController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationPromptController.php',
-        'App\\Http\\Controllers\\Auth\\NewPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/NewPasswordController.php',
-        'App\\Http\\Controllers\\Auth\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordController.php',
-        'App\\Http\\Controllers\\Auth\\PasswordResetLinkController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordResetLinkController.php',
-        'App\\Http\\Controllers\\Auth\\RegisteredUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisteredUserController.php',
-        'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Authentication\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Authentication/LoginController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
@@ -1174,6 +1160,7 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\DeliverySlotSeeder' => __DIR__ . '/../..' . '/database/seeders/DeliverySlotSeeder.php',
         'Database\\Seeders\\DepartmentTableSeeder' => __DIR__ . '/../..' . '/database/seeders/DepartmentTableSeeder.php',
+        'Database\\Seeders\\DesignationTableSeeder' => __DIR__ . '/../..' . '/database/seeders/DesignationTableSeeder.php',
         'Database\\Seeders\\PermissionTableSeeder' => __DIR__ . '/../..' . '/database/seeders/PermissionTableSeeder.php',
         'Database\\Seeders\\RolePermissionTableSeeder' => __DIR__ . '/../..' . '/database/seeders/RolePermissionTableSeeder.php',
         'Database\\Seeders\\RolesTableSeeder' => __DIR__ . '/../..' . '/database/seeders/RolesTableSeeder.php',
@@ -4596,11 +4583,6 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
         'JasonGuru\\LaravelMakeRepository\\RepositoryServiceProvider' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/RepositoryServiceProvider.php',
         'JasonGuru\\LaravelMakeRepository\\Repository\\BaseRepository' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/repository/BaseRepository.php',
         'JasonGuru\\LaravelMakeRepository\\Repository\\RepositoryContract' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/repository/RepositoryContract.php',
-        'Laravel\\Breeze\\BreezeServiceProvider' => __DIR__ . '/..' . '/laravel/breeze/src/BreezeServiceProvider.php',
-        'Laravel\\Breeze\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallCommand.php',
-        'Laravel\\Breeze\\Console\\InstallsApiStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsApiStack.php',
-        'Laravel\\Breeze\\Console\\InstallsBladeStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsBladeStack.php',
-        'Laravel\\Breeze\\Console\\InstallsInertiaStacks' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsInertiaStacks.php',
         'Laravel\\Passport\\ApiTokenCookieFactory' => __DIR__ . '/..' . '/laravel/passport/src/ApiTokenCookieFactory.php',
         'Laravel\\Passport\\AuthCode' => __DIR__ . '/..' . '/laravel/passport/src/AuthCode.php',
         'Laravel\\Passport\\Bridge\\AccessToken' => __DIR__ . '/..' . '/laravel/passport/src/Bridge/AccessToken.php',
@@ -9954,10 +9936,10 @@ class ComposerStaticInit07fc982328bcbaf742865ffcec369d2d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit07fc982328bcbaf742865ffcec369d2d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit07fc982328bcbaf742865ffcec369d2d::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit07fc982328bcbaf742865ffcec369d2d::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit07fc982328bcbaf742865ffcec369d2d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$classMap;
 
         }, null, ClassLoader::class);
     }

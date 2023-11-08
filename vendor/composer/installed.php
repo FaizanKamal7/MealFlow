@@ -3,7 +3,9 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'cf54da9ee3b52cf9da02f5eef84991f47c5fa8ad',
+
+        'reference' => '6fe58d872beaf85a2b581821fec5ad6224118a64',
+
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -517,15 +519,8 @@
                 0 => '*',
             ),
         ),
-        'laravel/breeze' => array(
-            'pretty_version' => 'v1.19.2',
-            'version' => '1.19.2.0',
-            'reference' => '725e0c4fb1f630afdd90b5fba2a7f6d8d547ac29',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../laravel/breeze',
-            'aliases' => array(),
-            'dev_requirement' => true,
-        ),
+
+
         'laravel/framework' => array(
             'pretty_version' => 'v9.52.16',
             'version' => '9.52.16.0',
@@ -538,7 +533,9 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'cf54da9ee3b52cf9da02f5eef84991f47c5fa8ad',
+
+            'reference' => '6fe58d872beaf85a2b581821fec5ad6224118a64',
+
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -653,18 +650,18 @@
             'dev_requirement' => false,
         ),
         'league/flysystem' => array(
-            'pretty_version' => '3.18.0',
-            'version' => '3.18.0.0',
-            'reference' => '015633a05aee22490495159237a5944091d8281e',
+            'pretty_version' => '3.19.0',
+            'version' => '3.19.0.0',
+            'reference' => '1b2aa10f2326e0351399b8ce68e287d8e9209a83',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/flysystem',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'league/flysystem-local' => array(
-            'pretty_version' => '3.18.0',
-            'version' => '3.18.0.0',
-            'reference' => 'e7381ef7643f658b87efb7dbe98fe538fb1bbf32',
+            'pretty_version' => '3.19.0',
+            'version' => '3.19.0.0',
+            'reference' => '8d868217f9eeb4e9a7320db5ccad825e9a7a4076',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/flysystem-local',
             'aliases' => array(),
