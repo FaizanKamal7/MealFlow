@@ -61,6 +61,14 @@ class AuthController extends Controller
                 'message' => 'Login failed, incorrect password.'
             ], 401);
         }
+
+        $user = User::where('email', $request->email)->first();
+        return $this->success([
+            'user' => $user,
+            'token' => $user->createToken('api-token' . $user->name)->accessToken,
+        ]);
+
+
     }
 
 

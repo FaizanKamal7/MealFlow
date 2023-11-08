@@ -1,3 +1,4 @@
+
 <!--begin::Aside menu-->
 
 <div class="aside-menu flex-column-fluid">
@@ -1139,7 +1140,7 @@
 
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    @can('update_city')
+                    {{-- @can('update_city') --}}
 
 
                     <div class="menu-item">
@@ -1150,7 +1151,7 @@
                             <span class="menu-title">Activate Locations</span>
                         </a>
                     </div>
-                    @endcan
+                    {{-- @endcan --}}
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('activated_locations_view') }}">
                             <span class="menu-bullet">

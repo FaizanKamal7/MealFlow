@@ -17,6 +17,7 @@ class ApplicationModelSeeder extends Seeder
         \DB::table('application_models')->delete();
 
         \DB::table('application_models')->insert(array(
+            array('id' => '1948f28a-97e7-11ed-b4bc-f8281997ce32', 'model_name' => 'Operations', 'app_id' => '04b1c75b-97e7-11ed-b4bc-f8281997df43', 'created_at' => NULL, 'updated_at' => NULL),
             array('id' => '1948f28a-97e7-11ed-b4bc-f8281997de10', 'model_name' => 'Users', 'app_id' => '04b1c75b-97e7-11ed-b4bc-f8281997de10', 'created_at' => NULL, 'updated_at' => NULL),
             array('id' => '82f24f89-e807-11ed-a8cd-ecf4bb29c0c8', 'model_name' => 'Appreciation', 'app_id' => 'cb503f1c-f54b-11ed-a20b-283a4d1eea26', 'created_at' => NULL, 'updated_at' => NULL),
             array('id' => '82f26762-e807-11ed-a8cd-ecf4bb29c0c8', 'model_name' => 'Attendance', 'app_id' => 'cb503f1c-f54b-11ed-a20b-283a4d1eea26', 'created_at' => NULL, 'updated_at' => NULL),

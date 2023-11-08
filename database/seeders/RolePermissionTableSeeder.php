@@ -17,6 +17,7 @@ class RolePermissionTableSeeder extends Seeder
         \DB::table('role_permissions')->delete();
 
         \DB::table('role_permissions')->insert(array(
+            array('id' => '984583db-5e00-4860-b20c-489fcd2bwpu8', 'role_id' => '984583db-2436-4893-b4b7-cb2bc2aea27b', 'permission_id' => '98458166-a2c5-46f7-b970-3bd00e4obh62', 'created_at' => '2023-01-20 19:35:23', 'updated_at' => '2023-01-20 19:35:23'),
             array('id' => '984583db-5e00-4860-b20c-489fcd2b67ec', 'role_id' => '984583db-2436-4893-b4b7-cb2bc2aea27b', 'permission_id' => '984581c5-b434-4dd6-9320-aa58bc96b34e', 'created_at' => '2023-01-20 19:35:23', 'updated_at' => '2023-01-20 19:35:23'),
             array('id' => '984583f9-832d-4fda-9d83-f2dd27adsda3', 'role_id' => '984583db-2436-4893-b4b7-cb2bc2aea27b', 'permission_id' => '98458166-a2c5-46f7-b970-3bd00e4a0bb2', 'created_at' => '2023-01-20 19:35:43', 'updated_at' => '2023-01-20 19:35:43'),
             array('id' => '9845841d-84f7-4f3c-ba4f-94c9fc6e1858', 'role_id' => '984583db-2436-4893-b4b7-cb2bc2aea27b', 'permission_id' => '984581a2-c5a4-4a2c-8db8-41d130706042', 'created_at' => '2023-01-20 19:36:06', 'updated_at' => '2023-01-20 19:36:06'),
