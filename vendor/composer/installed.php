@@ -533,9 +533,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-
-            'reference' => '6fe58d872beaf85a2b581821fec5ad6224118a64',
-
+            'reference' => '251ec066600f33a0be3d049b5a9d758b2b64ea82',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
