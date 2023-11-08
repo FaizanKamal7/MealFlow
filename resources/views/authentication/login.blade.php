@@ -76,7 +76,7 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input class="form-control form-control-lg form-control-solid" type="text" id="email"
-                                name="email" autocomplete="off" placeholder="Email" />
+                                name="email_or_phone" autocomplete="off" placeholder="Email" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->

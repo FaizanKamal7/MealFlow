@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\LocationManagement\LocationController;
 use App\Http\Controllers\Admin\LocationManagement\State\StateController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\UserManagement\ApplicationController;
+use App\Http\Controllers\Authentication\AuthController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Modules\BusinessService\Http\Controllers\PartnerPortal\DashboardController;
@@ -26,11 +27,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboards.admin_dashboard');
-})->name('dashboard');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['cors', 'json.response']], function () {
+    // Public Routes
+    Route::get('/login', [AuthController::class, 'login_view'])->name('login_view');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/verify', [AuthController::class, 'verify'])->name('verify');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+
+Route::middleware('auth')->group(function () {
+
+    // Protected Routes
+    Route::get('/dashboard', function () {
+        return view('dashboards.admin_dashboard');
+    })->name('dashboard');
+    // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

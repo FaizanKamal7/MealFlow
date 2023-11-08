@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\APIControllers\AuthController;
+use App\Http\Controllers\APIControllers\AuthAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,15 +15,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['cors', 'json.response']], function () {
+    // Public Routes
+    Route::post('/login', [AuthAPIController::class, 'login'])->name('login');
+    Route::post('/verify', [AuthAPIController::class, 'verify'])->name('verify');
+    Route::post('/register', [AuthAPIController::class, 'register'])->name('register');
+});
+Route::post('/logout', [AuthAPIController::class, 'logout'])->name('logout');
+
+// Route::middleware('auth:api')->group(function () {
+//     // Protected Routes
+//     Route::post('/logout', [AuthAPIController::class, 'logout'])->name('logout');
+// });
+
+// 
 
 
-Route::group(['middleware'=>'auth:api'],function (){
-    
-    Route::post('/logout',[AuthController::class,'logout']);
+Route::group(['middleware' => 'auth:api'], function () {
+
+    Route::post('/logout', [AuthAPIController::class, 'logout']);
 
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthAPIController::class, 'logout']);
 });
 
 
