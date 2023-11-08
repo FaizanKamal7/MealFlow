@@ -32,6 +32,16 @@ class MealPlan extends Model
         return $this->belongsTo(Driver::class, 'customer_id');
     }
 
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['business'] = $this->business->toArray();
+        $array['customer'] = $this->customer->toArray();
+
+        return $array;
+    }
+
+
     protected static function newFactory()
     {
         return \Modules\DeliveryService\Database\factories\MealPlanFactory::new();

@@ -3,6 +3,7 @@
 namespace Modules\DeliveryService\Http\Controllers\Bags;
 
 use App\Enum\BagStatusEnum;
+use App\Enum\DeliveryStatusEnum;
 use App\Enum\EmptyBagCollectionStatusEnum;
 use App\Http\Helper\Helper;
 use Exception;
@@ -507,7 +508,7 @@ class BagsController extends Controller
 
 
             $delivery_data = [
-                'status' => 'UNASSIGN',
+                'status' => DeliveryStatusEnum::UNASSIGNED->value,
                 'is_recurring' => false,
                 'payment_status' => false,
                 'is_sign_required' => $signature,
