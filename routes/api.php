@@ -15,7 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['cors', 'json.response']], function () {
+    // Public Routes
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/verify', [AuthController::class, 'verify'])->name('verify');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+});
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Route::middleware('auth:api')->group(function () {
+//     // Protected Routes
+//     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// });
+
+// 
 
 // Route::group(['middleware'=>'auth:sanctum'],function (){
 
