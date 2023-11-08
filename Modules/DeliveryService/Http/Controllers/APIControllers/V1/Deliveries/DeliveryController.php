@@ -568,7 +568,7 @@ class DeliveryController extends Controller
     // ------------------------------------- SUGGESTED DRIVER-----------------------
     function unassigned_deliveries()
     {
-        $deliveries = $this->deliveryRepository->getDeliveriesByStatus('UNASSIGN');
+        $deliveries = $this->deliveryRepository->getDeliveriesByStatus(DeliveryStatusEnum::UNASSIGNED->value);
 
         foreach ($deliveries as $delivery) {
             $customerAddress = $this->customerAddressRepository->getCustomerAddressesbyID($delivery->customer_address_id);
