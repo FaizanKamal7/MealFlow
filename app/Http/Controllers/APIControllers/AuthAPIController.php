@@ -20,23 +20,45 @@ class AuthAPIController extends Controller
     use HttpResponses, HasApiTokens;
 
 
+
+
     public function login(Request $request)
     {
+       
+    
         // return response()->json("hey there");
+        // $request->validate([
+        //     "email" => "required|email",
+        //     "password" => "required",
+        // ]);
+        // $credentials = $request->only("email", "password");
+        // if (!Auth::attempt($credentials)) {
+        //     return $this->error('', 'Credientials do not match', 401);
+        // }
+        // $user = User::where('email', $request->email)->first();
+        // return $this->success([
+        //     'user' => $user,
+        //     'token' => $user->createToken('Api Token of' . $user->name)->accessToken,
+        // ]);
+    
         $request->validate([
-            "email" => "required|email",
-            "password" => "required",
+            'email_or_phone' => 'required',
+            'password' => 'required|min:6',
         ]);
-        $credentials = $request->only("email", "password");
-        if (!Auth::attempt($credentials)) {
+
+        $fieldType = filter_var($request->email_or_phone, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+        if (!Auth::attempt([$fieldType => $request->email_or_phone, 'password' => $request->password])) {
             return $this->error('', 'Credientials do not match', 401);
         }
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email_or_phone)->first();
         return $this->success([
             'user' => $user,
             'token' => $user->createToken('auth-token' . $user->name)->accessToken,
         ]);
     }
+
+
 
 
     public function logout()
