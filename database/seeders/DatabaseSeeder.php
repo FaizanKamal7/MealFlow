@@ -96,6 +96,20 @@ class DatabaseSeeder extends Seeder
         $this->command->warn(PHP_EOL . 'Importing departments...');
         $this->call(DepartmentTableSeeder::class);
         $this->command->info('Departments added.');
+
+        // ------ Adding Designations
+        $this->command->warn(PHP_EOL . 'Importing Designations...');
+        $this->call(DesignationTableSeeder::class);
+        $this->command->info('Designations added.');
+        // ------ Adding RolePermission 
+        $this->command->warn(PHP_EOL . 'Importing RolePermission...');
+        $this->call(RolePermissionTableSeeder::class);
+        $this->command->info('RolePermission added.');
+        
+        // ------ Adding UserRoles 
+        $this->command->warn(PHP_EOL . 'Importing UserRoles...');
+        $this->call(UserRolesTableSeeder::class);
+        $this->command->info('UserRoles added.');
     }
 
     protected function withProgressBar(int $amount, Closure $createCollectionOfOne): Collection

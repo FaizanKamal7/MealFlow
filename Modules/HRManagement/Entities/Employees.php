@@ -2,6 +2,7 @@
 
 namespace Modules\HRManagement\Entities;
 
+
 use App\Http\Helper\Helper;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Request;
 use Modules\CRM\Entities\Leads;
 use Modules\FleetService\Entities\Driver;
 use Modules\HRManagement\Database\factories\EmployeesFactory;
+
 
 class Employees extends Model
 {
