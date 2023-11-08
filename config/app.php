@@ -190,7 +190,7 @@ return [
          */
         Barryvdh\Debugbar\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-        Laravel\Passport\PassportServiceProvider::class,
+        // Laravel\Passport\PassportServiceProvider::class,
 
         /*
          * Application Service Providers...
