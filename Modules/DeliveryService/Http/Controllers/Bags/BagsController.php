@@ -3,6 +3,7 @@
 namespace Modules\DeliveryService\Http\Controllers\Bags;
 
 use App\Enum\BagStatusEnum;
+use App\Enum\DeliveryStatusEnum;
 use App\Enum\EmptyBagCollectionStatusEnum;
 use App\Http\Helper\Helper;
 use Exception;
@@ -495,7 +496,7 @@ class BagsController extends Controller
                     'is_active' => true
                 ], false);
                 $customer = $this->customerRepository->create(['user_id' => $user->id]);
-                $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $businessIdInput]);
+                $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $businessIdInput);
                 // $this->businessCustomerRepository->create(['customer_id' => $customer->id, 'business_id' => $request->business_id]);
             }
 
@@ -507,7 +508,7 @@ class BagsController extends Controller
 
 
             $delivery_data = [
-                'status' => 'UNASSIGN',
+                'status' => DeliveryStatusEnum::UNASSIGNED->value,
                 'is_recurring' => false,
                 'payment_status' => false,
                 'is_sign_required' => $signature,
