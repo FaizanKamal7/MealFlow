@@ -3,6 +3,7 @@
 namespace Modules\FleetService\Entities;
 
 use App\Models\Area;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,7 +36,10 @@ class Driver extends Model
     {
         return $this->belongsTo(Employees::class, 'employee_id');
     }
-
+    public function user()
+    {
+        return $this->hasOneThrough(Employees::class,User::class);
+    }
     public function timelines()
     {
         return $this->hasMany(VehicleTimeline::class);

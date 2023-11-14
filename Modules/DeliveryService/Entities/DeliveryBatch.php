@@ -128,7 +128,14 @@ class DeliveryBatch extends Model
                 $driver_id = $attributes['driver_id'];
                 $vehicle_id = $attributes['vehicle_id'];
 
-                if ($status == BatchStatusEnum::ENDED->value) {
+                if ($status == BatchStatusEnum::STARTED->value) {
+                    $delivery_batch_deliveries = $helper->getDeliveryBatchDeliveries($id);
+                    $data = ['status' => DeliveryStatusEnum::DISPATCHED->value];
+                    foreach ($delivery_batch_deliveries as $single_delivery) {
+                        $helper->updateDelivery($single_delivery, $data);
+                    }
+
+                } else if ($status == BatchStatusEnum::ENDED->value) {
                     $delivery_batch_empty_bag_collections = $helper->getDeliveryBatchBagCollection($id);
                     // ----- On completion of delivery batch update collected bags on bags timeline 
                     foreach ($delivery_batch_empty_bag_collections as $single_bag) {
@@ -144,6 +151,9 @@ class DeliveryBatch extends Model
                         }
                     }
                 }
+
+
+
             }
         });
 

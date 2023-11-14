@@ -13,7 +13,9 @@ use App\Http\Helper\Helper;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
 use App\Interfaces\DeliverySlotInterface;
+use App\Interfaces\RoleInterface;
 use App\Interfaces\UserInterface;
+use App\Interfaces\UserRoleInterface;
 use App\Traits\HttpResponses;
 use Exception;
 use Illuminate\Http\Request;
@@ -647,7 +649,7 @@ class DeliveryController extends Controller
     public function getDriverDeliveries(Request $request)
     {
         try {
-            $driver_id = $request->get('driver_id');
+            $driver_id = auth()->user()->driver->id;
             $delivery_batch = $this->deliveryBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
             $data = ['delivery_batch' => $delivery_batch];
             if (!$data) {

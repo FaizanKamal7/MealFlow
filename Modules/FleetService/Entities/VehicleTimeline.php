@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\FleetService\Database\factories\VehicleTimelinesFactory;
+use Modules\HRManagement\Entities\Employees;
 
 class VehicleTimeline extends Model
 {
