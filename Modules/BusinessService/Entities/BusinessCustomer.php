@@ -12,10 +12,8 @@ class BusinessCustomer extends Model
     use HasUuids;
 
     protected $fillable = [
-        'id',
         'customer_id',
         'business_id',
-        'is_deleted',
     ];
 
     protected static function newFactory()
@@ -34,12 +32,12 @@ class BusinessCustomer extends Model
     }
 
 
-    public function toArray()
-    {
-        $array = parent::toArray();
-        $array['customer'] = $this->customer->toArray();
-        $array['business'] = $this->business->toArray();
+    // public function toArray()
+    // {
+    //     $array = parent::toArray();
+    //     $array['customer'] = $this->customer->toArray();
+    //     $array['business'] = $this->business->toArray();
 
-        return $array;
-    }
+    //     return $array;
+    // }
 }

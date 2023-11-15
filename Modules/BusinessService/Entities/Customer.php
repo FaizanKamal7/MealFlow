@@ -38,15 +38,14 @@ class Customer extends Model
         return $this->hasMany(CustomerSecondaryNumber::class);
     }
 
-
     // Customize JSON Serialization to make sure below relationships are included whenever Customer is converted to an array or JSON
     public function toArray()
     {
         $array = parent::toArray();
         $array['customerAddresses'] = $this->customerAddresses->toArray();
         $array['secondaryNumbers'] = $this->secondaryNumbers->toArray();
-        $array['businessCustomers'] = $this->businessCustomers->toArray();
-        $array['user'] = $this->user->toArray();
+        $array['businessCustomers'] = $this->businessCustomers ? $this->businessCustomers->toArray() : [];
+        $array['user'] = $this->user ? $this->user->toArray() : [];
 
         return $array;
     }

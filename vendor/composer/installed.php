@@ -3,9 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-
-        'reference' => '6fe58d872beaf85a2b581821fec5ad6224118a64',
-
+        'reference' => '24140cd0e48fa6f00192de1629712f9fcad8a4d8',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -519,8 +517,15 @@
                 0 => '*',
             ),
         ),
-
-
+        'laravel/breeze' => array(
+            'pretty_version' => 'v1.19.2',
+            'version' => '1.19.2.0',
+            'reference' => '725e0c4fb1f630afdd90b5fba2a7f6d8d547ac29',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/breeze',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'laravel/framework' => array(
             'pretty_version' => 'v9.52.16',
             'version' => '9.52.16.0',
@@ -533,7 +538,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '251ec066600f33a0be3d049b5a9d758b2b64ea82',
+            'reference' => '24140cd0e48fa6f00192de1629712f9fcad8a4d8',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -567,9 +572,9 @@
             'dev_requirement' => true,
         ),
         'laravel/sanctum' => array(
-            'pretty_version' => 'v3.3.1',
-            'version' => '3.3.1.0',
-            'reference' => '338f633e6487e76b255470d3373fbc29228aa971',
+            'pretty_version' => 'v3.3.2',
+            'version' => '3.3.2.0',
+            'reference' => 'e1a272893bec13cf135627f7e156030b3afe1e60',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laravel/sanctum',
             'aliases' => array(),
@@ -878,6 +883,15 @@
             'reference' => '3cb4d163b58589e47b35103e8e5e6a6a475b47be',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nyholm/psr7',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'orangehill/iseed' => array(
+            'pretty_version' => 'v3.0.3',
+            'version' => '3.0.3.0',
+            'reference' => '92b98c8bda6280afa0fac016b1b49caf6f57f18d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../orangehill/iseed',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

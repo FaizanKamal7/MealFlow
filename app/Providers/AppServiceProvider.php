@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Enum\ServiceTypeEnum;
 use App\Interfaces\ApplicationInterface;
 use App\Interfaces\ApplicationModelInterface;
 use App\Interfaces\AreaInterface;
@@ -89,6 +88,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(InvoiceItemInterface::class, InvoiceItemRepository::class);
         $this->app->bind(InvoiceItemInterface::class, InvoiceItemRepository::class);
         $this->app->bind(ApplicationInterface::class, ApplicationRepository::class);
+        
     }
 
     /**

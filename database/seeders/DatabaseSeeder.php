@@ -110,6 +110,8 @@ class DatabaseSeeder extends Seeder
         $this->command->warn(PHP_EOL . 'Importing UserRoles...');
         $this->call(UserRolesTableSeeder::class);
         $this->command->info('UserRoles added.');
+        $this->call(BusinessesOldDbTableSeeder::class);
+        $this->call(LogxCustomersOldDbTableSeeder::class);
     }
 
     protected function withProgressBar(int $amount, Closure $createCollectionOfOne): Collection

@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('meal_plan_logs', function (Blueprint $table) {
+        Schema::create('special_instructions', function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->string("action");
-            $table->uuid("action_by");
-            $table->uuid("meal_plan_id");
-            $table->foreign('action_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('meal_plan_id')->references('id')->on('meal_plans')->onDelete('cascade');
+            $table->longText('special_instruction');
+            $table->json('special_instruction_files')->nullable();
+            $table->uuid('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meal_plan_logs');
+        Schema::dropIfExists('special_instructions');
     }
 };

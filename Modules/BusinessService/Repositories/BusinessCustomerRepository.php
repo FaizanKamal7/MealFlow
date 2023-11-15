@@ -22,6 +22,46 @@ class BusinessCustomerRepository implements BusinessCustomerInterface
             'customer_id' => $customer_id,
             'business_id' => $business_id,
         ]);
+
+        // $businessCustomer = BusinessCustomer::where([
+        //     'customer_id' => $customer_id,
+        //     'business_id' => $business_id,
+        // ])->first();
+        // if (!$businessCustomer) {
+        //     $businessCustomer = BusinessCustomer::create([
+        //         'customer_id' => $customer_id,
+        //         'business_id' => $business_id,
+        //     ]);
+        // }
+        // return $businessCustomer;
+        // Query Builder
+        // $businessCustomer = DB::table('business_customers')
+        //     ->where('customer_id', $customer_id)
+        //     ->where('business_id', $business_id)
+        //     ->first();
+
+        // if (!$businessCustomer) {
+        //     $businessCustomerId = DB::table('business_customers')
+        //         ->insert([
+        //             'id' => "213242",
+        //             'customer_id' => $customer_id,
+        //             'business_id' => $business_id,
+        //         ]);
+        //     $businessCustomer = DB::table('users')->find($businessCustomerId);
+        // }
+        // // dd($businessCustomer);
+        // return $businessCustomer;
+
+        // Your SQL query
+        // $sql = "INSERT INTO business_customers (customer_id, business_id) 
+        // SELECT * FROM (SELECT '$customer_id', '$business_id') AS tmp 
+        // WHERE NOT EXISTS (
+        //     SELECT 1 FROM business_customers 
+        //     WHERE customer_id = '$customer_id' AND business_id = '$business_id'
+        // ) LIMIT 1";
+
+        // $result = DB::statement($sql);
+        // return $result;
     }
 
     public function getBusinessCustomer($business_id)

@@ -184,11 +184,6 @@ class BusinessOnboardingController extends Controller
             $business = $this->businessRepository->createBusiness(
                 name: $buisness_name,
                 logo: $logo,
-                card_name: $card_name,
-                card_number: $card_number,
-                card_expiry_month: $card_expiry_month,
-                card_expiry_year: $card_expiry_year,
-                card_cvv: $card_cvv,
                 business_category_id: $business_category_id,
                 admin: $user->id,
                 status: BusinessStatusEnum::NEW_REQUEST->value,

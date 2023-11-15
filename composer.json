@@ -19,6 +19,7 @@
         "maatwebsite/excel": "*",
         "mhmiton/laravel-modules-livewire": "1.6.0",
         "nwidart/laravel-modules": "^9.0",
+        "orangehill/iseed": "^3.0",
         "propaganistas/laravel-phone": "^5.0",
         "saade/blade-iconsax": "^1.1",
         "simplesoftwareio/simple-qrcode": "4.2.0",

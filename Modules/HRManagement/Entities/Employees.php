@@ -45,6 +45,8 @@ class Employees extends Model
         "leave_policy_id",
     ];
 
+
+
     public function employeeDepartments()
     {
         return $this->hasMany(EmployeeDepartments::class, "employee_id");

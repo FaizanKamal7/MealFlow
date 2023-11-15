@@ -15,6 +15,7 @@ use Modules\DeliveryService\Entities\DeliveryTimeline;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
+use App\Repositories\AreaRepository;
 use Modules\BusinessService\Repositories\CustomerAddressRepository;
 use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Entities\EmptyBagCollection;
@@ -25,10 +26,12 @@ class Helper
 {
 
     private $customerAddressRepository;
-    public function __construct(CustomerAddressRepository $customerAddressRepository = null)
+    private $areaRepository;
+    public function __construct(CustomerAddressRepository $customerAddressRepository = null, AreaRepository $areaRepository = null)
 
     {
         $this->customerAddressRepository = $customerAddressRepository;
+        $this->areaRepository = $areaRepository;
     }
     public function storeFile($file, $module, $directory)
     {
@@ -186,15 +189,24 @@ class Helper
 
     function getLocationFromCoordinates($latitude, $longitude)
     {
+
         $api_key = Config::get('services.google.key');
         $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$api_key&language_code=en"; // Add &language=en
-        $response = file_get_contents($url);
+        // $response = file_get_contents($url);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response = curl_exec($ch);
+        curl_close($ch);
         $data = json_decode($response, true);
 
         $country = $state = $city = $area = '';
 
-        if ($data && isset($data['results'][1])) {
-            foreach ($data['results'][1]['address_components'] as $component) {
+        if ($data && isset($data['results'][0])) {
+            foreach ($data['results'][0]['address_components'] as $component) {
                 $types = $component['types'];
                 if (in_array('country', $types)) {
                     $country = $component['long_name'];
@@ -259,10 +271,15 @@ class Helper
         }
 
 
-        if ($area_name) {
+        if ($area_name && $area_name != "") {
 
             $area_record = Area::where('name', 'LIKE', '%' . $area_name . '%')->first();
-
+            if ($area_record == null && $db_map_location_ids['city_id'] != "") {
+                $area_record =   $this->areaRepository->createArea(
+                    name: $area_name,
+                    city_id: $db_map_location_ids['city_id'],
+                );
+            }
             $db_map_location_ids['area_id'] = $area_record ? $area_record->id : "";
         } else {
             $db_map_location_ids['area_id'] = "";
@@ -349,6 +366,8 @@ class Helper
 
     function convertStringAddressToCoordinates($address)
     {
+        echo "<br> Inside convertStringAddressToCoordinates. " . json_encode($address) . "<br>";
+
         $api_key = Config::get('services.google.key');
         $maxAttempts = 5; // Set a maximum number of attempts
         for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
@@ -407,6 +426,10 @@ class Helper
 
     function getExcelSheetData($file)
     {
+
+        if (!$file) {
+            return [];
+        }
         $spreadsheet = IOFactory::load($file->getPathname());
 
         // Get data from the first sheet

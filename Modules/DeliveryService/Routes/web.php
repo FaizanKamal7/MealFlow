@@ -26,6 +26,8 @@ Route::prefix('admin/deliveries')->group(function () {
 
 
 
+    // Route::post('upload/test_upload_db', [DeliveryController::class, "testUploadDB"])->name("test_upload_db");
+    Route::post('upload/test_upload_db', [DeliveryController::class, "testUploadDBCustomers"])->name("test_upload_db");
 
 
     //    Route::group(['prefix'=> 'deliveries'], function (){
@@ -34,7 +36,6 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::post('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByForm"])->name("upload_deliveries_by_form");
     Route::get('generate-template', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "generateAndDownloadDeliveryTemplate"])->name("generate_delivery_template");
     Route::post('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
-    // Route::get('upload/excel', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveriesByExcel"])->name("upload_deliveries_by_excel");
     Route::get('/batch', [DeliveryController::class, "batch"])->name("batch");
     Route::get('/update', [DeliveryController::class, "update"])->name("users.update");
     Route::post('/upload-conflicted-deliveries', [DeliveryController::class, "uploadConflictedDeliveries"])->name("upload_conflicted_deliveries");
