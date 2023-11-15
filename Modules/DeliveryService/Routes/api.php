@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
         // ------------------------------------- D E L I V E R I E S - R O U T E S -----------------------
         Route::prefix('deliveries/')->group(function () {
             Route::GET('get', [DeliveryController::class, "getDriverDeliveries"]);
-            Route::GET('complete-delivery', [DeliveryController::class, "completeDelivery"]);
+            Route::POST('complete-delivery', [DeliveryController::class, "completeDelivery"]);
 
 
         });

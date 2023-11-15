@@ -299,7 +299,7 @@ function assignDeliveries() {
         }
     });
     const driver_id = document.getElementById("driverSelect").value;
-    var url = "/admin/deliveries/assigning_process/";
+    var url = "/admin/deliveries/assigning_process";
     if (url.startsWith("http://")) {
         url = url.replace("http://", "https://");
     }
