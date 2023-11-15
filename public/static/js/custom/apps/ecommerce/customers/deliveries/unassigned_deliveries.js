@@ -304,7 +304,7 @@ function assignDeliveries() {
         url = url.replace("http://", "https://");
     }
     var csrf_token = "{{ csrf_token() }}";
-    alert(url);
+   
     $.ajax({
         url: url,
         type: "POST",
