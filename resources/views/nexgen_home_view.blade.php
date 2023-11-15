@@ -793,6 +793,7 @@
                                             <option>Middle Marketing</option>
                                             <option>Legal Consulting</option>
                                             <option>Regulatory Risk</option>
+                                            <option>new</option>
                                             <option>Other</option>
                                         </select>
                                     </div>
