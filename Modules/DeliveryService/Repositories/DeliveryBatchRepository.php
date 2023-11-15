@@ -27,7 +27,7 @@ class DeliveryBatchRepository implements DeliveryBatchInterface
 
   public function updateDeliveryBatch($batch_id, $data)
   {
-    $batch =  DeliveryBatch::findOrFail($batch_id);
+    $batch = DeliveryBatch::findOrFail($batch_id);
     return $batch->update($data);
   }
 
@@ -35,7 +35,7 @@ class DeliveryBatchRepository implements DeliveryBatchInterface
   {
     $batch = DeliveryBatch::where('driver_id', $driver_id)->where('batch_end_time', null)->first();
     if (!$batch) {
-      $batch =  $this->createDeliveryBatch($driver_id);
+      $batch = $this->createDeliveryBatch($driver_id);
     }
     return $batch;
   }
@@ -52,46 +52,49 @@ class DeliveryBatchRepository implements DeliveryBatchInterface
 
     // Fetch all related data in bulk:
 
+    if(empty($deliveryBatch)) {
+      return null;
+    }
     $deliveries = [];
     $customerAddresses = [];
     $customers = [];
     $users = [];
     $deliverySlots = [];
 
-    if ($deliveryBatch) {
-      $deliveries = DB::table('deliveries')
-        ->where('delivery_batch_id', $deliveryBatch->id)
-        ->get()
-        ->keyBy('id');
 
-      $customerAddressIds = $deliveries->pluck('customer_address_id');
-      $customerAddresses = DB::table('customer_addresses')
-        ->select('id', 'address', 'latitude', 'longitude')
-        ->whereIn('id', $customerAddressIds)
-        ->get()
-        ->keyBy('id');
+    $deliveries = DB::table('deliveries')
+      ->where('delivery_batch_id', $deliveryBatch->id)
+      ->get()
+      ->keyBy('id');
 
-      $customerIds = $deliveries->pluck('customer_id');
-      $customers = DB::table('customers')
-        ->select('id', 'user_id')
-        ->whereIn('id', $customerIds)
-        ->get()
-        ->keyBy('id');
+    $customerAddressIds = $deliveries->pluck('customer_address_id');
+    $customerAddresses = DB::table('customer_addresses')
+      ->select('id', 'address', 'latitude', 'longitude')
+      ->whereIn('id', $customerAddressIds)
+      ->get()
+      ->keyBy('id');
 
-      $userIds = $customers->pluck('user_id');
-      $users = DB::table('users')
-        ->select('id', 'name', 'phone')
-        ->whereIn('id', $userIds)
-        ->get()
-        ->keyBy('id');
+    $customerIds = $deliveries->pluck('customer_id');
+    $customers = DB::table('customers')
+      ->select('id', 'user_id')
+      ->whereIn('id', $customerIds)
+      ->get()
+      ->keyBy('id');
 
-      $deliverySlotIds = $deliveries->pluck('delivery_slot_id');
-      $deliverySlots = DB::table('delivery_slots')
-        ->select('id', 'start_time', 'end_time')
-        ->whereIn('id', $deliverySlotIds)
-        ->get()
-        ->keyBy('id');
-    }
+    $userIds = $customers->pluck('user_id');
+    $users = DB::table('users')
+      ->select('id', 'name', 'phone')
+      ->whereIn('id', $userIds)
+      ->get()
+      ->keyBy('id');
+
+    $deliverySlotIds = $deliveries->pluck('delivery_slot_id');
+    $deliverySlots = DB::table('delivery_slots')
+      ->select('id', 'start_time', 'end_time')
+      ->whereIn('id', $deliverySlotIds)
+      ->get()
+      ->keyBy('id');
+
     // Group the data:
 
     foreach ($deliveries as $delivery) {
