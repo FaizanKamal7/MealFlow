@@ -7,6 +7,7 @@ use App\Enum\BusinessWalletTransactionTypeEnum;
 use App\Enum\EmptyBagCollectionStatusEnum;
 use App\Enum\InvoiceItemTypeEnum;
 use App\Enum\BatchStatusEnum;
+use App\Enum\BagTypeEnum;
 use App\Enum\DeliveryImageTypeEnum;
 use App\Enum\DeliveryStatusEnum;
 use App\Http\Helper\Helper;
@@ -143,7 +144,7 @@ class DeliveryController extends Controller
         $this->businessWalletTransactionRepository = $businessWalletTransactionRepository;
         $this->emptyBagcollectionRepository = $emptyBagcollectionRepository;
         $this->bagTimeRepository = $bagTimeRepository;
-        $this->roleRepository =  $roleRepository;
+        $this->roleRepository = $roleRepository;
         $this->userRoleRepository = $userRoleRepository;
         $this->helper = $helper;
     }
@@ -224,7 +225,7 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
@@ -328,7 +329,7 @@ class DeliveryController extends Controller
 
                             $address_data = [
                                 'address' => $sheet_address,
-                                'address_type' => AddressTypeEnum::DEFAULT->value,
+                                'address_type' => AddressTypeEnum::DEFAULT ->value,
                                 'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
                                 'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
                                 'customer_id' => $customer->id,
@@ -549,8 +550,8 @@ class DeliveryController extends Controller
         // - Making all words lower case
         // - replace spaces with underscore "_"
         // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+        $actual_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
 
         // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
         // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
@@ -666,6 +667,7 @@ class DeliveryController extends Controller
     public function completeDelivery(Request $request)
     {
         try {
+            ini_set('max_execution_time', 30000000000);
             // Check if $validator = Validator::make($request->all(), [
             $validator = Validator::make($request->all(), [
                 'delivery_id' => ['required', 'exists:deliveries,id'],
@@ -694,9 +696,9 @@ class DeliveryController extends Controller
             $delivery = $this->deliveryRepository->getSingleDelivery($delivery_id);
 
             $date = date('Y-m-d');
-            $delivery_count =  $this->deliveryRepository->getDeliveredCountOfDays($delivery->branch_id, $date,  $date);
-            $range_price =  $this->rangePricingRepository->getRangePriceOfDelivery($delivery_count, $delivery->customerAddress->city_id,  $delivery->branch->business_id);
-            $delivery_slot_price =  $this->deliverySlotPricingRepository->getDeliverySlotPriceOfDelivery($delivery->delivery_slot_id, $delivery->customerAddress->city_id,  $delivery->branch->business_id);
+            $delivery_count = $this->deliveryRepository->getDeliveredCountOfDays($delivery->branch_id, $date, $date);
+            $range_price = $this->rangePricingRepository->getRangePriceOfDelivery($delivery_count, $delivery->customerAddress->city_id, $delivery->branch->business_id);
+            $delivery_slot_price = $this->deliverySlotPricingRepository->getDeliverySlotPriceOfDelivery($delivery->delivery_slot_id, $delivery->customerAddress->city_id, $delivery->branch->business_id);
 
             // ----- If no price is set for the city
             $validator->after(function ($validator) use ($range_price, $delivery_slot_price, $delivery) {
@@ -710,18 +712,22 @@ class DeliveryController extends Controller
             }
             DB::beginTransaction();
 
-            // ----- Deduct amount for delivery 
-            $amount_to_deduct = $delivery_slot_price && $range_price ?  min($delivery_slot_price->delivery_price, $range_price->delivery_price) : $delivery_slot_price->delivery_price ?? $range_price->delivery_price;
-            $invoice_item = $this->invoiceItemRepository->createInvoiceItem(
-                $amount_to_deduct == $delivery_slot_price->delivery_price ?  InvoiceItemTypeEnum::DELIVERY_SLOT_PRICING->value : InvoiceItemTypeEnum::RANGE_PRICING->value,
-                $amount_to_deduct,
-                $delivery,
-                $delivery, // *Polymorph identification
+           
+                // ----- Deduct amount for delivery 
+            $amount_to_deduct = $delivery_slot_price && $range_price ? min($delivery_slot_price->delivery_price, $range_price->delivery_price) : $delivery_slot_price->delivery_price ?? $range_price->delivery_price;
+            $invoice_item = $this->invoiceItemRepository->createInvoiceItem( item_type:$delivery_slot_price ? InvoiceItemTypeEnum::DELIVERY_SLOT_PRICING->value : InvoiceItemTypeEnum::RANGE_PRICING->value,
+               amount: $amount_to_deduct,
+               item_info: $delivery,
+               service:$delivery // *Polymorph identification
             );
+            
+            
+
             // ----- Updating wallet
             $business_wallet = $this->businessWalletRepository->getBusinessWallet($delivery->branch->business_id);
             $this->businessWalletRepository->update($business_wallet->id, ['balance' => $business_wallet->balance - $amount_to_deduct]);
-            $this->businessWalletTransactionRepository->createBusinessWalletTransactions($amount_to_deduct, BusinessWalletTransactionTypeEnum::DEBIT->value, $business_wallet->id, $invoice_item->id);
+            // $this->businessWalletTransactionRepository->createBusinessWalletTransactions($amount_to_deduct, BusinessWalletTransactionTypeEnum::DEBIT->value, $business_wallet->id, $invoice_item->id);
+            dd($delivery);
 
 
             // ----- Uploading images
@@ -753,17 +759,19 @@ class DeliveryController extends Controller
             // ---- As bag is delivered, it need to be collected, hence adding it in empty bag collections 
             $delivery_bag = $this->deliveryBagRepository->getDeliveryBagOfDelivery($delivery->id);
 
+            if ($delivery->bag_type == BagTypeEnum::COLLER_BAG->value) {
+                $this->emptyBagcollectionRepository->createBagCollection(
+                    [
+                        'status' => EmptyBagCollectionStatusEnum::UNASSIGNED->value,
+                        'bag_id' => $delivery_bag->bag_id,
+                        'delivery_id' => $delivery_id,
+                        'customer_id' => $delivery->customer_id,
+                        'customer_address_id' => $delivery->customer_address_id,
+                    ]
+                );
+            }
 
-            $this->emptyBagcollectionRepository->createBagCollection(
-                [
-                    'status' => EmptyBagCollectionStatusEnum::UNASSIGNED->value,
-                    'bag_id' => $delivery_bag->bag_id,
-                    'delivery_id' => $delivery_id,
-                    'customer_id' => $delivery->customer_id,
-                    'customer_address_id' => $delivery->customer_address_id,
-                ]
-            );
-            $data =  $this->deliveryRepository->updateDelivery($delivery_id, [
+            $data = $this->deliveryRepository->updateDelivery($delivery_id, [
                 'status' => DeliveryStatusEnum::DELIVERED->value,
                 'empty_bag_count' => $empty_bag_count,
             ]);
@@ -932,7 +940,7 @@ class DeliveryController extends Controller
             ];
 
             // --- Link bag with delivery
-            $result =  $this->deliveryBagRepository->create($data);
+            $result = $this->deliveryBagRepository->create($data);
 
             if (!$result) {
                 return $this->error($result, "Something went wrong. Bag did not link");
@@ -975,13 +983,13 @@ class DeliveryController extends Controller
                 "status" => $status,
                 "vehicle_id" => $vehicle_id,
             ] : [
-                "batch_end_time" => date("Y-m-d H:i:s"),
-                "batch_end_map_coordinates" => $map_coordinates,
-                "status" => $status,
-                "vehicle_id" => $vehicle_id,
-            ];
+                    "batch_end_time" => date("Y-m-d H:i:s"),
+                    "batch_end_map_coordinates" => $map_coordinates,
+                    "status" => $status,
+                    "vehicle_id" => $vehicle_id,
+                ];
 
-            $result =  $this->pickupBatchRepository->updatePickupBatch($pickup_batch_id, $data);
+            $result = $this->pickupBatchRepository->updatePickupBatch($pickup_batch_id, $data);
 
             if (!$result) {
                 return $this->error($result, "Error: Pickup Batch Not Updated");

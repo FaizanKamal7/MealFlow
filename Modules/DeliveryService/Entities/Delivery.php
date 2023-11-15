@@ -221,9 +221,14 @@ class Delivery extends Model
                         $description = "dispatched from warehouse for delivery";
                         $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::DISPATCHED->value, $action_by, $vehicle_id, $description);
                     } elseif ($status == DeliveryStatusEnum::DELIVERED->value) {
-                        $description = "Delivery Bag delivered at customer's location";
-                        $bag = DeliveryBag::where('delivery_id', $delivery_id)->last();
-                        $helper->bagTimeline($bag->id, $delivery_id, BagStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
+                        $bag = DeliveryBag::where('delivery_id', $delivery_id)->latest()->first();
+                        if ($bag) {
+
+                            $bag_description = "Delivery Bag delivered at customer's location";
+                            $helper->bagTimeline($bag->id, $delivery_id, BagStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $bag_description);
+
+                        }
+                        $description = "Delivery completed";
                         $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
                     }
                 }

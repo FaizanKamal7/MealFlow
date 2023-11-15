@@ -1164,7 +1164,7 @@
                 </div>
             </div>
 
-            @can('view_range_pricing')
+            
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
@@ -1207,7 +1207,7 @@
                 </div>
             </div>
 
-            @endcan
+            
 
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <a href="{{ route('get_all_delivery_slots') }}">
