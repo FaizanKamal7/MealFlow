@@ -27,14 +27,14 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
         // ------------------------------------- D E L I V E R I E S - R O U T E S -----------------------
         Route::prefix('deliveries/')->group(function () {
             Route::GET('get', [DeliveryController::class, "getDriverDeliveries"]);
+            Route::GET('complete-delivery', [DeliveryController::class, "completeDelivery"]);
+
 
         });
 
         // ------------------------------------- D E L I V E R Y- B A T C H - R O U T E S -----------------------
 
         Route::prefix('deliverybatch/')->group(function () {
-            // Route::POST('start-batch', [DeliveryBatchController::class, "startDeliveryBatch"]);
-            // Route::POST('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
             Route::POST('update-delivery-batch-progress', [DeliveryBatchController::class, "updateDeliveryBatchpProgress"]);
         });
 

@@ -471,9 +471,9 @@ class Helper
     }
 
     function updateDelivery($delivery,$data){
-        $delivery = Delivery::find($delivery->id);
-    $delivery->update($data);
-        // return $delivery->update($data);
+    //     $delivery = Delivery::find($delivery->id);
+    // $delivery->update($data);
+        return $delivery->update($data);
         // return $this->deliveryRepository->updateDelivery($delivery_id,$data);
     }
 
