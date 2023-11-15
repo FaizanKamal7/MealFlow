@@ -25,6 +25,7 @@ use App\Interfaces\RoleInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserRoleInterface;
 use DateTime;
+use Illuminate\Support\Facades\Validator;
 use Modules\BusinessService\Interfaces\BranchInterface;
 use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;

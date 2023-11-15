@@ -14,6 +14,8 @@ use Modules\BusinessService\Entities\Business;
 use Modules\BusinessService\Entities\BusinessCustomer;
 use Modules\BusinessService\Entities\BusinessUser;
 use Modules\BusinessService\Entities\Customer;
+use Modules\FleetService\Entities\Driver;
+use Modules\HRManagement\Entities\Employees;
 
 
 
@@ -83,6 +85,17 @@ class User extends Authenticatable
     public function is_admin()
     {
         return $this->business()->exists();
+    }
+    public function driver()
+    {
+        return $this->hasOneThrough(
+            Driver::class,
+            Employees::class,
+            'user_id', // Foreign key on employees table
+            'employee_id', // Foreign key on drivers table
+            'id', // Local key on users table
+            'id' // Local key on employees table
+        );
     }
 }
 

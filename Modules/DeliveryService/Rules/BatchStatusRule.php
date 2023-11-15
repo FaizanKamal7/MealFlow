@@ -42,6 +42,6 @@ class BatchStatusRule implements Rule
      */
     public function message()
     {
-        return 'Pickup Batch Status is not valid (Hint: Try started/ended)';
+        return 'Batch Status is not valid (Hint: Try started/ended)';
     }
 }

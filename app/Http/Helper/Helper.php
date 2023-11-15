@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Config;
 use Modules\CRM\Entities\Task;
 use Modules\DeliveryService\Entities\BagTimeline;
 use Modules\DeliveryService\Entities\DeliveryTimeline;
+use Modules\DeliveryService\Repositories\DeliveryRepository;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
@@ -25,10 +26,12 @@ class Helper
 {
 
     private $customerAddressRepository;
-    public function __construct(CustomerAddressRepository $customerAddressRepository = null)
+    private $deliveryRepository;
+    public function __construct(CustomerAddressRepository $customerAddressRepository = null,DeliveryRepository $deliveryRepository= null)
 
     {
         $this->customerAddressRepository = $customerAddressRepository;
+        $this->deliveryRepository = $deliveryRepository;
     }
     public function storeFile($file, $module, $directory)
     {
@@ -465,6 +468,13 @@ class Helper
     function getDelivery($delivery_id)
     {
         return Delivery::find($delivery_id);
+    }
+
+    function updateDelivery($delivery,$data){
+    //     $delivery = Delivery::find($delivery->id);
+    // $delivery->update($data);
+        return $delivery->update($data);
+        // return $this->deliveryRepository->updateDelivery($delivery_id,$data);
     }
 
     public function removeArrayDuplicatesWithProperty($array = [], $property_name = '')
