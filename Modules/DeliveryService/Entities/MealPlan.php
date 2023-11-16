@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\BusinessService\Entities\Business;
+use Modules\BusinessService\Entities\Customer;
 
 class MealPlan extends Model
 {
@@ -29,11 +30,19 @@ class MealPlan extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Driver::class, 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
-
+    
+    // public function toArray()
+    // {
+    //     $array = parent::toArray();
+    //     $array['business'] = $this->business->toArray();
+    //     $array['customer'] = $this->customer->toArray();
+    //     return $array;
+    // }
     protected static function newFactory()
     {
         return \Modules\DeliveryService\Database\factories\MealPlanFactory::new();
     }
+
 }

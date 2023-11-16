@@ -162,7 +162,7 @@ class CustomersController extends Controller
 
                 $customer = $this->customerRepository->create(['user_id' => $user->id, 'is_notification_enabled' => $is_notifications_enabled]);
                 $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
-                $role = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
+                $role = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER);
                 $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role->id);
             }
 
@@ -170,11 +170,11 @@ class CustomersController extends Controller
 
             $address_data = [
                 'address' =>  $address,
-                'address_type' => AddressTypeEnum::DEFAULT->value,
+                'address_type' => AddressTypeEnum::DEFAULT,
                 'latitude' => $latitude,
                 'longitude' => $longitude,
                 'customer_id' => $customer->id,
-                'address_status' => $latitude ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
+                'address_status' => $latitude ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED : AddressStatusEnum::NO_COORDINATES,
                 'area_id' => $address_area,
                 'city_id' => $address_city,
                 'state_id' => $address_state,
@@ -312,7 +312,7 @@ class CustomersController extends Controller
                                 'password' => Hash::make("Aced732nokia501@"),
                                 'isActive' => true
                             ], false);
-                            $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
+                            $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER);
                             $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id->id);
 
                             $customer = $this->customerRepository->create(['user_id' => $user->id]);
@@ -332,11 +332,11 @@ class CustomersController extends Controller
                         $finalized_address = '';
                         $address_data = [
                             'address' => $sheet_address,
-                            'address_type' => AddressTypeEnum::DEFAULT->value,
+                            'address_type' => AddressTypeEnum::DEFAULT,
                             'latitude' => $latitude,
                             'longitude' => $longitude,
                             'customer_id' => $customer->id,
-                            'address_status' => $new_address_coordinates ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
+                            'address_status' => $new_address_coordinates ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED : AddressStatusEnum::NO_COORDINATES,
                             'area_id' => $area->id,
                             'city_id' => $city->id,
                             'state_id' => $city->state->id,

@@ -113,6 +113,11 @@ class DeliveryRepository implements DeliveryInterface
         return Delivery::whereNull('pickup_batch_id')->get();
     }
 
+    public function getDeliveriesByMealID($meal_id)
+    {
+        return Delivery::where('meal_plan_id', $meal_id)->get();
+    }
+
 
     public function getCompletedPickupDeliveries($start_date, $end_date)
     {
@@ -121,7 +126,7 @@ class DeliveryRepository implements DeliveryInterface
 
     public function updateDeliveryQR($delivery_id, $data)
     {
-        return  Delivery::where('id', $delivery_id)->whereNull('qr_code')->update($data);
+        return Delivery::where('id', $delivery_id)->whereNull('qr_code')->update($data);
     }
 
 

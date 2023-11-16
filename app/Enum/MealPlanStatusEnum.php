@@ -3,9 +3,9 @@
 namespace App\Enum;
 
 
-enum MealPlanStatusEnum: string
+class MealPlanStatusEnum
 {
-    case FROZEN = 'frozen';
-    case ACTIVE = 'active';
-    case ENDED = 'ended';
+    const FROZEN = 'frozen';
+    const ACTIVE = 'active';
+    const ENDED = 'ended';
 }

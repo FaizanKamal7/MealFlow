@@ -8,6 +8,8 @@ use Modules\DeliveryService\Entities\MealPlan;
 class PlanReport extends Component
 {
     public $customer_meal_plans;
+    public $user;
+    
 
     public function render()
     {

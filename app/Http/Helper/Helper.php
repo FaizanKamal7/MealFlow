@@ -445,7 +445,7 @@ class Helper
         return EmptyBagCollection::where(
             [
                 "empty_bag_collection_batch_id" => $empty_bag_collection_batch_id,
-                "status" => EmptyBagCollectionStatusEnum::COMPLETED->value
+                "status" => EmptyBagCollectionStatusEnum::COMPLETED
             ]
         )->get();
     }

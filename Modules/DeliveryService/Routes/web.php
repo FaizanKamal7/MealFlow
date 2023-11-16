@@ -23,11 +23,6 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::post('/upload/save', 'DeliveryServiceController@uploadFile')->name("upload_file");
     Route::get('/', 'DeliveryServiceController@index');
     Route::get('/test', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "test"])->name("test");
-
-
-
-
-
     //    Route::group(['prefix'=> 'deliveries'], function (){
 
     Route::get('upload', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "uploadDeliveries"])->name("upload_deliveries");
@@ -40,17 +35,14 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::post('/upload-conflicted-deliveries', [DeliveryController::class, "uploadConflictedDeliveries"])->name("upload_conflicted_deliveries");
 
     // thhese routes are for suggested driver and assigning of delivery    
-    Route::get('/unassigned-deliveries',  [DeliveryController::class, "unassignedDeliveries"])->name("unassigned_deliveries");
-    Route::POST('/assigning_process',  [DeliveryController::class, "assignDeliveriesToDriver"])->name('assign_delivery_to_driver');
+    Route::get('/unassigned-deliveries', [DeliveryController::class, "unassignedDeliveries"])->name("unassigned_deliveries");
+    Route::POST('/assigning_process', [DeliveryController::class, "assignDeliveriesToDriver"])->name('assign_delivery_to_driver');
     Route::get('/assigned-deliveries', [DeliveryController::class, "viewAssignedDeliveries"])->name("view_assigned_deliveries");
     Route::get('/completed-deliveries', [DeliveryController::class, "viewCompletedDeliveries"])->name("view_completed_deliveries");
 
     Route::get('/print-label', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "printLabel"])->name('print-label');
     Route::post('/upload_deliveries_multiple', [DeliveryController::class, "uploadDeliveriesMultiple"])->name("upload_deliveries_multiple");
     Route::get('/get-business-branches/{id}', [DeliveryController::class, "getBusinessBranches"]);
-
-
-
 
     //TODO:: This route will be moved to Customers Module
     Route::get('get-delivery-addresses', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "getAddresses"])->name("get_customer_address");
@@ -61,8 +53,6 @@ Route::prefix('admin/deliveries')->group(function () {
     Route::get('update-deliveries-label', [DeliveryController::class, "updateDeliveriesLabel"])->name("update_deliveries_label");
     Route::get('deliveries-label/{deliveries}', [DeliveryController::class, "viewDeliveriesLabelView"])->name("view_deliveries_label");
     Route::get('{delivery_id}/timeline', [DeliveryController::class, "deliveryTimeline"])->name("view_delivery_timeline");
-
-
     //    });
 
     Route::group(['prefix' => 'bag/'], function () {
@@ -89,9 +79,6 @@ Route::prefix('admin/deliveries')->group(function () {
             Route::get('/completed-bags-collection', [BagsController::class, "completedBagsCollection"])->name("completed_bags_collection");
             Route::get('/cancelled-bags-collection', [BagsController::class, "cancelledBagsCollection"])->name("cancelled_bags_collection");
             Route::get('/deleted-bags-collection', [BagsController::class, "deletedBagsCollection"])->name("deleted_bags_collection");
-
-
-
             // Route::GET('/d\river-bag-collection', [BagsController::class, "assignBagsCollection"])->name("assign_bag_collection_to_driver");
         });
     });
@@ -106,6 +93,9 @@ Route::prefix('admin/deliveries')->group(function () {
 
     Route::group(['prefix' => 'track/'], function () {
         Route::get('view_pickup_batch', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewPickupBatch"])->name("view_pickup_batch");
+        Route::get('pickup_batch_detail/{deliveryId}', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "PickupBatchDetail"])->name("pickup_batch_detail");
+        Route::get('view_delivery_batch', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "viewDeliveryBatch"])->name("view_delivery_batch");
+        Route::get('delivery_batch_detail/{deliveryId}', [Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController::class, "DeliveryBatchDetail"])->name("delivery_batch_detail");
 
     });
 });

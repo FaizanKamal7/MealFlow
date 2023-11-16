@@ -50,7 +50,7 @@
                 <h6>{{ $date }}</h6>
             </div>
             <div class="form-element-div">
-                <div class="form-group row mb-10">
+                {{-- <div class="form-group row mb-10">
                     <div class="col-md-4">
                         <label class="form-label upload-label">Delivery Address</label>
                         <select id="delivery_address_{{ $i }}" class="form-select meal-control"
@@ -88,7 +88,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-element-div">
                     <div class="form-group row mb-10">
                         <div class="col-md-4">

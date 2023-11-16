@@ -1,5 +1,5 @@
 @extends('layouts.admin_master')
-@section('title', 'View Meal Plan')
+@section('title', 'View Batches')
 
 @section('extra_style')
     <link rel="stylesheet" href="{{ asset('static/css/pickup_batch.css') }}" type="text/css">
@@ -76,63 +76,63 @@
                             <div class="tab-pane fade show active d-flex flex-column" id="kt_tab_pane_1" role="tabpanel">
                                 <?php
                                 // Dummy data array
-                                $deliveries = [
-                                    ['id' => 127, 'time' => '12:09 am', 'driverName' => 'John Doe', 'vehicleNumber' => 'XYZ 1234', 'rate' => '29/65', 'timeLeft' => '4h 26m', 'width' => 60],
-                                    ['id' => 128, 'time' => '1:15 pm', 'driverName' => 'Jane Smith', 'vehicleNumber' => 'ABC 9876', 'rate' => '45/70', 'timeLeft' => '3h 12m', 'width' => 80],
-                                    // ... add as many arrays as you want to loop over
-                                ];
+                                $deliveries = [['id' => 127, 'time' => '12:09 am', 'driverName' => 'John Doe', 'vehicleNumber' => 'XYZ 1234', 'rate' => '29/65', 'timeLeft' => '4h 26m', 'width' => 60], ['id' => 128, 'time' => '1:15 pm', 'driverName' => 'Jane Smith', 'vehicleNumber' => 'ABC 9876', 'rate' => '45/70', 'timeLeft' => '3h 12m', 'width' => 80], ['id' => 129, 'time' => '1:15 pm', 'driverName' => 'Jane Smith', 'vehicleNumber' => 'ABC 9876', 'rate' => '45/70', 'timeLeft' => '3h 12m', 'width' => 80], ['id' => 130, 'time' => '1:15 pm', 'driverName' => 'Jane Smith', 'vehicleNumber' => 'ABC 9876', 'rate' => '45/70', 'timeLeft' => '3h 12m', 'width' => 80]];
                                 ?>
                                 @foreach ($deliveries as $delivery)
-                                    <div class="d-flex batch-row">
-                                        <div class="id-div">
-                                            <p class="delivery-id">ID # {{ $delivery['id'] }}</p>
-                                            <p class="delivery-time">{{ $delivery['time'] }}</p>
-                                        </div>
-                                        <div class="driver-name-div">
-                                            <p class="driver-name">{{ $delivery['driverName'] }}</p>
-                                            <p class="vehicle-number">{{ $delivery['vehicleNumber'] }}</p>
-                                        </div>
+                                    <a href="{{ route('pickup_batch_detail', $delivery['id']) }}" class="">
+                                        <div class="d-flex batch-row">
+                                            <div class="id-div">
+                                                <p class="delivery-id">ID # {{ $delivery['id'] }}</p>
+                                                <p class="delivery-time">{{ $delivery['time'] }}</p>
+                                            </div>
+                                            <div class="driver-name-div">
+                                                <p class="driver-name">{{ $delivery['driverName'] }}</p>
+                                                <p class="vehicle-number">{{ $delivery['vehicleNumber'] }}</p>
+                                            </div>
 
-                                        <div class="progress-div">
-                                            <!--begin::Section-->
-                                            <div class="d-flex align-items-center ">
-                                                <div class="d-flex align-items-center w-100 justify-content-between mb-3">
-                                                    <span class="rate fw-bolder">{{ $delivery['rate'] }}</span>
-                                                    <span class="text-black-700 opacity-75 fw-bolder">Time Left
-                                                        {{ $delivery['timeLeft'] }}</span>
+                                            <div class="progress-div">
+                                                <!--begin::Section-->
+                                                <div class="d-flex align-items-center ">
+                                                    <div
+                                                        class="d-flex align-items-center w-100 justify-content-between mb-3">
+                                                        <span class="rate fw-bolder">{{ $delivery['rate'] }}</span>
+                                                        <span class="text-black-700 opacity-75 fw-bolder">Time Left
+                                                            {{ $delivery['timeLeft'] }}</span>
+                                                    </div>
+                                                    <!--end::Section-->
                                                 </div>
                                                 <!--end::Section-->
-                                            </div>
-                                            <!--end::Section-->
-                                            <!--begin::Statistics-->
-                                            <div class="d-flex align-items-center w-100">
-                                                <!--begin::Progress-->
-                                                <div class="progress h-6px w-100 ">
-                                                    <div class="progress-bar" role="progressbar"
-                                                        style="width: 58%; background: rgba(0, 66, 110, 1);"
-                                                        aria-valuenow={{ $delivery['width'] }} aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
+                                                <!--begin::Statistics-->
+                                                <div class="d-flex align-items-center w-100">
+                                                    <!--begin::Progress-->
+                                                    <div class="progress h-6px w-100 ">
+                                                        <div class="progress-bar" role="progressbar"
+                                                            style="width: {{ $delivery['width'] }}%; background: rgba(0, 66, 110, 1);"
+                                                            aria-valuenow={{ $delivery['width'] }} aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                    </div>
+                                                    <!--end::Progress-->
                                                 </div>
-                                                <!--end::Progress-->
+                                                <!--end::Statistics-->
                                             </div>
-                                            <!--end::Statistics-->
-                                        </div>
 
-                                    </div>
+                                        </div>
+                                    </a>
                                 @endforeach
                             </div>
 
                             <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
-                                ... Driver Name 2
+                                stopped delivery
+
                             </div>
                             <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel">
-                                ...
+                                driving delivery
                             </div>
                             <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel">
-                                ...
+                                idling delivery
                             </div>
                             <div class="tab-pane fade" id="kt_tab_pane_5" role="tabpanel">
-                                ...
+                                no data
                             </div>
                         </div>
                     </div>

@@ -129,7 +129,7 @@ class Delivery extends Model
             $helper = new Helper();
             $action_by = $user_id = auth()->check() ? auth()->id() : null;
             $delivery_id = $attributes['id'];
-            $status = DeliveryStatusEnum::UNASSIGNED->value;
+            $status = DeliveryStatusEnum::UNASSIGNED;
             $vehicle_id = null;
             $description = "New Delivery added";
 
@@ -207,18 +207,18 @@ class Delivery extends Model
                     $status = $model->getAttributes('status');
                     $vehicle_id = isset(Delivery::find($delivery_id)->deliveryBatch->vehicle) ? Delivery::find($delivery_id)->deliveryBatch->vehicle->id : null;
 
-                    $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED->value, $action_by, $vehicle_id, $description);
+                    $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED, $action_by, $vehicle_id, $description);
 
                     // Access the related vehicle using the vehicle (through) relationship
 
-                    if ($status == DeliveryStatusEnum::ASSIGNED->value) {
-                        $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED->value, $action_by, $vehicle_id, $description);
+                    if ($status == DeliveryStatusEnum::ASSIGNED) {
+                        $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::ASSIGNED, $action_by, $vehicle_id, $description);
                         $description = "Delivery assigned to the driver";
-                    } elseif ($status == DeliveryStatusEnum::DELIVERED->value) {
+                    } elseif ($status == DeliveryStatusEnum::DELIVERED) {
                         $description = "Delivery Bag delivered at customer's location";
                         $bag = DeliveryBag::where('delivery_id', $delivery_id)->last();
-                        $helper->bagTimeline($bag->id, $delivery_id, BagStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
-                        $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);
+                        $helper->bagTimeline($bag->id, $delivery_id, BagStatusEnum::DELIVERED, $action_by, $vehicle_id, $description);
+                        $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::DELIVERED, $action_by, $vehicle_id, $description);
                     }
                 }
             }

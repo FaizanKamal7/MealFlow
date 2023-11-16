@@ -203,3 +203,99 @@ p.p-route {
         rgba(255, 255, 255, 0.28) 100%
     );
 }
+
+/* /////////// */
+/* batch_pickup_details css */
+
+.breadcrumb .breadcrumb-item {
+    font-size: 12px;
+}
+
+.vehicle-detail-div {
+    background: rgba(0, 66, 110, 1);
+    border-radius: 11px;
+    padding: 10px;
+}
+
+.vehicle-detail-div h5 {
+    color: rgba(255, 255, 255, 1);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.all-detail-div {
+    flex-grow: 1;
+}
+
+.d-flex.vehicle-detail {
+    /* justify-content: space-between; */
+}
+
+p.vehicle-detail-title {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    flex-basis: 40%;
+}
+
+p.vehicle-detail-content {
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+    flex-basis: 70%;
+}
+
+.van-img {
+    background: linear-gradient(
+        120.29deg,
+        rgba(72, 140, 185, 0.6) 0%,
+        rgba(36, 111, 161, 0.4) 49.91%,
+        rgba(0, 83, 138, 0.2) 98.79%
+    );
+    border-radius: 50%;
+    padding: 12px 0px;
+}
+
+button.lock-button {
+    background: rgba(161, 211, 243, 1);
+    border-radius: 6px;
+    border: none;
+    width: 80%;
+    padding: 10px;
+}
+
+.order_id_p {
+    color: rgba(0, 66, 110, 1);
+    font-size: 14px;
+    font-weight: 500;
+}
+.bag_id {
+    color: rgba(17, 16, 16, 0.7);
+    font-size: 12px;
+    line-height: 1px;
+}
+.start_time {
+    color: rgba(0, 66, 110, 1);
+    font-size: 12px;
+}
+.status {
+    background: rgba(209, 237, 255, 1);
+    padding: 10px;
+    border-radius: 4px;
+    color: rgba(0, 66, 110, 1);
+    font-weight: 700;
+}
+
+.order-div {
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.5) 0.78%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+}

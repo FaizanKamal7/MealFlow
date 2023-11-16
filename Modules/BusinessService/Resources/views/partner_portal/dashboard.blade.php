@@ -317,7 +317,7 @@
                             <!--end::Title-->
                             <!--begin::Illustration-->
                             <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center card-rounded-bottom h-200px mh-200px my-5 mb-lg-12"
-                                style="background-image:url('{{ asset(' static/media/svg/illustrations/easy/5.svg') }}')">
+                                style="background-image:url('{{ asset('static/media/svg/illustrations/easy/5.svg') }}')">
                             </div>
                             <!--end::Illustration-->
                         </div>
@@ -1991,7 +1991,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(' static/media/avatars/300-1.jpg') }}" class=""
+                                                    <img src="{{ asset('static/media/avatars/300-1.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2031,7 +2031,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(' static/media/avatars/300-2.jpg') }}" class=""
+                                                    <img src="{{ asset('static/media/avatars/300-2.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2070,7 +2070,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(' static/media/avatars/300-12.jpg') }}" class=""
+                                                    <img src="{{ asset('static/media/avatars/300-12.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2109,7 +2109,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(' static/media/avatars/300-11.jpg') }}" class=""
+                                                    <img src="{{ asset('static/media/avatars/300-11.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2148,7 +2148,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(' static/media/avatars/300-13.jpg') }}" class=""
+                                                    <img src="{{ asset('static/media/avatars/300-13.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2188,7 +2188,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(' static/media/avatars/300-13.jpg') }}" class=""
+                                                    <img src="{{ asset('static/media/avatars/300-13.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2228,7 +2228,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="symbol symbol-40px me-3">
-                                                    <img src="{{ asset(' static/media/avatars/300-13.jpg') }}" class=""
+                                                    <img src="{{ asset('static/media/avatars/300-13.jpg') }}" class=""
                                                         alt="" />
                                                 </div>
                                                 <div class="d-flex justify-content-start flex-column">
@@ -2287,7 +2287,7 @@
 @endsection
 
 @section('extra_scripts')
-<script src="{{ asset('static/plugins/custom/documentation/general/datatables/datatables.bundle.js') }}"></script>
+{{-- <script src="{{ asset('static/plugins/custom/documentation/general/datatables/datatables.bundle.js') }}"></script> --}}
 {{-- <script src="{{ asset('static/js/custom/documentation/general/datatables/subtable.js')}}"></script> --}}
 <script>
     $("#kt_datatable_responsive_2").DataTable({

@@ -20,4 +20,6 @@ interface DeliveryInterface
     public function getDriverCompletedBranchPickups($driver_id, $batch_id, $branch_id);
     public function getAllBatchDeliveries($delivery_batch_id);
     public function getCompletedPickupDeliveries($start_date, $end_date);
+    public function getDeliveriesByMealID($meal_id);
+
 }
