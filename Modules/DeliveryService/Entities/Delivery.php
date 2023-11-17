@@ -104,14 +104,14 @@ class Delivery extends Model
     }
 
     // Customize JSON Serialization to make sure below relationships are included whenever Customer is converted to an array or JSON
-    public function toArray()
-    {
-        $array = parent::toArray();
-        $array['branch'] = $this->branch->toArray();
-        $array['customer'] = $this->customer->toArray();
+    // public function toArray()
+    // {
+    //     $array = parent::toArray();
+    //     $array['branch'] = $this->branch->toArray();
+    //     $array['customer'] = $this->customer->toArray();
 
-        return $array;
-    }
+    //     return $array;
+    // }
 
 
     protected static function newFactory()
