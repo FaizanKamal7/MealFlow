@@ -1,12 +1,10 @@
 <?php
 
-namespace Modules\DeliveryService\Rules;
+namespace App\Rules;
 
-use App\Enum\BatchStatusEnum;
 use Illuminate\Contracts\Validation\Rule;
-use Modules\DeliveryService\Entities\PickupBatch;
 
-class BatchStatusRule implements Rule
+class ValidCoordinates implements Rule
 {
     /**
      * Create a new rule instance.
@@ -27,12 +25,7 @@ class BatchStatusRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $allowedBatchStatus = [
-            BatchStatusEnum::ASSIGNED->value,
-            BatchStatusEnum::STARTED->value,
-            BatchStatusEnum::ENDED->value,
-        ];
-        return in_array($value, $allowedBatchStatus);
+        //
     }
 
     /**
@@ -42,6 +35,6 @@ class BatchStatusRule implements Rule
      */
     public function message()
     {
-        return 'Batch Status is not valid (Hint: Try started/ended)';
+        return 'The validation error message.';
     }
 }

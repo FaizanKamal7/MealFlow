@@ -107,10 +107,12 @@
                                             </div>
                                             <div class="fv-row col-md-3">
                                                 <label class="form-label upload-label">Phone Number</label>
-                                                <input type="number" name="phone" id="phone"
+                                                <input type="tel" name="phone" id="phone"
                                                     class="form-control upload-control mb-2 mb-md-0"
-                                                    placeholder="0512233123" autocomplete="off"
+                                                    placeholder="971512233123" autocomplete="off"
                                                     value="{{ old('kt_docs_repeater_advanced.0.phone') }}" />
+                                                <input type="hidden" name="country_code" id="country_code">
+
 
 
                                                 @if ($errors->has('kt_docs_repeater_advanced.0.phone'))
@@ -442,12 +444,21 @@
 <script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 
 <script>
-    var input = document.querySelector("#phone");
-    window.intlTelInput(input, {
-        separateDialCode: true,
-        excludeCountries: ["in", "il"],
-        preferredCountries: ["ae", "pk", "sa"]
-    });
+    // Adding country flag with the phone input
+    // var input = document.querySelector("#phone");
+    // var iti = window.intlTelInput(input, {
+    //     separateDialCode: true,
+    //     excludeCountries: ["in", "il"],
+    //     preferredCountries: ["ae", "pk", "sa"]
+    // });
+
+    // // Listen for the country change event and update the hidden field
+    // iti.promise.then(function () {
+    //     input.addEventListener('countrychange', function () {
+    //         var countryCode = iti.getSelectedCountryData().dialCode;
+    //         document.querySelector("#country_code").value = countryCode;
+    //     });
+    // });
 
     $('#kt_docs_repeater_advanced').repeater({
             initEmpty: false,

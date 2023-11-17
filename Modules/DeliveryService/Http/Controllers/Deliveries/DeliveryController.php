@@ -49,7 +49,6 @@ use Modules\FleetService\Interfaces\DriverAreaInterface;
 use Modules\FleetService\Interfaces\DriverInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Propaganistas\LaravelPhone\PhoneNumber;
 use function PHPUnit\Framework\isEmpty;
 
 class DeliveryController extends Controller
@@ -288,7 +287,7 @@ class DeliveryController extends Controller
 
         // $request->validate([
         //     'kt_docs_repeater_advanced.*.delivery_name' => 'required|string|max:255',
-        //     'kt_docs_repeater_advanced.*.phone_number' => 'required',
+        //     'kt_docs_repeater_advanced.*.phone' => 'required',
         //     'kt_docs_repeater_advanced.*.area' => 'required',
         //     'kt_docs_repeater_advanced.*.emirates_with_time' => 'required',
         //     'kt_docs_repeater_advanced.*.datepicker' => 'required|date',
@@ -303,7 +302,7 @@ class DeliveryController extends Controller
         //     // 'kt_docs_repeater_advanced.*.google_link_address' => 'required|url',
         // ], [
         //     'kt_docs_repeater_advanced.*.delivery_name.required' => 'Delivery name is required',
-        //     'kt_docs_repeater_advanced.*.phone_number.required' => 'Phone number is required',
+        //     'kt_docs_repeater_advanced.*.phone.required' => 'Phone number is required',
         //     'kt_docs_repeater_advanced.*.area.required' => 'Area is required',
         //     'kt_docs_repeater_advanced.*.emirates_with_time.required' => 'Emirates with time is required',
         //     'kt_docs_repeater_advanced.*.datepicker.required' => 'Date is required',
@@ -323,10 +322,7 @@ class DeliveryController extends Controller
         foreach ($repeaterData as $row) {
             // Process the data for each row
             $name = $row['delivery_name'];
-            // Country code will be dynamically passed
-            // $phone_number = new PhoneNumber($row['phone']);
-            // $phone_number =  $phone_number->formatE164();
-            $phone_number = $row['phone'];
+            $phone_number = $this->helper->formatPhoneNumber($row['phone']);
             $area = $row['area'];
             $emiratesWithTime = $row['emirates_with_time'];
             $delivery_date = $row['datepicker'];
@@ -555,6 +551,7 @@ class DeliveryController extends Controller
                         $row = array_combine($header, $row);
                         // $chunks[$key][$chunk_item_id] = $row;
                         // $chunk[$chunk_item_id] = $row;
+                        $phone_number = $this->helper->formatPhoneNumber($row['phone']);
 
 
                         $sheet_area_with_city = $row['area_with_city_select_option'];
@@ -575,7 +572,7 @@ class DeliveryController extends Controller
 
                         // ---- 3. Get all the addresses ($customer_address) of the db customer of selected city
                         $sheet_address = $row['address'];
-                        $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($row['phone']);
+                        $customer = $this->customerRepository->customerWithMatchingPhoneNoInUsers($phone_number);
                         if (!$customer && ($row['email_optional'] != '' || $row['email_optional'] != null)) {
                             $this->customerRepository->customerWithMatchingEmailInUsers($row['email_optional']);
                         }
@@ -584,7 +581,7 @@ class DeliveryController extends Controller
 
                         // --- If customer phone already exist in priamry list 
                         if ($customer) {
-                            // $customer_with_sec_phon =  $this->customerRepository->customerWithMatchingPhoneNoInSecondaryNumbers($row['phone']); // Will need for dealing with secondary numbers
+                            // $customer_with_sec_phon =  $this->customerRepository->customerWithMatchingPhoneNoInSecondaryNumbers($phone_number); // Will need for dealing with secondary numbers
                             $customer_addresses = $this->customerAddressRepository->getCustomerCityAddresses($customer->id, $city->id);
                             $address_matching = $this->helper->addressDBStatus($sheet_address, $customer_addresses);
                             $this->businessCustomerRepository->create(customer_id: $customer->id, business_id: $request->business_id);
@@ -592,7 +589,7 @@ class DeliveryController extends Controller
                             $user = $this->userRepository->createUser([
                                 'name' => $row['full_name'],
                                 'email' => $row['email_optional'] ?? null,
-                                'phone' => $row['phone'] ?? null,
+                                'phone' => $phone_number ?? null,
                                 'password' => Hash::make("Aced732nokia501@"),
                                 'isActive' => true
                             ], false);
@@ -1074,23 +1071,26 @@ class DeliveryController extends Controller
                     echo "<script>window.scrollTo(0, document.body.scrollHeight);</script>";
 
                     $row = array_combine($header, $row);
-                    $db_user =  $this->userRepository->getSingleUserWhere(['name' => $row['full_name'], 'phone' => $row['phone'],]);
+
+                    $phone_number = $this->helper->formatPhoneNumber($row['phone']);
+
+                    $db_user =  $this->userRepository->getSingleUserWhere(['name' => $row['full_name'], 'phone' => $phone_number,]);
 
                     if ($db_user) {
                         echo "<br> =============== S K I P P I N G " . json_encode($db_user) . "====================== <br>";
                         echo "<br> =============== S K I P P I N G " . json_encode($row) . "====================== <br>";
-                    } elseif (array_key_exists($row['phone'], $num_freq)) {
-                        $num_freq[$row['phone']]++;
+                    } elseif (array_key_exists($phone_number, $num_freq)) {
+                        $num_freq[$phone_number]++;
                     } else {
                         $addition_count++;
-                        $num_freq[$row['phone']] = 1;
+                        $num_freq[$phone_number] = 1;
                         // echo "<br><br>" . var_dump($db_location_ids), PHP_EOL;
-                        $user =  $this->userRepository->getSingleUserWhere(['phone' => $row['phone']]);
+                        $user =  $this->userRepository->getSingleUserWhere(['phone' => $phone_number]);
                         if (!$user) {
                             $user =  $this->userRepository->createUser([
                                 'name' => $row['full_name'],
                                 'email' => $row['email'] == "" ? null : $row['email'],
-                                'phone' => $row['phone'] == "" ? null : $row['phone'],
+                                'phone' => $phone_number == "" ? null : $phone_number,
                                 'password' => Hash::make($row['password_partner']),
                             ], false);
                         }
@@ -1130,7 +1130,7 @@ class DeliveryController extends Controller
 
                             $branch =   $this->branchRepository->createBranch(
                                 name: "Main branch",
-                                phone: $row['phone'],
+                                phone: $phone_number,
                                 address: $row['address'],
                                 business_id: $business->id,
                                 is_main_branch: true,
@@ -1157,7 +1157,7 @@ class DeliveryController extends Controller
 
                                 $branch =   $this->branchRepository->createBranch(
                                     name: "Main branch",
-                                    phone: $row['phone'],
+                                    phone: $phone_number,
                                     address: $row['address'],
                                     country_id: $db_location_ids['country_id'],
                                     state_id: $db_location_ids['state_id'] == "" ? null : $db_location_ids['state_id'],
@@ -3191,7 +3191,7 @@ class DeliveryController extends Controller
         //   15 => "created_dt"
         //   16 => "send_notification"
         //   17 => "mul_address"
-        //   18 => "all_detail"
+        //   18 => "all_detail" removed
         //   19 => "addr_loc_by_dri_usr"
         //   20 => "addr_img_usr"
         //   21 => "mealplan_check"
@@ -3203,194 +3203,213 @@ class DeliveryController extends Controller
         if ($request->hasFile('excel_files')) {
             $files = $request->excel_files;
             $num_freq = [];
+            $total_records_checked = 0;
+            $total_records_added = 0;
+            $duplication_ignored_numbers = 0;
+            $duplication_ignored_users = 0;
+
             foreach ($files as $file) {
 
                 $data = $this->helper->getExcelSheetData($file);
-
                 $header = $data[0];
                 $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
                 unset($data[0]);
 
-
                 $addition_count = 0;
 
                 foreach ($data as  $row) {
+                    $total_records_checked++;
                     echo "<script>window.scrollTo(0, document.body.scrollHeight);</script>";
                     $row = array_combine($header, $row);
-
+                    $phone_number = $this->helper->formatPhoneNumber($row['phone']);
+                    echo "<br> Adding new record.... <br>";
 
                     try {
                         DB::beginTransaction();
-                        if (array_key_exists($row['phone'], $num_freq)) {
-                            $num_freq[$row['phone']]++;
-                            array_push($faulted_records, $row);
-                        } else {
-                            $addition_count++;
-                            $num_freq[$row['phone']] = 1;
-
-                            $user =  $this->userRepository->getSingleUserWhere(['phone' => $row['phone']]);
-                            if (!$user) {
-                                $user =  $this->userRepository->createUser([
-                                    'name' => $row['full_name'] ?? "",
-                                    'email' => $row['email'] == "" ? null : $row['email'],
-                                    'phone' => $row['phone'] == "" ? null : $row['phone'],
-                                    'password' => Hash::make($row['password_partner']),
-                                ], false);
-
-                                $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
-                                $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id->id);
-                            }
-                            echo "<br> ===============user " . json_encode($user) . "====================== <br>";
-
-                            $business =  $this->businessRepository->getSingleBusinessWhere(['name' => $row['vendor']]);
-                            echo "<br> ===============business " . json_encode($business->id) . "====================== <br>";
+                        $same_user  =  $this->userRepository->getSingleUserWhere(['phone' => $phone_number, 'name' => $row['full_name']]);
+                        if ($same_user == null) {
+                            $duplication_ignored_users++;
+                            if (array_key_exists($phone_number, $num_freq)) {
+                                $duplication_ignored_numbers++;
+                                $num_freq[$phone_number]++;
+                                array_push($faulted_records, $row);
+                                echo "<br><br> ================" . $row['phone'] . " N U M B E R   A L R E A D Y   A D D E D ===================== <br>";
+                            } else {
+                                $total_records_added++;
+                                $num_freq[$phone_number] = 1;
 
 
-                            $customer = $this->customerRepository->create([
-                                'user_id' => $user->id,
-                                'is_notification_enabled' => $row['send_notification'] == "Yes" ? true : false,
-                            ]);
+                                $user =  $this->userRepository->getSingleUserWhere(['phone' => $phone_number]);
+                                if (!$user) {
+                                    $user =  $this->userRepository->createUser([
+                                        'name' => $row['full_name'] ?? "",
+                                        'email' => $row['email'] == "" ? null : $row['email'],
+                                        'phone' => $phone_number == "" ? null : $phone_number,
+                                        'password' => Hash::make($row['password_partner']),
+                                    ], false);
 
-                            echo "<br> ===============customer " . json_encode($customer) . "====================== <br>";
+                                    $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::CUSTOMER->value);
+                                    $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id->id);
+                                }
+                                echo "<br> ===============user " . json_encode($user) . "====================== <br>";
 
 
-                            if ($row['special_instruction'] != null && $row['special_instruction'] != "NULL") {
-                                $this->specialInstructionRepository->create([
-                                    "special_instruction" => $row["special_instruction"],
-                                    "customer_id" => $customer->id,
+                                $customer = $this->customerRepository->create([
+                                    'user_id' => $user->id,
+                                    'is_notification_enabled' => $row['send_notification'] == "Yes" ? true : false,
                                 ]);
-                            }
 
-                            $business_customer =  $this->businessCustomerRepository->create(
-                                customer_id: $customer->id,
-                                business_id: $business->id,
-                            );
-
-                            echo "<br> ===============business_customer " . json_encode($business_customer) . "====================== <br>";
-
-                            // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                            // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  A D D R E S S   S T A R T  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                            // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-                            $mul_addresses = [];
-                            if ($row['mul_address'] != "" && $row['mul_address'] != null) {
-
-                                $arrayData = json_decode($row['mul_address'], true);
-                                $filteredAddresses = array_filter($arrayData, function ($item) {
-                                    return !empty($item['address']);
-                                });
-
-                                $mul_addresses = array_column($filteredAddresses, 'address');
-                            }
-                            // $address_xy = $row['addr_loc_by_dri_usr'] != "" ? (object) ['latitude' => $sheet_xy[0], 'longitude' => $sheet_xy[1]] :  $this->helper->convertStringAddressToCoordinates($row['address']);
-
-                            // echo "<br> ===============." . $row['addr_loc_by_dri_usr'] . ".address_xy " . json_encode($sheet_xy) . "====================== <br>";
+                                echo "<br> ===============customer " . json_encode($customer) . "====================== <br>";
 
 
-                            echo "<br> ===============mul_addresses " . gettype($mul_addresses) . " " . json_encode($mul_addresses) . "====================== <br>";
+                                if ($row['special_instruction'] != null && $row['special_instruction'] != "NULL") {
+                                    $this->specialInstructionRepository->create([
+                                        "special_instruction" => $row["special_instruction"],
+                                        "customer_id" => $customer->id,
+                                    ]);
+                                }
+                                $business =  $this->businessRepository->getSingleBusinessWhere(['name' => $row['vendor']]);
+                                echo "<br> ===============business " . json_encode($business->id) . "====================== <br>";
 
-                            // if cordinates available add that seperately 
-                            if ($row['addr_loc_by_dri_usr'] != "") {
-                                $sheet_xy = explode(",",  $row['addr_loc_by_dri_usr']);
-                                $address_xy = (object) ['latitude' => $sheet_xy[0], 'longitude' => $sheet_xy[1]];
+                                $business_customer =  $this->businessCustomerRepository->create(
+                                    customer_id: $customer->id,
+                                    business_id: $business->id,
+                                );
 
-                                if ($address_xy == null) {
-                                    array_push($faulted_records, $row);
-                                } else {
-                                    $address =  $address_xy ? $this->helper->getLocationFromCoordinates($address_xy->latitude, $address_xy->longitude) : null;
-                                    echo "<br><br> ===================================== <br>";
-                                    echo "<br> R O W with coordinates: " . $row['full_name'] . " and address_xy" . json_encode($address_xy) . " and address " . json_encode($address) . "<br>";
-                                    echo "<br> ===================================== <br>";
+                                echo "<br> ===============business_customer " . json_encode($business_customer) . "====================== <br>";
 
-                                    $db_location_ids = $this->helper->findDBLocationsWithNames(
-                                        $address['country'],
-                                        $address['state'],
-                                        $address['city'],
-                                        $address['area'],
-                                    );
-                                    echo "<br> ===============db_location_ids " . json_encode($db_location_ids) . "====================== <br>";
+                                // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                                // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  A D D R E S S   S T A R T  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                                // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                                // Extracting address from mul_address json to array in below code 
+                                $mul_addresses = [];
+                                if ($row['mul_address'] != "" && $row['mul_address'] != null) {
 
-                                    if ($db_location_ids['country_id'] == "" || $db_location_ids['state_id'] == "" || $db_location_ids['city_id'] == "") {
+                                    $arrayData = json_decode($row['mul_address'], true);
+                                    $filteredAddresses = array_filter($arrayData, function ($item) {
+                                        return !empty($item['address']);
+                                    });
+
+                                    $mul_addresses = array_column($filteredAddresses, 'address');
+                                }
+                                // $address_xy = $row['addr_loc_by_dri_usr'] != "" ? (object) ['latitude' => $sheet_xy[0], 'longitude' => $sheet_xy[1]] :  $this->helper->convertStringAddressToCoordinates($row['address']);
+
+                                // echo "<br> ===============." . $row['addr_loc_by_dri_usr'] . ".address_xy " . json_encode($sheet_xy) . "====================== <br>";
+
+
+                                echo "<br> ===============mul_addresses " . gettype($mul_addresses) . " " . json_encode($mul_addresses) . "====================== <br>";
+
+                                // if cordinates available add that seperately 
+                                if ($row['addr_loc_by_dri_usr'] != "") {
+                                    echo "<br> =============== addr_loc_by_dri_usr " . gettype($row['addr_loc_by_dri_usr']) . " " . json_encode($row['addr_loc_by_dri_usr']) . "====================== <br>";
+
+                                    $sheet_coordinates_xy = explode(",",  $row['addr_loc_by_dri_usr']);
+
+                                    echo "<br> =============== sheet_coordinates_xy " . gettype($sheet_coordinates_xy) . " " . json_encode($sheet_coordinates_xy) . "====================== <br>";
+
+                                    $address_xy = (object) ['latitude' => $sheet_coordinates_xy[0], 'longitude' => $sheet_coordinates_xy[1]];
+
+                                    if ($address_xy == null) {
                                         array_push($faulted_records, $row);
                                     } else {
+                                        $address =  $address_xy ? $this->helper->getLocationFromCoordinates($address_xy->latitude, $address_xy->longitude) : null;
+                                        echo "<br><br> ===================================== <br>";
+                                        echo "<br> R O W with coordinates: " . $row['full_name'] . " and address_xy" . json_encode($address_xy) . " and address " . json_encode($address) . "<br>";
+                                        echo "<br> ===================================== <br>";
+
+                                        $db_location_ids = $this->helper->findDBLocationsWithNames(
+                                            $address['country'],
+                                            $address['state'],
+                                            $address['city'],
+                                            $address['area'],
+                                        );
+                                        echo "<br> ===============db_location_ids " . json_encode($db_location_ids) . "====================== <br>";
+
+                                        if ($db_location_ids['country_id'] == "" || $db_location_ids['state_id'] == "" || $db_location_ids['city_id'] == "") {
+                                            array_push($faulted_records, $row);
+                                        } else {
 
 
-                                        $address_data = [
-                                            'address' => $row['address'],
-                                            'address_type' => "OTHER",
-                                            'latitude' => $address_xy ? $address_xy->latitude : null,
-                                            'longitude' => $address_xy ? $address_xy->longitude : null,
-                                            'customer_id' => $customer->id,
-                                            'address_status' => $address_xy ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
-                                            'area_id' => $db_location_ids['area_id'] == "" ? null : $db_location_ids['area_id'],
-                                            'city_id' => $db_location_ids['city_id'],
-                                            'state_id' => $db_location_ids['state_id'],
-                                            'country_id' => $db_location_ids['country_id'],
-                                        ];
+                                            $address_data = [
+                                                'address' => $row['address'],
+                                                'address_type' => "OTHER",
+                                                'latitude' => $address_xy ? $address_xy->latitude : null,
+                                                'longitude' => $address_xy ? $address_xy->longitude : null,
+                                                'customer_id' => $customer->id,
+                                                'address_status' => $address_xy ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
+                                                'area_id' => $db_location_ids['area_id'] == "" ? null : $db_location_ids['area_id'],
+                                                'city_id' => $db_location_ids['city_id'],
+                                                'state_id' => $db_location_ids['state_id'],
+                                                'country_id' => $db_location_ids['country_id'],
+                                            ];
 
-                                        $customer_address = $this->customerAddressRepository->create($address_data);
+                                            $customer_address = $this->customerAddressRepository->create($address_data);
 
-                                        echo "<br> ===============customer_address " . json_encode($customer_address) . "====================== <br>";
+                                            echo "<br> ===============customer_address " . json_encode($customer_address) . "====================== <br>";
 
-                                        echo "<br> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> <br>";
+                                            echo "<br> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> <br>";
+                                        }
                                     }
+                                    // if address available add it with mul address 
+
+                                } elseif ($row['address'] != "" && $row['address'] == null) {
+                                    array_push($mul_addresses, $row['address']);
+                                    echo "<br> ===============address in elseif " . json_encode($row['address']) . " " . json_encode($mul_addresses) . "====================== <br>";
                                 }
-                                // if address available add it with mul address 
-
-                            } elseif ($row['address'] != "" && $row['address'] == null) {
-                                array_push($mul_addresses, $row['address']);
-                            }
 
 
-                            echo "<br> =============== mul_addresses before for loop " . gettype($mul_addresses) . " " . json_encode($mul_addresses) . "====================== <br>";
+                                echo "<br> =============== mul_addresses before for loop " . gettype($mul_addresses) . " " . json_encode($mul_addresses) . "====================== <br>";
 
-                            foreach ($mul_addresses as $single_address) {
+                                foreach ($mul_addresses as $single_address) {
 
 
-                                $address_xy = $this->helper->convertStringAddressToCoordinates($single_address);
-                                echo "<br> ===============address_xy " . json_encode($address_xy) . "====================== <br>";
+                                    $address_xy = $this->helper->convertStringAddressToCoordinates($single_address);
+                                    echo "<br> ===============address_xy " . json_encode($address_xy) . "====================== <br>";
 
-                                if ($address_xy == null) {
-                                    array_push($faulted_records, $row);
-                                } else {
-                                    $address =  $address_xy ? $this->helper->getLocationFromCoordinates($address_xy->latitude, $address_xy->longitude) : null;
-                                    echo "<br><br> ===================================== <br>";
-                                    echo "<br> R O W : " . $row['full_name'] . " and address_xy" . json_encode($address_xy) . " and address " . json_encode($single_address) . "<br>";
-                                    echo "<br> ===================================== <br>";
-
-                                    $db_location_ids = $this->helper->findDBLocationsWithNames(
-                                        $address['country'],
-                                        $address['state'],
-                                        $address['city'],
-                                        $address['area'],
-                                    );
-                                    echo "<br> ===============db_location_ids " . json_encode($db_location_ids) . "====================== <br>";
-
-                                    if ($db_location_ids['country_id'] == "" || $db_location_ids['state_id'] == "" || $db_location_ids['city_id'] == "") {
+                                    if ($address_xy == null) {
                                         array_push($faulted_records, $row);
                                     } else {
+                                        $address =  $address_xy ? $this->helper->getLocationFromCoordinates($address_xy->latitude, $address_xy->longitude) : null;
+                                        echo "<br><br> ===================================== <br>";
+                                        echo "<br> R O W : " . $row['full_name'] . " and address_xy" . json_encode($address_xy) . " and address " . json_encode($single_address) . "<br>";
+                                        echo "<br> ===================================== <br>";
+
+                                        $db_location_ids = $this->helper->findDBLocationsWithNames(
+                                            $address['country'],
+                                            $address['state'],
+                                            $address['city'],
+                                            $address['area'],
+                                        );
+                                        echo "<br> ===============db_location_ids " . json_encode($db_location_ids) . "====================== <br>";
+
+                                        if ($db_location_ids['country_id'] == "" || $db_location_ids['state_id'] == "" || $db_location_ids['city_id'] == "") {
+                                            array_push($faulted_records, $row);
+                                        } else {
 
 
-                                        $address_data = [
-                                            'address' => $single_address,
-                                            'address_type' => "OTHER",
-                                            'latitude' => $address_xy ? $address_xy->latitude : null,
-                                            'longitude' => $address_xy ? $address_xy->longitude : null,
-                                            'customer_id' => $customer->id,
-                                            'address_status' => $address_xy ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
-                                            'area_id' => $db_location_ids['area_id'] == "" ? null : $db_location_ids['area_id'],
-                                            'city_id' => $db_location_ids['city_id'],
-                                            'state_id' => $db_location_ids['state_id'],
-                                            'country_id' => $db_location_ids['country_id'],
-                                        ];
+                                            $address_data = [
+                                                'address' => $single_address,
+                                                'address_type' => "OTHER",
+                                                'latitude' => $address_xy ? $address_xy->latitude : null,
+                                                'longitude' => $address_xy ? $address_xy->longitude : null,
+                                                'customer_id' => $customer->id,
+                                                'address_status' => $address_xy ? AddressStatusEnum::COORDINATES_MANUAL_APPORVAL_REQUIRED->value : AddressStatusEnum::NO_COORDINATES->value,
+                                                'area_id' => $db_location_ids['area_id'] == "" ? null : $db_location_ids['area_id'],
+                                                'city_id' => $db_location_ids['city_id'],
+                                                'state_id' => $db_location_ids['state_id'],
+                                                'country_id' => $db_location_ids['country_id'],
+                                            ];
 
-                                        $customer_address = $this->customerAddressRepository->create($address_data);
-                                        echo "<br> ===============customer_address " . json_encode($customer_address) . "====================== <br>";
+                                            $customer_address = $this->customerAddressRepository->create($address_data);
+                                            echo "<br> ===============customer_address " . json_encode($customer_address) . "====================== <br>";
 
-                                        echo "<br> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> <br>";
+                                            echo "<br> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> <br>";
+                                        }
                                     }
                                 }
                             }
+                        } else {
+                            echo "<br><br> ================" . $row['full_name'] . " A L R E A D Y   A D D E D ===================== <br>";
                         }
                         DB::commit();
                     } catch (Exception $e) {
@@ -3402,7 +3421,10 @@ class DeliveryController extends Controller
                 flush();
             }
 
-            echo "<br><br> ================ Count: " . $addition_count . " ===================== <br>";
+            echo "<br><br> ================ total_records_added: " . $total_records_added . " ===================== <br>";
+            echo "<br><br> ================ total_records_checked: " . $total_records_checked . " ===================== <br>";
+            echo "<br><br> ================ duplication_ignored_numbers: " . $duplication_ignored_numbers . " ===================== <br>";
+            echo "<br><br> ================ duplication_ignored_users: " . $duplication_ignored_users . " ===================== <br>";
 
 
 
