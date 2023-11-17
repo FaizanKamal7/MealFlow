@@ -181,6 +181,7 @@ class BusinessOnboardingController extends Controller
             $trade_licence_file_path = $trade_licence_file ?  $this->helper->storeFile($trade_licence_file, ModulesTitleEnum::BUSINESS_SERVICE->value, "Businesses") : null;
             $trn_file_path =   $trn_file ? $this->helper->storeFile($trn_file, ModulesTitleEnum::BUSINESS_SERVICE->value, "Businesses") : null;
 
+
             $business = $this->businessRepository->createBusiness(
                 name: $buisness_name,
                 logo: $logo,
