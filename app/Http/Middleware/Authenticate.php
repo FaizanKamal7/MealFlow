@@ -19,12 +19,17 @@ class Authenticate extends Middleware
     {
         return route('login_view');
     }
+
     public function handle($request, Closure $next, ...$guards)
     {
         if (Auth::guest()) {
-            return redirect('/login');
-            
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'Unauthenticated.'], 401);
+            } else {
+                return redirect('/login');
+            }
         }
+    
         return parent::handle($request, $next, $guards);
     }
 }
