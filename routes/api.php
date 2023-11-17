@@ -22,7 +22,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/verify', [AuthAPIController::class, 'verify'])->name('verify');
     Route::post('/register', [AuthAPIController::class, 'register'])->name('register');
 });
-Route::post('/logout', [AuthAPIController::class, 'logout'])->name('logout');
 
 // Route::middleware('auth:api')->group(function () {
 //     // Protected Routes
@@ -33,10 +32,7 @@ Route::post('/logout', [AuthAPIController::class, 'logout'])->name('logout');
 
 
 Route::group(['middleware' => 'auth:api'], function () {
-
     Route::post('/logout', [AuthAPIController::class, 'logout']);
-
-
     Route::post('/logout', [AuthAPIController::class, 'logout']);
 });
 

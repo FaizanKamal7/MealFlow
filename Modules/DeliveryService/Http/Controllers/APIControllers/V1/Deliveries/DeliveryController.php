@@ -152,11 +152,7 @@ class DeliveryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function uploadDeliveries()
-    {
-        $businesses = $this->businessRepository->getActiveBusinesses();
-        return view('deliveryservice::deliveries.upload_delivery', ['businesses' => $businesses]);
-    }
+
 
     public function uploadDeliveriesByForm(Request $request)
     {
@@ -642,6 +638,17 @@ class DeliveryController extends Controller
     }
 
 
+    public function getAllDeliverySlots(Request $request)
+    {
+        try {
+            // $data = $this->deliverySlotRepository->getAllDeliverySlots();
+            return $this->success("data", "Delivery Slots retrieved successfully");
+        } catch (Exception $exception) {
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
+
+
     // -------------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------DRIVER APP ----------------------------------------------
     // -------------------------------------------------------------------------------------------------------------
@@ -795,7 +802,7 @@ class DeliveryController extends Controller
 
         try {
             $driver_id = $request->get("driver_id");
-            $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
+            $batch = $this->pickupBatchRepository->getPickupBatchByDriver($driver_id);
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
             $grouped_deliveries = [];
 

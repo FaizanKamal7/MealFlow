@@ -913,7 +913,11 @@ class DeliveryController extends Controller
             $customerAddress = $delivery->customerAddress;
 
             // Step 1: Find a driver that matches the delivery area and has duty timing eligilable for that slot
-            $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
+            $drivers = [];
+            if ($customerAddress == null || !isset($customerAddress->area_id)) {
+                dd($customerAddress);
+                $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
+            }
             $delivery->setAttribute('suggested_drivers', $drivers);
         }
 
@@ -3168,6 +3172,8 @@ class DeliveryController extends Controller
     {
 
         ini_set('max_execution_time', 30000000000);
+        ini_set('memory_limit', 5147483648);
+
 
         // ini_set('upload_max_filesize', 365658992);
         // ini_set('post_max_size', 365658992);
@@ -3208,16 +3214,19 @@ class DeliveryController extends Controller
             $duplication_ignored_numbers = 0;
             $duplication_ignored_users = 0;
 
-            foreach ($files as $file) {
+            foreach ($files as $key =>  $file) {
 
                 $data = $this->helper->getExcelSheetData($file);
+                $total_record_in_file = count($data);
+                $total_checked_record_in_file = 0;
                 $header = $data[0];
                 $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
                 unset($data[0]);
 
                 $addition_count = 0;
 
-                foreach ($data as  $row) {
+                foreach ($data as $row) {
+                    $total_checked_record_in_file++;
                     $total_records_checked++;
                     echo "<script>window.scrollTo(0, document.body.scrollHeight);</script>";
                     $row = array_combine($header, $row);
@@ -3240,7 +3249,8 @@ class DeliveryController extends Controller
 
 
                                 $user =  $this->userRepository->getSingleUserWhere(['phone' => $phone_number]);
-                                if (!$user) {
+                                $user = $user == null ? $this->userRepository->getSingleUserWhere(['email' =>  $row['email']]) : $user;
+                                if ($user == null) {
                                     $user =  $this->userRepository->createUser([
                                         'name' => $row['full_name'] ?? "",
                                         'email' => $row['email'] == "" ? null : $row['email'],
@@ -3416,6 +3426,7 @@ class DeliveryController extends Controller
                         DB::rollback();
                         return 'Data upload failed: ' . $e->getMessage();
                     }
+                    echo "<br><br> >>>>>>>>>>>>>>>>>>>>>> C H E C K E D -> File no: " . $key . "/" . count($files) . " - (" . $total_checked_record_in_file . "/" . $total_record_in_file . ") -<br><br> Total overall records checked :" . $total_records_checked . " Added: " . $total_records_added . " <br>";
                 }
                 echo "<br><br> ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// <br>";
                 flush();

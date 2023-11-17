@@ -36,7 +36,10 @@ class PickupBatchRepository implements PickupBatchInterface
         }
         return $batch;
     }
-
+    public function getPickupBatchByDriver($driver_id)
+    {
+        return PickupBatch::where('driver_id', $driver_id)->where('batch_end_time', null)->first();
+    }
 
     public function getDriverActiveBatchWithDeliveries($driver_id)
     {
