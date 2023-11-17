@@ -2164,7 +2164,6 @@
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
             },
-            "time": "2023-08-27T10:13:57+00:00",
             "type": "library",
             "extra": {
                 "bamarni-bin": {
@@ -5389,7 +5388,6 @@
                 "phpunit/phpunit": "^9.5",
                 "spatie/phpunit-snapshot-assertions": "^4.2"
             },
-            "time": "2022-10-28T11:50:28+00:00",
             "type": "library",
             "extra": {
                 "laravel": {
