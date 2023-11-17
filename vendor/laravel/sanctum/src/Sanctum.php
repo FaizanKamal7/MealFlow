@@ -43,7 +43,7 @@ class Sanctum
     {
         $appUrl = config('app.url');
 
-        return $appUrl ? ','.parse_url($appUrl, PHP_URL_HOST).(parse_url($appUrl, PHP_URL_PORT) ? ':'.parse_url($appUrl, PHP_URL_PORT) : '') : '';
+        return $appUrl ? ',' . parse_url($appUrl, PHP_URL_HOST) . (parse_url($appUrl, PHP_URL_PORT) ? ':' . parse_url($appUrl, PHP_URL_PORT) : '') : '';
     }
 
     /**
@@ -93,10 +93,10 @@ class Sanctum
     /**
      * Specify a callback that should be used to fetch the access token from the request.
      *
-     * @param  callable|null  $callback
+     * @param  callable  $callback
      * @return void
      */
-    public static function getAccessTokenFromRequestUsing(?callable $callback)
+    public static function getAccessTokenFromRequestUsing(callable $callback)
     {
         static::$accessTokenRetrievalCallback = $callback;
     }

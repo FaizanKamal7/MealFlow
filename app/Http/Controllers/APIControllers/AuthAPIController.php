@@ -25,6 +25,22 @@ class AuthAPIController extends Controller
     public function login(Request $request)
     {
 
+
+        // return response()->json("hey there");
+        // $request->validate([
+        //     "email" => "required|email",
+        //     "password" => "required",
+        // ]);
+        // $credentials = $request->only("email", "password");
+        // if (!Auth::attempt($credentials)) {
+        //     return $this->error('', 'Credientials do not match', 401);
+        // }
+        // $user = User::where('email', $request->email)->first();
+        // return $this->success([
+        //     'user' => $user,
+        //     'token' => $user->createToken('Api Token of' . $user->name)->accessToken,
+        // ]);
+
         $request->validate([
             'email_or_phone' => 'required',
             'password' => 'required|min:6',
@@ -36,7 +52,6 @@ class AuthAPIController extends Controller
             return $this->error('', 'Credientials do not match', 401);
         }
         $user = User::where($fieldType, $request->email_or_phone)->first();
-
         return $this->success([
             'user' => $user,
             'token' => $user->createToken('auth-token' . $user->name)->accessToken,

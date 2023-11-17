@@ -42,6 +42,9 @@ class Helper
     }
     public function storeFile($file, $module, $directory)
     {
+        if ($file == null) {
+            return null;
+        }
         $file_url = $file->getClientOriginalName();
         $file_url = time() . '-' . date('YmdHi') . '-' . $file_url;
         $file_url = $module . "/" . $directory . "/" . $file_url;

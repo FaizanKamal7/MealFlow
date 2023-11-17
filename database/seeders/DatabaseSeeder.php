@@ -105,7 +105,7 @@ class DatabaseSeeder extends Seeder
         $this->command->warn(PHP_EOL . 'Importing RolePermission...');
         $this->call(RolePermissionTableSeeder::class);
         $this->command->info('RolePermission added.');
-        
+
         // ------ Adding UserRoles 
         $this->command->warn(PHP_EOL . 'Importing UserRoles...');
         $this->call(UserRolesTableSeeder::class);

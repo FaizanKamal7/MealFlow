@@ -153,7 +153,6 @@ class DeliveryController extends Controller
      * Show the form for creating a new resource.
      */
 
-
     public function uploadDeliveriesByForm(Request $request)
     {
         $customers = $request->get("customer");

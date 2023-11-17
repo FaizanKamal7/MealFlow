@@ -13,8 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
+<<<<<<<< HEAD:vendor/laravel/framework/src/Illuminate/Database/Migrations/stubs/migration.update.stub
         Schema::table('{{ table }}', function (Blueprint $table) {
             //
+========
+        Schema::create('meal_plans', function (Blueprint $table) {
+            $table->id();
+
+            $table->timestamps();
+>>>>>>>> 34a472928dd6927f2584e4cd9fd16be6ebed9d7b:Modules/BusinessService/Database/Migrations/2023_10_23_155745_create_meal_plans_table.php
         });
     }
 
@@ -25,8 +32,12 @@ return new class extends Migration
      */
     public function down()
     {
+<<<<<<<< HEAD:vendor/laravel/framework/src/Illuminate/Database/Migrations/stubs/migration.update.stub
         Schema::table('{{ table }}', function (Blueprint $table) {
             //
         });
+========
+        Schema::dropIfExists('meal_plans');
+>>>>>>>> 34a472928dd6927f2584e4cd9fd16be6ebed9d7b:Modules/BusinessService/Database/Migrations/2023_10_23_155745_create_meal_plans_table.php
     }
 };

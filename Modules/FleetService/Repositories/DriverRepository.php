@@ -76,7 +76,7 @@ class DriverRepository implements DriverInterface
             ->whereTime('employees.duty_end_time', '>=', $slot_end)
             ->get();
     }
-    
+
     public function delete_driver($id)
     {
         return Driver::find($id)->delete();

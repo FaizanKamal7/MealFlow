@@ -136,13 +136,13 @@
                             <!--end::Checkbox-->
                             <!--begin::Name=-->
                             <td>
-                                {{-- <a href="../../demo1/dist/apps/ecommerce/customers/details.html"
-                                    class="text-gray-800 text-hover-primary mb-1">{{$customer->user->name}}</a> --}}
+                                <a href="../../demo1/dist/apps/ecommerce/customers/details.html"
+                                    class="text-gray-800 text-hover-primary mb-1">{{$customer->user->name}}</a>
                             </td>
                             <!--end::Name=-->
                             <!--begin::Email=-->
                             <td>
-                                <p>{{$customer}}<br>{{$customer}}</p>
+                                <p>{{$customer->user->phone}}<br>{{$customer->user->email}}</p>
                             </td>
                             <!--end::Email=-->
                             <!--begin::Phone=-->
