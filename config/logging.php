@@ -117,6 +117,12 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        // custom channel for listner logs
+        'listener' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/listener.log'),
+            'level' => 'info',
+        ],
     ],
 
 ];

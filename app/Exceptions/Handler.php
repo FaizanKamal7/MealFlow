@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -47,4 +48,18 @@ class Handler extends ExceptionHandler
             //
         });
     }
+    // public function render($request, Throwable $exception)
+    // {
+    //     if ($exception instanceof AuthenticationException && $request->wantsJson()) {
+    //         // For API authentication, return a JSON response with a 401 status code
+    //         return response()->json(['error' => 'Unauthenticated.'], 401);
+    //     }
+    
+    //     // For web authentication, redirect to the login page
+    //     if ($exception instanceof AuthenticationException) {
+    //         return redirect()->guest(route('login'));
+    //     }
+    
+    //     return parent::render($request, $exception);
+    // }
 }

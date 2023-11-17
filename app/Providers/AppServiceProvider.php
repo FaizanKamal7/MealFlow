@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enum\ServiceTypeEnum;
+use Illuminate\Support\Facades\DB;
 use App\Interfaces\ApplicationInterface;
 use App\Interfaces\ApplicationModelInterface;
 use App\Interfaces\AreaInterface;
@@ -121,7 +122,9 @@ class AppServiceProvider extends ServiceProvider
         //     });
         // }
 
-
+        if ($this->app->environment('local')) {
+            DB::connection()->enableQueryLog();
+        }
         Relation::morphMap([
             'delivery' => Delivery::class,
             'bag_collection' => EmptyBagCollection::class,

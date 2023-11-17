@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\BusinessService\Entities\DeliverySlotPricing;
 use Modules\BusinessService\Entities\Pricing;
+use Modules\DeliveryService\Entities\Delivery;
 
 class DeliverySlot extends Model
 {
@@ -27,7 +28,9 @@ class DeliverySlot extends Model
         return $this->belongsTo(City::class, 'city_id');
     }
 
-
+    public function deliveries(){
+        return $this->hasMany(Delivery::class);
+    }
     public function deliverySlotPricings()
     {
         return $this->hasMany(DeliverySlotPricing::class);

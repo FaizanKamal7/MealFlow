@@ -27,18 +27,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login', [AuthController::class, 'login_view'])->name('login_view');
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
     // Public Routes
     Route::get('/login', [AuthController::class, 'login_view'])->name('login_view');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/logins', [AuthController::class, 'login'])->name('login');
     Route::post('/verify', [AuthController::class, 'verify'])->name('verify');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // Protected Routes
     Route::get('/dashboard', function () {
