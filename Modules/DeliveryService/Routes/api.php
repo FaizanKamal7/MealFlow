@@ -27,9 +27,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
         // ------------------------------------- D E L I V E R I E S - R O U T E S -----------------------
         Route::prefix('deliveries/')->group(function () {
             Route::GET('get', [DeliveryController::class, "getDriverDeliveries"]);
-            Route::POST('complete-delivery', [DeliveryController::class, "completeDelivery"]);
-
-
+            Route::GET('complete-delivery', [DeliveryController::class, "completeDelivery"]);
         });
 
         // ------------------------------------- D E L I V E R Y- B A T C H - R O U T E S -----------------------
@@ -37,9 +35,6 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
         Route::prefix('deliverybatch/')->group(function () {
             Route::POST('update-delivery-batch-progress', [DeliveryBatchController::class, "updateDeliveryBatchpProgress"]);
         });
-
-
-
     });
 
 
@@ -56,6 +51,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
         Route::DELETE('delete-delivery', [DeliveryBatchController::class, "deleteDelivery"]);
         Route::GET('get-business-customers', [DeliveryController::class, "getBusinessCustomer"]);
         Route::GET('get-delivery-slots', [DeliveryController::class, "getDeliverySlots"]);
+        Route::GET('get-all-delivery-slots', [DeliveryController::class, "getAllDeliverySlots"]);
     });
 
     // Route::group(['prefix' => 'Collection/'], function () {

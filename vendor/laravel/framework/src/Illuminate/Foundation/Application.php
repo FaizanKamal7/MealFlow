@@ -209,9 +209,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
 
         $this->singleton(PackageManifest::class, function () {
             return new PackageManifest(
-                new Filesystem,
-                $this->basePath(),
-                $this->getCachedPackagesPath()
+                new Filesystem, $this->basePath(), $this->getCachedPackagesPath()
             );
         });
     }
@@ -239,11 +237,11 @@ class Application extends Container implements ApplicationContract, CachesConfig
         $this->hasBeenBootstrapped = true;
 
         foreach ($bootstrappers as $bootstrapper) {
-            $this['events']->dispatch('bootstrapping: ' . $bootstrapper, [$this]);
+            $this['events']->dispatch('bootstrapping: '.$bootstrapper, [$this]);
 
             $this->make($bootstrapper)->bootstrap($this);
 
-            $this['events']->dispatch('bootstrapped: ' . $bootstrapper, [$this]);
+            $this['events']->dispatch('bootstrapped: '.$bootstrapper, [$this]);
         }
     }
 
@@ -256,8 +254,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
     public function afterLoadingEnvironment(Closure $callback)
     {
         $this->afterBootstrapping(
-            LoadEnvironmentVariables::class,
-            $callback
+            LoadEnvironmentVariables::class, $callback
         );
     }
 
@@ -270,7 +267,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function beforeBootstrapping($bootstrapper, Closure $callback)
     {
-        $this['events']->listen('bootstrapping: ' . $bootstrapper, $callback);
+        $this['events']->listen('bootstrapping: '.$bootstrapper, $callback);
     }
 
     /**
@@ -282,7 +279,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function afterBootstrapping($bootstrapper, Closure $callback)
     {
-        $this['events']->listen('bootstrapped: ' . $bootstrapper, $callback);
+        $this['events']->listen('bootstrapped: '.$bootstrapper, $callback);
     }
 
     /**
@@ -343,9 +340,9 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function path($path = '')
     {
-        $appPath = $this->appPath ?: $this->basePath . DIRECTORY_SEPARATOR . 'app';
+        $appPath = $this->appPath ?: $this->basePath.DIRECTORY_SEPARATOR.'app';
 
-        return $appPath . ($path != '' ? DIRECTORY_SEPARATOR . $path : '');
+        return $appPath.($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
@@ -371,7 +368,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function basePath($path = '')
     {
-        return $this->basePath . ($path != '' ? DIRECTORY_SEPARATOR . $path : '');
+        return $this->basePath.($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
@@ -382,7 +379,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function bootstrapPath($path = '')
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'bootstrap' . ($path != '' ? DIRECTORY_SEPARATOR . $path : '');
+        return $this->basePath.DIRECTORY_SEPARATOR.'bootstrap'.($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
@@ -393,7 +390,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function configPath($path = '')
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'config' . ($path != '' ? DIRECTORY_SEPARATOR . $path : '');
+        return $this->basePath.DIRECTORY_SEPARATOR.'config'.($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
@@ -404,7 +401,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function databasePath($path = '')
     {
-        return ($this->databasePath ?: $this->basePath . DIRECTORY_SEPARATOR . 'database') . ($path != '' ? DIRECTORY_SEPARATOR . $path : '');
+        return ($this->databasePath ?: $this->basePath.DIRECTORY_SEPARATOR.'database').($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
@@ -430,7 +427,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function langPath($path = '')
     {
-        return $this->langPath . ($path != '' ? DIRECTORY_SEPARATOR . $path : '');
+        return $this->langPath.($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
@@ -455,7 +452,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function publicPath()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'public';
+        return $this->basePath.DIRECTORY_SEPARATOR.'public';
     }
 
     /**
@@ -466,8 +463,8 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function storagePath($path = '')
     {
-        return ($this->storagePath ?: $this->basePath . DIRECTORY_SEPARATOR . 'storage')
-            . ($path != '' ? DIRECTORY_SEPARATOR . $path : '');
+        return ($this->storagePath ?: $this->basePath.DIRECTORY_SEPARATOR.'storage')
+                            .($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
@@ -493,7 +490,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function resourcePath($path = '')
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . ($path != '' ? DIRECTORY_SEPARATOR . $path : '');
+        return $this->basePath.DIRECTORY_SEPARATOR.'resources'.($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
@@ -508,7 +505,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
     {
         $basePath = $this['config']->get('view.paths')[0];
 
-        return rtrim($basePath, DIRECTORY_SEPARATOR) . ($path != '' ? DIRECTORY_SEPARATOR . $path : '');
+        return rtrim($basePath, DIRECTORY_SEPARATOR).($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
@@ -564,7 +561,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function environmentFilePath()
     {
-        return $this->environmentPath() . DIRECTORY_SEPARATOR . $this->environmentFile();
+        return $this->environmentPath().DIRECTORY_SEPARATOR.$this->environmentFile();
     }
 
     /**
@@ -659,12 +656,12 @@ class Application extends Container implements ApplicationContract, CachesConfig
     public function registerConfiguredProviders()
     {
         $providers = Collection::make($this->make('config')->get('app.providers'))
-            ->partition(fn ($provider) => str_starts_with($provider, 'Illuminate\\'));
+                        ->partition(fn ($provider) => str_starts_with($provider, 'Illuminate\\'));
 
         $providers->splice(1, 0, [$this->make(PackageManifest::class)->providers()]);
 
         (new ProviderRepository($this, new Filesystem, $this->getCachedServicesPath()))
-            ->load($providers->collapse()->toArray());
+                    ->load($providers->collapse()->toArray());
     }
 
     /**
@@ -676,7 +673,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function register($provider, $force = false)
     {
-        if (($registered = $this->getProvider($provider)) && !$force) {
+        if (($registered = $this->getProvider($provider)) && ! $force) {
             return $registered;
         }
 
@@ -791,7 +788,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function loadDeferredProvider($service)
     {
-        if (!$this->isDeferredService($service)) {
+        if (! $this->isDeferredService($service)) {
             return;
         }
 
@@ -800,7 +797,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
         // If the service provider has not already been loaded and registered we can
         // register it with the application and remove the service from this list
         // of deferred services, since it will already be loaded on subsequent.
-        if (!isset($this->loadedProviders[$provider])) {
+        if (! isset($this->loadedProviders[$provider])) {
             $this->registerDeferredProvider($provider, $service);
         }
     }
@@ -823,7 +820,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
 
         $this->register($instance = new $provider($this));
 
-        if (!$this->isBooted()) {
+        if (! $this->isBooted()) {
             $this->booting(function () use ($instance) {
                 $this->bootProvider($instance);
             });
@@ -867,7 +864,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     protected function loadDeferredProviderIfNeeded($abstract)
     {
-        if ($this->isDeferredService($abstract) && !isset($this->instances[$abstract])) {
+        if ($this->isDeferredService($abstract) && ! isset($this->instances[$abstract])) {
             $this->loadDeferredProvider($abstract);
         }
     }
@@ -996,7 +993,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
     public function shouldSkipMiddleware()
     {
         return $this->bound('middleware.disable') &&
-            $this->make('middleware.disable') === true;
+               $this->make('middleware.disable') === true;
     }
 
     /**
@@ -1093,8 +1090,8 @@ class Application extends Container implements ApplicationContract, CachesConfig
         }
 
         return Str::startsWith($env, $this->absoluteCachePathPrefixes)
-            ? $env
-            : $this->basePath($env);
+                ? $env
+                : $this->basePath($env);
     }
 
     /**
@@ -1411,7 +1408,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function getNamespace()
     {
-        if (!is_null($this->namespace)) {
+        if (! is_null($this->namespace)) {
             return $this->namespace;
         }
 

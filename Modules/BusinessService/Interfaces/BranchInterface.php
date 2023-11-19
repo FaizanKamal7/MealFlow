@@ -4,21 +4,21 @@ namespace Modules\BusinessService\Interfaces;
 
 interface BranchInterface
 {
-    public function getBranch();
-    public function createBranch(
-        $name,
-        $phone,
-        $address,
-        $country_id,
-        $state_id,
-        $city_id,
-        $area_id,
-        $active_status,
-        $is_main_branch,
-        $business_id,
-        $latitude,
-        $longitude
-    );
-    public function getBusinessBranches($business_id);
-    public function getBusinessBranch($where);
+        public function getBranch();
+        public function createBranch(
+                $name,
+                $phone,
+                $address,
+                $business_id,
+                $country_id = null,
+                $state_id = null,
+                $city_id = null,
+                $area_id = null,
+                $active_status = null,
+                $is_main_branch = null,
+                $latitude = null,
+                $longitude = null
+        );
+        public function getBusinessBranches($business_id);
+        public function getBusinessBranch($where);
 }

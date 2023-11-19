@@ -21,7 +21,7 @@ class CustomerRepository implements CustomerInterface
 
     public function create($data)
     {
-        return Customer::create($data);
+        return Customer::firstOrCreate($data);
     }
 
     public function customerWithMatchingPhoneNoInUsers($phone_no)

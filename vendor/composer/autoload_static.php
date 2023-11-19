@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
+class ComposerStaticInit109545fe7fb94ace418c089da77e4241
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -174,6 +174,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
             'Laravel\\Sail\\' => 13,
             'Laravel\\Passport\\Database\\Factories\\' => 36,
             'Laravel\\Passport\\' => 17,
+            'Laravel\\Breeze\\' => 15,
         ),
         'J' => 
         array (
@@ -454,8 +455,8 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -605,6 +606,10 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Laravel\\Passport\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/passport/src',
+        ),
+        'Laravel\\Breeze\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/breeze/src',
         ),
         'JasonGuru\\LaravelMakeRepository\\' => 
         array (
@@ -770,6 +775,13 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
     );
 
     public static $prefixesPsr0 = array (
+        'O' => 
+        array (
+            'Orangehill\\Iseed' => 
+            array (
+                0 => __DIR__ . '/..' . '/orangehill/iseed/src',
+            ),
+        ),
         'H' => 
         array (
             'HTMLPurifier' => 
@@ -799,7 +811,8 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'App\\Enum\\ServiceTypeEnum' => __DIR__ . '/../..' . '/app/Enum/ServiceTypeEnum.php',
         'App\\Enum\\UserTypeEnum' => __DIR__ . '/../..' . '/app/Enum/UserTypeEnum.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'App\\Http\\Controllers\\APIControllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/APIControllers/AuthController.php',
+        'App\\Exports\\CustomExportExcel' => __DIR__ . '/../..' . '/app/Exports/CustomExportExcel.php',
+        'App\\Http\\Controllers\\APIControllers\\AuthAPIController' => __DIR__ . '/../..' . '/app/Http/Controllers/APIControllers/AuthAPIController.php',
         'App\\Http\\Controllers\\Admin\\DeliverySlots\\DeliverySlotController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DeliverySlots/DeliverySlotController.php',
         'App\\Http\\Controllers\\Admin\\LocationManagement\\Area\\AreaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LocationManagement/Area/AreaController.php',
         'App\\Http\\Controllers\\Admin\\LocationManagement\\City\\CityController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LocationManagement/City/CityController.php',
@@ -811,7 +824,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'App\\Http\\Controllers\\Admin\\UserManagement\\PermissionsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/PermissionsController.php',
         'App\\Http\\Controllers\\Admin\\UserManagement\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/RolesController.php',
         'App\\Http\\Controllers\\Admin\\UserManagement\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserManagement/UsersController.php',
-        'App\\Http\\Controllers\\Authentication\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Authentication/LoginController.php',
+        'App\\Http\\Controllers\\Authentication\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Authentication/AuthController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
         'App\\Http\\Helper\\Helper' => __DIR__ . '/../..' . '/app/Http/Helper/Helper.php',
@@ -852,6 +865,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'App\\Interfaces\\UserInterface' => __DIR__ . '/../..' . '/app/Interfaces/UserInterface.php',
         'App\\Interfaces\\UserPermissionInterface' => __DIR__ . '/../..' . '/app/Interfaces/UserPermissionInterface.php',
         'App\\Interfaces\\UserRoleInterface' => __DIR__ . '/../..' . '/app/Interfaces/UserRoleInterface.php',
+        'App\\Jobs\\OldDBTransferJob' => __DIR__ . '/../..' . '/app/Jobs/OldDBTransferJob.php',
         'App\\Models\\ActivityLogs' => __DIR__ . '/../..' . '/app/Models/ActivityLogs.php',
         'App\\Models\\Application' => __DIR__ . '/../..' . '/app/Models/Application.php',
         'App\\Models\\ApplicationModel' => __DIR__ . '/../..' . '/app/Models/ApplicationModel.php',
@@ -885,6 +899,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'App\\Repositories\\UserPermissionRepository' => __DIR__ . '/../..' . '/app/Repositories/UserPermissionRepository.php',
         'App\\Repositories\\UserRepository' => __DIR__ . '/../..' . '/app/Repositories/UserRepository.php',
         'App\\Repositories\\UserRoleRepository' => __DIR__ . '/../..' . '/app/Repositories/UserRoleRepository.php',
+        'App\\Rules\\ValidCoordinates' => __DIR__ . '/../..' . '/app/Rules/ValidCoordinates.php',
         'App\\Traits\\HttpResponses' => __DIR__ . '/../..' . '/app/Traits/HttpResponses.php',
         'App\\View\\Components\\AppLayout' => __DIR__ . '/../..' . '/app/View/Components/AppLayout.php',
         'App\\View\\Components\\GuestLayout' => __DIR__ . '/../..' . '/app/View/Components/GuestLayout.php',
@@ -1152,6 +1167,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Database\\Seeders\\AreaSeeder' => __DIR__ . '/../..' . '/database/seeders/AreaSeeder.php',
         'Database\\Seeders\\BusinessCategoryTableSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessCategoryTableSeeder.php',
         'Database\\Seeders\\BusinessSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessSeeder.php',
+        'Database\\Seeders\\BusinessesOldDbTableSeeder' => __DIR__ . '/../..' . '/database/seeders/BusinessesOldDbTableSeeder.php',
         'Database\\Seeders\\CitiesTableChunkFiveSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkFiveSeeder.php',
         'Database\\Seeders\\CitiesTableChunkFourSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkFourSeeder.php',
         'Database\\Seeders\\CitiesTableChunkOneSeeder' => __DIR__ . '/../..' . '/database/seeders/CitiesTableChunkOneSeeder.php',
@@ -4585,6 +4601,11 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'JasonGuru\\LaravelMakeRepository\\RepositoryServiceProvider' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/RepositoryServiceProvider.php',
         'JasonGuru\\LaravelMakeRepository\\Repository\\BaseRepository' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/repository/BaseRepository.php',
         'JasonGuru\\LaravelMakeRepository\\Repository\\RepositoryContract' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/repository/RepositoryContract.php',
+        'Laravel\\Breeze\\BreezeServiceProvider' => __DIR__ . '/..' . '/laravel/breeze/src/BreezeServiceProvider.php',
+        'Laravel\\Breeze\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallCommand.php',
+        'Laravel\\Breeze\\Console\\InstallsApiStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsApiStack.php',
+        'Laravel\\Breeze\\Console\\InstallsBladeStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsBladeStack.php',
+        'Laravel\\Breeze\\Console\\InstallsInertiaStacks' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsInertiaStacks.php',
         'Laravel\\Passport\\ApiTokenCookieFactory' => __DIR__ . '/..' . '/laravel/passport/src/ApiTokenCookieFactory.php',
         'Laravel\\Passport\\AuthCode' => __DIR__ . '/..' . '/laravel/passport/src/AuthCode.php',
         'Laravel\\Passport\\Bridge\\AccessToken' => __DIR__ . '/..' . '/laravel/passport/src/Bridge/AccessToken.php',
@@ -5623,6 +5644,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Modules\\BusinessService\\Entities\\PartnerDeliverySlot' => __DIR__ . '/../..' . '/Modules/BusinessService/Entities/PartnerDeliverySlot.php',
         'Modules\\BusinessService\\Entities\\PricingType' => __DIR__ . '/../..' . '/Modules/BusinessService/Entities/PricingType.php',
         'Modules\\BusinessService\\Entities\\RangePricing' => __DIR__ . '/../..' . '/Modules/BusinessService/Entities/RangePricing.php',
+        'Modules\\BusinessService\\Entities\\SpecialInstruction' => __DIR__ . '/../..' . '/Modules/BusinessService/Entities/SpecialInstruction.php',
         'Modules\\BusinessService\\Http\\Controllers\\BusinessInfo\\BusinessInfoController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/BusinessInfo/BusinessInfoController.php',
         'Modules\\BusinessService\\Http\\Controllers\\BusinessPricing\\BusinessPricingController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/BusinessPricing/BusinessPricingController.php',
         'Modules\\BusinessService\\Http\\Controllers\\BusinessRequests\\NewRequestsController' => __DIR__ . '/../..' . '/Modules/BusinessService/Http/Controllers/BusinessRequests/NewRequestsController.php',
@@ -5649,6 +5671,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Modules\\BusinessService\\Interfaces\\OnboardingInterface' => __DIR__ . '/../..' . '/Modules/BusinessService/Interfaces/OnboardingInterface.php',
         'Modules\\BusinessService\\Interfaces\\PricingTypeInterface' => __DIR__ . '/../..' . '/Modules/BusinessService/Interfaces/PricingTypeInterface.php',
         'Modules\\BusinessService\\Interfaces\\RangePricingInterface' => __DIR__ . '/../..' . '/Modules/BusinessService/Interfaces/RangePricingInterface.php',
+        'Modules\\BusinessService\\Interfaces\\SpecialInstructionInterface' => __DIR__ . '/../..' . '/Modules/BusinessService/Interfaces/SpecialInstructionInterface.php',
         'Modules\\BusinessService\\Providers\\BusinessServiceServiceProvider' => __DIR__ . '/../..' . '/Modules/BusinessService/Providers/BusinessServiceServiceProvider.php',
         'Modules\\BusinessService\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/Modules/BusinessService/Providers/RouteServiceProvider.php',
         'Modules\\BusinessService\\Repositories\\BranchCoverageDeliverySlotsRepository' => __DIR__ . '/../..' . '/Modules/BusinessService/Repositories/BranchCoverageDeliverySlotsRepository.php',
@@ -5666,6 +5689,7 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Modules\\BusinessService\\Repositories\\OnboardingRepository' => __DIR__ . '/../..' . '/Modules/BusinessService/Repositories/OnboardingRepository.php',
         'Modules\\BusinessService\\Repositories\\PricingTypeRepository' => __DIR__ . '/../..' . '/Modules/BusinessService/Repositories/PricingTypeRepository.php',
         'Modules\\BusinessService\\Repositories\\RangePricingRepository' => __DIR__ . '/../..' . '/Modules/BusinessService/Repositories/RangePricingRepository.php',
+        'Modules\\BusinessService\\Repositories\\SpecialInstructionRepository' => __DIR__ . '/../..' . '/Modules/BusinessService/Repositories/SpecialInstructionRepository.php',
         'Modules\\DeliveryService\\Database\\Seeders\\DeliveryServiceDatabaseSeeder' => __DIR__ . '/../..' . '/Modules/DeliveryService/Database/Seeders/DeliveryServiceDatabaseSeeder.php',
         'Modules\\DeliveryService\\Entities\\Bag' => __DIR__ . '/../..' . '/Modules/DeliveryService/Entities/Bag.php',
         'Modules\\DeliveryService\\Entities\\BagDropBatch' => __DIR__ . '/../..' . '/Modules/DeliveryService/Entities/BagDropBatch.php',
@@ -6238,6 +6262,11 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
         'Nyholm\\Psr7\\StreamTrait' => __DIR__ . '/..' . '/nyholm/psr7/src/StreamTrait.php',
         'Nyholm\\Psr7\\UploadedFile' => __DIR__ . '/..' . '/nyholm/psr7/src/UploadedFile.php',
         'Nyholm\\Psr7\\Uri' => __DIR__ . '/..' . '/nyholm/psr7/src/Uri.php',
+        'Orangehill\\Iseed\\Facades\\Iseed' => __DIR__ . '/..' . '/orangehill/iseed/src/Orangehill/Iseed/Facades/Iseed.php',
+        'Orangehill\\Iseed\\Iseed' => __DIR__ . '/..' . '/orangehill/iseed/src/Orangehill/Iseed/Iseed.php',
+        'Orangehill\\Iseed\\IseedCommand' => __DIR__ . '/..' . '/orangehill/iseed/src/Orangehill/Iseed/IseedCommand.php',
+        'Orangehill\\Iseed\\IseedServiceProvider' => __DIR__ . '/..' . '/orangehill/iseed/src/Orangehill/Iseed/IseedServiceProvider.php',
+        'Orangehill\\Iseed\\TableNotFoundException' => __DIR__ . '/..' . '/orangehill/iseed/src/Orangehill/Iseed/Exceptions.php',
         'Override' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/Override.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\ActualValueIsNotAnObjectException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/ActualValueIsNotAnObjectException.php',
@@ -9938,10 +9967,10 @@ class ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit8c491fba5278ea0e57e30fedb4f480e3::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit109545fe7fb94ace418c089da77e4241::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit109545fe7fb94ace418c089da77e4241::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit109545fe7fb94ace418c089da77e4241::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit109545fe7fb94ace418c089da77e4241::$classMap;
 
         }, null, ClassLoader::class);
     }

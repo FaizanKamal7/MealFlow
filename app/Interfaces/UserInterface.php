@@ -10,4 +10,5 @@ interface UserInterface
     public function getUser($id);
     public function deleteUser($id);
     public function getUserWhere($where);
+    public function getSingleUserWhere($where);
 }

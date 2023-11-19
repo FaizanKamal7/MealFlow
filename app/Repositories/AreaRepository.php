@@ -58,4 +58,15 @@ class AreaRepository implements AreaInterface
     {
         return Area::where('name', 'like', "%{$searchTerm}%")->first();
     }
+
+    public function createArea($name, $city_id, $coordinates = null, $geoname_id = null)
+    {
+        return Area::create([
+            'active_status' => true,
+            'name' => $name,
+            'city_id' => $city_id,
+            'coordinates' => $coordinates,
+            'geoname_id' => $geoname_id
+        ]);
+    }
 }

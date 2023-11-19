@@ -27,6 +27,8 @@ class BusinessUser extends Model
         return \Modules\BusinessService\Database\factories\BusinessUserFactory::new();
     }
 
+
+
     public function business()
     {
         return $this->belongsTo(Business::class);

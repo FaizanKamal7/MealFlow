@@ -81,15 +81,11 @@ class DeliveryController extends Controller
     private $businessWalletTransactionRepository;
     private $emptyBagcollectionRepository;
     private $bagTimeRepository;
-
     private $roleRepository;
     private $userRoleRepository;
 
 
-
-
     use HttpResponses;
-
     public function __construct(
         CustomerInterface $customerRepository,
         CityInterface $cityRepository,
@@ -154,11 +150,6 @@ class DeliveryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function uploadDeliveries()
-    {
-        $businesses = $this->businessRepository->getActiveBusinesses();
-        return view('deliveryservice::deliveries.upload_delivery', ['businesses' => $businesses]);
-    }
 
     public function uploadDeliveriesByForm(Request $request)
     {
@@ -644,6 +635,18 @@ class DeliveryController extends Controller
     }
 
 
+    public function getAllDeliverySlots(Request $request)
+    {
+        try {
+            $data = $this->deliverySlotRepository->getAllDeliverySlots();
+            dd($data);
+            return $this->success($data, "Delivery Slots retrieved successfully");
+        } catch (Exception $exception) {
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
+
+
     // -------------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------DRIVER APP ----------------------------------------------
     // -------------------------------------------------------------------------------------------------------------
@@ -806,7 +809,7 @@ class DeliveryController extends Controller
 
         try {
             $driver_id = $request->get("driver_id");
-            $batch = $this->pickupBatchRepository->getDriverActiveBatchWithDeliveries($driver_id);
+            $batch = $this->pickupBatchRepository->getPickupBatchByDriver($driver_id);
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
             $grouped_deliveries = [];
 
@@ -923,12 +926,11 @@ class DeliveryController extends Controller
     public function linkBagWithDelivery(Request $request)
     {
         try {
+            DB::beginTransaction();
             $validator = Validator::make($request->all(), [
                 'delivery_id' => ['required', 'exists:deliveries,id'],
                 'bag_id' => ['required', 'exists:bags,id'],
             ]);
-
-            DB::beginTransaction();
 
             // Check if validation fails
             if ($validator->fails()) {

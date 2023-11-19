@@ -24,8 +24,8 @@ class AuthAPIController extends Controller
 
     public function login(Request $request)
     {
-       
-    
+
+
         // return response()->json("hey there");
         // $request->validate([
         //     "email" => "required|email",
@@ -40,7 +40,7 @@ class AuthAPIController extends Controller
         //     'user' => $user,
         //     'token' => $user->createToken('Api Token of' . $user->name)->accessToken,
         // ]);
-    
+
         $request->validate([
             'email_or_phone' => 'required',
             'password' => 'required|min:6',

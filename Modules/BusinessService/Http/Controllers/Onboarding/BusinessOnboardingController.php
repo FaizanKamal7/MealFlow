@@ -178,17 +178,13 @@ class BusinessOnboardingController extends Controller
 
             // --- Adding data in business table
             // abort_if(Gate::denies('add_user'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            $trade_licence_file_path =  $this->helper->storeFile($trade_licence_file, ModulesTitleEnum::BUSINESS_SERVICE->value, "Businesses");
-            $trn_file_path =  $this->helper->storeFile($trn_file, ModulesTitleEnum::BUSINESS_SERVICE->value, "Businesses");
+            $trade_licence_file_path = $trade_licence_file ?  $this->helper->storeFile($trade_licence_file, ModulesTitleEnum::BUSINESS_SERVICE->value, "Businesses") : null;
+            $trn_file_path =   $trn_file ? $this->helper->storeFile($trn_file, ModulesTitleEnum::BUSINESS_SERVICE->value, "Businesses") : null;
+
 
             $business = $this->businessRepository->createBusiness(
                 name: $buisness_name,
                 logo: $logo,
-                card_name: $card_name,
-                card_number: $card_number,
-                card_expiry_month: $card_expiry_month,
-                card_expiry_year: $card_expiry_year,
-                card_cvv: $card_cvv,
                 business_category_id: $business_category_id,
                 admin: $user->id,
                 status: BusinessStatusEnum::NEW_REQUEST->value,

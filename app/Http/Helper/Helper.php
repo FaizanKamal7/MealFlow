@@ -16,25 +16,35 @@ use Modules\DeliveryService\Repositories\DeliveryRepository;
 use Modules\FinanceService\Entities\BusinessWallet;
 use Illuminate\Support\Str;
 use App\Helpers\TimeExtractor;
+use App\Repositories\AreaRepository;
+use Illuminate\Support\Facades\Validator;
 use Modules\BusinessService\Repositories\CustomerAddressRepository;
 use Modules\DeliveryService\Entities\Delivery;
 use Modules\DeliveryService\Entities\EmptyBagCollection;
 use Modules\FinanceService\Entities\BusinessWalletTransaction;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Propaganistas\LaravelPhone\PhoneNumber;
+
 
 class Helper
 {
 
     private $customerAddressRepository;
     private $deliveryRepository;
-    public function __construct(CustomerAddressRepository $customerAddressRepository = null,DeliveryRepository $deliveryRepository= null)
+    private $areaRepository;
+
+    public function __construct(CustomerAddressRepository $customerAddressRepository = null, DeliveryRepository $deliveryRepository = null,  AreaRepository $areaRepository = null)
 
     {
         $this->customerAddressRepository = $customerAddressRepository;
         $this->deliveryRepository = $deliveryRepository;
+        $this->areaRepository = $areaRepository;
     }
     public function storeFile($file, $module, $directory)
     {
+        if ($file == null) {
+            return null;
+        }
         $file_url = $file->getClientOriginalName();
         $file_url = time() . '-' . date('YmdHi') . '-' . $file_url;
         $file_url = $module . "/" . $directory . "/" . $file_url;
@@ -189,15 +199,24 @@ class Helper
 
     function getLocationFromCoordinates($latitude, $longitude)
     {
+
         $api_key = Config::get('services.google.key');
         $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$api_key&language_code=en"; // Add &language=en
-        $response = file_get_contents($url);
+        // $response = file_get_contents($url);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response = curl_exec($ch);
+        curl_close($ch);
         $data = json_decode($response, true);
 
         $country = $state = $city = $area = '';
 
-        if ($data && isset($data['results'][1])) {
-            foreach ($data['results'][1]['address_components'] as $component) {
+        if ($data && isset($data['results'][0])) {
+            foreach ($data['results'][0]['address_components'] as $component) {
                 $types = $component['types'];
                 if (in_array('country', $types)) {
                     $country = $component['long_name'];
@@ -262,10 +281,15 @@ class Helper
         }
 
 
-        if ($area_name) {
+        if ($area_name && $area_name != "") {
 
             $area_record = Area::where('name', 'LIKE', '%' . $area_name . '%')->first();
-
+            if ($area_record == null && $db_map_location_ids['city_id'] != "") {
+                $area_record =   $this->areaRepository->createArea(
+                    name: $area_name,
+                    city_id: $db_map_location_ids['city_id'],
+                );
+            }
             $db_map_location_ids['area_id'] = $area_record ? $area_record->id : "";
         } else {
             $db_map_location_ids['area_id'] = "";
@@ -352,6 +376,8 @@ class Helper
 
     function convertStringAddressToCoordinates($address)
     {
+        echo "<br> Inside convertStringAddressToCoordinates. " . json_encode($address) . "<br>";
+
         $api_key = Config::get('services.google.key');
         $maxAttempts = 5; // Set a maximum number of attempts
         for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
@@ -410,6 +436,10 @@ class Helper
 
     function getExcelSheetData($file)
     {
+
+        if (!$file) {
+            return [];
+        }
         $spreadsheet = IOFactory::load($file->getPathname());
 
         // Get data from the first sheet
@@ -470,9 +500,10 @@ class Helper
         return Delivery::find($delivery_id);
     }
 
-    function updateDelivery($delivery,$data){
-    //     $delivery = Delivery::find($delivery->id);
-    // $delivery->update($data);
+    function updateDelivery($delivery, $data)
+    {
+        //     $delivery = Delivery::find($delivery->id);
+        // $delivery->update($data);
         return $delivery->update($data);
         // return $this->deliveryRepository->updateDelivery($delivery_id,$data);
     }
@@ -494,5 +525,57 @@ class Helper
         });
         // Re-index the array
         return array_values($response_array);
+    }
+
+    public function formatPhoneNumber($phone)
+    {
+        $phone = preg_replace('/[^0-9]/', '', $phone);
+        try {
+            // Check if the phone number starts with '05' or '5' (UAE format)
+            $uae_code = '971'; // UAE country code (P R I O R I T I Z I N G   U A E)
+            if ((substr($phone, 0, 2) === '05' && strlen($phone) === 10) || ((substr($phone, 0, 1) === '5') && (strlen($phone) === 9))) {
+                $phone = $uae_code . ltrim($phone, '0'); // Add UAE code and remove leading '0' if any
+            }
+
+            // Check if the phone number starts with a '+' sign, if not, add it
+            if (substr($phone, 0, 1) !== '+') {
+                $phone = '+' . $phone;
+            }
+            $phone_number = new PhoneNumber($phone);
+            $detected_country_code = $phone_number->getCountry();
+            // Format the number with the detected country code
+            $formatted_phone = $phone_number->formatE164($detected_country_code);
+            if ($formatted_phone[0] === '+') {
+                $formatted_phone = substr($formatted_phone, 1);
+            }
+        } catch (\Exception $e) {
+            // Handle the case where the PhoneNumber instantiation fails
+            $formatted_phone = null; // Set the formatted phone number to null
+            // You might want to log the error or handle it based on your application's needs
+        }
+        return  $formatted_phone;
+    }
+
+
+
+    public function validateCoordinates($latitude, $longitude)
+    {
+        $validator = Validator::make([
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+        ], [
+            'latitude' => ['required', 'numeric', function ($attribute, $value, $fail) {
+                if (!preg_match('/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/', $value)) {
+                    $fail("The $attribute should be a valid latitude.");
+                }
+            }],
+            'longitude' => ['required', 'numeric', function ($attribute, $value, $fail) {
+                if (!preg_match('/^[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/', $value)) {
+                    $fail("The $attribute should be a valid longitude.");
+                }
+            }],
+        ]);
+
+        return $validator->passes();
     }
 }
