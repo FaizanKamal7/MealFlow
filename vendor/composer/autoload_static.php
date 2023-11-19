@@ -455,8 +455,8 @@ class ComposerStaticInit109545fe7fb94ace418c089da77e4241
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -797,6 +797,7 @@ class ComposerStaticInit109545fe7fb94ace418c089da77e4241
         'App\\Enum\\AddressStatusEnum' => __DIR__ . '/../..' . '/app/Enum/AddressStatusEnum.php',
         'App\\Enum\\AddressTypeEnum' => __DIR__ . '/../..' . '/app/Enum/AddressTypeEnum.php',
         'App\\Enum\\BagStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BagStatusEnum.php',
+        'App\\Enum\\BagTypeEnum' => __DIR__ . '/../..' . '/app/Enum/BagTypeEnum.php',
         'App\\Enum\\BatchStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BatchStatusEnum.php',
         'App\\Enum\\BusinessStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BusinessStatusEnum.php',
         'App\\Enum\\BusinessWalletTransactionStatusEnum' => __DIR__ . '/../..' . '/app/Enum/BusinessWalletTransactionStatusEnum.php',
@@ -810,6 +811,7 @@ class ComposerStaticInit109545fe7fb94ace418c089da77e4241
         'App\\Enum\\RoleNamesEnum' => __DIR__ . '/../..' . '/app/Enum/RoleNamesEnum.php',
         'App\\Enum\\ServiceTypeEnum' => __DIR__ . '/../..' . '/app/Enum/ServiceTypeEnum.php',
         'App\\Enum\\UserTypeEnum' => __DIR__ . '/../..' . '/app/Enum/UserTypeEnum.php',
+        'App\\Events\\DeliveryCompleted' => __DIR__ . '/../..' . '/app/Events/DeliveryCompleted.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Exports\\CustomExportExcel' => __DIR__ . '/../..' . '/app/Exports/CustomExportExcel.php',
         'App\\Http\\Controllers\\APIControllers\\AuthAPIController' => __DIR__ . '/../..' . '/app/Http/Controllers/APIControllers/AuthAPIController.php',
@@ -866,6 +868,8 @@ class ComposerStaticInit109545fe7fb94ace418c089da77e4241
         'App\\Interfaces\\UserPermissionInterface' => __DIR__ . '/../..' . '/app/Interfaces/UserPermissionInterface.php',
         'App\\Interfaces\\UserRoleInterface' => __DIR__ . '/../..' . '/app/Interfaces/UserRoleInterface.php',
         'App\\Jobs\\OldDBTransferJob' => __DIR__ . '/../..' . '/app/Jobs/OldDBTransferJob.php',
+        'App\\Listeners\\DeliveryDeduction' => __DIR__ . '/../..' . '/app/Listeners/DeliveryDeduction.php',
+        'App\\Listeners\\UploadBagCollection' => __DIR__ . '/../..' . '/app/Listeners/UploadBagCollection.php',
         'App\\Models\\ActivityLogs' => __DIR__ . '/../..' . '/app/Models/ActivityLogs.php',
         'App\\Models\\Application' => __DIR__ . '/../..' . '/app/Models/Application.php',
         'App\\Models\\ApplicationModel' => __DIR__ . '/../..' . '/app/Models/ApplicationModel.php',

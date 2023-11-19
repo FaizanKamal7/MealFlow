@@ -217,7 +217,7 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
@@ -321,7 +321,7 @@ class DeliveryController extends Controller
 
                             $address_data = [
                                 'address' => $sheet_address,
-                                'address_type' => AddressTypeEnum::DEFAULT ->value,
+                                'address_type' => AddressTypeEnum::DEFAULT->value,
                                 'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
                                 'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
                                 'customer_id' => $customer->id,
@@ -542,8 +542,8 @@ class DeliveryController extends Controller
         // - Making all words lower case
         // - replace spaces with underscore "_"
         // - remove ONLY round brackets if there are any, NOT the content inside the round brackets 
-        $actual_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
-        $expected_headers = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
+        $actual_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $actual_headers);
+        $expected_headers = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $expected_headers);
 
         // $actual_headers_lowercase = array_map('strtolower', $actual_headers);
         // $expected_headers_lowercase = array_map('strtolower', $expected_headers);
@@ -638,8 +638,8 @@ class DeliveryController extends Controller
     public function getAllDeliverySlots(Request $request)
     {
         try {
-            $data = $this->deliverySlotRepository->getAllDeliverySlots();
-            dd($data);
+            $data = $this->deliverySlotRepository->getAllFormattedDeliverySlots();
+
             return $this->success($data, "Delivery Slots retrieved successfully");
         } catch (Exception $exception) {
             return $this->error($exception, "Something went wrong please contact support");
@@ -670,7 +670,7 @@ class DeliveryController extends Controller
 
     public function completeDelivery(Request $request)
     {
- 
+
         try {
             // Check if $validator = Validator::make($request->all(), [
             $validator = Validator::make($request->all(), [
@@ -683,7 +683,7 @@ class DeliveryController extends Controller
                 'address_img' => ['image'],
                 'empty_bag_count' => [],
             ]);
-            
+
             // Check if validation fails
             if ($validator->fails()) {
                 return $this->error($validator->errors(), "validation failed", 422);
@@ -698,7 +698,7 @@ class DeliveryController extends Controller
             $empty_bag_count = $request->post('empty_bag_count');
 
             $delivery = $this->deliveryRepository->getSingleDelivery($delivery_id);
-        
+
             $date = date('Y-m-d');
             // $delivery_count = $this->deliveryRepository->getDeliveredCountOfDays($delivery->branch_id, $date, $date);
             // $range_price = $this->rangePricingRepository->getRangePriceOfDelivery($delivery_count, $delivery->customerAddress->city_id, $delivery->branch->business_id);
@@ -716,22 +716,22 @@ class DeliveryController extends Controller
             // }
             DB::beginTransaction();
 
-           
-                // ----- Deduct amount for delivery 
+
+            // ----- Deduct amount for delivery 
             // $amount_to_deduct = $delivery_slot_price && $range_price ? min($delivery_slot_price->delivery_price, $range_price->delivery_price) : $delivery_slot_price->delivery_price ?? $range_price->delivery_price;
             // $invoice_item = $this->invoiceItemRepository->createInvoiceItem( item_type:$delivery_slot_price ? InvoiceItemTypeEnum::DELIVERY_SLOT_PRICING->value : InvoiceItemTypeEnum::RANGE_PRICING->value,
             //    amount: $amount_to_deduct,
             //    item_info: $delivery,
             //    service:$delivery // *Polymorph identification
             // );
-            
-            
+
+
 
             // ----- Updating wallet
             // $business_wallet = $this->businessWalletRepository->getBusinessWallet($delivery->branch->business_id);
             // $this->businessWalletRepository->update($business_wallet->id, ['balance' => $business_wallet->balance - $amount_to_deduct]);
             // $this->businessWalletTransactionRepository->createBusinessWalletTransactions($amount_to_deduct, BusinessWalletTransactionTypeEnum::DEBIT->value, $business_wallet->id, $invoice_item->id);
-           
+
 
 
             // ----- Uploading images
@@ -762,7 +762,7 @@ class DeliveryController extends Controller
 
             // ---- As bag is delivered, it need to be collected, hence adding it in empty bag collections 
             // $delivery_bag = $this->deliveryBagRepository->getDeliveryBagOfDelivery($delivery->id);
-            
+
             // if ($delivery->bag_type == BagTypeEnum::COLLER_BAG->value) {
             //     $this->emptyBagcollectionRepository->createBagCollection(
             //         [
@@ -784,7 +784,6 @@ class DeliveryController extends Controller
 
             if (!$data) {
                 return $this->error($data, "Something went wrong please contact support, Delivery not completed");
-            
             }
 
             DB::commit();
@@ -988,11 +987,11 @@ class DeliveryController extends Controller
                 "status" => $status,
                 "vehicle_id" => $vehicle_id,
             ] : [
-                    "batch_end_time" => date("Y-m-d H:i:s"),
-                    "batch_end_map_coordinates" => $map_coordinates,
-                    "status" => $status,
-                    "vehicle_id" => $vehicle_id,
-                ];
+                "batch_end_time" => date("Y-m-d H:i:s"),
+                "batch_end_map_coordinates" => $map_coordinates,
+                "status" => $status,
+                "vehicle_id" => $vehicle_id,
+            ];
 
             $result = $this->pickupBatchRepository->updatePickupBatch($pickup_batch_id, $data);
 

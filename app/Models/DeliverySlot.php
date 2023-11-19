@@ -28,9 +28,11 @@ class DeliverySlot extends Model
         return $this->belongsTo(City::class, 'city_id');
     }
 
-    public function deliveries(){
+    public function deliveries()
+    {
         return $this->hasMany(Delivery::class);
     }
+
     public function deliverySlotPricings()
     {
         return $this->hasMany(DeliverySlotPricing::class);

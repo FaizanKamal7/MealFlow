@@ -72,6 +72,5 @@ class Kernel extends HttpKernel
         // --  Below for Laravel Passport
         'json.response' => \App\Http\Middleware\ForceJsonResponse::class,
         'cors' => \App\Http\Middleware\Cors::class,
-
     ];
 }

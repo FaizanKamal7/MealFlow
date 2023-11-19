@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['middleware' => ['cors', 'json.response']], function () {
-    // Public Routes
-    Route::post('/login', [AuthAPIController::class, 'login'])->name('login');
-    Route::post('/verify', [AuthAPIController::class, 'verify'])->name('verify');
-    Route::post('/register', [AuthAPIController::class, 'register'])->name('register');
-});
+// Route::group(['middleware' => ['cors', 'json.response']], function () {
+// Public Routes
+Route::post('/login', [AuthAPIController::class, 'login'])->name('login');
+Route::post('/verify', [AuthAPIController::class, 'verify'])->name('verify');
+Route::post('/register', [AuthAPIController::class, 'register'])->name('register');
+// });
 
 // Route::middleware('auth:api')->group(function () {
 //     // Protected Routes
