@@ -79,15 +79,11 @@ class DeliveryController extends Controller
     private $businessWalletTransactionRepository;
     private $emptyBagcollectionRepository;
     private $bagTimeRepository;
-
     private $roleRepository;
     private $userRoleRepository;
 
 
-
-
     use HttpResponses;
-
     public function __construct(
         CustomerInterface $customerRepository,
         CityInterface $cityRepository,
@@ -640,8 +636,9 @@ class DeliveryController extends Controller
     public function getAllDeliverySlots(Request $request)
     {
         try {
-            // $data = $this->deliverySlotRepository->getAllDeliverySlots();
-            return $this->success("data", "Delivery Slots retrieved successfully");
+            $data = $this->deliverySlotRepository->getAllDeliverySlots();
+            dd($data);
+            return $this->success($data, "Delivery Slots retrieved successfully");
         } catch (Exception $exception) {
             return $this->error($exception, "Something went wrong please contact support");
         }
