@@ -15,19 +15,14 @@ class BusinessRepository implements BusinessInterface
 
     public function createBusiness(
         $name,
-        $logo,
-        $card_name,
-        $card_number,
-        $card_expiry_month,
-        $card_expiry_year,
-        $card_cvv,
         $business_category_id,
         $admin,
         $status,
-        $trade_licence_file,
-        $state_legal_id,
-        $trn_number,
-        $trn_file
+        $trade_licence_file = null,
+        $state_legal_id = null,
+        $trn_number = null,
+        $trn_file = null,
+        $logo = null
     ) {
         $business = Business::create([
             "name" => $name,
@@ -39,9 +34,8 @@ class BusinessRepository implements BusinessInterface
             "trn_file" => $trn_file,
             "trn_number" => $trn_number,
             "state_legal_id" => $state_legal_id,
-
         ]);
-        // $business->save();
+
         return $business;
     }
 
@@ -64,6 +58,12 @@ class BusinessRepository implements BusinessInterface
     {
         return Business::find($id);
     }
+
+    public function getSingleBusinessWhere($where)
+    {
+        return Business::where($where)->first();
+    }
+
 
     public function update($id, $data)
     {

@@ -17,7 +17,7 @@ class LivewireManager
     protected $shouldDisableBackButtonCache = false;
 
     protected $persistentMiddleware = [
-        // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         \Laravel\Jetstream\Http\Middleware\AuthenticateSession::class,
         \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -76,7 +76,7 @@ class LivewireManager
             $this->componentAliases[$alias] ?? $finder->find($alias)
         );
 
-        if (!$class) {
+        if (! $class) {
             // If we haven't found the component through the normal channels
             // we'll look through user-land missing-component JIT hooks...
             foreach ($this->missingComponentResolvers as $resolve) {
@@ -145,7 +145,7 @@ class LivewireManager
 
     public function visit($browser, $class, $queryString = '')
     {
-        $url = '/livewire-dusk/' . urlencode($class) . $queryString;
+        $url = '/livewire-dusk/'.urlencode($class).$queryString;
 
         return $browser->visit($url)->waitForLivewireToLoad();
     }
@@ -254,7 +254,7 @@ HTML;
 
         $jsLivewireToken = app()->has('session.store') ? "'" . csrf_token() . "'" : 'null';
 
-        $manifest = json_decode(file_get_contents(__DIR__ . '/../dist/manifest.json'), true);
+        $manifest = json_decode(file_get_contents(__DIR__.'/../dist/manifest.json'), true);
         $versionedFileName = $manifest['/livewire.js'];
 
         // Default to dynamic `livewire.js` (served by a Laravel route).
@@ -268,7 +268,7 @@ HTML;
             $publishedManifest = json_decode(file_get_contents(public_path('vendor/livewire/manifest.json')), true);
             $versionedFileName = $publishedManifest['/livewire.js'];
 
-            $fullAssetPath = ($this->isRunningServerless() ? config('app.asset_url') : $assetsUrl) . '/vendor/livewire' . $versionedFileName;
+            $fullAssetPath = ($this->isRunningServerless() ? config('app.asset_url') : $assetsUrl).'/vendor/livewire'.$versionedFileName;
 
             if ($manifest !== $publishedManifest) {
                 $assetWarning = <<<HTML
@@ -279,19 +279,19 @@ HTML;
             }
         }
 
-        $devTools = null;
-        $windowLivewireCheck = null;
-        $windowAlpineCheck = null;
+	    $devTools = null;
+	    $windowLivewireCheck = null;
+	    $windowAlpineCheck = null;
         if (config('app.debug')) {
-            $devTools = 'window.livewire.devTools(true);';
+	        $devTools = 'window.livewire.devTools(true);';
 
-            $windowLivewireCheck = <<<'HTML'
+	        $windowLivewireCheck = <<<'HTML'
 if (window.livewire) {
 	    console.warn('Livewire: It looks like Livewire\'s @livewireScripts JavaScript assets have already been loaded. Make sure you aren\'t loading them twice.')
 	}
 HTML;
 
-            $windowAlpineCheck = <<<'HTML'
+	        $windowAlpineCheck = <<<'HTML'
 /* Make sure Livewire loads first. */
 	if (window.Alpine) {
 	    /* Defer showing the warning so it doesn't get buried under downstream errors. */
@@ -304,6 +304,7 @@ HTML;
 
 	/* Make Alpine wait until Livewire is finished rendering to do its thing. */
 HTML;
+
         }
 
         // Adding semicolons for this JavaScript is important,
@@ -362,7 +363,7 @@ HTML;
     {
         $route = request()->route();
 
-        if (!$route) return false;
+        if (! $route) return false;
 
         return $route->named('livewire.message') || $route->named('livewire.message-localized');
     }
@@ -461,7 +462,7 @@ HTML;
         /**
          * Reverse this boolean so that the middleware is only applied when it is disabled.
          */
-        $this->shouldDisableBackButtonCache = !config('livewire.back_button_cache', false);
+        $this->shouldDisableBackButtonCache = ! config('livewire.back_button_cache', false);
     }
 
     public function disableBackButtonCache()

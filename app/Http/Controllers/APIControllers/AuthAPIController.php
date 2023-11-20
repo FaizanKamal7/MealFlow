@@ -21,26 +21,8 @@ class AuthAPIController extends Controller
 
 
 
-
     public function login(Request $request)
     {
-       
-    
-        // return response()->json("hey there");
-        // $request->validate([
-        //     "email" => "required|email",
-        //     "password" => "required",
-        // ]);
-        // $credentials = $request->only("email", "password");
-        // if (!Auth::attempt($credentials)) {
-        //     return $this->error('', 'Credientials do not match', 401);
-        // }
-        // $user = User::where('email', $request->email)->first();
-        // return $this->success([
-        //     'user' => $user,
-        //     'token' => $user->createToken('Api Token of' . $user->name)->accessToken,
-        // ]);
-    
         $request->validate([
             'email_or_phone' => 'required',
             'password' => 'required|min:6',
@@ -56,6 +38,44 @@ class AuthAPIController extends Controller
             'user' => $user,
             'token' => $user->createToken('auth-token' . $user->name)->accessToken,
         ]);
+
+        // --- Below code to shorten the bearer token 
+        // $request->validate([
+        //     'email_or_phone' => 'required',
+        //     'password' => 'required|min:6',
+        // ]);
+
+        // $fieldType = filter_var($request->email_or_phone, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+        // if (!Auth::attempt([$fieldType => $request->email_or_phone, 'password' => $request->password])) {
+        //     return $this->error('', 'Credentials do not match', 401);
+        // }
+
+        // $user = User::where($fieldType, $request->email_or_phone)->first();
+
+        // // Generate the access token
+        // $accessToken = $user->createToken('auth-token' . $user->name);
+
+        // // Ensure the access token was created successfully
+        // if (!$accessToken instanceof Token) {
+        //     return $this->error('', 'Token creation failed', 500);
+        // }
+
+        // // Retrieve the ID of the access token
+        // $passportTokenId = $accessToken->id;
+
+        // // Create a shorter token and store its mapping
+        // $shortToken = bin2hex(random_bytes(16)); // Generate a shorter token (example: 32 characters)
+        // TokenMapping::create([
+        //     'short_token' => $shortToken,
+        //     'user_id' => $user->id,
+        //     'passport_token_id' => $passportTokenId, // Store Passport token ID
+        // ]);
+
+        // return $this->success([
+        //     'user' => $user,
+        //     'short_token' => $shortToken, // Return the short token instead of the original lengthy token
+        // ]);
     }
 
 

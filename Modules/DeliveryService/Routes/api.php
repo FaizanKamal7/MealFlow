@@ -23,17 +23,13 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
     // ------------------------------------- D R I V E R - A P I - R O U T E S -----------------------
 
     Route::prefix('driver/')->group(function () {
-
         // ------------------------------------- D E L I V E R I E S - R O U T E S -----------------------
         Route::prefix('deliveries/')->group(function () {
             Route::GET('get', [DeliveryController::class, "getDriverDeliveries"]);
             Route::POST('complete-delivery', [DeliveryController::class, "completeDelivery"]);
-
-
         });
 
         // ------------------------------------- D E L I V E R Y- B A T C H - R O U T E S -----------------------
-
         Route::prefix('deliverybatch/')->group(function () {
             Route::POST('update-delivery-batch-progress', [DeliveryBatchController::class, "updateDeliveryBatchpProgress"]);
         });
@@ -66,8 +62,8 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
     Route::prefix('deliveries/')->group(function () {
         Route::GET('download-deliveries_excel-sample', [DeliveryController::class, "generateAndDownloadDeliveryTemplate"]);
 
-        Route::post('upload/excel', [DeliveryController::class, "uploadDeliveriesByExcel"]);
-        Route::post('upload/single-delivery', [DeliveryController::class, "uploadSingleDelivery"]);
+        Route::POST('upload/excel', [DeliveryController::class, "uploadDeliveriesByExcel"]);
+        Route::POST('upload/single-delivery', [DeliveryController::class, "uploadSingleDelivery"]);
 
         Route::POST('complete-delivery', [DeliveryController::class, "completeDelivery"]);
         Route::POST('end-batch', [DeliveryBatchController::class, "endDeliveryBatch"]);
@@ -75,6 +71,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
         Route::DELETE('delete-delivery', [DeliveryBatchController::class, "deleteDelivery"]);
         Route::GET('get-business-customers', [DeliveryController::class, "getBusinessCustomer"]);
         Route::GET('get-delivery-slots', [DeliveryController::class, "getDeliverySlots"]);
+        Route::GET('get-all-delivery-slots', [DeliveryController::class, "getAllDeliverySlots"]);
     });
 
     // Route::group(['prefix' => 'Collection/'], function () {

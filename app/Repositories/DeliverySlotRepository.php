@@ -4,12 +4,28 @@ namespace App\Repositories;
 
 use App\Interfaces\DeliverySlotInterface;
 use App\Models\DeliverySlot;
+use Illuminate\Support\Facades\DB;
 
 class DeliverySlotRepository implements DeliverySlotInterface
 {
     public function getAllDeliverySlots()
     {
         return DeliverySlot::all();
+    }
+
+    public function getAllFormattedDeliverySlots()
+    {
+        // return DeliverySlot::with('city')->get();
+        return DeliverySlot::join('cities', 'delivery_slots.city_id', '=', 'cities.id')
+            ->select(
+                'delivery_slots.id',
+                'delivery_slots.city_id',
+                DB::raw("CONCAT(TIME_FORMAT(delivery_slots.start_time, '%h:%i %p'), ' - ', TIME_FORMAT(delivery_slots.end_time, '%h:%i %p'), ' (', cities.name, ')') AS slot")
+            )
+            ->where('delivery_slots.active_status', 1)
+            ->whereNull('delivery_slots.deleted_at')
+            ->whereNull('cities.deleted_at')
+            ->get();
     }
 
     public function getAllDeliverySlotsOfCity($city_id)

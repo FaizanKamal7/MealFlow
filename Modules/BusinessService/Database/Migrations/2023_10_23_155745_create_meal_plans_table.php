@@ -14,9 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('meal_plans', function (Blueprint $table) {
-            $table->id();
-
+            $table->uuid("id")->primary();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('status');
+            $table->json('skip_days');
+            $table->uuid('customer_id');
+            $table->uuid('business_id')->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('set null');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

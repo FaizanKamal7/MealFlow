@@ -50,6 +50,11 @@ class UserRepository implements UserInterface
         return User::where($where)->get();
     }
 
+    public function getSingleUserWhere($where)
+    {
+        return User::where($where)->first();
+    }
+
     public function deleteUser($id)
     {
         return User::where(["id" => $id])->delete();

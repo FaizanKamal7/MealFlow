@@ -10,6 +10,7 @@ use Modules\BusinessService\Interfaces\BusinessCategoryInterface;
 use Modules\BusinessService\Interfaces\OnboardingInterface;
 use Modules\BusinessService\Interfaces\BusinessInterface;
 use Modules\BusinessService\Interfaces\BusinessUserInterface;
+use Modules\BusinessService\Interfaces\SpecialInstructionInterface;
 use Modules\BusinessService\Repositories\BranchCoverageDeliverySlotsRepository;
 use Modules\BusinessService\Repositories\BranchCoverageRepository;
 use Modules\BusinessService\Repositories\BranchRepository;
@@ -18,6 +19,7 @@ use Modules\BusinessService\Repositories\BusinessCustomerRepository;
 use Modules\BusinessService\Repositories\BusinessRepository;
 use Modules\BusinessService\Repositories\BusinessUserRepository;
 use Modules\BusinessService\Repositories\OnboardingRepository;
+use Modules\BusinessService\Repositories\SpecialInstructionRepository;
 use TestInterface;
 use TestRepository;
 
@@ -64,6 +66,7 @@ class BusinessServiceServiceProvider extends ServiceProvider
         $this->app->bind(BusinessCustomerInterface::class, BusinessCustomerRepository::class);
         $this->app->bind(BusinessUserInterface::class, BusinessUserRepository::class);
         $this->app->bind(BranchCoverageDeliverySlotsInterface::class, BranchCoverageDeliverySlotsRepository::class);
+        $this->app->bind(SpecialInstructionInterface::class, SpecialInstructionRepository::class);
     }
 
     /**

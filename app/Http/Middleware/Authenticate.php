@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\TokenMapping;
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
@@ -15,9 +16,51 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (!$request->expectsJson()) {
-            return redirect('/login');
+        return route('login_view');
+    }
+
+    public function handle($request, Closure $next, ...$guards)
+    {
+        // if (Auth::guest()) {
+        //     if ($request->expectsJson()) {
+        //         return response()->json(['error' => 'Unauthenticated.'], 401);
+        //     } else {
+        //         return redirect('/login');
+        //     }
+        // }
+        // return parent::handle($request, $next, $guards);
+        if ($request->route()->getAction('middleware') === 'api') {
+            $token = $request->bearerToken();
+            if (!$token || !Auth::guard('api')->check()) {
+                return response()->json(['error' => 'Unauthenticated.'], 401);
+            }
+            return $next($request);
+        } else {
+            if (!Auth::guest()) {
+                return $next($request);
+            } else {
+                return redirect('/login');
+            }
         }
+
+
+
+
+
+        // -- Below code is to deal with shorten token
+        // $token = $request->bearerToken();
+
+        // if (!$token || !TokenMapping::where('short_token', $token)->exists()) {
+        //     // Token is missing or not found in the token_mappings table
+        //     return response()->json(['error' => 'Unauthenticated.'], 401);
+        // }
+
+        // // Retrieve the original token using the short token
+        // $passportToken = TokenMapping::where('short_token', $token)->first()->passport_token_id;
+        // $request->headers->set('Authorization', 'Bearer ' . $passportToken);
+
+        // return $next($request);
+
     }
     // public function handle($request, Closure $next, ...$guards)
     // {
