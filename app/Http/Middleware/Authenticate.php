@@ -3,9 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
-use Illuminate\Support\Facades\Auth;
 
 class Authenticate extends Middleware
 {
@@ -17,19 +15,21 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        return route('login_view');
-    }
-
-    public function handle($request, Closure $next, ...$guards)
-    {
-        if (Auth::guest()) {
-            if ($request->expectsJson()) {
-                return response()->json(['error' => 'Unauthenticated.'], 401);
-            } else {
-                return redirect('/login');
-            }
+        if (!$request->expectsJson()) {
+            return redirect('/login');
         }
-    
-        return parent::handle($request, $next, $guards);
     }
+    // public function handle($request, Closure $next, ...$guards)
+    // {
+    //     if (!auth()->user()) {
+    //         if ($request->expectsJson()) {
+    //             return response()->json(['error' => 'Unauthenticated.'], 401);
+    //         } else {
+    //             return redirect('/login');
+    //         }
+    //     }
+
+    //     return $next($request);
+    //     ;
+    // }
 }
