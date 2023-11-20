@@ -31,18 +31,23 @@ class Authenticate extends Middleware
         //     }
         // }
         // return parent::handle($request, $next, $guards);
-
-
-        if (!Auth::guest()) {
+        if ($request->route()->getAction('middleware') === 'api') {
+            $token = $request->bearerToken();
+            if (!$token || !Auth::guard('api')->check()) {
+                return response()->json(['error' => 'Unauthenticated.'], 401);
+            }
             return $next($request);
+        } else {
+            if (!Auth::guest()) {
+                return $next($request);
+            } else {
+                return redirect('/login');
+            }
         }
 
-        $token = $request->bearerToken();
-        if (!$token || !Auth::guard('api')->check()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
-        }
 
-        return $next($request);
+
+
 
         // -- Below code is to deal with shorten token
         // $token = $request->bearerToken();

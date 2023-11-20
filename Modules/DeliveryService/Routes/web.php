@@ -15,7 +15,7 @@ use Modules\DeliveryService\Http\Controllers\Bags\BagsController;
 use Modules\DeliveryService\Http\Controllers\Customers\CustomersController;
 use Modules\DeliveryService\Http\Controllers\Deliveries\DeliveryController;
 
-Route::prefix('admin/deliveries')->group(function () {
+Route::middleware(['auth'])->prefix('admin/deliveries')->group(function () {
     Route::get('download-excel', 'DeliveryServiceController@downloadExcel');
     //    Route::get('/upload', 'DeliveryServiceController@uploadDeliveryView');
     Route::post('/upload/bulk', 'DeliveryServiceController@addBulk')->name("bulk_delivery_add");
