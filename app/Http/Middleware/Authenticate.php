@@ -31,9 +31,14 @@ class Authenticate extends Middleware
         //     }
         // }
         // return parent::handle($request, $next, $guards);
+
+
+        if (!Auth::guest()) {
+            return $next($request);
+        }
+
         $token = $request->bearerToken();
         if (!$token || !Auth::guard('api')->check()) {
-            // Token is missing or user is not authenticated
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
