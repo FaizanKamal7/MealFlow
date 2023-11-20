@@ -3,6 +3,7 @@
 namespace App\Enum;
 
 
+// class MealPlanStatusEnum
 enum MealPlanStatusEnum: string
 {
     case FROZEN = 'frozen';

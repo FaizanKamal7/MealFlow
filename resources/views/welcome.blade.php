@@ -1,6 +1,8 @@
 <html>
     {{-- @include('oomph') --}}
-    @include('nexgen_home_view')
+    {{-- @include('nexgen_home_view') --}}
+    @include('authentication.login')
+    
 </html>
 
 {{-- <!DOCTYPE html>

@@ -212,7 +212,7 @@
 
             console.log('Expiry Date: ' + expiryDate.toISOString().slice(0, 10));
             console.log('Included Dates: ' + includedDates.join(', '));
-            invokeForm(expiryDate, currentDate, includedDates, numPlanDays)
+            invokeForm(expiryDate, startDate, includedDates, numPlanDays)
         }
         // Helper function to get the name of the day
         function getDayName(dayOfWeek) {
@@ -232,8 +232,6 @@
             component.set('starting_date', start_date);
             component.set('no_of_days', no_of_days);
             component.set('skip_days', skip_days);
-            
-
         }
 </script>
 @endsection

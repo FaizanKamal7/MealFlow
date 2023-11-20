@@ -15,10 +15,12 @@ use App\Models\DeliverySlot;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\BusinessService\Entities\Customer;
 use Modules\BusinessService\Entities\CustomerAddress;
 use App\Interfaces\AreaInterface;
 use App\Interfaces\CityInterface;
@@ -128,6 +130,27 @@ class DeliveryController extends Controller
         $this->helper = $helper;
     }
 
+    public function viewDeliveryBatch()
+    {
+        return view('deliveryservice::batches.delivery_batch');
+
+    }
+    public function DeliveryBatchDetail($deliveryId)
+    {
+        return view('deliveryservice::batches.delivery_batch_detail');
+
+    }
+
+    public function viewPickupBatch()
+    {
+        return view('deliveryservice::batches.pickup_batch');
+
+    }
+    public function PickupBatchDetail($deliveryId)
+    {
+        return view('deliveryservice::batches.pickup_batch_detail');
+
+    }
     public function viewMealPlan()
     {
         $partner = $this->businessRepository->getActiveBusinesses();
@@ -177,8 +200,6 @@ class DeliveryController extends Controller
         $customer_id = $submittedData['customer_id'];
         $business_id = $submittedData['business_id'];
         $included_dates = json_decode($submittedData['included_dates']);
-
-
         // $start_date = new DateTime::format('Y-m-d', $start_date);
         // $end_date = new DateTime($expiry_date);
 
@@ -202,7 +223,7 @@ class DeliveryController extends Controller
 
 
 
-        $start_date =  $start_date->format('Y-m-d');
+        $start_date = $start_date->format('Y-m-d');
         $end_date = $end_date->format('Y-m-d');
 
         // dd($start_date, $end_date, gettype($start_date), gettype($start_date));
@@ -212,7 +233,8 @@ class DeliveryController extends Controller
         $meal_data = [
             'start_date' => $start_date,
             'end_date' => $end_date,
-            'status' => MealPlanStatusEnum::ACTIVE->value,
+            'status' => MealPlanStatusEnum::ACTIVE,
+            // 'status' => 'active',
             'skip_days' => json_encode($skip_days),
             'customer_id' => $customer_id,
             'business_id' => $business_id,
@@ -228,11 +250,12 @@ class DeliveryController extends Controller
 
 
                 $delivery_data = [
-                    'status' => DeliveryStatusEnum::UNASSIGNED->value,
+                    // 'status' => 'unassigned',
+                    'status' => DeliveryStatusEnum::UNASSIGNED,
                     'is_recurring' => false,
                     'payment_status' => false,
                     'is_sign_required' => false,
-                    'is_notification_enabled' => $submittedData['notification'][$i],
+                    'is_notification_enabled' => (bool) $submittedData['notification'][$i],
                     'note' => $submittedData['notes'][$i],
                     'branch_id' => $submittedData['pickup_point'][$i],
                     'delivery_slot_id' => $submittedData['time_slot'][$i],
@@ -245,6 +268,7 @@ class DeliveryController extends Controller
                     'country_id' => $customer->country_id,
                     'meal_plan_id' => $plan->id
                 ];
+
 
                 $this->deliveryRepository->create($delivery_data);
             }
@@ -262,7 +286,41 @@ class DeliveryController extends Controller
     public function getCustomersMealPlan($customer_id)
     {
         $customer_meal_plans = $this->mealPlanRepository->getCustomerMealPlans($customer_id);
-        return response()->json($customer_meal_plans);
+        // Loop through each meal plan and calculate total days
+        foreach ($customer_meal_plans as &$meal_plan) {
+            $startDate = Carbon::parse($meal_plan['start_date']);
+            $endDate = Carbon::parse($meal_plan['end_date']);
+            $totalDays = $startDate->diffInDays($endDate);
+            // Store the total days in the meal plan array
+            $meal_plan['total_days'] = $totalDays + 1;
+            // $deliveries = $this->deliveryRepository->getDeliveriesByMealID($meal_plan->id);
+            // change to get result fast, otherwise it was slow, fatal error
+            $deliveries = DB::table('deliveries')
+                ->select('*')
+                ->where('meal_plan_id', $meal_plan['id'])
+                ->get();
+            $meal_plan['total_deliveries'] = count($deliveries);
+            $meal_plan['deliveries'] = $deliveries;
+            $pending = 0;
+            // Loop through deliveries to count unassigned deliveries
+            foreach ($deliveries as $delivery) {
+                if ($delivery->status === 'unassigned') {
+                    $pending++;
+                }
+            }
+            // Store the count of unassigned deliveries in the meal plan array
+            $meal_plan['pending'] = $pending;
+
+        }
+        // dd($customer_meal_plans);
+        $customer = $this->customerRepository->getCustomer($customer_id);
+        $user = $this->userRepository->getUser($customer->user_id);
+        $data = [
+            'customer' => $customer,
+            'user' => $user,
+            'meal_plans' => $customer_meal_plans,
+        ];
+        return response()->json(['success' => true, 'data' => $data]);
     }
 
     /**
@@ -538,7 +596,7 @@ class DeliveryController extends Controller
         $chunks = array_chunk($data, 10);
 
         $header = $chunks[0][0];
-        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $batch = Bus::batch([])->dispatch();
         $conflicted_deliveries = [];
@@ -640,7 +698,7 @@ class DeliveryController extends Controller
                             $new_address_coordinates = $this->helper->convertStringAddressToCoordinates($sheet_address);
                             $address_data = [
                                 'address' => $sheet_address,
-                                'address_type' => AddressTypeEnum::DEFAULT->value,
+                                'address_type' => AddressTypeEnum::DEFAULT ->value,
                                 'latitude' => $new_address_coordinates ? $new_address_coordinates->latitude : null,
                                 'longitude' => $new_address_coordinates ? $new_address_coordinates->longitude : null,
                                 'customer_id' => $customer->id,
@@ -915,7 +973,6 @@ class DeliveryController extends Controller
             // Step 1: Find a driver that matches the delivery area and has duty timing eligilable for that slot
             $drivers = [];
             if ($customerAddress == null || !isset($customerAddress->area_id)) {
-                dd($customerAddress);
                 $drivers = $this->driverRepository->getDriversbyAreaID($customerAddress->area_id, $delivery->deliverySlot->start_time, $delivery->deliverySlot->end_time);
             }
             $delivery->setAttribute('suggested_drivers', $drivers);

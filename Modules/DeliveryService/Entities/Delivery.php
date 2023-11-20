@@ -129,7 +129,7 @@ class Delivery extends Model
             $helper = new Helper();
             $action_by = $user_id = auth()->check() ? auth()->id() : null;
             $delivery_id = $attributes['id'];
-            $status = DeliveryStatusEnum::UNASSIGNED->value;
+            $status = DeliveryStatusEnum::UNASSIGNED;
             $vehicle_id = null;
             $description = "New Delivery added";
 
@@ -226,7 +226,6 @@ class Delivery extends Model
 
                             $bag_description = "Delivery Bag delivered at customer's location";
                             $helper->bagTimeline($bag->id, $delivery_id, BagStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $bag_description);
-
                         }
                         $description = "Delivery completed";
                         $helper->deliveryTimeline($delivery_id, DeliveryStatusEnum::DELIVERED->value, $action_by, $vehicle_id, $description);

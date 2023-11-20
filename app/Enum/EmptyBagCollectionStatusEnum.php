@@ -3,6 +3,7 @@
 namespace App\Enum;
 
 enum EmptyBagCollectionStatusEnum: string
+
 {
     case UNASSIGNED = 'unassigned';
     case ASSIGNED = 'assigned';

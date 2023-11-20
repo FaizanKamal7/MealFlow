@@ -1,0 +1,301 @@
+.on-route,
+.completed {
+    background-blend-mode: luminosity;
+    border-radius: 4px;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.5) 0.78%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    padding: 8px 10px;
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-left: 3px solid rgba(0, 66, 110, 1);
+}
+.delivery-car-pick {
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    background: rgba(0, 66, 110, 1);
+}
+
+.on-route p,
+h5 {
+    color: rgba(0, 66, 110, 1);
+}
+.on-route p {
+    font-size: 10px;
+}
+
+.completed p {
+    color: rgba(0, 146, 93, 1);
+    font-size: 10px;
+}
+.completed h5 {
+    color: rgba(0, 146, 93, 1);
+}
+
+.completed {
+    border-left: 3px solid rgba(0, 146, 93, 1);
+}
+
+.search-box {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 90px;
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    padding: 7px;
+    height: 44px;
+    width: 89%;
+}
+
+.setting-icon {
+    border-radius: 100%;
+    color: rgba(0, 66, 110, 1) !important;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 8px 6px;
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    /* margin-left: 10px; */
+}
+
+.tab-heading-div {
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.5) 0.78%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-radius: 4px;
+}
+
+.nav-line-tabs .nav-item .nav-link.active,
+.nav-line-tabs .nav-item .nav-link:hover:not(.disabled),
+.nav-line-tabs .nav-item.show .nav-link {
+    background-color: rgba(161, 211, 243, 1);
+    border-bottom: 1px solid rgba(0, 66, 110, 1);
+    color: rgba(0, 66, 110, 1);
+    font-weight: 700;
+}
+.nav-line-tabs .nav-item .nav-link {
+    color: rgba(17, 16, 16, 0.5);
+    margin: 0 2px;
+    padding: 10px;
+    width: 80px;
+    text-align: center;
+}
+
+.nav {
+    justify-content: space-between;
+}
+
+.num-span {
+    margin-left: unset;
+    font-size: 16px;
+}
+
+.delivery-id {
+    font-size: 12px;
+    color: rgba(0, 66, 110, 1);
+}
+
+.delivery-time {
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(17, 16, 16, 0.6);
+    line-height: 6px;
+}
+
+.driver-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+p.vehicle-number {
+    font-size: 10px;
+    line-height: 0px;
+}
+
+.progress-div {
+    flex: 2;
+}
+.driver-name-div {
+    flex: 2;
+}
+.id-div {
+    flex: 1;
+}
+
+.rate {
+    color: rgba(0, 66, 110, 1);
+    font-size: 12px !important;
+}
+p.p-route {
+    width: 70px;
+}
+.tab-div-batches {
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.5) 0.78%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    border: 4px solid;
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-radius: 6px;
+}
+
+.pickup-batches {
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.5) 0.78%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.pickup-batches h4 {
+    color: rgba(0, 66, 110, 1);
+    font-size: 16px;
+}
+
+.d-flex.batch-row {
+    background: linear-gradient(
+        176.59deg,
+        rgba(244, 251, 255, 0.74) 0.22%,
+        rgba(226, 244, 255, 0.4) 99.71%
+    );
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    padding: 10px;
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+}
+
+/* /////////// */
+/* batch_pickup_details css */
+
+.breadcrumb .breadcrumb-item {
+    font-size: 12px;
+}
+
+.vehicle-detail-div {
+    background: rgba(0, 66, 110, 1);
+    border-radius: 11px;
+    padding: 10px;
+}
+
+.vehicle-detail-div h5 {
+    color: rgba(255, 255, 255, 1);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.all-detail-div {
+    flex-grow: 1;
+}
+
+.d-flex.vehicle-detail {
+    /* justify-content: space-between; */
+}
+
+p.vehicle-detail-title {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    flex-basis: 40%;
+}
+
+p.vehicle-detail-content {
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+    flex-basis: 70%;
+}
+
+.van-img {
+    background: linear-gradient(
+        120.29deg,
+        rgba(72, 140, 185, 0.6) 0%,
+        rgba(36, 111, 161, 0.4) 49.91%,
+        rgba(0, 83, 138, 0.2) 98.79%
+    );
+    border-radius: 50%;
+    padding: 12px 0px;
+}
+
+button.lock-button {
+    background: rgba(161, 211, 243, 1);
+    border-radius: 6px;
+    border: none;
+    width: 80%;
+    padding: 10px;
+}
+
+.order_id_p {
+    color: rgba(0, 66, 110, 1);
+    font-size: 14px;
+    font-weight: 500;
+}
+.bag_id {
+    color: rgba(17, 16, 16, 0.7);
+    font-size: 12px;
+    line-height: 1px;
+}
+.start_time {
+    color: rgba(0, 66, 110, 1);
+    font-size: 12px;
+}
+.status {
+    background: rgba(209, 237, 255, 1);
+    padding: 10px;
+    border-radius: 4px;
+    color: rgba(0, 66, 110, 1);
+    font-weight: 700;
+}
+
+.order-div {
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.5) 0.78%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+}

@@ -174,7 +174,6 @@ class ComposerStaticInit109545fe7fb94ace418c089da77e4241
             'Laravel\\Sail\\' => 13,
             'Laravel\\Passport\\Database\\Factories\\' => 36,
             'Laravel\\Passport\\' => 17,
-            'Laravel\\Breeze\\' => 15,
         ),
         'J' => 
         array (
@@ -607,10 +606,6 @@ class ComposerStaticInit109545fe7fb94ace418c089da77e4241
         array (
             0 => __DIR__ . '/..' . '/laravel/passport/src',
         ),
-        'Laravel\\Breeze\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/breeze/src',
-        ),
         'JasonGuru\\LaravelMakeRepository\\' => 
         array (
             0 => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src',
@@ -881,6 +876,7 @@ class ComposerStaticInit109545fe7fb94ace418c089da77e4241
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
         'App\\Models\\RolePermission' => __DIR__ . '/../..' . '/app/Models/RolePermission.php',
         'App\\Models\\State' => __DIR__ . '/../..' . '/app/Models/State.php',
+        'App\\Models\\TokenMapping' => __DIR__ . '/../..' . '/app/Models/TokenMapping.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\UserPermission' => __DIR__ . '/../..' . '/app/Models/UserPermission.php',
         'App\\Models\\UserRole' => __DIR__ . '/../..' . '/app/Models/UserRole.php',
@@ -4605,11 +4601,6 @@ class ComposerStaticInit109545fe7fb94ace418c089da77e4241
         'JasonGuru\\LaravelMakeRepository\\RepositoryServiceProvider' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/RepositoryServiceProvider.php',
         'JasonGuru\\LaravelMakeRepository\\Repository\\BaseRepository' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/repository/BaseRepository.php',
         'JasonGuru\\LaravelMakeRepository\\Repository\\RepositoryContract' => __DIR__ . '/..' . '/jason-guru/laravel-make-repository/src/repository/RepositoryContract.php',
-        'Laravel\\Breeze\\BreezeServiceProvider' => __DIR__ . '/..' . '/laravel/breeze/src/BreezeServiceProvider.php',
-        'Laravel\\Breeze\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallCommand.php',
-        'Laravel\\Breeze\\Console\\InstallsApiStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsApiStack.php',
-        'Laravel\\Breeze\\Console\\InstallsBladeStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsBladeStack.php',
-        'Laravel\\Breeze\\Console\\InstallsInertiaStacks' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsInertiaStacks.php',
         'Laravel\\Passport\\ApiTokenCookieFactory' => __DIR__ . '/..' . '/laravel/passport/src/ApiTokenCookieFactory.php',
         'Laravel\\Passport\\AuthCode' => __DIR__ . '/..' . '/laravel/passport/src/AuthCode.php',
         'Laravel\\Passport\\Bridge\\AccessToken' => __DIR__ . '/..' . '/laravel/passport/src/Bridge/AccessToken.php',

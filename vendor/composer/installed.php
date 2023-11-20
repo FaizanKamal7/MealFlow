@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'a999cdb65e1582d4af2832a724fde4ff1ed4c9f7',
+        'reference' => 'b3486fc5f4d7b83c5d6f471776474079b7446623',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -517,15 +517,6 @@
                 0 => '*',
             ),
         ),
-        'laravel/breeze' => array(
-            'pretty_version' => 'v1.19.2',
-            'version' => '1.19.2.0',
-            'reference' => '725e0c4fb1f630afdd90b5fba2a7f6d8d547ac29',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../laravel/breeze',
-            'aliases' => array(),
-            'dev_requirement' => true,
-        ),
         'laravel/framework' => array(
             'pretty_version' => 'v9.52.16',
             'version' => '9.52.16.0',
@@ -538,7 +529,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'a999cdb65e1582d4af2832a724fde4ff1ed4c9f7',
+            'reference' => 'b3486fc5f4d7b83c5d6f471776474079b7446623',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1138,8 +1129,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(
@@ -1698,9 +1689,9 @@
             'dev_requirement' => true,
         ),
         'theseer/tokenizer' => array(
-            'pretty_version' => '1.2.1',
-            'version' => '1.2.1.0',
-            'reference' => '34a41e998c2183e22995f158c581e7b5e755ab9e',
+            'pretty_version' => '1.2.2',
+            'version' => '1.2.2.0',
+            'reference' => 'b2ad5003ca10d4ee50a12da31de12a5774ba6b96',
             'type' => 'library',
             'install_path' => __DIR__ . '/../theseer/tokenizer',
             'aliases' => array(),

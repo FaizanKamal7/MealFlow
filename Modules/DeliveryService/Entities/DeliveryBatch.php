@@ -134,26 +134,22 @@ class DeliveryBatch extends Model
                     foreach ($delivery_batch_deliveries as $single_delivery) {
                         $helper->updateDelivery($single_delivery, $data);
                     }
-
                 } else if ($status == BatchStatusEnum::ENDED->value) {
                     $delivery_batch_empty_bag_collections = $helper->getDeliveryBatchBagCollection($id);
                     // ----- On completion of delivery batch update collected bags on bags timeline 
                     foreach ($delivery_batch_empty_bag_collections as $single_bag) {
                         $single_bag_delivery = $helper->getDelivery($single_bag->empty_bag_collection_delivery_id);
                         // * If picked bag have food 
-                        if ($single_bag_delivery->status == DeliveryStatusEnum::CANCELED->value || $single_bag_delivery->status == DeliveryStatusEnum::RESCHEDULED->value) {
+                        if ($single_bag_delivery->status == DeliveryStatusEnum::CANCELED || $single_bag_delivery->status == DeliveryStatusEnum::RESCHEDULED) {
                             $description = "Delivery Batch Completed. Bag with delivery arrived at warehouse with food as it was either resheduled or canceled";
-                            $helper->bagTimeline($single_bag->bag_id, $single_bag->delivery_id, BagStatusEnum::RECEIVED_IN_WAREHOUSE_WITH_DELIVERY->value, $action_by, $vehicle_id, $description);
+                            $helper->bagTimeline($single_bag->bag_id, $single_bag->delivery_id, BagStatusEnum::RECEIVED_IN_WAREHOUSE_WITH_DELIVERY, $action_by, $vehicle_id, $description);
                             // * If picked bag is empty food 
                         } else {
                             $description = "Delivery Batch Completed. Empty collected bags with delivery arrived at warehouse";
-                            $helper->bagTimeline($single_bag->bag_id, $single_bag->delivery_id, BagStatusEnum::RECEIVED_EMPTY_IN_WAREHOUSE->value, $action_by, $vehicle_id, $description);
+                            $helper->bagTimeline($single_bag->bag_id, $single_bag->delivery_id, BagStatusEnum::RECEIVED_EMPTY_IN_WAREHOUSE, $action_by, $vehicle_id, $description);
                         }
                     }
                 }
-
-
-
             }
         });
 

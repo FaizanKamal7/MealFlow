@@ -19,12 +19,12 @@
     {{--
     <link rel="shortcut icon" href="theme/nexgen/images/favicon.ico"> --}}
 
-   
-  
+
+
     {{-- <script src="//geodata.solutions/includes/countrystatecity.js"></script> --}}
 
     @include('partials.styles')
-    @yield("extra_style")
+    @yield('extra_style')
 
 </head>
 <!--end::Head-->
@@ -32,7 +32,7 @@
 
 <body id="kt_body" class="bg-body">
     <!--begin::Main-->
-    @yield("main_content")
+    @yield('main_content')
 
     <!--end::Main-->
     <!--begin::Javascript-->

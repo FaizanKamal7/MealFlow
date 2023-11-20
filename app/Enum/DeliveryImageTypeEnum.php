@@ -4,6 +4,7 @@ namespace App\Enum;
 
 
 enum DeliveryImageTypeEnum: string
+
 {
     case OPEN_BAG_IMG = 'open_bag_img';
     case CLOSE_BAG_IMG = 'close_bag_img';
