@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\CityInterface;
 use App\Models\City;
+use Illuminate\Support\Facades\DB;
 use Modules\BusinessService\Entities\Business;
 use Yajra\DataTables\DataTables;
 
@@ -63,5 +64,24 @@ class CityRepository implements CityInterface
     public function searchCityFirst($searchTerm)
     {
         return City::where('name', 'like', "%{$searchTerm}%")->first();
+    }
+
+    // =============================================================================================
+    // ===============================  A P I   F U N C T I O N S   ================================
+    // =============================================================================================
+
+
+    public function getFormattedActiveCities()
+    {
+        // return City::where(["active_status" => "1"])->get();
+        return  City::select(
+            'cities.id as city_id',
+            DB::raw('CONCAT(cities.name, " (", states.name, ", ", countries.name, ")") AS city')
+        )
+            ->join('states', 'cities.state_id', '=', 'states.id')
+            ->join('countries', 'states.country_id', '=', 'countries.id')
+            ->where('cities.active_status', true)
+            ->orderBy('cities.active_status', 'desc') // Order by active_status to get true values first
+            ->get();
     }
 }

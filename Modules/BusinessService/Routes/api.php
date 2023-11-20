@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIControllers\V1\BusinessInfo\BusinessInfoController;
 use Illuminate\Http\Request;
 
 /*
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/businessservice', function (Request $request) {
-    return $request->user();
+
+Route::group(['middleware' => 'auth:api', 'prefix' => 'businessservice/'], function () {
+    Route::GET('get-business-info', [BusinessInfoController::class, "getBusinessInfo"]);
 });

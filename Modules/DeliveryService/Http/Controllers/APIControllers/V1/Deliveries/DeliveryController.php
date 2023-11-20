@@ -2,12 +2,7 @@
 
 namespace Modules\DeliveryService\Http\Controllers\APIControllers\V1\Deliveries;
 
-use App\Enum\BagStatusEnum;
-use App\Enum\BusinessWalletTransactionTypeEnum;
-use App\Enum\EmptyBagCollectionStatusEnum;
-use App\Enum\InvoiceItemTypeEnum;
 use App\Enum\BatchStatusEnum;
-use App\Enum\BagTypeEnum;
 use App\Enum\DeliveryImageTypeEnum;
 use App\Enum\DeliveryStatusEnum;
 use App\Events\DeliveryCompleted;
@@ -943,7 +938,7 @@ class DeliveryController extends Controller
                         $lastDeliveryBag = DeliveryBag::where('bag_id', $value)
                             ->latest()
                             ->first();
-            
+
                         // Check if the last entry has a status other than "completed"
                         if ($lastDeliveryBag && $lastDeliveryBag->delivery->status != 'completed') {
                             $fail('This Bag is Already linked with Delivery.');

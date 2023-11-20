@@ -13,20 +13,6 @@ class DeliverySlotRepository implements DeliverySlotInterface
         return DeliverySlot::all();
     }
 
-    public function getAllFormattedDeliverySlots()
-    {
-        // return DeliverySlot::with('city')->get();
-        return DeliverySlot::join('cities', 'delivery_slots.city_id', '=', 'cities.id')
-            ->select(
-                'delivery_slots.id',
-                'delivery_slots.city_id',
-                DB::raw("CONCAT(TIME_FORMAT(delivery_slots.start_time, '%h:%i %p'), ' - ', TIME_FORMAT(delivery_slots.end_time, '%h:%i %p'), ' (', cities.name, ')') AS slot")
-            )
-            ->where('delivery_slots.active_status', 1)
-            ->whereNull('delivery_slots.deleted_at')
-            ->whereNull('cities.deleted_at')
-            ->get();
-    }
 
     public function getAllDeliverySlotsOfCity($city_id)
     {
@@ -59,5 +45,25 @@ class DeliverySlotRepository implements DeliverySlotInterface
             ->where('city_id', $city_id)
             ->where('active_status', 1)
             ->first();
+    }
+
+
+    // =============================================================================================
+    // ===============================  A P I   F U N C T I O N S   ================================
+    // =============================================================================================
+
+    public function getAllFormattedDeliverySlots()
+    {
+        // return DeliverySlot::with('city')->get();
+        return DeliverySlot::select(
+            'delivery_slots.id as slot_id',
+            'delivery_slots.city_id',
+            DB::raw("CONCAT(TIME_FORMAT(delivery_slots.start_time, '%h:%i %p'), ' - ', TIME_FORMAT(delivery_slots.end_time, '%h:%i %p'), ' (', cities.name, ')') AS slot")
+        )
+            ->join('cities', 'delivery_slots.city_id', '=', 'cities.id')
+            ->where('delivery_slots.active_status', 1)
+            ->whereNull('delivery_slots.deleted_at')
+            ->whereNull('cities.deleted_at')
+            ->get();
     }
 }

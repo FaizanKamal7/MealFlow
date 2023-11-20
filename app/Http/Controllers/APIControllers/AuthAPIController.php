@@ -19,8 +19,6 @@ class AuthAPIController extends Controller
 
     use HttpResponses, HasApiTokens;
 
-
-
     public function login(Request $request)
     {
         $request->validate([
@@ -34,12 +32,16 @@ class AuthAPIController extends Controller
             return $this->error('', 'Credientials do not match', 401);
         }
         $user = User::where($fieldType, $request->email_or_phone)->first();
+        $tokenInstance = $user->createToken('auth-token' . $user->name);
+        $accessToken = $tokenInstance->accessToken; // *JSON Web Token (JWT) format token
+        $tokenAttributes = $tokenInstance->token;   // oauth_access_token object info
         return $this->success([
             'user' => $user,
-            'token' => $user->createToken('auth-token' . $user->name)->accessToken,
+            'access_token' => $accessToken,
         ]);
 
-        // --- Below code to shorten the bearer token 
+
+        // --- Below code to shorten the JWT token and mapping it
         // $request->validate([
         //     'email_or_phone' => 'required',
         //     'password' => 'required|min:6',
