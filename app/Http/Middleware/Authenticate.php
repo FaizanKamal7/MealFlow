@@ -4,9 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\TokenMapping;
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
-use Illuminate\Support\Facades\Auth;
 
 class Authenticate extends Middleware
 {
@@ -66,4 +64,17 @@ class Authenticate extends Middleware
         // return $next($request);
 
     }
+    // public function handle($request, Closure $next, ...$guards)
+    // {
+    //     if (!auth()->user()) {
+    //         if ($request->expectsJson()) {
+    //             return response()->json(['error' => 'Unauthenticated.'], 401);
+    //         } else {
+    //             return redirect('/login');
+    //         }
+    //     }
+
+    //     return $next($request);
+    //     ;
+    // }
 }

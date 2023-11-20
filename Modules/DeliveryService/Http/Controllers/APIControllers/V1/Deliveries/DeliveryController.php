@@ -36,6 +36,8 @@ use Modules\BusinessService\Interfaces\CustomerInterface;
 use Modules\BusinessService\Interfaces\CustomerSecondaryNumberInterface;
 use Modules\BusinessService\Interfaces\DeliverySlotPricingInterface;
 use Modules\BusinessService\Interfaces\RangePricingInterface;
+use Modules\DeliveryService\Entities\Delivery;
+use Modules\DeliveryService\Entities\DeliveryBag;
 use Modules\DeliveryService\Http\Exports\DeliveryTemplateClass;
 use Modules\DeliveryService\Interfaces\BagTimelineInterface;
 use Modules\DeliveryService\Interfaces\DeliveryBagInterface;
@@ -809,6 +811,7 @@ class DeliveryController extends Controller
         try {
             $driver_id = $request->get("driver_id");
             $batch = $this->pickupBatchRepository->getPickupBatchByDriver($driver_id);
+
             $db_deliveries = $this->deliveryRepository->getDriverPickupAssignedDeliveries($start_date, $end_date, $batch->id);
             $grouped_deliveries = [];
 
@@ -925,11 +928,32 @@ class DeliveryController extends Controller
     public function linkBagWithDelivery(Request $request)
     {
         try {
-            DB::beginTransaction();
+
+            // $validator = Validator::make($request->all(), [
+            //     'delivery_id' => ['required', 'exists:deliveries,id'],
+            //     'bag_id' => ['required', 'exists:bags,id' ],
+            // ]);
             $validator = Validator::make($request->all(), [
                 'delivery_id' => ['required', 'exists:deliveries,id'],
-                'bag_id' => ['required', 'exists:bags,id'],
+                'bag_id' => [
+                    'required',
+                    'exists:bags,id',
+                    function ($attribute, $value, $fail) {
+                        // Get the last entry in the delivery_bags table with the given bag_id
+                        $lastDeliveryBag = DeliveryBag::where('bag_id', $value)
+                            ->latest()
+                            ->first();
+            
+                        // Check if the last entry has a status other than "completed"
+                        if ($lastDeliveryBag && $lastDeliveryBag->delivery->status != 'completed') {
+                            $fail('This Bag is Already linked with Delivery.');
+                        }
+                    },
+                ],
             ]);
+            // check ttthe bag id in delivery_bags table one delivery bag should only be linked with one delivery at a time 
+
+            DB::beginTransaction();
 
             // Check if validation fails
             if ($validator->fails()) {

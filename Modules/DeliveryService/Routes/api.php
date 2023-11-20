@@ -33,6 +33,28 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
         Route::prefix('deliverybatch/')->group(function () {
             Route::POST('update-delivery-batch-progress', [DeliveryBatchController::class, "updateDeliveryBatchpProgress"]);
         });
+
+        // ------------------------------------- B A G - R O U T E S -----------------------
+
+        Route::group(['prefix' => 'bag/'], function () {
+        // ------------------------------------- B A G - C O L L E C T I O N - R O U T E S -----------------------
+
+            Route::group(['prefix' => 'collection/'], function () {
+                Route::POST('create', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
+                Route::POST('create-delivery-bag-collection', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
+                Route::POST('update-bag-collection-batch-progress', [EmptyBagCollectionController::class, "updateBagCollectionBatchpProgress"]);
+            });
+        // ------------------------------------- B A G - P I C K U P - R O U T E S -----------------------
+
+            Route::group(['prefix' => 'pickup/'], function () {
+                Route::GET('driver-assigned-pickup', [DeliveryController::class, "driverAssignedPickup"]);
+                Route::GET('driver-pending-pickups', [DeliveryController::class, "driverPendingPickups"]);
+                Route::GET('driver-completed-pickups', [DeliveryController::class, "driverCompletedPickups"]);
+                Route::POST('link-bag-with-delivery', [DeliveryController::class, "linkBagWithDelivery"]);
+                Route::POST('update-pickup-batch-progress', [DeliveryController::class, "updatePickupBatchpProgress"]);
+            });
+        });
+
     });
 
 
@@ -60,20 +82,4 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
     //     Route::GET('driver-bags-pickup', [BagsController::class, "driverBagsPickup"]);
     // });
 
-    Route::group(['prefix' => 'bag/'], function () {
-
-        Route::group(['prefix' => 'collection/'], function () {
-            Route::POST('create', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
-            Route::POST('create-delivery-bag-collection', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
-            Route::POST('update-bag-collection-batch-progress', [EmptyBagCollectionController::class, "updateBagCollectionBatchpProgress"]);
-        });
-
-        Route::group(['prefix' => 'pickup/'], function () {
-            Route::GET('driver-assigned-pickup', [DeliveryController::class, "driverAssignedPickup"]);
-            Route::GET('driver-pending-pickups', [DeliveryController::class, "driverPendingPickups"]);
-            Route::GET('driver-completed-pickups', [DeliveryController::class, "driverCompletedPickups"]);
-            Route::POST('link-bag-with-delivery', [DeliveryController::class, "linkBagWithDelivery"]);
-            Route::POST('update-pickup-batch-progress', [DeliveryController::class, "updatePickupBatchpProgress"]);
-        });
-    });
 });
