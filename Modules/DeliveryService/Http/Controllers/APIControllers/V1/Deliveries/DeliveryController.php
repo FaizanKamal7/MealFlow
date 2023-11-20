@@ -641,7 +641,17 @@ class DeliveryController extends Controller
     {
         try {
             $data = $this->deliverySlotRepository->getAllFormattedDeliverySlots();
+            return $this->success($data, "Delivery Slots retrieved successfully");
+        } catch (Exception $exception) {
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
 
+
+    public function getCityDeliverySlots($city_id)
+    {
+        try {
+            $data = $this->deliverySlotRepository->getAllFormattedDeliverySlots();
             return $this->success($data, "Delivery Slots retrieved successfully");
         } catch (Exception $exception) {
             return $this->error($exception, "Something went wrong please contact support");
@@ -943,7 +953,7 @@ class DeliveryController extends Controller
                         $lastDeliveryBag = DeliveryBag::where('bag_id', $value)
                             ->latest()
                             ->first();
-            
+
                         // Check if the last entry has a status other than "completed"
                         if ($lastDeliveryBag && $lastDeliveryBag->delivery->status != 'completed') {
                             $fail('This Bag is Already linked with Delivery.');

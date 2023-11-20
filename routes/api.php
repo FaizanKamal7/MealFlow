@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\APIControllers\AuthAPIController;
+use App\Http\Controllers\APIControllers\V1\LocationManagement\City\CityAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +33,14 @@ Route::post('/register', [AuthAPIController::class, 'register'])->name('register
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/logout', [AuthAPIController::class, 'logout']);
+
+    Route::group(['prefix' => 'core/'], function () {
+        Route::group(['prefix' => 'settings/'], function () {
+            Route::group(['prefix' => 'locations/'], function () {
+                Route::get("/get-all-cities", [CityAPIController::class, "getAllCities"]);
+            });
+        });
+    });
 });
 
 

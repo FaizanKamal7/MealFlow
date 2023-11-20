@@ -37,14 +37,14 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
         // ------------------------------------- B A G - R O U T E S -----------------------
 
         Route::group(['prefix' => 'bag/'], function () {
-        // ------------------------------------- B A G - C O L L E C T I O N - R O U T E S -----------------------
+            // ------------------------------------- B A G - C O L L E C T I O N - R O U T E S -----------------------
 
             Route::group(['prefix' => 'collection/'], function () {
                 Route::POST('create', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
                 Route::POST('create-delivery-bag-collection', [EmptyBagCollectionController::class, "createBagCollectionAtDelivery"]);
                 Route::POST('update-bag-collection-batch-progress', [EmptyBagCollectionController::class, "updateBagCollectionBatchpProgress"]);
             });
-        // ------------------------------------- B A G - P I C K U P - R O U T E S -----------------------
+            // ------------------------------------- B A G - P I C K U P - R O U T E S -----------------------
 
             Route::group(['prefix' => 'pickup/'], function () {
                 Route::GET('driver-assigned-pickup', [DeliveryController::class, "driverAssignedPickup"]);
@@ -54,7 +54,6 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
                 Route::POST('update-pickup-batch-progress', [DeliveryController::class, "updatePickupBatchpProgress"]);
             });
         });
-
     });
 
 
@@ -70,7 +69,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'deliveryservice/'], funct
 
         Route::DELETE('delete-delivery', [DeliveryBatchController::class, "deleteDelivery"]);
         Route::GET('get-business-customers', [DeliveryController::class, "getBusinessCustomer"]);
-        Route::GET('get-delivery-slots', [DeliveryController::class, "getDeliverySlots"]);
+        Route::GET('get-city-delivery-slots/{city_id}', [DeliveryController::class, "getCityDeliverySlots"]);
         Route::GET('get-all-delivery-slots', [DeliveryController::class, "getAllDeliverySlots"]);
     });
 
