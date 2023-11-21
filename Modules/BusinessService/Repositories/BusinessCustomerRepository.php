@@ -86,4 +86,11 @@ class BusinessCustomerRepository implements BusinessCustomerInterface
     {
         return BusinessCustomer::where($where)->first();
     }
+
+
+
+    public function getCustomersInfoWithIDsArray($where)
+    {
+        return BusinessCustomer::where($where)->first();
+    }
 }

@@ -405,7 +405,7 @@ class DeliveryController extends Controller
 
     public function uploadSingleDelivery(Request $request)
     {
-        return $this->error("Error", 'Something went wrong contact support');
+        
     }
 
     public function getBusinessCustomer(Request $request)

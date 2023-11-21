@@ -21,4 +21,5 @@ interface BusinessInterface
     public function getActiveBusinesses();
     public function getBusiness($id);
     public function getSingleBusinessWhere($where);
+    public function getFormattedBusinessInfo($business_id);
 }

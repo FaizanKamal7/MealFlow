@@ -44,19 +44,18 @@
             </div>
 
             {{-- ------------ --}}
-
+            {{--
             <form action="{{route('test_upload_db')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="required fs-6 fw-bold mb-2">Excel File</label>
-                    {{-- <input type="file" class="form-control form-control-solid" placeholder="Select excel file"
-                        name="excel_file" /> --}}
+
                     <input type="file" class="form-control form-control-solid" placeholder="Select excel file(s)"
                         name="excel_files[]" multiple />
                 </div>
 
                 <button type="submit" class="btn-light-danger"> Upload Business data</button>
-            </form>
+            </form> --}}
             {{-- ------------ --}}
 
             <!--begin::Content-->
