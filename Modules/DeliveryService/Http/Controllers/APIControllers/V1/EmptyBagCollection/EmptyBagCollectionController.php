@@ -115,6 +115,7 @@ class EmptyBagCollectionController extends Controller
             return $this->error($exception, "Error: " . $exception->getMessage(), 500);
         }
     }
+
     public function updateBagCollectionBatchpProgress(Request $request)
     {
         try {

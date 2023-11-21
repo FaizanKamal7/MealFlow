@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\TokenMapping;
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\Auth;
 
 class Authenticate extends Middleware
 {
@@ -21,16 +22,6 @@ class Authenticate extends Middleware
 
     public function handle($request, Closure $next, ...$guards)
     {
-        // if (Auth::guest()) {
-        //     if ($request->expectsJson()) {
-        //         return response()->json(['error' => 'Unauthenticated.'], 401);
-        //     } else {
-        //         return redirect('/login');
-        //     }
-        // }
-        // return parent::handle($request, $next, $guards);
-
-        // if ($request->route()->getAction('middleware') === 'api') {
         if (in_array('api', $request->route()->getAction('middleware'))) {
             $token = $request->bearerToken();
             if (!$token || !Auth::guard('api')->check()) {

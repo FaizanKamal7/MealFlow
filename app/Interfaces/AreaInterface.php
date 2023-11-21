@@ -14,4 +14,9 @@ interface AreaInterface
     public function searchAreaFirst($searchTerm);
     public function getAreaById($id);
     public function createArea($name, $city_id, $coordinates = null, $geoname_id = null);
+
+    // =============================================================================================
+    // ===============================  A P I   F U N C T I O N S   ================================
+    // =============================================================================================
+    public function getFormattedAreas();
 }

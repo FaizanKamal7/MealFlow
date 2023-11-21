@@ -2,12 +2,7 @@
 
 namespace Modules\DeliveryService\Http\Controllers\APIControllers\V1\Deliveries;
 
-use App\Enum\BagStatusEnum;
-use App\Enum\BusinessWalletTransactionTypeEnum;
-use App\Enum\EmptyBagCollectionStatusEnum;
-use App\Enum\InvoiceItemTypeEnum;
 use App\Enum\BatchStatusEnum;
-use App\Enum\BagTypeEnum;
 use App\Enum\DeliveryImageTypeEnum;
 use App\Enum\DeliveryStatusEnum;
 use App\Events\DeliveryCompleted;
