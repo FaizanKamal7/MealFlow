@@ -327,13 +327,13 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ route('view_delivery_batch') }}">
+                        <a class="menu-link" href="{{ route('activated_locations_view') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">Delivery Batch</span>
                         </a>
-                    </div>
+                    </div>            
                 </div>
             </div>
 
@@ -1158,9 +1158,7 @@
 
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    {{-- @can('update_city') --}}
-
-
+                    @can('update_city')
                     <div class="menu-item">
                         <a class="menu-link" href="{{ route('activate_locations_view') }}">
                             <span class="menu-bullet">

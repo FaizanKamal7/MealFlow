@@ -1120,7 +1120,7 @@ class DeliveryController extends Controller
         // 5 => "plain_password"
         // 6 => "address"
         // 7 => "created_dt"
-        $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+        $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
         unset($chunks[0][0]);
         $num_freq = [];
         $faulted_records = [];
@@ -1128,14 +1128,14 @@ class DeliveryController extends Controller
             DB::beginTransaction();
             $addition_count = 0;
             foreach ($chunks as $key => $chunk) {
-                foreach ($chunk as  $row) {
+                foreach ($chunk as $row) {
                     echo "<script>window.scrollTo(0, document.body.scrollHeight);</script>";
 
                     $row = array_combine($header, $row);
 
                     $phone_number = $this->helper->formatPhoneNumber($row['phone']);
 
-                    $db_user =  $this->userRepository->getSingleUserWhere(['name' => $row['full_name'], 'phone' => $phone_number,]);
+                    $db_user = $this->userRepository->getSingleUserWhere(['name' => $row['full_name'], 'phone' => $phone_number,]);
 
                     if ($db_user) {
                         echo "<br> =============== S K I P P I N G " . json_encode($db_user) . "====================== <br>";
@@ -1146,9 +1146,9 @@ class DeliveryController extends Controller
                         $addition_count++;
                         $num_freq[$phone_number] = 1;
                         // echo "<br><br>" . var_dump($db_location_ids), PHP_EOL;
-                        $user =  $this->userRepository->getSingleUserWhere(['phone' => $phone_number]);
+                        $user = $this->userRepository->getSingleUserWhere(['phone' => $phone_number]);
                         if (!$user) {
-                            $user =  $this->userRepository->createUser([
+                            $user = $this->userRepository->createUser([
                                 'name' => $row['full_name'],
                                 'email' => $row['email'] == "" ? null : $row['email'],
                                 'phone' => $phone_number == "" ? null : $phone_number,
@@ -1162,7 +1162,7 @@ class DeliveryController extends Controller
                         $role_id = $this->roleRepository->getRoleByName(RoleNamesEnum::BUSINESS_ADMIN->value);
                         $this->userRoleRepository->createUserRole(userId: $user->id, roleId: $role_id->id);
 
-                        $business =  $this->businessRepository->createBusiness(
+                        $business = $this->businessRepository->createBusiness(
                             name: $row['full_name'],
                             business_category_id: '984584e4-3579-sde3-a380-363ee669ad42',
                             admin: $user->id,
@@ -1178,9 +1178,9 @@ class DeliveryController extends Controller
                         // ========================== A D D R E S S
                         $address_xy = null;
                         if (strtolower($row['address']) == 'dubai') {
-                            $address_xy =  (object) ['latitude' => '25.3585607', 'longitude' => '55.5645216'];
+                            $address_xy = (object) ['latitude' => '25.3585607', 'longitude' => '55.5645216'];
                         } elseif (strtolower($row['address']) == 'abu dhabi') {
-                            $address_xy =  (object) ['latitude' => '24.621895', 'longitude' => '54.8509598'];
+                            $address_xy = (object) ['latitude' => '24.621895', 'longitude' => '54.8509598'];
                         } else {
                             $address_xy = $this->helper->convertStringAddressToCoordinates($row['address']);
                         }
@@ -1189,7 +1189,7 @@ class DeliveryController extends Controller
                             // $row['reason'] = "No valid cordinates obtained for the address";
                             // array_push($faulted_records, $row);
 
-                            $branch =   $this->branchRepository->createBranch(
+                            $branch = $this->branchRepository->createBranch(
                                 name: "Main branch",
                                 phone: $phone_number,
                                 address: $row['address'],
@@ -1198,7 +1198,7 @@ class DeliveryController extends Controller
                                 active_status: true,
                             );
                         } else {
-                            $address =   $this->helper->getLocationFromCoordinates($address_xy->latitude, $address_xy->longitude);
+                            $address = $this->helper->getLocationFromCoordinates($address_xy->latitude, $address_xy->longitude);
                             echo "<br><br> ===================================== <br>";
                             echo "<br> R O W : " . $row['full_name'] . " and address_xy" . json_encode($address_xy) . " and address " . json_encode($address) . "<br>";
                             echo "<br> ===================================== <br>";
@@ -1216,7 +1216,7 @@ class DeliveryController extends Controller
                                 array_push($faulted_records, $row);
                             } else {
 
-                                $branch =   $this->branchRepository->createBranch(
+                                $branch = $this->branchRepository->createBranch(
                                     name: "Main branch",
                                     phone: $phone_number,
                                     address: $row['address'],
@@ -1249,7 +1249,7 @@ class DeliveryController extends Controller
             return 'Data upload failed: ' . $e->getMessage();
         }
 
-        echo "<br><br>" .    print_r($faulted_records) . "<br>";
+        echo "<br><br>" . print_r($faulted_records) . "<br>";
         arsort($num_freq);
         $export = new CustomExportExcel($faulted_records);
 
@@ -3271,13 +3271,13 @@ class DeliveryController extends Controller
             $duplication_ignored_numbers = 0;
             $duplication_ignored_users = 0;
 
-            foreach ($files as $key =>  $file) {
+            foreach ($files as $key => $file) {
 
                 $data = $this->helper->getExcelSheetData($file);
                 $total_record_in_file = count($data);
                 $total_checked_record_in_file = 0;
                 $header = $data[0];
-                $header = array_map(fn ($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
+                $header = array_map(fn($v) => trim(str_replace([' ', '(', ')'], ['_', '', ''], strtolower(preg_replace('/\(([^)]+)\)/', '$1', $v))), '_'), $header);
                 unset($data[0]);
 
                 $addition_count = 0;
@@ -3292,7 +3292,7 @@ class DeliveryController extends Controller
 
                     try {
                         DB::beginTransaction();
-                        $same_user  =  $this->userRepository->getSingleUserWhere(['phone' => $phone_number, 'name' => $row['full_name']]);
+                        $same_user = $this->userRepository->getSingleUserWhere(['phone' => $phone_number, 'name' => $row['full_name']]);
                         if ($same_user == null) {
                             $duplication_ignored_users++;
                             if (array_key_exists($phone_number, $num_freq)) {
@@ -3305,10 +3305,10 @@ class DeliveryController extends Controller
                                 $num_freq[$phone_number] = 1;
 
 
-                                $user =  $this->userRepository->getSingleUserWhere(['phone' => $phone_number]);
-                                $user = $user == null ? $this->userRepository->getSingleUserWhere(['email' =>  $row['email']]) : $user;
+                                $user = $this->userRepository->getSingleUserWhere(['phone' => $phone_number]);
+                                $user = $user == null ? $this->userRepository->getSingleUserWhere(['email' => $row['email']]) : $user;
                                 if ($user == null) {
-                                    $user =  $this->userRepository->createUser([
+                                    $user = $this->userRepository->createUser([
                                         'name' => $row['full_name'] ?? "",
                                         'email' => $row['email'] == "" ? null : $row['email'],
                                         'phone' => $phone_number == "" ? null : $phone_number,
@@ -3335,10 +3335,10 @@ class DeliveryController extends Controller
                                         "customer_id" => $customer->id,
                                     ]);
                                 }
-                                $business =  $this->businessRepository->getSingleBusinessWhere(['name' => $row['vendor']]);
+                                $business = $this->businessRepository->getSingleBusinessWhere(['name' => $row['vendor']]);
                                 echo "<br> ===============business " . json_encode($business->id) . "====================== <br>";
 
-                                $business_customer =  $this->businessCustomerRepository->create(
+                                $business_customer = $this->businessCustomerRepository->create(
                                     customer_id: $customer->id,
                                     business_id: $business->id,
                                 );
@@ -3370,7 +3370,7 @@ class DeliveryController extends Controller
                                 if ($row['addr_loc_by_dri_usr'] != "") {
                                     echo "<br> =============== addr_loc_by_dri_usr " . gettype($row['addr_loc_by_dri_usr']) . " " . json_encode($row['addr_loc_by_dri_usr']) . "====================== <br>";
 
-                                    $sheet_coordinates_xy = explode(",",  $row['addr_loc_by_dri_usr']);
+                                    $sheet_coordinates_xy = explode(",", $row['addr_loc_by_dri_usr']);
 
                                     echo "<br> =============== sheet_coordinates_xy " . gettype($sheet_coordinates_xy) . " " . json_encode($sheet_coordinates_xy) . "====================== <br>";
 
@@ -3379,7 +3379,7 @@ class DeliveryController extends Controller
                                     if ($address_xy == null) {
                                         array_push($faulted_records, $row);
                                     } else {
-                                        $address =  $address_xy ? $this->helper->getLocationFromCoordinates($address_xy->latitude, $address_xy->longitude) : null;
+                                        $address = $address_xy ? $this->helper->getLocationFromCoordinates($address_xy->latitude, $address_xy->longitude) : null;
                                         echo "<br><br> ===================================== <br>";
                                         echo "<br> R O W with coordinates: " . $row['full_name'] . " and address_xy" . json_encode($address_xy) . " and address " . json_encode($address) . "<br>";
                                         echo "<br> ===================================== <br>";
@@ -3436,7 +3436,7 @@ class DeliveryController extends Controller
                                     if ($address_xy == null) {
                                         array_push($faulted_records, $row);
                                     } else {
-                                        $address =  $address_xy ? $this->helper->getLocationFromCoordinates($address_xy->latitude, $address_xy->longitude) : null;
+                                        $address = $address_xy ? $this->helper->getLocationFromCoordinates($address_xy->latitude, $address_xy->longitude) : null;
                                         echo "<br><br> ===================================== <br>";
                                         echo "<br> R O W : " . $row['full_name'] . " and address_xy" . json_encode($address_xy) . " and address " . json_encode($single_address) . "<br>";
                                         echo "<br> ===================================== <br>";
@@ -3496,7 +3496,7 @@ class DeliveryController extends Controller
 
 
 
-            echo "<br><br><pre> Faulted records: " .    print_r(count($faulted_records)) . "<pre><br>";
+            echo "<br><br><pre> Faulted records: " . print_r(count($faulted_records)) . "<pre><br>";
 
 
 
