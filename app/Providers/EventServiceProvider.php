@@ -24,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
         DeliveryCompleted::class => [
             DeliveryDeduction::class,
             UploadBagCollection::class,
-            ]
+        ]
     ];
 
     /**

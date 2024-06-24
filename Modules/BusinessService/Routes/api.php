@@ -17,4 +17,5 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'businessservice/'], function () {
     Route::GET('get-business-info', [BusinessInfoController::class, "getBusinessInfo"]);
+    Route::GET('get-business-customers', [BusinessInfoController::class, "getBusinessCustomers"]);
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\APIControllers\V1\BusinessInfo;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
 use Modules\BusinessService\Interfaces\BranchCoverageInterface;
 use Modules\BusinessService\Interfaces\BusinessCustomerInterface;
@@ -13,6 +14,8 @@ use Modules\BusinessService\Interfaces\RangePricingInterface;
 
 class BusinessInfoController extends Controller
 {
+    use HttpResponses;
+
     private $businessRepository;
     private $deliverySlotPricingRepository;
     private $rangePricingRepository;
@@ -35,22 +38,27 @@ class BusinessInfoController extends Controller
      */
     public function getBusinessInfo(Request $request)
     {
-        $user = Auth::guard('api')->user();
-        dd($user->business);
-        // $business = $this->businessRepository->getBusiness($business_id);
+        try {
+            $user = Auth::guard('api')->user();
+            $business = $user->business;
+            $business_info = $this->businessRepository->getFormattedBusinessInfo($business->id);
+            return $this->success($business_info, "Business Info retrieved successfully");
+        } catch (Exception $exception) {
+            return $this->error($exception, "Something went wrong please contact support");
+        }
+    }
 
-        // // Getting business delivery slot pricing 
-        // $business_delivery_slot_pricing = $this->deliverySlotPricingRepository->getBusinessPricing($business_id);
-        // if ($business_delivery_slot_pricing->isEmpty()) {
-        //     $business_delivery_slot_pricing = $this->getBusinessBaseDeliverySlotPricing($business);
-        // }
-
-        // // Getting business range pricing 
-        // $business_range_pricing = $this->rangePricingRepository->getBusinessPricing($business_id);
-        // if ($business_range_pricing->isEmpty()) {
-        //     $business_range_pricing = $this->getBusinessBaseRangePricing($business);
-        // }
-        // return view('businessservice::business_info.business_overview', ['business' =>  $business, 'business_delivery_slot_pricing' => $business_delivery_slot_pricing, 'business_range_pricing' => $business_range_pricing]);
+    public function getBusinessCustomers(Request $request)
+    {
+        try {
+            $user = Auth::guard('api')->user();
+            $business_customers = $user->business->businessCustomers;
+            $business_customers_ids = collect($business_customers)->pluck('customer_id');
+            $business_customers_info = $this->businessCustomereRepository->getCustomersInfoWithIDsArray($business_customers_ids);
+            return $this->success($business_customers, "Business Customers retrieved successfully");
+        } catch (Exception $exception) {
+            return $this->error($exception, "Something went wrong please contact support");
+        }
     }
 
     // public function getBusinessBaseDeliverySlotPricing($business)

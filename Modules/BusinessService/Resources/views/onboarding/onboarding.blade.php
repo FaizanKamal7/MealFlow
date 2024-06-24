@@ -409,7 +409,7 @@
                                     <br>
                                     <div class="form-group row" id="google_map_address_selection">
                                         <input class="form-control form-control-lg form-control-solid"
-                                            id="search-location" type="text" placeholder="Enter you address here">
+                                            id="search-location" name="map_address" type="text" placeholder="Enter you address here">
                                         <br><br>
                                         <!--begin::HINTS-->
                                         <div class="alert alert-primary d-flex align-items-center p-5">

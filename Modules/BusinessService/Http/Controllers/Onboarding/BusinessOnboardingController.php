@@ -48,8 +48,6 @@ class BusinessOnboardingController extends Controller
     private BranchCoverageDeliverySlotsInterface $branchCoverageDeliverySlotRepository;
     private BusinessWalletInterface $businessWalletRepository;
     private RoleInterface $roleRepository;
-
-
     private Helper $helper;
 
 
@@ -123,7 +121,7 @@ class BusinessOnboardingController extends Controller
         $business_category_id = $request->category;
         $phone = $request->phone;
         $business_phone = $request->business_phone;
-        $address = $request->address;
+        $address = $request->map_address ?? $request->address;
         $address_country = $request->address_country;
         $address_state = $request->address_state;
         $address_city = $request->address_city;
@@ -203,8 +201,6 @@ class BusinessOnboardingController extends Controller
             );
 
             $this->businessWalletRepository->createWallet($business->id);
-
-
             $branch = $this->branchRepository->createBranch(
                 name: "Main Branch",
                 phone: $phone,
