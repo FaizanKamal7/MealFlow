@@ -1,0 +1,8 @@
+{
+    "HRManagement": true,
+    "UserService": true,
+    "BusinessService": true,
+    "FleetService": true,
+    "DeliveryService": true,
+    "FinanceService": true
+}

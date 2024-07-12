@@ -1,0 +1,195 @@
+@charset "UTF-8";
+:root {
+    --text-login-color: rgba(17, 16, 16, 1);
+    --login-background-gradient: linear-gradient(
+        240.88deg,
+        #f9fdff -2.36%,
+        rgba(217, 217, 217, 0) 101.43%
+    );
+
+    /* --text-login-color: rgba(255, 255, 255, 1);
+    --login-background-gradient: linear-gradient(
+        225.1deg,
+        #06090a 30.55%,
+        rgba(107, 107, 107, 0) 100%
+    ); */
+}
+
+
+.bg {
+    background-image: url("../media/bg_gradient1.png");
+    /* width: 100%; */
+    height: auto;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+}
+
+.bg-login {
+    background-image: url("../media/bg_gradient1.png");
+    /* height: 100%; */
+    height: auto;
+    display: flex;
+    flex: 1;
+    /* justify-content: center; */
+    overflow: auto;
+    /* background-size: cover; */
+}
+.margin-div {
+    flex: 1;
+    margin: 10px;
+    background: linear-gradient(
+        123.16deg,
+        rgba(255, 255, 255, 0.6) 0.66%,
+        rgba(255, 255, 255, 0.21) 100%
+    );
+    border: 1px solid;
+    border-image-source: linear-gradient(
+        118.35deg,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.3) 100.8%
+    );
+    border-radius: 24px !important;
+    overflow: hidden;
+    box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.07) !important;
+}
+.side-div::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../media/Union.png") center/cover no-repeat;
+    opacity: 0.7;
+}
+
+.side-div {
+    background: linear-gradient(205.64deg, #06adcd -5%, #2c2d2d 106%);
+    /* background: linear-gradient(
+        205.64deg,
+        #08adcd -5%,
+        rgba(45, 45, 45, 0) 106%
+    ); */
+
+    flex: 1;
+    z-index: 1;
+}
+
+.login-div {
+    z-index: 100;
+    flex: 1;
+    background: var(--login-background-gradient);
+    /* linear-gradient(
+        123.16deg,
+        rgba(255, 255, 255, 0.6) 0.66%,
+        rgba(255, 255, 255, 0.21) 100%
+    ); */
+}
+
+.main {
+    margin: 2%;
+    border-radius: 24px !important;
+    overflow: hidden;
+}
+.big-img {
+    max-width: 100%;
+}
+img.img-big {
+    background-repeat: no-repeat;
+    object-fit: contain;
+    height: 300px;
+}
+
+@media screen and (min-width: 1024px) {
+}
+
+.side-img {
+    margin: 0 auto;
+    padding: 0 20px;
+    border: 1px solid rgba(255, 255, 255, 1);
+    background: linear-gradient(
+            151.96deg,
+            rgba(255, 255, 255, 0.8) 0.49%,
+            rgba(255, 255, 255, 0.42) 97.45%
+        ),
+        linear-gradient(0deg, #ffffff, #ffffff);
+}
+
+.logo {
+    position: relative;
+    position: relative;
+    bottom: -1%;
+    right: 10%;
+}
+.welcome {
+    text-align: center;
+}
+
+.logo img {
+    height: 82px;
+}
+
+.welcome h1 {
+    font-size: 30px !important;
+    color: #00426e;
+}
+
+.welcome p {
+    color: #00426e;
+    font-size: 24px !important;
+    text-align: center;
+    line-height: 30px;
+}
+
+.login {
+    padding: 60px;
+    flex: 1;
+    background: linear-gradient(
+        123.16deg,
+        rgba(255, 255, 255, 0.6) 0.66%,
+        rgba(255, 255, 255, 0.21) 100%
+    );
+    border: 1px solid;
+
+    border-image-source: linear-gradient(
+        118.35deg,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.3) 100.8%
+    );
+}
+.login-text {
+    color: var(--text-login-color) !important;
+}
+
+label.user-label {
+    font-size: 15px !important;
+}
+
+.form h1 {
+    font-size: 40px;
+}
+
+a.forgot {
+    line-height: 20px;
+    color: #00426e;
+    float: right;
+    margin-top: -18px;
+    font-size: 16px !important;
+}
+
+.submit_btn {
+    width: 500px;
+    color: white;
+    margin-top: 3%;
+    border: none !important;
+}
+
+p.p-dont {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.dont span {
+}

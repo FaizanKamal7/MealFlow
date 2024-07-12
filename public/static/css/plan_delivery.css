@@ -1,0 +1,187 @@
+.table {
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    border: none;
+    text-align: center;
+}
+
+.table-row.bottom-row {
+    color: white;
+}
+
+.customer_name h5 {
+    color: white;
+}
+
+.table-row.top-row {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.customer_detail_div {
+    background: rgba(0, 66, 110, 1);
+    border-radius: 4px;
+    padding: 5px 10px 0px;
+}
+
+.cell p {
+    margin-bottom: 0;
+}
+
+.top-row-bag .cell p {
+    color: rgba(17, 16, 16, 0.7);
+}
+
+.bottom-row-bag .cell p {
+    color: rgba(0, 66, 110, 1);
+}
+.bag_detail_div {
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.8) 0.78%,
+        rgba(255, 255, 255, 0.56) 100%
+    );
+    border-radius: 4px;
+    padding: 5px 10px 0px;
+}
+
+.bag-card {
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.64) 0.78%,
+        rgba(255, 255, 255, 0.448) 100%
+    );
+    border: 3px solid;
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    border-radius: 8px;
+}
+.delivery_back {
+    width: 150px;
+    background: rgba(225, 240, 250, 1);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.delivery_blue {
+    color: rgba(0, 66, 110, 1);
+}
+.delivery_yellow {
+    color: rgba(193, 123, 19, 1);
+}
+.delivery_purple {
+    color: rgba(112, 41, 166, 1);
+}
+.delivery_pink {
+    color: rgba(241, 65, 108, 1);
+}
+.delivery_green {
+    color: rgba(0, 146, 93, 1);
+}
+.day_blue {
+    background: rgba(161, 211, 243, 0.3);
+}
+.day_light {
+    background: rgba(254, 171, 45, 0.1);
+}
+.day_less {
+    background: rgba(161, 36, 255, 0.1);
+}
+.day_back {
+    width: 110px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.active-class {
+    color: rgba(0, 146, 93, 1);
+    background: rgba(231, 248, 239, 1);
+    font-weight: 600;
+    text-align: center;
+}
+.inactive-class {
+    color: rgba(241, 65, 108, 1);
+    font-weight: 600;
+    background: rgba(231, 248, 239, 1);
+    text-align: center;
+}
+/* 
+ */
+
+/*  */
+/* add meal plan css */
+.form-generate-div {
+    padding: 0rem 1rem !important;
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.8) 0.78%,
+        rgba(255, 255, 255, 0.56) 100%
+    );
+    border-radius: 4px;
+    border: 3px solid;
+    border-image-source: linear-gradient(
+        112.7deg,
+        rgba(255, 255, 255, 0.33) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+    );
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+}
+
+.delievry-no {
+    background: linear-gradient(
+        120.29deg,
+        #b3e1ff 0%,
+        #a1d3f3 54.03%,
+        #8fc5e8 98.79%
+    );
+    padding: 10px;
+    display: flex;
+    margin-top: 3%;
+    /* border: 0.5px solid; */
+    /* border-image-source: linear-gradient(120.29deg, #B3E1FF 0%, #A1D3F3 54.03%, #8FC5E8 98.79%); */
+}
+
+.delievry-no h6 {
+    margin: 0 0 0px 20px;
+}
+
+.form-element-div {
+    background-blend-mode: luminosity;
+    background: linear-gradient(
+        172.99deg,
+        rgba(255, 255, 255, 0.8) 0.78%,
+        rgba(255, 255, 255, 0.56) 100%
+    );
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0px 20px 20px 0px rgba(0, 83, 138, 0.06);
+    padding: 20px 20px;
+}
+
+.meal-control {
+    border: 0.5px solid rgba(179, 225, 255, 1);
+}
+
+#copyAllAddresses {
+    text-decoration: underline;
+    border: none;
+    text-decoration-color: rgba(0, 66, 110, 1);
+    background: none;
+    padding: 0 5px;
+    margin-right: 15px;
+    font-style: italic;
+    cursor: pointer;
+}
